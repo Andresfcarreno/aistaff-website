@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jarvis for Real Estate — AI Command Center by AIStaff</title>
+  <meta name="description" content="Jarvis is AIStaff's AI command center for real estate developers and brokerages — capturing, qualifying and following up every lead across Instagram, WhatsApp, Meta Ads, your website and phone calls, live in one dashboard, 24/7."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060608;
+      --surface: #0E0E14;
+      --surface2: #12121C;
+      --border: #1E1E30;
+      --accent: #6C63FF;
+      --accent2: #A78BFA;
+      --cyan: #00F5FF;
+      --pink: #FF2D78;
+      --green: #00FFB2;
+      --yellow: #FFD600;
+      --text: #FFFFFF;
+      --sub: #C8C8E0;
+      --white: #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+    .cursor { position: fixed; width: 18px; height: 18px; border-radius: 50%; background: var(--cyan); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s; mix-blend-mode: screen; }
+    .cursor-glow { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,245,255,0.12) 0%, transparent 70%); pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.25s ease; }
+
+    #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+    .particle { position: absolute; bottom: -10px; border-radius: 50%; animation: floatUp linear infinite; opacity: 0.6; }
+    @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-110vh) scale(0.3); opacity: 0; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 60px;
+      background: rgba(6,6,8,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(108,99,255,0.2);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+    .logo .ai-part {
+      font-style: italic;
+      background: linear-gradient(90deg, #00F5FF, #A78BFA, #FF2D78);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: underline; text-decoration-color: #00F5FF; text-underline-offset: 3px;
+    }
+    .logo .staff-part { color: #38BDF8; }
+    .logo-tag {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--yellow); background: rgba(255,214,0,0.1); border: 1px solid rgba(255,214,0,0.35);
+      padding: 4px 10px; border-radius: 100px;
+    }
+    nav ul { list-style: none; display: flex; gap: 32px; align-items: center; }
+    nav ul a { color: #C0C0D8; text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    nav ul a:hover { color: var(--cyan); }
+    .nav-cta {
+      background: linear-gradient(135deg, #6C63FF, #A78BFA);
+      color: #fff !important; padding: 10px 22px; border-radius: 8px;
+      font-weight: 700 !important; transition: opacity 0.2s !important;
+      box-shadow: 0 0 16px rgba(108,99,255,0.4);
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 140px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: pulse 4s ease-in-out infinite; }
+    .orb1 { width: 500px; height: 500px; background: rgba(108,99,255,0.18); top: -100px; left: -150px; }
+    .orb2 { width: 400px; height: 400px; background: rgba(0,245,255,0.12); bottom: -80px; right: -100px; animation-delay: 2s; }
+    .orb3 { width: 300px; height: 300px; background: rgba(255,214,0,0.08); top: 40%; left: 50%; transform: translateX(-50%); animation-delay: 1s; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.15); opacity: 1; } }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.35);
+      color: var(--cyan); padding: 8px 18px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 28px; position: relative; z-index: 1;
+      box-shadow: 0 0 20px rgba(0,245,255,0.2);
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+    @keyframes badgePulse { 0%,100% { box-shadow: 0 0 20px rgba(0,245,255,0.2); } 50% { box-shadow: 0 0 35px rgba(0,245,255,0.5); } }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: blink 1.2s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; line-height: 1.08; letter-spacing: -2px; color: #fff; position: relative; z-index: 1; margin-bottom: 12px; }
+    .hero h1 .grad {
+      background: linear-gradient(90deg, #6C63FF, #A78BFA, #00F5FF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.15rem; font-weight: 600;
+      background: linear-gradient(90deg, #FFD600, #00F5FF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      position: relative; z-index: 1; margin-bottom: 16px;
+      filter: drop-shadow(0 0 12px rgba(255,214,0,0.35));
+    }
+    .hero-desc { font-size: 1.05rem; color: #D0D0E8; max-width: 640px; position: relative; z-index: 1; margin-bottom: 40px; font-weight: 400; }
+    .hero-desc strong { color: #fff; }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #6C63FF, #A78BFA);
+      color: #fff; padding: 16px 32px; border-radius: 12px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      box-shadow: 0 0 30px rgba(108,99,255,0.5);
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; top: -50%; left: -60%;
+      width: 40%; height: 200%; background: rgba(255,255,255,0.15);
+      transform: skewX(-20deg); transition: left 0.4s;
+    }
+    .btn-primary:hover::after { left: 130%; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(108,99,255,0.7); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--cyan);
+      border: 1.5px solid rgba(0,245,255,0.5);
+      padding: 16px 32px; border-radius: 12px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: all 0.3s; box-shadow: 0 0 16px rgba(0,245,255,0.15);
+    }
+    .btn-secondary:hover { background: rgba(0,245,255,0.08); box-shadow: 0 0 30px rgba(0,245,255,0.35); transform: translateY(-2px); }
+
+    .stats-bar {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+      background: var(--surface); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 28px 0;
+      position: relative; z-index: 1;
+    }
+    .stat-item { text-align: center; padding: 0 48px; border-right: 1px solid var(--border); }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-size: 2.2rem; font-weight: 900;
+      background: linear-gradient(90deg, #00F5FF, #A78BFA);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(0,245,255,0.4));
+    }
+    .stat-label { font-size: 0.82rem; color: #B0B0CC; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    section { padding: 100px 24px; position: relative; z-index: 1; }
+    .section-label {
+      display: inline-block; font-size: 0.75rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase;
+      background: linear-gradient(90deg, #FF2D78, #A78BFA);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 14px; filter: drop-shadow(0 0 8px rgba(255,45,120,0.4));
+    }
+    .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { font-size: 1.05rem; font-weight: 600;
+      background: linear-gradient(90deg, #00F5FF, #00FFB2);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 56px; max-width: 720px; margin-left:auto; margin-right:auto;
+      filter: drop-shadow(0 0 10px rgba(0,245,255,0.3));
+    }
+    .center { text-align: center; }
+
+    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+    .problem-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+    .problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #FF2D78, #A78BFA); }
+    .problem-card:hover { transform: translateY(-4px); border-color: rgba(255,45,120,0.4); box-shadow: 0 0 30px rgba(255,45,120,0.15); }
+    .problem-icon { font-size: 2rem; margin-bottom: 14px; }
+    .problem-card h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .problem-card p { font-size: 0.92rem; color: #C0C0D8; line-height: 1.6; }
+    .problem-card p strong { color: #FF2D78; }
+
+    /* ===== DASHBOARD MOCKUP ===== */
+    .re-dash-wrap { max-width: 1180px; margin: 0 auto; }
+    .re-browser {
+      border-radius: 20px; border: 1px solid rgba(0,245,255,0.18);
+      overflow: hidden; background: #0b0b13;
+      box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,245,255,0.08);
+    }
+    .re-browser-bar {
+      background: #14141f; padding: 12px 18px; display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .re-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .re-dot.red { background: #ff5f57; } .re-dot.yellow { background: #ffbd2e; } .re-dot.green { background: #28c840; }
+    .re-url { flex: 1; background: rgba(255,255,255,0.05); border-radius: 6px; padding: 6px 14px; margin: 0 14px; font-size: 11px; color: rgba(255,255,255,0.3); font-family: monospace; }
+    .re-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: blink 1.2s ease-in-out infinite; }
+    .re-live-label { font-size: 10px; color: var(--green); font-weight: 800; letter-spacing: 1.5px; margin-left: 6px; }
+
+    .re-dash-body { padding: 28px; display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+    @media (max-width: 900px) { .re-dash-body { grid-template-columns: 1fr; } }
+
+    .re-panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; }
+    .re-panel-title { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; display:flex; align-items:center; justify-content:space-between; }
+
+    /* activity feed */
+    .re-feed { display: flex; flex-direction: column; gap: 10px; min-height: 320px; }
+    .re-feed-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 10px; border-radius: 10px; background: rgba(255,255,255,0.02); transition: background 0.3s, transform 0.3s; }
+    .re-feed-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .re-feed-text { font-size: 11.5px; color: rgba(255,255,255,0.78); line-height: 1.4; }
+    .re-feed-text strong { color: #fff; }
+    .re-feed-time { font-size: 9.5px; color: rgba(255,255,255,0.32); margin-top: 2px; }
+    .fd-red { background: #FF6B6B; box-shadow: 0 0 6px #FF6B6B; }
+    .fd-cyan { background: #00F5FF; box-shadow: 0 0 6px #00F5FF; }
+    .fd-green { background: #00FFB2; box-shadow: 0 0 6px #00FFB2; }
+    .fd-purple { background: #A78BFA; box-shadow: 0 0 6px #A78BFA; }
+    .fd-yellow { background: #FFD600; box-shadow: 0 0 6px #FFD600; }
+
+    /* channel cards row */
+    .re-channels-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+    @media (max-width: 640px) { .re-channels-row { grid-template-columns: 1fr 1fr; } }
+    .re-ch-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px; }
+    .re-ch-top { display: flex; align-items: center; gap: 6px; font-size: 9px; color: rgba(255,255,255,0.4); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .re-ch-val { font-size: 24px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .re-spark { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+    .re-spark span { flex: 1; border-radius: 2px 2px 0 0; animation: sparkGrow 2.4s ease-in-out infinite; }
+
+    .re-mid-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; margin-bottom: 10px; }
+    @media (max-width: 640px) { .re-mid-grid { grid-template-columns: 1fr; } }
+
+    /* weekly bars */
+    .re-week-bars { display: flex; align-items: flex-end; gap: 6px; height: 64px; margin-top: 10px; }
+    .re-week-bar { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, rgba(0,245,255,0.5), rgba(0,245,255,0.15)); width: 0%; height: 0; transition: height 1.4s cubic-bezier(0.4,0,0.2,1); }
+
+    /* interests */
+    .re-interest-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+    .re-interest-label { font-size: 10px; color: rgba(255,255,255,0.55); width: 80px; flex-shrink: 0; }
+    .re-interest-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+    .re-interest-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.4s cubic-bezier(0.4,0,0.2,1); }
+    .re-interest-pct { font-size: 10px; font-weight: 700; color: #fff; width: 30px; text-align: right; flex-shrink: 0; }
+
+    /* bottom strip */
+    .re-bottom-row { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 10px; }
+    @media (max-width: 760px) { .re-bottom-row { grid-template-columns: 1fr; } }
+    .re-bottom-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px; }
+    .re-score-big { font-size: 26px; font-weight: 900; color: var(--green); filter: drop-shadow(0 0 8px rgba(0,255,178,0.4)); }
+    .re-waveform { display: flex; align-items: center; gap: 3px; height: 26px; margin-top: 8px; }
+    .re-waveform span { width: 3px; background: var(--cyan); border-radius: 2px; animation: waveMove 1s ease-in-out infinite; box-shadow: 0 0 6px rgba(0,245,255,0.5); }
+    .re-listening { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--cyan); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+
+    @keyframes sparkGrow { 0%,100% { transform: scaleY(0.6); } 50% { transform: scaleY(1); } }
+    @keyframes waveMove { 0%,100% { height: 6px; } 50% { height: 24px; } }
+
+    .re-dash-caption { text-align: center; margin-top: 28px; font-size: 0.92rem; color: #9090B0; }
+    .re-dash-caption a { color: var(--cyan); text-decoration: none; font-weight: 700; margin-left: 6px; }
+
+    /* ===== LEAD CAPTURE DEMO ===== */
+    .re-lead-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .re-lead-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    @media (max-width: 900px) { .re-lead-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .re-lead-text h2 { font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 14px; }
+    .re-lead-text p { color: #C8C8E0; font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px; }
+    .re-lead-text p strong { color: #fff; }
+    .re-lead-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .re-lead-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 0.8rem; font-weight: 700; padding: 8px 16px; border-radius: 100px; background: rgba(0,245,255,0.08); color: #00F5FF; border: 1px solid rgba(0,245,255,0.25); }
+
+    .re-form-card {
+      background: var(--surface2); border: 1px solid rgba(0,245,255,0.3); border-radius: 24px;
+      padding: 28px 30px; max-width: 420px; margin: 0 auto; position: relative; overflow: hidden;
+      box-shadow: 0 0 50px rgba(0,245,255,0.12);
+    }
+    .re-form-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#00F5FF,#6C63FF,#A78BFA); }
+    .re-form-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .re-form-icon { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#6C63FF,#00F5FF); display:flex; align-items:center; justify-content:center; font-size: 1.2rem; box-shadow: 0 0 20px rgba(108,99,255,0.5); }
+    .re-form-name { font-size: 0.95rem; font-weight: 800; color: #fff; }
+    .re-form-status { font-size: 0.72rem; color: var(--green); font-weight: 700; display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .re-input {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 12px 14px; color: #fff; font-size: 0.85rem; margin-bottom: 10px; font-family: inherit;
+    }
+    .re-input::placeholder { color: #6060A0; }
+    .re-filter-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 18px; }
+    .re-filter-chip { font-size: 0.72rem; font-weight: 700; color: #A78BFA; background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.25); padding: 5px 11px; border-radius: 100px; }
+    .re-send-btn {
+      width: 100%; padding: 13px; border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg,#00F5FF,#6C63FF); color: #000; font-weight: 800; font-size: 0.9rem;
+      box-shadow: 0 0 24px rgba(0,245,255,0.4); transition: all 0.3s;
+    }
+    .re-send-btn:hover { box-shadow: 0 0 40px rgba(0,245,255,0.6); transform: translateY(-1px); }
+    .re-match-result { margin-top: 14px; font-size: 0.8rem; color: var(--green); font-weight: 700; opacity: 0; transition: opacity 0.4s; }
+    .re-match-result.show { opacity: 1; }
+
+    /* ===== LAYER CARDS (Jarvis OS) ===== */
+    .re-layer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1160px; margin: 0 auto; }
+    @media (max-width: 900px) { .re-layer-grid { grid-template-columns: 1fr; } }
+    .re-layer-card {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 18px; padding: 26px;
+      position: relative; overflow: hidden; transition: all 0.3s;
+    }
+    .re-layer-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+    .l1::before { background: linear-gradient(90deg,#00F5FF,#6C63FF); }
+    .l2::before { background: linear-gradient(90deg,#6C63FF,#A78BFA); }
+    .l3::before { background: linear-gradient(90deg,#A78BFA,#FF2D78); }
+    .l4::before { background: linear-gradient(90deg,#00FFB2,#00F5FF); }
+    .l5::before { background: linear-gradient(90deg,#FFD600,#FF2D78); }
+    .l6::before { background: linear-gradient(90deg,#FF2D78,#6C63FF); }
+    .re-layer-card:hover { transform: translateY(-4px); box-shadow: 0 0 40px rgba(108,99,255,0.15); }
+    .re-layer-num { font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; color: #7070A0; text-transform: uppercase; margin-bottom: 10px; }
+    .re-layer-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .re-layer-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .re-layer-desc { font-size: 0.88rem; color: #C0C0D8; line-height: 1.6; }
+    .re-quote { max-width: 780px; margin: 48px auto 0; text-align: center; font-size: 1.05rem; font-weight: 600; color: #E0E0F0; font-style: italic; line-height: 1.7; }
+    .re-quote span { color: var(--cyan); font-style: normal; font-weight: 800; }
+
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+    .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: all 0.3s; }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 0 30px rgba(0,245,255,0.12); border-color: rgba(0,245,255,0.3); }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.88rem; color: #C0C0D8; line-height: 1.6; }
+
+    /* BATTLE (reused pattern) */
+    .battle-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; position: relative; }
+    .battle-side { background: var(--surface2); border: 1px solid var(--border); border-radius: 24px; padding: 36px 32px; position: relative; overflow: hidden; transition: all 0.4s; }
+    .battle-side.human-side { border-color: rgba(255,100,100,0.3); background: linear-gradient(160deg, #12121C 60%, rgba(255,80,80,0.06)); }
+    .battle-side.ai-side { border-color: rgba(0,245,255,0.35); background: linear-gradient(160deg, #12121C 60%, rgba(0,245,255,0.07)); box-shadow: 0 0 60px rgba(0,245,255,0.1); }
+    .battle-side.ai-side:hover { box-shadow: 0 0 80px rgba(0,245,255,0.2); transform: translateY(-4px); }
+    .battle-side.human-side:hover { transform: translateY(-4px); }
+    .battle-avatar { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto 20px; position: relative; }
+    .human-avatar { background: radial-gradient(circle, rgba(255,100,80,0.2), rgba(255,100,80,0.05)); border: 2px solid rgba(255,100,80,0.4); box-shadow: 0 0 30px rgba(255,100,80,0.2); }
+    .ai-avatar { background: radial-gradient(circle, rgba(0,245,255,0.2), rgba(108,99,255,0.1)); border: 2px solid rgba(0,245,255,0.5); box-shadow: 0 0 40px rgba(0,245,255,0.35); animation: aiGlow 2.5s ease-in-out infinite; }
+    @keyframes aiGlow { 0%,100% { box-shadow: 0 0 40px rgba(0,245,255,0.35); } 50% { box-shadow: 0 0 70px rgba(0,245,255,0.6), 0 0 120px rgba(108,99,255,0.3); } }
+    .battle-name { font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 6px; }
+    .human-name { color: #FF8080; }
+    .ai-name { background: linear-gradient(90deg, #00F5FF, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(0,245,255,0.5)); }
+    .battle-subtitle { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 28px; }
+    .human-subtitle { color: #FF8080; opacity: 0.7; }
+    .ai-subtitle { color: #00F5FF; opacity: 0.85; }
+    .battle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; }
+    .battle-label { font-size: 0.82rem; color: #A0A0C0; font-weight: 600; flex: 1; }
+    .battle-score { font-size: 1.05rem; font-weight: 900; min-width: 84px; text-align: center; padding: 6px 10px; border-radius: 8px; }
+    .score-bad { color: #FF8080; background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.25); }
+    .score-good { background: linear-gradient(135deg, rgba(0,245,255,0.15), rgba(108,99,255,0.15)); border: 1px solid rgba(0,245,255,0.35); color: #00F5FF; box-shadow: 0 0 12px rgba(0,245,255,0.2); }
+    .battle-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+    .battle-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1.6s cubic-bezier(0.4,0,0.2,1); }
+    .fill-bad { background: linear-gradient(90deg, #FF8080, #FF4040); }
+    .fill-good { background: linear-gradient(90deg, #00F5FF, #00FFB2); box-shadow: 0 0 8px rgba(0,245,255,0.5); }
+    .winner-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #00F5FF, #6C63FF); color: #000; font-size: 0.7rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 16px; border-radius: 0 0 12px 12px; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,245,255,0.4); }
+    .battle-vs { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 20px; gap: 16px; position: relative; z-index: 2; }
+    .vs-circle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #1a1a2e, #0E0E14); border: 2px solid rgba(108,99,255,0.5); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; color: #A78BFA; box-shadow: 0 0 30px rgba(108,99,255,0.3); letter-spacing: 1px; }
+    .vs-line { width: 2px; height: 60px; background: linear-gradient(180deg, transparent, rgba(108,99,255,0.4), transparent); }
+    .ai-side::after { content: ''; position: absolute; top: -100%; left: 0; right: 0; height: 40%; background: linear-gradient(180deg, transparent, rgba(0,245,255,0.04), transparent); animation: scanLine 3s linear infinite; pointer-events: none; }
+    @keyframes scanLine { 0% { top: -40%; } 100% { top: 110%; } }
+    .battle-verdict { max-width: 1100px; margin: 32px auto 0; background: linear-gradient(135deg, rgba(0,245,255,0.08), rgba(108,99,255,0.08)); border: 1px solid rgba(0,245,255,0.25); border-radius: 16px; padding: 28px 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+    .verdict-text { font-size: 1rem; font-weight: 700; color: #fff; max-width: 860px; }
+    .verdict-text span { background: linear-gradient(90deg, #00F5FF, #00FFB2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .verdict-savings { font-size: 2.2rem; font-weight: 900; text-align: center; width: 100%; background: linear-gradient(90deg, #00FFB2, #00F5FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 14px rgba(0,255,178,0.5)); }
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1160px; margin: 0 auto; position: relative; z-index: 2; }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
+    .pricing-tier { background: var(--surface2); border: 1px solid var(--border); border-radius: 24px; padding: 36px 28px; position: relative; overflow: visible; transition: all 0.35s; display: flex; flex-direction: column; z-index: 2; isolation: isolate; }
+    .pricing-tier::after { content: ''; position: absolute; inset: 0; border-radius: 24px; background: var(--surface2); z-index: -1; }
+    .pricing-tier::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .tier-starter::before { background: linear-gradient(90deg, #6C63FF, #A78BFA); }
+    .tier-pro::before { background: linear-gradient(90deg, #00F5FF, #6C63FF); }
+    .tier-elite::before { background: linear-gradient(90deg, #FF2D78, #A78BFA, #00F5FF); }
+    .pricing-tier:hover { transform: translateY(-6px); }
+    .tier-starter:hover { box-shadow: 0 0 40px rgba(108,99,255,0.2); border-color: rgba(108,99,255,0.4); }
+    .tier-pro:hover { box-shadow: 0 0 50px rgba(0,245,255,0.25); border-color: rgba(0,245,255,0.45); }
+    .tier-elite:hover { box-shadow: 0 0 50px rgba(255,45,120,0.2); border-color: rgba(255,45,120,0.4); }
+    .tier-pro { border-color: rgba(0,245,255,0.4); background: linear-gradient(160deg, #12121C 60%, rgba(0,245,255,0.05)); box-shadow: 0 0 40px rgba(0,245,255,0.15); transform: scale(1.03); }
+    .tier-pro:hover { transform: scale(1.03) translateY(-6px); }
+    @media (max-width: 900px) { .tier-pro { transform: scale(1) !important; } .tier-pro:hover { transform: translateY(-6px) !important; } }
+    .tier-badge { display: inline-block; font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; margin-bottom: 16px; align-self: flex-start; }
+    .badge-starter { background: rgba(108,99,255,0.2); color: #A78BFA; border: 1px solid rgba(108,99,255,0.4); }
+    .badge-pro { background: linear-gradient(135deg, #00F5FF, #6C63FF); color: #000; box-shadow: 0 0 16px rgba(0,245,255,0.4); }
+    .badge-elite { background: rgba(255,45,120,0.15); color: #FF2D78; border: 1px solid rgba(255,45,120,0.4); }
+    .tier-phase { font-size: 0.72rem; color: #7070A0; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .tier-name { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: 6px; }
+    .tier-tagline { font-size: 0.85rem; color: #9090B0; margin-bottom: 22px; line-height: 1.5; }
+    .tier-monthly { font-size: 2.4rem; font-weight: 900; color: #fff; line-height: 1; }
+    .tier-monthly span { font-size: 1rem; color: #8080A0; font-weight: 500; }
+    .tier-starter .tier-monthly { color: #A78BFA; }
+    .tier-pro .tier-monthly { background: linear-gradient(90deg, #00F5FF, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(0,245,255,0.4)); }
+    .tier-elite .tier-monthly { color: #FF2D78; font-size: 1.9rem; }
+    .tier-setup { font-size: 0.82rem; color: #8080A0; margin-bottom: 22px; font-weight: 500; }
+    .tier-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .tier-features { list-style: none; flex: 1; margin-bottom: 28px; }
+    .tier-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.86rem; color: #C8C8E0; font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+    .tier-features li .check { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; color: #000; }
+    .check-purple { background: linear-gradient(135deg, #A78BFA, #6C63FF); box-shadow: 0 0 8px rgba(108,99,255,0.4); }
+    .check-cyan { background: linear-gradient(135deg, #00F5FF, #00FFB2); box-shadow: 0 0 8px rgba(0,245,255,0.4); }
+    .check-pink { background: linear-gradient(135deg, #FF2D78, #A78BFA); box-shadow: 0 0 8px rgba(255,45,120,0.4); }
+    .btn-tier { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+    .btn-starter { background: rgba(108,99,255,0.15); color: #A78BFA; border: 1.5px solid rgba(108,99,255,0.4); }
+    .btn-starter:hover { background: rgba(108,99,255,0.25); box-shadow: 0 0 24px rgba(108,99,255,0.3); }
+    .btn-pro { background: linear-gradient(135deg, #00F5FF, #6C63FF); color: #000; box-shadow: 0 0 24px rgba(0,245,255,0.4); }
+    .btn-pro:hover { box-shadow: 0 0 40px rgba(0,245,255,0.6); transform: translateY(-2px); }
+    .btn-elite { background: rgba(255,45,120,0.15); color: #FF2D78; border: 1.5px solid rgba(255,45,120,0.4); }
+    .btn-elite:hover { background: rgba(255,45,120,0.25); box-shadow: 0 0 24px rgba(255,45,120,0.3); }
+
+    /* CTA / FOOTER / MODAL / FAQ (shared) */
+    .cta-section { text-align: center; padding: 120px 24px; background: radial-gradient(ellipse at center, rgba(108,99,255,0.15) 0%, transparent 70%); position: relative; z-index: 1; }
+    .cta-section h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: #fff; margin-bottom: 16px; line-height: 1.2; }
+    .cta-section p { font-size: 1.1rem; font-weight: 600; background: linear-gradient(90deg, #00F5FF, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 40px; filter: drop-shadow(0 0 10px rgba(0,245,255,0.3)); }
+    footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+    footer .logo { margin-bottom: 12px; display: inline-block; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-top: 16px; flex-wrap: wrap; }
+    .footer-links a { color: #8888AA; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-copy { color: #6060A0; font-size: 0.8rem; margin-top: 8px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal { background: var(--surface2); border: 1px solid rgba(108,99,255,0.4); border-radius: 24px; padding: 48px 40px; max-width: 440px; width: 90%; text-align: center; position: relative; box-shadow: 0 0 80px rgba(108,99,255,0.3); }
+    .modal h3 { font-size: 1.6rem; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .modal p { color: #C0C0D8; font-size: 0.95rem; margin-bottom: 28px; line-height: 1.6; }
+    .modal-number { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; background: linear-gradient(90deg, #00F5FF, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 24px; filter: drop-shadow(0 0 14px rgba(0,245,255,0.5)); }
+    .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #6060A0; font-size: 1.6rem; cursor: pointer; transition: color 0.2s; }
+    .modal-close:hover { color: #fff; }
+    .faq-wrap { max-width: 780px; margin: 0 auto; }
+    .faq-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 14px; overflow: hidden; transition: all 0.3s; position: relative; }
+    .faq-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #6C63FF, #00F5FF); border-radius: 3px 0 0 3px; }
+    .faq-item:hover { border-color: rgba(108,99,255,0.4); box-shadow: 0 0 24px rgba(108,99,255,0.12); }
+    .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 22px 24px 22px 28px; text-align: left; gap: 16px; }
+    .faq-q-text { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.4; }
+    .faq-icon { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #6C63FF, #A78BFA); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 900; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 12px rgba(108,99,255,0.4); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); box-shadow: 0 0 20px rgba(0,245,255,0.5); background: linear-gradient(135deg, #00F5FF, #6C63FF); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s; padding: 0 28px; }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 28px 22px; }
+    .faq-answer p { font-size: 0.95rem; line-height: 1.7; color: #C8C8E0; }
+    .faq-answer p strong { color: #00F5FF; }
+    .faq-answer p .ans-green { color: #00FFB2; font-weight: 700; }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 16px; }
+      nav ul { display: none; }
+      .nav-hamburger { display: flex; }
+      #navMenu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(6,6,8,0.97); backdrop-filter: blur(20px); flex-direction: column; gap: 0; padding: 16px 0; border-bottom: 1px solid rgba(108,99,255,0.3); z-index: 99; }
+      #navMenu.open { display: flex; }
+      #navMenu li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+      #navMenu a { display: block; padding: 14px 24px; font-size: 1rem !important; color: #E0E0F8 !important; }
+      #navMenu .nav-cta { margin: 12px 24px; border-radius: 8px; text-align: center; }
+      body { overflow-x: hidden; }
+      section { padding: 64px 16px; }
+      .hero { padding: 110px 16px 60px; }
+      .hero h1 { font-size: 2.3rem; letter-spacing: -1px; }
+      .hero-desc { font-size: 0.95rem; }
+      .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
+      .stats-bar { flex-wrap: wrap; gap: 20px; padding: 24px 16px; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 16px; width: 45%; }
+      .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .battle-wrap { display: flex; flex-direction: column; gap: 0; max-width: 100%; }
+      .battle-vs { flex-direction: row; padding: 12px 0; gap: 12px; justify-content: center; }
+      .vs-line { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, rgba(108,99,255,0.4), transparent); }
+      .battle-side { border-radius: 16px; padding: 24px 20px; width: 100%; }
+      .section-title { font-size: 1.8rem; }
+      .re-dash-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo-wrap">
+    <div class="logo"><span class="ai-part">AI</span><span class="staff-part">Staff</span></div>
+    <span class="logo-tag">Jarvis · Real Estate</span>
+  </a>
+  <ul id="navMenu">
+    <li><a href="#dashboard" onclick="closeMenu()">Command Center</a></li>
+    <li><a href="#how-it-works" onclick="closeMenu()">How It Works</a></li>
+    <li><a href="#results" onclick="closeMenu()">Results</a></li>
+    <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
+    <li><a href="#faq" onclick="closeMenu()">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(); closeMenu(); return false;">Get Jarvis →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+
+  <div class="badge"><span class="badge-dot"></span>AI JARVIS · BUILT FOR REAL ESTATE OPERATIONS</div>
+
+  <h1>Meet Jarvis.<br/><span class="grad">Your AI Command Center</span><br/>for Real Estate.</h1>
+  <p class="hero-sub">"POV: Jarvis manages your full real estate operations." — and it's live, 24/7.</p>
+  <p class="hero-desc">
+    AIStaff's Jarvis captures every lead from <strong>Instagram, Meta Ads, WhatsApp, your website and phone calls</strong> — qualifies buyers instantly, books site visits, tracks deposits, and gives your sales director one live command center to watch it all happen.
+  </p>
+  <div class="hero-btns">
+    <a href="#dashboard" class="btn-primary">🖥️ See The Command Center →</a>
+    <a href="tel:+13056149424" class="btn-secondary">📞 Talk to Jarvis Live</a>
+  </div>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:36px; position:relative; z-index:1;">
+    <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); border-radius:100px; padding:8px 18px; font-size:0.8rem; font-weight:700; color:#FF2D78;">📸 Instagram Ads</div>
+    <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.25); border-radius:100px; padding:8px 18px; font-size:0.8rem; font-weight:700; color:#A78BFA;">🎯 Meta Ads</div>
+    <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(0,255,178,0.08); border:1px solid rgba(0,255,178,0.25); border-radius:100px; padding:8px 18px; font-size:0.8rem; font-weight:700; color:#00FFB2;">💬 WhatsApp</div>
+    <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(0,245,255,0.08); border:1px solid rgba(0,245,255,0.25); border-radius:100px; padding:8px 18px; font-size:0.8rem; font-weight:700; color:#00F5FF;">🌐 Website</div>
+    <div style="display:inline-flex; align-items:center; gap:7px; background:rgba(255,214,0,0.08); border:1px solid rgba(255,214,0,0.25); border-radius:100px; padding:8px 18px; font-size:0.8rem; font-weight:700; color:#FFD600;">📞 Phone Calls</div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-number" data-target="24" data-suffix="/7">0/7</div>
+    <div class="stat-label">Watching Your Pipeline</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="5" data-suffix="">0</div>
+    <div class="stat-label">Channels Unified</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="98" data-suffix="%">0%</div>
+    <div class="stat-label">Leads Captured</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="7" data-suffix=" days">0 days</div>
+    <div class="stat-label">Live In</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section>
+  <div class="center">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Your best leads are dying<br/>between five different inboxes.</h2>
+    <p class="section-sub">Instagram DMs, WhatsApp, ad forms, walk-ins, missed calls — real estate leads scatter across channels faster than any sales team can watch.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">📵</div>
+      <h3>Leads Go Cold in Minutes</h3>
+      <p>A buyer who doesn't hear back in 5 minutes is <strong>80% less likely</strong> to book a visit. Most agencies take hours.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🧩</div>
+      <h3>Five Channels, Zero Visibility</h3>
+      <p>Instagram, Meta Ads, WhatsApp, your website and calls all live in different inboxes. <strong>Nobody sees the full pipeline.</strong></p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🧮</div>
+      <h3>Manual Qualification Wastes Agents</h3>
+      <p>Your best closers spend hours pre-qualifying budget and intent <strong>instead of closing deals.</strong></p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🌐</div>
+      <h3>International Buyers, One Language</h3>
+      <p>Buyers call in different languages — most teams <strong>can only serve one</strong> and lose the rest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMAND CENTER DASHBOARD -->
+<section id="dashboard" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="center">
+    <div class="section-label">Live Command Center</div>
+    <h2 class="section-title">Everything your sales team sees.<br/>In real time.</h2>
+    <p class="section-sub">This is Jarvis's actual command center — the same category of AI operations dashboard real estate developers pay <strong style="color:#fff;">$50K+</strong> to have built. It's included in your AIStaff plan.</p>
+  </div>
+
+  <div class="re-dash-wrap">
+    <div class="re-browser">
+      <div class="re-browser-bar">
+        <div class="re-dot red"></div><div class="re-dot yellow"></div><div class="re-dot green"></div>
+        <div class="re-url">jarvis.meetaistaff.com/command-center</div>
+        <div class="re-live-dot"></div><span class="re-live-label">LIVE</span>
+      </div>
+      <div class="re-dash-body">
+
+        <!-- LEFT: live activity -->
+        <div class="re-panel">
+          <div class="re-panel-title">Live Activity <span id="feedPulse" style="width:6px;height:6px;border-radius:50%;background:#00FFB2;box-shadow:0 0 6px #00FFB2;"></span></div>
+          <div class="re-feed" id="reFeed"></div>
+        </div>
+
+        <!-- RIGHT: channels + charts -->
+        <div>
+          <div class="re-channels-row" id="reChannels"></div>
+
+          <div class="re-mid-grid">
+            <div class="re-panel">
+              <div class="re-panel-title">Weekly Performance · Leads</div>
+              <div class="re-week-bars" id="reWeekBars"></div>
+            </div>
+            <div class="re-panel">
+              <div class="re-panel-title">Top Interests</div>
+              <div id="reInterests"></div>
+            </div>
+          </div>
+
+          <div class="re-bottom-row">
+            <div class="re-bottom-card">
+              <div class="re-panel-title">Conversations Live</div>
+              <div class="re-score-big" id="reConvo">7</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;">active right now</div>
+            </div>
+            <div class="re-bottom-card">
+              <div class="re-panel-title">Lead Score</div>
+              <div class="re-score-big">98.1%</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;">avg. qualification confidence</div>
+            </div>
+            <div class="re-bottom-card">
+              <div class="re-listening"><span class="re-live-dot"></span>Jarvis — Live Listening</div>
+              <div class="re-waveform">
+                <span style="animation-delay:0s"></span><span style="animation-delay:0.1s"></span><span style="animation-delay:0.2s"></span>
+                <span style="animation-delay:0.3s"></span><span style="animation-delay:0.4s"></span><span style="animation-delay:0.5s"></span>
+                <span style="animation-delay:0.6s"></span><span style="animation-delay:0.7s"></span><span style="animation-delay:0.8s"></span>
+                <span style="animation-delay:0.9s"></span><span style="animation-delay:1s"></span><span style="animation-delay:0.5s"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="re-dash-caption">Every client gets this command center — live, private, and updated after every lead. <a href="#pricing">Get yours →</a></p>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE DEMO -->
+<section class="re-lead-section">
+  <div style="padding:0 24px;">
+  <div class="re-lead-inner">
+    <div class="re-lead-text">
+      <div class="section-label">Instant Lead Capture</div>
+      <h2>Every visitor becomes<br/>a qualified lead — automatically.</h2>
+      <p>Jarvis embeds a smart property-match widget on your site, WhatsApp and Instagram. The moment a buyer submits bedrooms, budget and location, <strong>Jarvis scores the lead, matches it to available units, and notifies the right agent</strong> — before the buyer even closes the tab.</p>
+      <div class="re-lead-pills">
+        <span class="re-lead-pill">🏠 Bedrooms</span>
+        <span class="re-lead-pill">📐 Sq Ft</span>
+        <span class="re-lead-pill">💰 Budget</span>
+        <span class="re-lead-pill">💳 Down Payment</span>
+        <span class="re-lead-pill">📍 Location</span>
+      </div>
+      <a href="#pricing" class="btn-primary">🚀 Add This To My Website</a>
+    </div>
+
+    <div class="re-form-card">
+      <div class="re-form-head">
+        <div class="re-form-icon">🏙️</div>
+        <div>
+          <div class="re-form-name">Property Match Request</div>
+          <div class="re-form-status"><span class="re-live-dot" style="width:6px;height:6px;"></span>Jarvis is watching this form</div>
+        </div>
+      </div>
+      <input class="re-input" type="text" placeholder="Full name" value="Ricardo Álvarez" readonly>
+      <input class="re-input" type="text" placeholder="Phone" value="+1 567 119 0825" readonly>
+      <input class="re-input" type="text" placeholder="Email" value="ricardo33@gmail.com" readonly>
+      <div class="re-filter-chips">
+        <span class="re-filter-chip">5 units</span>
+        <span class="re-filter-chip">2,000 sq ft</span>
+        <span class="re-filter-chip">up to $800K</span>
+        <span class="re-filter-chip">10% down</span>
+        <span class="re-filter-chip">Miami, FL</span>
+      </div>
+      <button class="re-send-btn" onclick="runMatchDemo(this)">SEND REQUEST →</button>
+      <div class="re-match-result" id="matchResult">✅ Matched to 3 available units — Agent notified in &lt;2s</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- HOW JARVIS WORKS -->
+<section id="how-it-works">
+  <div class="center">
+    <div class="section-label">How Jarvis Works</div>
+    <h2 class="section-title">Built on the same architecture<br/>as a private AI operating system.</h2>
+    <p class="section-sub">Six layers working together — not just a chatbot. This is the Jarvis OS blueprint, applied to real estate.</p>
+  </div>
+  <div class="re-layer-grid">
+    <div class="re-layer-card l1">
+      <div class="re-layer-num">Layer 01</div>
+      <div class="re-layer-icon">🧠</div>
+      <div class="re-layer-title">Brain</div>
+      <div class="re-layer-desc">Reasons through every buyer conversation — qualifies budget, intent and urgency before a human ever gets involved.</div>
+    </div>
+    <div class="re-layer-card l2">
+      <div class="re-layer-num">Layer 02</div>
+      <div class="re-layer-icon">💾</div>
+      <div class="re-layer-title">Memory</div>
+      <div class="re-layer-desc">Remembers every buyer's preferences, budget, unit interest and conversation history — across calls, WhatsApp and Instagram.</div>
+    </div>
+    <div class="re-layer-card l3">
+      <div class="re-layer-num">Layer 03</div>
+      <div class="re-layer-icon">🎙️</div>
+      <div class="re-layer-title">Voice</div>
+      <div class="re-layer-desc">Answers calls in English, Spanish and French, books site visits, and never puts a buyer on hold.</div>
+    </div>
+    <div class="re-layer-card l4">
+      <div class="re-layer-num">Layer 04</div>
+      <div class="re-layer-icon">🛠️</div>
+      <div class="re-layer-title">Tools</div>
+      <div class="re-layer-desc">Connects to your CRM, calendar, payment links and property inventory — with permissioned, auditable access.</div>
+    </div>
+    <div class="re-layer-card l5">
+      <div class="re-layer-num">Layer 05</div>
+      <div class="re-layer-icon">⚡</div>
+      <div class="re-layer-title">Actions</div>
+      <div class="re-layer-desc">Sends automated WhatsApp follow-ups, deposit reminders and escalations — reliably, with retries and no duplicates.</div>
+    </div>
+    <div class="re-layer-card l6">
+      <div class="re-layer-num">Layer 06</div>
+      <div class="re-layer-icon">🖥️</div>
+      <div class="re-layer-title">Interface</div>
+      <div class="re-layer-desc">The command center you just saw — live activity, approvals and full visibility for your sales director.</div>
+    </div>
+  </div>
+  <p class="re-quote">"The magic is not the chatbot. It's <span>the orchestration</span> — memory, tools, actions and a command center that never sleeps."</p>
+</section>
+
+<!-- FEATURES -->
+<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="center">
+    <div class="section-label">What's Included</div>
+    <h2 class="section-title">Everything a real estate<br/>sales floor needs — automated.</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📲</div>
+      <h3>Multi-Channel Intake</h3>
+      <p>Instagram, Meta Ads, WhatsApp, website and phone — unified into one pipeline, no lead left behind.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Instant Lead Scoring</h3>
+      <p>Every lead ranked hot, warm or cold the moment it arrives — based on budget, timeline and intent.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <h3>Credit Pre-Approval Detection</h3>
+      <p>Jarvis flags buyers who mention financing and routes them straight to your lending partner.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗓️</div>
+      <h3>Site Visit Booking</h3>
+      <p>Syncs to your team's calendar and confirms visits automatically — zero back-and-forth.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h3>Deposit & Payment Tracking</h3>
+      <p>Tracks deposits received in real time and sends reminders before a reservation slips.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Live Command Center</h3>
+      <p>Your entire pipeline, visible in real time, from any device — the dashboard you saw above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="center">
+    <div class="section-label">Real Results</div>
+    <h2 class="section-title">A sales floor that never sleeps<br/>vs. one that watches five inboxes.</h2>
+  </div>
+
+  <div class="battle-wrap">
+    <div class="battle-side human-side">
+      <div class="battle-avatar human-avatar">👨‍💼</div>
+      <div class="battle-name human-name">Traditional Sales Team</div>
+      <div class="battle-subtitle human-subtitle">Human-Only Ops</div>
+
+      <div class="battle-row"><div class="battle-label">Leads Captured</div><div class="battle-score score-bad">41%</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-bad" data-width="41"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Response Time</div><div class="battle-score score-bad">3–6 hrs</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-bad" data-width="20"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Channels Watched</div><div class="battle-score score-bad">1–2</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-bad" data-width="30"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Pipeline Visibility</div><div class="battle-score score-bad">Spreadsheets</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-bad" data-width="25"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Languages</div><div class="battle-score score-bad">1</div></div>
+      <div class="battle-track"><div class="battle-fill fill-bad" data-width="15"></div></div>
+    </div>
+
+    <div class="battle-vs">
+      <div class="vs-line"></div>
+      <div class="vs-circle">VS</div>
+      <div class="vs-line"></div>
+    </div>
+
+    <div class="battle-side ai-side">
+      <div class="winner-badge">🏆 Winner</div>
+      <div class="battle-avatar ai-avatar">🤖</div>
+      <div class="battle-name ai-name">Jarvis Command Center</div>
+      <div class="battle-subtitle ai-subtitle">AIStaff for Real Estate</div>
+
+      <div class="battle-row"><div class="battle-label">Leads Captured</div><div class="battle-score score-good">98%</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-good" data-width="98"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Response Time</div><div class="battle-score score-good">&lt; 2 sec</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-good" data-width="99"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Channels Watched</div><div class="battle-score score-good">5</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-good" data-width="100"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Pipeline Visibility</div><div class="battle-score score-good">Live Dashboard</div></div>
+      <div class="battle-track" style="margin-bottom:18px;"><div class="battle-fill fill-good" data-width="100"></div></div>
+
+      <div class="battle-row"><div class="battle-label">Languages</div><div class="battle-score score-good">3+</div></div>
+      <div class="battle-track"><div class="battle-fill fill-good" data-width="90"></div></div>
+    </div>
+  </div>
+
+  <div class="battle-verdict">
+    <div class="verdict-text">Brokerages running Jarvis close deals <span>3x faster</span> and give their sales director full visibility — without hiring a bigger team.</div>
+    <div class="verdict-savings">Cut Ops Overhead 60%+ 🚀</div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="position:relative; z-index:2; overflow:visible;">
+  <div class="center">
+    <div class="section-label">Investment</div>
+    <h2 class="section-title">Choose your Jarvis phase.</h2>
+    <p class="section-sub">Start with one reliable workflow, then compound capabilities — exactly like the Jarvis OS blueprint recommends.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-tier tier-starter">
+      <span class="tier-badge badge-starter">Phase 1</span>
+      <div class="tier-phase">One Workflow</div>
+      <div class="tier-name">Presell</div>
+      <div class="tier-tagline">Capture and qualify leads from your top channels, live in 7 days.</div>
+      <div class="tier-monthly">$1,497 <span>/ mo</span></div>
+      <div class="tier-setup">+ $2,500 one-time setup</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li><span class="check check-purple">✓</span> Multi-channel intake (2 channels)</li>
+        <li><span class="check check-purple">✓</span> Instant lead scoring</li>
+        <li><span class="check check-purple">✓</span> WhatsApp automated follow-up</li>
+        <li><span class="check check-purple">✓</span> Basic CRM (Notion / HubSpot)</li>
+        <li><span class="check check-purple">✓</span> Monthly performance report</li>
+        <li><span class="check check-purple">✓</span> Live in 7 business days</li>
+      </ul>
+      <a href="#" class="btn-tier btn-starter" onclick="openModal(); return false;">Get Started →</a>
+    </div>
+
+    <div class="pricing-tier tier-pro">
+      <span class="tier-badge badge-pro">⚡ Most Popular</span>
+      <div class="tier-phase">Phase 2</div>
+      <div class="tier-name">Command Center</div>
+      <div class="tier-tagline">All five channels, live dashboard, memory, and automated nurture.</div>
+      <div class="tier-monthly">$2,497 <span>/ mo</span></div>
+      <div class="tier-setup">+ $4,500 one-time setup</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li><span class="check check-cyan">✓</span> Everything in Presell</li>
+        <li><span class="check check-cyan">✓</span> All 5 channels unified</li>
+        <li><span class="check check-cyan">✓</span> Live command center dashboard</li>
+        <li><span class="check check-cyan">✓</span> Deposit & payment tracking</li>
+        <li><span class="check check-cyan">✓</span> Site visit booking + calendar sync</li>
+        <li><span class="check check-cyan">✓</span> Trilingual voice agent (EN/ES/FR)</li>
+        <li><span class="check check-cyan">✓</span> Dedicated account manager</li>
+      </ul>
+      <a href="#" class="btn-tier btn-pro" onclick="openModal(); return false;">Get The Command Center →</a>
+    </div>
+
+    <div class="pricing-tier tier-elite">
+      <span class="tier-badge badge-elite">Phase 3</span>
+      <div class="tier-phase">Private AI Operating System</div>
+      <div class="tier-name">Private Jarvis OS</div>
+      <div class="tier-tagline">A dedicated build for brokerages ready for serious AI infrastructure.</div>
+      <div class="tier-monthly">From $50,000</div>
+      <div class="tier-setup">Applications reviewed individually</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li><span class="check check-pink">✓</span> Everything in Command Center</li>
+        <li><span class="check check-pink">✓</span> Multi-agent delegation across your ops</li>
+        <li><span class="check check-pink">✓</span> Custom integrations (portals, ERP, lending)</li>
+        <li><span class="check check-pink">✓</span> Dedicated infrastructure & observability</li>
+        <li><span class="check check-pink">✓</span> White-glove implementation team</li>
+        <li><span class="check check-pink">✓</span> Priority roadmap access</li>
+      </ul>
+      <a href="#" class="btn-tier btn-elite" onclick="openModal(); return false;">Apply For Private Jarvis OS →</a>
+    </div>
+
+  </div>
+  <p style="text-align:center; margin-top: 32px; font-size: 0.85rem; color: #7070A0; font-weight: 500;">
+    No long-term contracts on Presell & Command Center · Private Jarvis OS is a limited, applications-reviewed engagement.
+  </p>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="center">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions.</h2>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Is this the same as a chatbot widget on my website?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>No — a chatbot answers questions. Jarvis <strong>unifies every channel</strong>, qualifies leads, remembers buyers, and gives you a live command center. <span class="ans-green">It's built on a full AI operating system architecture</span>, not a single script.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Does Jarvis integrate with my CRM or property portal?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Yes. It integrates with common CRMs like <strong>HubSpot, Notion and Salesforce</strong>, and can connect to property portals and lending partners on the <span class="ans-green">Command Center and Private Jarvis OS</span> tiers.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Can Jarvis handle international buyers?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Yes — <strong>trilingual voice and chat (English, Spanish, French)</strong>, and it <span class="ans-green">detects the buyer's language automatically</span>, no extra setup.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How fast can we launch?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Presell and Command Center go live in <strong>7 business days</strong>. Private Jarvis OS is a scoped, multi-week engagement built around your existing systems.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What happens to a lead Jarvis can't qualify?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>It's <strong>escalated to a human agent immediately</strong>, with full conversation context. <span class="ans-green">Nothing sits in a queue unseen.</span></p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What's the difference between Command Center and Private Jarvis OS?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Command Center runs on AIStaff's shared Jarvis infrastructure. <strong>Private Jarvis OS is a dedicated build</strong> — multi-agent, custom integrations, your own infrastructure — for brokerages ready to invest <span class="ans-green">$50K+</span>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <h2>Your real estate command center<br/>is 7 days away.</h2>
+  <p>Stop watching leads scatter across five inboxes. Let Jarvis run the floor.</p>
+  <a href="#" class="btn-primary" onclick="openModal(); return false;">🖥️ Get Jarvis For Your Brokerage</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo"><span class="ai-part">AI</span><span class="staff-part">Staff</span></div>
+  <p class="footer-copy">Jarvis for Real Estate is an AIStaff product · © 2025 AIStaff. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="/">← Back to AIStaff.com</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="mailto:hello@meetaistaff.com">Contact</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div style="font-size: 2.5rem; margin-bottom: 16px;">🖥️</div>
+    <h3>Talk to Jarvis Now</h3>
+    <p>See the real estate command center live and get a custom rollout plan for your brokerage — in English, Spanish, or French.</p>
+    <div class="modal-number">+1 (305) 614-9424</div>
+    <a href="tel:+13056149424" class="btn-primary" style="width: 100%; justify-content: center;">Tap to Call</a>
+    <p style="margin-top: 16px; font-size: 0.8rem; color: #9090B0;">Available 24/7 · No commitment required</p>
+  </div>
+</div>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // PARTICLES
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 50; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (8 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+    const colors = ['#6C63FF', '#A78BFA', '#00F5FF', '#FF2D78', '#00FFB2', '#FFD600'];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.boxShadow = `0 0 6px ${p.style.background}`;
+    container.appendChild(p);
+  }
+
+  // COUNTER ANIMATION
+  function animateCounters() {
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      let current = 0;
+      const step = target / 60 || 1;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current) + suffix;
+      }, 20);
+    });
+  }
+  function animateBars() {
+    document.querySelectorAll('.battle-fill').forEach(bar => { bar.style.width = bar.dataset.width + '%'; });
+  }
+  const statsBar = document.querySelector('.stats-bar');
+  new IntersectionObserver(entries => { if (entries[0].isIntersecting) animateCounters(); }, { threshold: 0.3 }).observe(statsBar);
+  const battleWrap = document.querySelector('.battle-wrap');
+  if (battleWrap) new IntersectionObserver(entries => { if (entries[0].isIntersecting) animateBars(); }, { threshold: 0.3 }).observe(battleWrap);
+
+  // SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.problem-card, .feature-card, .re-layer-card, .pricing-tier');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; }, i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    revealObserver.observe(el);
+  });
+
+  // FAQ TOGGLE
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // MODAL
+  function openModal() { document.getElementById('modal').classList.add('active'); }
+  function closeModal() { document.getElementById('modal').classList.remove('active'); }
+  document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+  // HAMBURGER
+  function toggleMenu() {
+    document.getElementById('navMenu').classList.toggle('open');
+    document.getElementById('navHamburger').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('navMenu').classList.remove('open');
+    document.getElementById('navHamburger').classList.remove('open');
+  }
+
+  // ===== DASHBOARD DATA =====
+  const channelDefs = [
+    { name: 'Instagram', icon: '📸', color: '#FF2D78', base: 204 },
+    { name: 'Meta Ads', icon: '🎯', color: '#00F5FF', base: 156 },
+    { name: 'Website', icon: '🌐', color: '#A78BFA', base: 98 },
+    { name: 'WhatsApp', icon: '💬', color: '#00FFB2', base: 69 }
+  ];
+  const reChannels = document.getElementById('reChannels');
+  channelDefs.forEach(ch => {
+    const card = document.createElement('div');
+    card.className = 're-ch-card';
+    let spark = '';
+    for (let i = 0; i < 8; i++) {
+      const h = 20 + Math.random() * 80;
+      spark += `<span style="height:${h}%;background:${ch.color};animation-delay:${(i*0.15).toFixed(2)}s;"></span>`;
+    }
+    card.innerHTML = `<div class="re-ch-top">${ch.icon} ${ch.name}</div><div class="re-ch-val" style="color:${ch.color};">${ch.base}</div><div class="re-spark">${spark}</div>`;
+    reChannels.appendChild(card);
+  });
+
+  const reWeekBars = document.getElementById('reWeekBars');
+  const weekHeights = [42, 58, 30, 78, 100, 55, 72];
+  weekHeights.forEach(h => {
+    const bar = document.createElement('div');
+    bar.className = 're-week-bar';
+    bar.dataset.h = h;
+    reWeekBars.appendChild(bar);
+  });
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.re-week-bar').forEach(b => { b.style.height = b.dataset.h + '%'; });
+      document.querySelectorAll('.re-interest-fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+    }
+  }, { threshold: 0.3 }).observe(document.getElementById('dashboard'));
+
+  const interests = [
+    { label: '2 Bedroom', pct: 42, color: '#00F5FF' },
+    { label: '3 Bedroom', pct: 28, color: '#A78BFA' },
+    { label: 'Penthouses', pct: 18, color: '#FF2D78' },
+    { label: 'Studio', pct: 12, color: '#00FFB2' }
+  ];
+  const reInterests = document.getElementById('reInterests');
+  interests.forEach(it => {
+    const row = document.createElement('div');
+    row.className = 're-interest-row';
+    row.innerHTML = `<div class="re-interest-label">${it.label}</div><div class="re-interest-track"><div class="re-interest-fill" data-w="${it.pct}" style="background:${it.color};"></div></div><div class="re-interest-pct">${it.pct}%</div>`;
+    reInterests.appendChild(row);
+  });
+
+  // LIVE ACTIVITY FEED
+  const feedPool = [
+    { dot: 'fd-cyan', text: 'Voice Call Connected — Lead: Valentina Cruz' },
+    { dot: 'fd-green', text: 'Credit Pre-Approved — Lead: Daniel Brooks' },
+    { dot: 'fd-purple', text: 'New Lead Incoming — Instagram Ads' },
+    { dot: 'fd-yellow', text: 'Lead Qualified — Budget $1.3M' },
+    { dot: 'fd-green', text: 'Deposit Received — $50,000' },
+    { dot: 'fd-red', text: 'Engagement Score Up — Lead: Ethan Reynolds' },
+    { dot: 'fd-cyan', text: 'Voice Call Connected — Lead: Sofia Martins' },
+    { dot: 'fd-purple', text: 'New Lead Incoming — WhatsApp' },
+    { dot: 'fd-yellow', text: 'Site Visit Booked — Unit 14B' },
+    { dot: 'fd-green', text: 'Deposit Received — $25,000' }
+  ];
+  const reFeed = document.getElementById('reFeed');
+  let feedIdx = 0;
+  function pushFeedItem() {
+    const item = feedPool[feedIdx % feedPool.length];
+    feedIdx++;
+    const div = document.createElement('div');
+    div.className = 're-feed-item';
+    div.style.opacity = '0';
+    div.style.transform = 'translateY(-6px)';
+    div.innerHTML = `<div class="re-feed-dot ${item.dot}"></div><div><div class="re-feed-text">${item.text}</div><div class="re-feed-time">just now</div></div>`;
+    reFeed.insertBefore(div, reFeed.firstChild);
+    requestAnimationFrame(() => { div.style.transition = 'opacity 0.4s, transform 0.4s'; div.style.opacity = '1'; div.style.transform = 'translateY(0)'; });
+    while (reFeed.children.length > 6) reFeed.removeChild(reFeed.lastChild);
+  }
+  for (let i = 0; i < 5; i++) pushFeedItem();
+  setInterval(pushFeedItem, 2600);
+
+  // CONVERSATIONS LIVE fluctuation
+  const reConvo = document.getElementById('reConvo');
+  setInterval(() => {
+    const val = 4 + Math.floor(Math.random() * 9);
+    reConvo.textContent = val;
+  }, 3200);
+
+  // LEAD FORM DEMO
+  function runMatchDemo(btn) {
+    btn.textContent = 'MATCHING…';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('matchResult').classList.add('show');
+      btn.textContent = 'SEND REQUEST →';
+      btn.disabled = false;
+    }, 900);
+  }
+</script>
+</body>
+</html>
