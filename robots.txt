@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /demo/
+Disallow: /immobilier/demo/
+
+Sitemap: https://meetaistaff.com/sitemap.xml

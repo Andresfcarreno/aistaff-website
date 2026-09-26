@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<script>
+(function(){try{var t=localStorage.getItem("aistaff-theme");if(!t){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();
+</script>
+<title>AI Staff — Tableau de bord</title>
+<meta name="description" content="Démo du tableau de bord client AI Staff : appels, messages, courriel, agenda, briefings et réseaux, gérés par votre assistante IA.">
+<style>
+  :root{
+    --cream:#F5EFE1;
+    --cream-2:#EFE7D3;
+    --card:#FFFDF7;
+    --ink:#221B10;
+    --muted:#8B7C60;
+    --gold:#C79A3B;
+    --gold-light:#F0D79A;
+    --gold-deep:#9A741F;
+    --bronze:#7A5C1E;
+    --line:rgba(160,125,45,.16);
+    --shadow:0 10px 34px rgba(140,105,35,.10);
+    --green:#2FA84F;
+    --orange:#E8830C;
+    --radius:24px;
+    color-scheme:light dark;
+  }
+  html[data-theme="dark"]{
+      --cream:#17150F;
+      --cream-2:#201C13;
+      --card:#242016;
+      --ink:#F8F0DF;
+      --muted:#C0B395;
+      --gold:#D8AD55;
+      --gold-light:#7A6030;
+      --gold-deep:#F0CF83;
+      --bronze:#E3C171;
+      --line:rgba(226,193,113,.17);
+      --shadow:0 10px 34px rgba(0,0,0,.28);
+      --green:#6FD18A;
+      --orange:#F5A33B;
+    }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    background:var(--cream);color:var(--ink);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    min-height:100vh;
+  }
+  .app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;
+    background:
+      radial-gradient(600px 300px at 90% -40px, rgba(240,215,154,.45), transparent 60%),
+      radial-gradient(500px 260px at -20% 10%, rgba(199,154,59,.12), transparent 60%),
+      var(--cream);
+    padding:0 18px calc(110px + env(safe-area-inset-bottom));
+  }
+
+  /* ---------- Header ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 2px 4px;}
+  .date{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);}
+  .top-actions{display:flex;align-items:center;gap:10px;}
+  .language-switch{display:flex;padding:3px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow);}
+  .language-switch button{min-width:34px;border:0;background:transparent;color:var(--muted);font:inherit;font-size:10px;font-weight:800;padding:7px 6px;border-radius:9px;cursor:pointer;}
+  .language-switch button.on{background:var(--ink);color:var(--card);}
+  .avatar{width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold) 60%,var(--gold-deep));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:15px;color:#fff;letter-spacing:.02em;
+    box-shadow:0 6px 16px rgba(160,120,40,.35), inset 0 1px 2px rgba(255,255,255,.5);}
+  h1{font-size:34px;font-weight:700;letter-spacing:-.8px;margin:2px 0 2px;}
+  .sub{font-size:15px;color:var(--muted);margin-bottom:6px;}
+  .demo-chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
+    color:var(--bronze);background:rgba(199,154,59,.14);border:1px solid var(--line);
+    padding:5px 11px;border-radius:999px;margin-top:6px;}
+
+  /* ---------- Live pill ---------- */
+  .live{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:10px 16px;margin:14px 0 18px;box-shadow:var(--shadow);font-size:13.5px;font-weight:600;}
+  .live .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));
+    box-shadow:0 0 0 4px rgba(199,154,59,.18);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(.72);}}
+  .live small{margin-left:auto;color:var(--muted);font-weight:500;}
+
+  /* ---------- Cards ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:20px;margin-bottom:16px;}
+  .card h3{font-size:16.5px;font-weight:700;letter-spacing:-.2px;margin-bottom:2px;}
+  .card .hint{font-size:13px;color:var(--muted);margin-bottom:14px;}
+
+  /* Hero */
+  .hero{background:linear-gradient(150deg,#FFFDF7 0%,#FBF3DF 55%,#F5E8C8 100%);
+    border:1px solid rgba(160,125,45,.28);position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,215,154,.55),transparent 70%);}
+  .hero-num{font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1;
+    background:linear-gradient(120deg,#8A6420,#C79A3B 55%,#8A6420);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero-label{font-size:14.5px;font-weight:600;margin-top:6px;}
+  .wave{display:flex;align-items:center;gap:4px;height:44px;margin:14px 0 4px;}
+  .wave span{width:5px;border-radius:3px;background:linear-gradient(180deg,var(--gold-light),var(--gold-deep));
+    animation:wv 1.1s ease-in-out infinite;}
+  @keyframes wv{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}
+  .hero-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;
+    font-size:13px;color:var(--muted);}
+  .hero-foot b{color:var(--ink);}
+
+  /* KPI grid */
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:16px 16px 14px;}
+  .kpi .v{font-size:29px;font-weight:800;letter-spacing:-.8px;}
+  .kpi .v.gold{background:linear-gradient(120deg,#8A6420,#C79A3B 60%,#8A6420);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .kpi .l{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:3px;}
+  .kpi .d{font-size:12px;font-weight:700;color:var(--green);margin-top:5px;}
+
+  /* Chart */
+  .bars{display:flex;align-items:flex-end;gap:10px;height:150px;padding:6px 2px 0;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end;}
+  .bar{width:100%;max-width:38px;border-radius:10px 10px 6px 6px;
+    background:linear-gradient(180deg,var(--gold-light),var(--gold));
+    box-shadow:inset 0 1px 2px rgba(255,255,255,.6), 0 4px 12px rgba(160,120,40,.18);
+    transform-origin:bottom;animation:grow .7s cubic-bezier(.2,.9,.25,1.2) backwards;}
+  .bar.today{background:linear-gradient(180deg,#F5E3AC,var(--gold-deep));}
+  @keyframes grow{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+  .bar-col span{font-size:11px;font-weight:600;color:var(--muted);}
+  .bar-col.today span{color:var(--gold-deep);font-weight:800;}
+
+  /* Lists */
+  .row{display:flex;align-items:center;gap:13px;padding:13px 2px;border-bottom:1px solid rgba(160,125,45,.10);}
+  .row:last-child{border-bottom:none;}
+  .pic{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em;
+    box-shadow:inset 0 1px 2px rgba(255,255,255,.4), 0 4px 10px rgba(140,105,35,.20);}
+  .row .info{flex:1;min-width:0;}
+  .row .name{font-size:15px;font-weight:600;letter-spacing:-.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .row .meta{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .badge{font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap;}
+  .b-chaud{background:linear-gradient(135deg,#F5E0A8,#E4B84F);color:#6E4E0E;}
+  .b-tiede{background:#FBEEDC;color:#B25E09;}
+  .b-froid{background:#EEE9DB;color:#8B7C60;}
+  .b-ok{background:#E3F4E8;color:#1E7A3A;}
+  .chev{color:#C4B48E;font-size:18px;font-weight:300;}
+
+  /* Visit cards */
+  .visit{display:flex;gap:14px;align-items:center;background:linear-gradient(150deg,#FFFDF7,#FAF1DC);
+    border:1px solid rgba(160,125,45,.25);border-radius:18px;padding:15px 16px;margin-bottom:10px;box-shadow:var(--shadow);}
+  .vdate{width:52px;height:56px;border-radius:14px;background:linear-gradient(160deg,var(--gold-light),var(--gold));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;flex-shrink:0;
+    box-shadow:0 6px 14px rgba(160,120,40,.3);}
+  .vdate b{font-size:19px;line-height:1;}
+  .vdate span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+  .visit .info{flex:1;}
+  .visit .t{font-size:15px;font-weight:700;}
+  .visit .a{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+  /* Segmented */
+  .seg{display:flex;background:#EAE1CC;border-radius:14px;padding:3px;margin-bottom:16px;}
+  .seg button{flex:1;border:none;background:none;font:inherit;font-size:13.5px;font-weight:600;color:var(--muted);
+    padding:9px 0;border-radius:11px;cursor:pointer;transition:all .2s;}
+  .seg button.on{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(120,90,30,.15);}
+
+  /* Search */
+  .search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:12px 14px;margin-bottom:14px;color:var(--muted);font-size:15px;box-shadow:var(--shadow);}
+  .search input{border:none;background:none;outline:none;font:inherit;flex:1;color:var(--ink);}
+
+  /* Week strip */
+  .week{display:flex;gap:8px;margin-bottom:16px;}
+  .day{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 0;text-align:center;
+    font-size:11px;font-weight:700;color:var(--muted);box-shadow:var(--shadow);}
+  .day b{display:block;font-size:16px;margin-top:3px;color:var(--ink);}
+  .day.on{background:linear-gradient(160deg,var(--gold-light),var(--gold));color:#fff;border:none;}
+  .day.on b{color:#fff;}
+
+  /* Alex pane */
+  .alex-hero{text-align:center;padding:30px 20px 26px;}
+  .orb{width:110px;height:110px;margin:0 auto 18px;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 35% 30%, #F7E7BC, #D9AE54 55%, #9A741F);
+    box-shadow:0 18px 44px rgba(160,120,40,.4), inset 0 2px 6px rgba(255,255,255,.6);
+    animation:breath 3.2s ease-in-out infinite;}
+  @keyframes breath{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  .orb::before,.orb::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2px solid rgba(199,154,59,.4);
+    animation:ring 3.2s ease-out infinite;}
+  .orb::after{animation-delay:1.6s;}
+  @keyframes ring{from{transform:scale(.8);opacity:1;}to{transform:scale(1.25);opacity:0;}}
+  .lang-row{display:flex;gap:10px;margin-top:16px;}
+  .lang{flex:1;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:14px;font-size:14px;
+    font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);}
+  .lang.on{border-color:var(--gold);color:var(--bronze);background:#FBF3DF;box-shadow:0 4px 14px rgba(160,120,40,.18);}
+  .cta{width:100%;border:none;cursor:pointer;font:inherit;font-size:16px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,#D9AE54,#9A741F);border-radius:18px;padding:17px;margin-top:14px;
+    box-shadow:0 10px 26px rgba(150,110,30,.4), inset 0 1px 2px rgba(255,255,255,.5);}
+  .cta:active{transform:scale(.98);}
+  .toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:#221B10;color:#FFFDF7;font-size:14px;font-weight:600;padding:13px 20px;border-radius:999px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25);transition:all .3s;pointer-events:none;z-index:50;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Tab bar ---------- */
+  .tabbar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:40;
+    background:rgba(255,253,247,.82);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);
+    border-top:1px solid var(--line);display:flex;padding:8px 6px calc(10px + env(safe-area-inset-bottom));}
+  .tab{flex:1;border:none;background:none;font:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:10.5px;font-weight:600;color:#A99A76;cursor:pointer;padding:4px 0;}
+  .tab svg{width:24px;height:24px;}
+  .tab.on{color:var(--gold-deep);}
+  .tab.on svg{filter:drop-shadow(0 2px 6px rgba(160,120,40,.4));}
+
+  .pane{display:none;}
+  .pane.on{display:block;}
+  .section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 10px;}
+  .section-title h2{font-size:19px;font-weight:700;letter-spacing:-.3px;}
+  .section-title a{font-size:13px;font-weight:600;color:var(--gold-deep);text-decoration:none;}
+  .foot-note{text-align:center;font-size:12px;color:var(--muted);margin:26px 0 6px;line-height:1.6;}
+  .sim-action{margin-left:auto;border:0;background:transparent;color:var(--gold-deep);font:inherit;font-size:12px;font-weight:800;cursor:pointer;padding:4px 0;}
+  .sim-action:focus-visible,.tab:focus-visible,.seg button:focus-visible,.lang:focus-visible,.cta:focus-visible{outline:3px solid rgba(199,154,59,.42);outline-offset:3px;}
+  .live.running .dot{animation:pulse .65s infinite;}
+  .live.running .sim-action{opacity:.55;cursor:wait;}
+  html[data-theme="dark"] .app{background:radial-gradient(600px 300px at 90% -40px,rgba(216,173,85,.16),transparent 60%),radial-gradient(500px 260px at -20% 10%,rgba(199,154,59,.08),transparent 60%),var(--cream);}
+html[data-theme="dark"] .hero,html[data-theme="dark"] .visit{background:linear-gradient(150deg,#292318 0%,#241F16 60%,#302616 100%);}
+html[data-theme="dark"] .seg{background:#302A1E;}
+html[data-theme="dark"] .lang.on{background:#302716;}
+html[data-theme="dark"] .tabbar{background:rgba(36,32,22,.9);}
+html[data-theme="dark"] .b-tiede{background:#49331D;color:#F2B96D;}
+html[data-theme="dark"] .b-froid{background:#343027;color:#C0B395;}
+html[data-theme="dark"] .b-ok{background:#1F3A27;color:#7CE198;}
+html[data-theme="dark"] .b-chaud{background:#5A4218;color:#F3D58F;}
+html[data-theme="dark"] .toast{background:#F8F0DF;color:#221B10;}
+  @media (min-width:760px){
+    .app{max-width:760px;padding-left:34px;padding-right:34px;}
+    .tabbar{max-width:760px;padding-left:90px;padding-right:90px;}
+    .kpis{grid-template-columns:repeat(4,1fr);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+  }
+
+  /* 2026 redesign — calm, high-trust SaaS dashboard */
+  :root{
+    --cream:#F4F6F8;
+    --cream-2:#E9EDF2;
+    --card:#FFFFFF;
+    --ink:#172033;
+    --muted:#687386;
+    --gold:#2563EB;
+    --gold-light:#DCE8FF;
+    --gold-deep:#1D4ED8;
+    --bronze:#1D4ED8;
+    --line:#E2E7EE;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.055);
+    --green:#16856F;
+    --orange:#B85C16;
+    --navy:#111B2E;
+    --radius:16px;
+  }
+  body{background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;}
+  .app{max-width:1120px;margin:0 auto;background:var(--cream);padding:0 22px calc(108px + env(safe-area-inset-bottom));}
+  .topbar{padding:28px 0 2px;}
+  .date{font-size:12px;letter-spacing:.04em;text-transform:none;color:var(--muted);}
+  .top-actions{gap:12px;}
+  .language-switch{padding:2px;border-color:var(--line);border-radius:9px;box-shadow:none;}
+  .language-switch button{min-width:31px;padding:6px 5px;border-radius:7px;color:var(--muted);}
+  .language-switch button.on{background:var(--navy);color:#fff;}
+  html[data-theme="light"]{color-scheme:light;}
+  html[data-theme="dark"]{color-scheme:dark;}
+  .theme-toggle{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);flex-shrink:0;}
+  .theme-toggle svg{width:18px;height:18px;}
+  .theme-toggle .ic-sun{display:none;}
+  html[data-theme="dark"] .theme-toggle .ic-sun{display:block;}
+  html[data-theme="dark"] .theme-toggle .ic-moon{display:none;}
+  .avatar{width:38px;height:38px;background:var(--navy);box-shadow:none;font-size:12px;}
+  h1{font-size:30px;font-weight:720;letter-spacing:-.7px;margin:6px 0 4px;}
+  .sub{font-size:14px;margin-bottom:7px;}
+  .demo-chip{margin-top:4px;padding:5px 9px;border-radius:7px;background:#EDF3FF;border-color:#D8E5FF;color:#2458B8;font-size:11px;}
+  .live{margin:16px 0 20px;border-radius:12px;padding:11px 14px;box-shadow:none;border-color:var(--line);font-size:13px;}
+  .live .dot{width:8px;height:8px;background:#22A06B;box-shadow:0 0 0 3px rgba(34,160,107,.13);}
+  .live small{font-size:11px;letter-spacing:.04em;}
+  .sim-action{color:var(--gold-deep);padding:5px 8px;border-radius:7px;}
+  .sim-action:hover{background:#EDF3FF;}
+
+  .card{border-color:var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;}
+  .card h3{font-size:15px;font-weight:700;}
+  .card .hint{font-size:12px;}
+  .hero{background:var(--navy);border:0;color:#fff;min-height:180px;display:flex;flex-direction:column;justify-content:center;}
+  .hero::after{display:none;}
+  .hero-num{font-size:50px;font-weight:720;color:#fff;background:none;-webkit-text-fill-color:currentColor;}
+  .hero-label{color:#DCE5F5;font-size:14px;font-weight:500;}
+  .wave{height:34px;margin:12px 0 5px;gap:4px;overflow:hidden;}
+  .wave span{width:4px;background:#5B8DEF;border-radius:3px;}
+  .hero-foot{color:#9FACC1;font-size:12px;gap:14px;}
+  .hero-foot b{color:#fff;}
+  .kpis{gap:12px;}
+  .kpi{border-radius:14px;border-color:var(--line);box-shadow:var(--shadow);padding:16px;min-height:112px;}
+  .kpi .v{font-size:27px;font-weight:720;}
+  .kpi .v.gold{background:none;-webkit-text-fill-color:currentColor;color:var(--gold-deep);}
+  .kpi .l{font-size:12px;line-height:1.35;}
+  .kpi .d{font-size:11px;color:var(--green);}
+  .bars{height:170px;gap:12px;padding-top:12px;}
+  .bar{max-width:none;border-radius:5px 5px 2px 2px;background:#D8E4FA;box-shadow:none;}
+  .bar.today{background:var(--gold);}
+  .bar-col.today span{color:var(--gold-deep);}
+  .section-title{margin:22px 1px 10px;}
+  .section-title h2{font-size:17px;letter-spacing:-.2px;}
+  .section-title a{color:var(--gold-deep);font-size:12px;}
+  .row{padding:14px 2px;border-color:var(--line);}
+  .pic{width:40px;height:40px;border-radius:11px;box-shadow:none;font-size:12px;}
+  .row .name{font-size:14px;}
+  .row .meta{font-size:12px;}
+  .badge{font-size:10px;padding:5px 8px;border-radius:7px;}
+  .b-chaud{background:#FFF3D6;color:#8A5A00;}
+  .b-tiede{background:#FFF0E5;color:#9A4A14;}
+  .b-froid{background:#EEF1F4;color:#596579;}
+  .b-ok{background:#E4F5EF;color:#08765B;}
+  .visit{background:var(--card);border-color:var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+  .vdate{width:48px;height:50px;border-radius:10px;background:#EDF3FF;color:var(--gold-deep);box-shadow:none;}
+  .vdate b{font-size:17px;}
+  .visit .t{font-size:14px;}
+  .visit .a{font-size:12px;}
+  .seg{background:#E7EBF0;border-radius:10px;padding:3px;}
+  .seg button{border-radius:8px;font-size:13px;padding:8px 0;}
+  .seg button.on{box-shadow:0 1px 3px rgba(16,24,40,.12);}
+  .search{border-radius:11px;padding:11px 13px;box-shadow:none;}
+  .week{gap:7px;}
+  .day{border-radius:10px;box-shadow:none;padding:9px 0;}
+  .day.on{background:var(--navy);}
+  .alex-hero{text-align:left;padding:24px;}
+  .orb{width:72px;height:72px;margin:0 0 18px;background:radial-gradient(circle at 35% 30%,#9DBCFB,#3B74E8 58%,#173F94);box-shadow:0 14px 30px rgba(37,99,235,.25),inset 0 2px 6px rgba(255,255,255,.45);}
+  .orb::before,.orb::after{border-color:rgba(37,99,235,.25);}
+  .lang-row{gap:8px;}
+  .lang{border-radius:10px;padding:11px 8px;font-size:12px;}
+  .lang.on{border-color:#B9CDF8;color:var(--gold-deep);background:#EDF3FF;box-shadow:none;}
+  .cta{border-radius:10px;background:var(--gold);box-shadow:none;padding:14px;font-size:14px;}
+  .cta:hover{background:#1D4ED8;}
+  .toast{background:var(--navy);border-radius:10px;}
+  .tabbar{background:rgba(255,255,255,.94);border-color:var(--line);box-shadow:0 -6px 24px rgba(16,24,40,.06);}
+  .tab{color:#7B879A;}
+  .tab svg{width:22px;height:22px;}
+  .tab.on{color:var(--gold-deep);}
+  .tab.on svg{filter:none;}
+  .foot-note{font-size:11px;}
+
+  html[data-theme="dark"]{
+      --cream:#0C1320;--cream-2:#111A2A;--card:#141E2E;--ink:#F5F7FA;--muted:#98A4B7;
+      --gold:#6E9BFF;--gold-light:#243B68;--gold-deep:#8DB0FF;--bronze:#8DB0FF;
+      --line:#253147;--shadow:0 1px 2px rgba(0,0,0,.25),0 10px 28px rgba(0,0,0,.18);
+      --green:#57C8A7;--orange:#F0A15F;--navy:#070C14;
+    }
+html[data-theme="dark"] .app{background:var(--cream);}
+html[data-theme="dark"] .demo-chip{background:#172A4A;border-color:#294270;color:#A9C3FF;}
+html[data-theme="dark"] .hero,html[data-theme="dark"] .visit{background:var(--card);}
+html[data-theme="dark"] .hero{background:#070C14;}
+html[data-theme="dark"] .seg{background:#0F1725;}
+html[data-theme="dark"] .lang.on{background:#172A4A;border-color:#294270;}
+html[data-theme="dark"] .tabbar{background:rgba(20,30,46,.96);}
+html[data-theme="dark"] .sim-action:hover{background:#172A4A;}
+html[data-theme="dark"] .b-chaud{background:#443718;color:#F5D277;}
+html[data-theme="dark"] .b-tiede{background:#402B1D;color:#F2AD75;}
+html[data-theme="dark"] .b-froid{background:#252F3E;color:#B4BECC;}
+html[data-theme="dark"] .b-ok{background:#15382E;color:#79D8BC;}
+html[data-theme="dark"] .vdate{background:#172A4A;color:#A9C3FF;}
+html[data-theme="dark"] .bar{background:#263A60;}
+html[data-theme="dark"] .bar.today{background:#6E9BFF;}
+
+  @media (min-width:900px){
+    body{min-height:100vh;}
+    .app{max-width:1260px;min-height:100vh;margin:0 auto;padding:0 38px 64px 126px;}
+    .topbar{padding-top:34px;}
+    .tabbar{left:0;top:0;bottom:0;transform:none;width:88px;max-width:none;height:100vh;padding:0 10px;flex-direction:column;justify-content:center;gap:12px;border-top:0;border-right:1px solid var(--line);box-shadow:6px 0 24px rgba(16,24,40,.04);}
+    .tab{flex:0 0 auto;width:68px;padding:11px 4px;border-radius:10px;gap:5px;}
+    .tab:hover{background:var(--cream-2);}
+    .tab.on{background:#EDF3FF;color:var(--gold-deep);}
+    .kpis{grid-template-columns:repeat(4,1fr);}
+    #pane-apercu.on{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 18px;}
+    #pane-apercu>.hero{grid-column:1/13;grid-row:1;}
+    #pane-apercu>.kpis{grid-column:1/13;grid-row:2;}
+    #activityCard{grid-column:1/8;grid-row:3/5;margin-bottom:0;}
+    #recentTitle{grid-column:8/13;grid-row:3;margin-top:0;align-self:end;}
+    #recentCalls{grid-column:8/13;grid-row:4;margin-bottom:0;}
+    #visitsTitle{grid-column:1/13;grid-row:5;margin-top:24px;}
+    #overviewVisitOne{grid-column:1/7;grid-row:6;}
+    #overviewVisitTwo{grid-column:7/13;grid-row:6;}
+    #pane-appels.on,#pane-contacts.on,#pane-agenda.on,#pane-alex.on{max-width:820px;margin-top:22px;}
+    #pane-alex.on{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;max-width:100%;}
+    #pane-alex .card{margin-bottom:0;}
+    .toast{bottom:36px;}
+  }
+
+  @media (max-width:520px){
+    .app{padding-left:16px;padding-right:16px;}
+    .topbar{padding-top:20px;}
+    h1{font-size:27px;}
+    .hero{min-height:168px;}
+    .hero-num{font-size:44px;}
+    .hero-foot{align-items:flex-start;}
+    .live small{display:none;}
+    .visit{align-items:flex-start;}
+    .visit .badge{margin-top:2px;}
+    .lang-row{flex-wrap:wrap;}
+    .lang{min-width:calc(50% - 4px);}
+  }
+
+  /* Level-up: command-center calls, transcripts, and full-month calendar */
+  .page-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:24px 0 14px;}
+  .page-intro h2{font-size:24px;letter-spacing:-.45px;line-height:1.15;}
+  .page-intro p{font-size:13px;color:var(--muted);margin-top:5px;}
+  .status-summary{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+  .status-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:9px;background:var(--card);border:1px solid var(--line);font-size:11px;font-weight:700;color:var(--muted);}
+  .status-pill strong{font-size:13px;color:var(--ink);}
+  .call-workspace{display:grid;grid-template-columns:minmax(0,.92fr) minmax(360px,1.08fr);gap:16px;align-items:start;}
+  .call-list-card{padding:6px 14px;min-width:0;}
+  .call-row{width:100%;border:0;background:transparent;color:inherit;text-align:left;font:inherit;cursor:pointer;position:relative;}
+  .call-row:hover{background:var(--cream);}
+  .call-row.active{background:#EDF3FF;border-radius:10px;padding-left:10px;padding-right:10px;}
+  .call-row:focus-visible{outline:3px solid rgba(37,99,235,.25);outline-offset:-2px;border-radius:10px;}
+  .call-row .call-main{display:flex;align-items:center;gap:11px;min-width:0;}
+  .direction{width:27px;height:27px;border-radius:8px;background:#EAF0FA;color:#4B668E;display:grid;place-items:center;flex:0 0 auto;}
+  .direction.out{background:#E8F5F1;color:var(--green);}
+  .direction.missed{background:#FCECE9;color:#B5473C;}
+  .direction svg{width:14px;height:14px;}
+  .call-row .badge{margin-left:5px;}
+  .call-row .name,.call-row .meta{display:block;}
+  .call-detail{position:sticky;top:20px;padding:0;overflow:hidden;}
+  .detail-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+  .detail-person{display:flex;gap:12px;align-items:center;min-width:0;}
+  .detail-person .pic{width:44px;height:44px;}
+  .detail-name{font-size:17px;font-weight:750;letter-spacing:-.25px;}
+  .detail-number{font-size:12px;color:var(--muted);margin-top:3px;}
+  .detail-actions{display:flex;gap:7px;}
+  .icon-button{border:1px solid var(--line);background:var(--card);color:var(--ink);width:34px;height:34px;border-radius:9px;display:grid;place-items:center;cursor:pointer;}
+  .icon-button svg{width:16px;height:16px;}
+  .icon-button:hover{background:var(--cream);}
+  .detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line);}
+  .detail-stat{padding:13px 15px;background:var(--card);}
+  .detail-stat span{display:block;color:var(--muted);font-size:10px;margin-bottom:4px;}
+  .detail-stat strong{font-size:12px;}
+  .insight-strip{margin:16px 18px 0;padding:12px 13px;border-radius:10px;background:#F3F7FE;border:1px solid #DFE9FB;display:flex;gap:10px;align-items:flex-start;}
+  .insight-strip svg{width:17px;height:17px;flex:0 0 auto;color:var(--gold-deep);margin-top:1px;}
+  .insight-strip strong{display:block;font-size:12px;margin-bottom:3px;}
+  .insight-strip span{display:block;font-size:11px;line-height:1.45;color:var(--muted);}
+  .transcript{padding:17px 18px 20px;}
+  .transcript-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .transcript-top h3{font-size:13px;}
+  .recording{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+  .recording::before{content:"";width:6px;height:6px;border-radius:50%;background:#D14343;}
+  .utterance{display:grid;grid-template-columns:42px 1fr;gap:8px;margin-bottom:12px;}
+  .speaker{font-size:10px;font-weight:750;color:var(--muted);padding-top:3px;}
+  .bubble{font-size:12px;line-height:1.52;background:var(--cream);padding:9px 11px;border-radius:4px 11px 11px 11px;}
+  .utterance.alex .speaker{color:var(--gold-deep);}
+  .utterance.alex .bubble{background:#EAF1FF;}
+  .detail-empty{padding:44px 24px;text-align:center;color:var(--muted);font-size:13px;}
+
+  .calendar-shell{padding:0;overflow:hidden;}
+  .calendar-toolbar{display:flex;align-items:center;justify-content:space-between;padding:17px 18px;border-bottom:1px solid var(--line);gap:12px;}
+  .month-label{font-size:17px;font-weight:750;letter-spacing:-.25px;}
+  .calendar-nav{display:flex;gap:6px;}
+  .calendar-nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:11px;font-weight:700;height:32px;padding:0 10px;border-radius:8px;cursor:pointer;}
+  .calendar-nav button.square{width:32px;padding:0;font-size:18px;}
+  .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+  .cal-weekday{padding:10px 8px;border-bottom:1px solid var(--line);font-size:10px;font-weight:700;color:var(--muted);text-align:center;background:var(--cream);}
+  .cal-day{min-height:92px;padding:8px;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card);color:var(--ink);text-align:left;font:inherit;cursor:pointer;overflow:hidden;}
+  .cal-day:nth-child(7n){border-right:0;}
+  .cal-day.outside{color:#AEB6C3;background:var(--cream);}
+  .cal-day:hover{background:#F7F9FC;}
+  .cal-day.selected{box-shadow:inset 0 0 0 2px var(--gold);background:#F4F7FF;}
+  .cal-number{font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+  .cal-number .today-dot{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#fff;}
+  .cal-event{display:block;margin-top:6px;padding:4px 5px;border-radius:5px;background:#EAF1FF;color:#2458B8;font-size:9px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cal-event.follow{background:#FFF2E5;color:#9A4A14;}
+  .cal-event.outbound{background:#E7F5F0;color:#08765B;}
+  .agenda-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.65fr);gap:16px;align-items:start;}
+  .day-panel{padding:18px;position:sticky;top:20px;}
+  .day-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .day-panel h3{font-size:15px;}
+  .day-panel .hint{margin:4px 0 14px;}
+  .timeline-event{display:grid;grid-template-columns:45px 3px 1fr;gap:10px;padding:9px 0;}
+  .timeline-time{font-size:11px;font-weight:700;color:var(--muted);padding-top:2px;}
+  .timeline-line{border-radius:3px;background:var(--gold);}
+  .timeline-event.follow .timeline-line{background:var(--orange);}
+  .timeline-body strong{font-size:12px;display:block;}
+  .timeline-body span{font-size:11px;color:var(--muted);line-height:1.4;display:block;margin-top:3px;}
+  .empty-day{padding:24px 0;color:var(--muted);font-size:12px;line-height:1.5;}
+
+  html[data-theme="dark"] .call-row.active,html[data-theme="dark"] .utterance.alex .bubble,html[data-theme="dark"] .insight-strip,html[data-theme="dark"] .cal-day.selected{background:#172A4A;}
+html[data-theme="dark"] .direction{background:#243147;color:#A8B9D1;}
+html[data-theme="dark"] .direction.out{background:#15382E;color:#79D8BC;}
+html[data-theme="dark"] .direction.missed{background:#422624;color:#F39B91;}
+html[data-theme="dark"] .insight-strip{border-color:#294270;}
+html[data-theme="dark"] .cal-day:hover{background:#172337;}
+html[data-theme="dark"] .cal-event{background:#1B3561;color:#AFC7FF;}
+html[data-theme="dark"] .cal-event.follow{background:#402B1D;color:#F2AD75;}
+html[data-theme="dark"] .cal-event.outbound{background:#15382E;color:#79D8BC;}
+  @media (min-width:900px){#pane-appels.on,#pane-agenda.on{max-width:100%;}}
+  @media (max-width:899px){
+    .call-workspace,.agenda-layout{grid-template-columns:1fr;}
+    .call-detail,.day-panel{position:static;}
+  }
+  @media (max-width:620px){
+    .page-intro{align-items:flex-start;flex-direction:column;margin-top:18px;gap:10px;}.page-intro h2{font-size:21px;}.status-summary{justify-content:flex-start;}
+    .call-list-card{padding:4px 10px;}.call-row .meta{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .call-row .badge{display:none;}.detail-head{padding:16px;}.detail-stats{grid-template-columns:1fr 1fr 1fr;}.detail-stat{padding:11px 9px;}.detail-stat strong{font-size:11px;}
+    .calendar-toolbar{padding:14px;}.calendar-nav .today-button{display:none;}.cal-weekday{padding:8px 2px;font-size:9px;}.cal-day{min-height:61px;padding:5px 3px;}.cal-number{font-size:10px;}.cal-event{height:5px;padding:0;margin:5px auto 0;width:5px;border-radius:50%;font-size:0;}.cal-number .today-dot{width:20px;height:20px;}
+    .day-panel{padding:16px;}.utterance{grid-template-columns:38px 1fr;}
+  }
+
+  /* Unified email workspace */
+  .email-status{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--green);}
+  .email-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px rgba(22,133,111,.12);}
+  .email-workspace{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:16px;align-items:start;}
+  .email-list-card{padding:0;overflow:hidden;}
+  .email-list-tools{padding:14px;border-bottom:1px solid var(--line);}
+  .email-search{margin:0;box-shadow:none;background:var(--cream);}
+  .email-row{width:100%;border:0;border-bottom:1px solid var(--line);background:var(--card);color:inherit;text-align:left;font:inherit;cursor:pointer;padding:15px;display:grid;grid-template-columns:9px minmax(0,1fr) auto;gap:11px;align-items:start;}
+  .email-row:last-child{border-bottom:0;}
+  .email-row:hover{background:#F7F9FC;}
+  .email-row.active{background:#EDF3FF;box-shadow:inset 3px 0 0 var(--gold);}
+  .email-row:focus-visible{outline:3px solid rgba(37,99,235,.25);outline-offset:-3px;}
+  .mail-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:5px;}
+  .mail-dot.handled{background:#A8B1BF;}
+  .email-sender{display:block;font-size:13px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .email-subject{display:block;font-size:12px;font-weight:650;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .email-preview{font-size:11px;color:var(--muted);line-height:1.4;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .email-time{font-size:10px;color:var(--muted);white-space:nowrap;margin-top:2px;}
+  .email-detail{padding:0;overflow:hidden;position:sticky;top:20px;}
+  .email-detail-head{padding:18px 20px;border-bottom:1px solid var(--line);}
+  .email-detail-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .email-detail-head h3{font-size:17px;line-height:1.3;letter-spacing:-.2px;margin:0;}
+  .email-meta{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.5;}
+  .email-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;}
+  .email-thread{padding:18px 20px;}
+  .email-message{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;}
+  .email-message.alex{background:#F4F7FF;border-color:#DCE7FC;}
+  .email-message-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:11px;color:var(--muted);}
+  .email-message-head strong{color:var(--ink);font-size:12px;}
+  .email-message-body{font-size:12px;line-height:1.58;color:var(--ink);white-space:pre-line;}
+  .email-ai-bar{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;padding:13px 20px;background:#F3F7FE;border-bottom:1px solid #DFE9FB;}
+  .email-ai-bar svg{width:18px;height:18px;color:var(--gold-deep);margin-top:1px;}
+  .email-ai-bar strong{display:block;font-size:11px;margin-bottom:3px;}
+  .email-ai-bar span{display:block;font-size:11px;color:var(--muted);line-height:1.45;}
+  .email-compose{padding:18px 20px;border-top:1px solid var(--line);background:var(--cream);}
+  .compose-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .compose-head strong{font-size:12px;}
+  .compose-fields{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .compose-line{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font-size:11px;}
+  .compose-line span{color:var(--muted);width:38px;flex:0 0 auto;}
+  .compose-line input{border:0;background:transparent;color:var(--ink);font:inherit;outline:0;width:100%;}
+  .compose-body{width:100%;min-height:126px;resize:vertical;border:0;background:transparent;color:var(--ink);font:inherit;font-size:12px;line-height:1.55;padding:12px;outline:0;}
+  .compose-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;flex-wrap:wrap;}
+  .secondary-button,.primary-button{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:11px;font-weight:750;padding:9px 12px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+  .primary-button{background:var(--gold);border-color:var(--gold);color:#fff;}
+  .secondary-button:hover{background:var(--cream-2);}.primary-button:hover{background:var(--gold-deep);}
+  .secondary-button:focus-visible,.primary-button:focus-visible,.email-row:focus-visible{outline:3px solid rgba(37,99,235,.25);outline-offset:2px;}
+  .email-note{font-size:10px;color:var(--muted);margin-right:auto;max-width:230px;line-height:1.4;}
+  .linked-context{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 17px;}
+  .context-chip{font-size:10px;font-weight:700;color:var(--muted);background:var(--cream);border:1px solid var(--line);padding:7px 9px;border-radius:7px;}
+
+  html[data-theme="dark"] .email-row:hover{background:#172337;}
+html[data-theme="dark"] .email-row.active,html[data-theme="dark"] .email-message.alex,html[data-theme="dark"] .email-ai-bar{background:#172A4A;}
+html[data-theme="dark"] .email-message.alex,html[data-theme="dark"] .email-ai-bar{border-color:#294270;}
+html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,167,.12);}
+  @media (min-width:900px){#pane-email.on{max-width:100%;}}
+  @media (max-width:899px){.email-workspace{grid-template-columns:1fr;}.email-detail{position:static;}}
+  @media (max-width:620px){
+    .email-row{padding:13px 12px;}.email-detail-head,.email-thread,.email-compose{padding-left:15px;padding-right:15px;}.email-ai-bar{grid-template-columns:20px 1fr;padding-left:15px;padding-right:15px;}.email-ai-bar .badge{display:none;}.compose-actions{justify-content:stretch;}.email-note{width:100%;max-width:none;margin-bottom:2px;}.secondary-button,.primary-button{flex:1;justify-content:center;}.tab{font-size:9px;}.tab svg{width:20px;height:20px;}
+  }
+
+  /* ===== AI Staff generalized dashboard additions ===== */
+  .brandline{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;letter-spacing:-.2px;color:var(--ink);text-decoration:none;}
+  .brandline .mk{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#0A1A33,#1F6FEB);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;}
+  .topbar-left{display:flex;flex-direction:column;gap:6px;}
+  .avatar.persona-av{background:linear-gradient(135deg,#0A1A33,#1F6FEB);}
+  .tabbar{overflow-x:auto;scrollbar-width:none;}
+  .tabbar::-webkit-scrollbar{display:none;}
+  .tab{min-width:62px;}
+  @media (min-width:900px){
+    .tabbar{overflow-y:auto;justify-content:flex-start;padding-top:22px;gap:6px;}
+    .tab{padding:9px 4px;}
+    #pane-messages.on,#pane-briefings.on,#pane-reseaux.on,#pane-assistant.on,#pane-contacts.on{max-width:100%;margin-top:0;}
+  }
+  .hero-next{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);font-size:12.5px;color:#C9D5EA;}
+  .hero-next b{color:#fff;}
+  .hero-next button{margin-left:auto;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:11.5px;font-weight:700;padding:7px 11px;border-radius:8px;cursor:pointer;}
+  .hero-next button:hover{background:rgba(255,255,255,.16);}
+
+  /* channel chips */
+  .ch{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.03em;padding:4px 7px;border-radius:6px;white-space:nowrap;}
+  .ch-sms{background:#EAF1FF;color:#2458B8;}
+  .ch-wa{background:#E4F5EF;color:#08765B;}
+  .ch-ig{background:#FCE8F3;color:#A0296A;}
+  .ch-fb{background:#E7EEFD;color:#2D4FA3;}
+  html[data-theme="dark"] .ch-sms{background:#1B3561;color:#AFC7FF;}
+  html[data-theme="dark"] .ch-wa{background:#15382E;color:#79D8BC;}
+  html[data-theme="dark"] .ch-ig{background:#43213A;color:#F3A6D0;}
+  html[data-theme="dark"] .ch-fb{background:#1D2D55;color:#A9C0F5;}
+  .msg-bubble-row{display:flex;margin-bottom:10px;}
+  .msg-bubble-row.ai{justify-content:flex-end;}
+  .msg-bubble{max-width:82%;font-size:12.5px;line-height:1.5;padding:10px 12px;border-radius:12px 12px 12px 4px;background:var(--cream);border:1px solid var(--line);}
+  .msg-bubble-row.ai .msg-bubble{background:#EAF1FF;border-color:#DCE7FC;border-radius:12px 12px 4px 12px;}
+  html[data-theme="dark"] .msg-bubble-row.ai .msg-bubble{background:#172A4A;border-color:#294270;}
+  .msg-bubble small{display:block;font-size:10px;color:var(--muted);margin-top:4px;font-weight:700;}
+  .approve-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 20px;border-top:1px solid var(--line);background:var(--cream);}
+  .approve-bar span{font-size:11px;color:var(--muted);margin-right:auto;}
+
+  /* briefings */
+  .brief-layout{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:16px;align-items:start;}
+  @media (max-width:899px){.brief-layout{grid-template-columns:1fr;}}
+  .slot{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .slot:last-of-type{border-bottom:0;}
+  .slot-time{font-size:18px;font-weight:750;letter-spacing:-.3px;width:62px;}
+  .slot-info{flex:1;min-width:0;}
+  .slot-info b{display:block;font-size:13px;}
+  .slot-info span{font-size:11.5px;color:var(--muted);}
+  .switch{position:relative;width:42px;height:24px;border-radius:999px;border:0;background:#CBD3DF;cursor:pointer;flex:0 0 auto;transition:background .2s;}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s;}
+  .switch.on{background:var(--gold);}
+  .switch.on::after{transform:translateX(18px);}
+  html[data-theme="dark"] .switch{background:#34425A;}
+  html[data-theme="dark"] .switch.on{background:var(--gold);}
+  .brief-row{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;padding:13px 4px;}
+  .brief-row:last-child{border-bottom:0;}
+  .brief-row:hover{background:var(--cream);}
+  .brief-row.active{background:#EDF3FF;border-radius:10px;padding-left:10px;padding-right:10px;}
+  html[data-theme="dark"] .brief-row.active{background:#172A4A;}
+  .brief-ico{width:38px;height:38px;border-radius:11px;background:#EDF3FF;color:var(--gold-deep);display:grid;place-items:center;font-size:17px;flex:0 0 auto;}
+  html[data-theme="dark"] .brief-ico{background:#172A4A;}
+  .brief-row .info b{display:block;font-size:13.5px;}
+  .brief-row .info span{font-size:11.5px;color:var(--muted);}
+  .action-list{list-style:none;margin:4px 0 0;}
+  .action-list li{font-size:12px;line-height:1.5;padding:6px 0 6px 20px;position:relative;border-bottom:1px dashed var(--line);}
+  .action-list li:last-child{border-bottom:0;}
+  .action-list li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:800;}
+
+  /* réseaux */
+  .soc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:760px){.soc-grid{grid-template-columns:1fr;}}
+  .soc-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .soc-logo{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;}
+  .soc-logo.ig{background:linear-gradient(135deg,#F58529,#DD2A7B 55%,#8134AF);}
+  .soc-logo.fb{background:#1877F2;}
+  .post-thumb{display:flex;gap:12px;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;}
+  .post-thumb .img{width:54px;height:54px;border-radius:9px;background:linear-gradient(135deg,#DCE8FF,#9DBCFB);flex:0 0 auto;display:grid;place-items:center;font-size:22px;}
+  html[data-theme="dark"] .post-thumb .img{background:linear-gradient(135deg,#243B68,#3B74E8);}
+  .post-thumb b{display:block;font-size:12.5px;}
+  .post-thumb span{font-size:11px;color:var(--muted);}
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .metric{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:10px;}
+  .metric b{display:block;font-size:19px;letter-spacing:-.4px;}
+  .metric span{font-size:10.5px;color:var(--muted);}
+  .mini-bars{display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:14px;}
+  .mini-bars div{flex:1;border-radius:4px 4px 2px 2px;background:#D8E4FA;}
+  .mini-bars div.last{background:var(--gold);}
+  html[data-theme="dark"] .mini-bars div{background:#263A60;}
+  html[data-theme="dark"] .mini-bars div.last{background:#6E9BFF;}
+
+  /* assistant + chat */
+  .asst-layout{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);gap:16px;align-items:start;}
+  @media (max-width:899px){.asst-layout{grid-template-columns:1fr;}}
+  .orb{display:grid;place-items:center;color:#fff;font-size:26px;font-weight:800;}
+  .persona-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .persona-btn{flex:1;min-width:88px;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 8px;font:inherit;font-size:12.5px;font-weight:750;color:var(--muted);cursor:pointer;}
+  .persona-btn.on{border-color:#B9CDF8;color:var(--gold-deep);background:#EDF3FF;}
+  html[data-theme="dark"] .persona-btn.on{background:#172A4A;border-color:#294270;}
+  .chat{padding:0;overflow:hidden;display:flex;flex-direction:column;min-height:520px;}
+  .chat-head{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line);}
+  .chat-head .mini-orb{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9DBCFB,#3B74E8 58%,#173F94);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800;}
+  .chat-head b{font-size:14px;display:block;}
+  .chat-head span{font-size:11px;color:var(--green);font-weight:700;}
+  .chat-body{flex:1;padding:16px 18px;overflow-y:auto;max-height:430px;display:flex;flex-direction:column;gap:9px;}
+  .cmsg{max-width:84%;font-size:13px;line-height:1.5;padding:10px 13px;border-radius:14px;white-space:pre-line;animation:cin .25s ease;}
+  @keyframes cin{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .cmsg.ai{align-self:flex-start;background:var(--cream);border:1px solid var(--line);border-bottom-left-radius:4px;}
+  .cmsg.me{align-self:flex-end;background:var(--gold);color:#fff;border-bottom-right-radius:4px;}
+  .cmsg.typing{display:flex;gap:4px;padding:12px 14px;}
+  .cmsg.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:tdot 1s infinite;}
+  .cmsg.typing i:nth-child(2){animation-delay:.15s}.cmsg.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes tdot{0%,100%{opacity:.3;}50%{opacity:1;}}
+  .chat-sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 18px 12px;}
+  .chat-sugg button{border:1px solid var(--line);background:var(--card);color:var(--gold-deep);font:inherit;font-size:11.5px;font-weight:700;padding:7px 10px;border-radius:999px;cursor:pointer;}
+  .chat-form{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--cream);}
+  .chat-form input{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:11px 13px;border-radius:10px;outline:0;}
+  .chat-form input:focus{border-color:var(--gold);}
+  .chat-form button{border:0;background:var(--gold);color:#fff;font:inherit;font-weight:750;font-size:13px;padding:0 16px;border-radius:10px;cursor:pointer;}
+  .human-note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--cream);border:1px solid var(--line);}
+  .variant-link{font-size:11px;font-weight:700;color:var(--gold-deep);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== HEADER ===== -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a class="brandline" href="/"><span class="mk">AI</span>AI Staff</a>
+      <div class="date" id="dateLine"></div>
+    </div>
+    <div class="top-actions">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Mode clair / sombre"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <div class="language-switch" aria-label="Langue"><button type="button" class="on" data-ui-lang="fr">FR</button><button type="button" data-ui-lang="en">EN</button><button type="button" data-ui-lang="es">ES</button></div>
+      <div class="avatar" id="clientAv">MC</div>
+    </div>
+  </div>
+  <h1 id="greeting"></h1>
+  <div class="sub" data-t="sub"></div>
+  <span class="demo-chip" data-t="demo"></span>
+
+  <div class="live" id="livePill"><span class="dot"></span><span id="liveLabel"></span><small>FR · EN · ES</small><button class="sim-action" id="simulateCall" type="button"></button></div>
+
+  <!-- ===== APERÇU ===== -->
+  <div class="pane on" id="pane-apercu">
+    <div class="card hero">
+      <div class="hero-num" id="heroNum">104</div>
+      <div class="hero-label" data-t="heroLabel"></div>
+      <div class="wave" id="wave"></div>
+      <div class="hero-foot"><span data-t="heroFoot1"></span><span data-t="heroFoot2"></span></div>
+      <div class="hero-next"><span>☀️</span><span data-t="nextBrief"></span><button type="button" data-go-btn="briefings" data-t="lastBrief"></button></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card" id="activityCard">
+      <h3 data-t="activity"></h3>
+      <div class="hint" data-t="activityHint"></div>
+      <div class="bars" id="bars"></div>
+    </div>
+    <div class="section-title" id="recentTitle"><h2 data-t="recent"></h2><a href="#" data-go-link="messages" data-t="seeAll"></a></div>
+    <div class="card" style="padding:6px 18px;" id="recentCalls"></div>
+    <div class="section-title" id="visitsTitle"><h2 data-t="upcoming"></h2><a href="#" data-go-link="agenda" data-t="agendaLink"></a></div>
+    <div id="overviewVisitOne"></div>
+    <div id="overviewVisitTwo"></div>
+  </div>
+
+  <!-- ===== APPELS ===== -->
+  <div class="pane" id="pane-appels">
+    <div class="page-intro">
+      <div><h2 data-t="callsTitle"></h2><p data-t="callsSub"></p></div>
+      <div class="status-summary" id="callPills"></div>
+    </div>
+    <div class="seg" id="segAppels">
+      <button class="on" data-f="all" data-t="fAll"></button>
+      <button data-f="in" data-t="fIn"></button>
+      <button data-f="out" data-t="fOut"></button>
+      <button data-f="missed" data-t="fMissed"></button>
+    </div>
+    <div class="call-workspace">
+      <div class="card call-list-card" id="callList"></div>
+      <section class="card call-detail" id="callDetail" aria-live="polite"></section>
+    </div>
+    <div class="foot-note" data-t="callsFoot"></div>
+  </div>
+
+  <!-- ===== MESSAGES ===== -->
+  <div class="pane" id="pane-messages">
+    <div class="page-intro">
+      <div><h2 data-t="msgTitle"></h2><p data-t="msgSub"></p></div>
+      <div class="status-summary" id="msgPills"></div>
+    </div>
+    <div class="seg" id="segMsg">
+      <button class="on" data-mf="all" data-t="fAll"></button>
+      <button data-mf="sms">SMS</button>
+      <button data-mf="wa">WhatsApp</button>
+      <button data-mf="ig">Instagram</button>
+      <button data-mf="fb">Facebook</button>
+    </div>
+    <div class="email-workspace">
+      <section class="card email-list-card"><div id="msgList"></div></section>
+      <section class="card email-detail" id="msgDetail" aria-live="polite"></section>
+    </div>
+    <div class="foot-note" data-t="msgFoot"></div>
+  </div>
+
+  <!-- ===== COURRIEL ===== -->
+  <div class="pane" id="pane-email">
+    <div class="page-intro">
+      <div><h2 data-t="emailTitle"></h2><p data-t="emailSub"></p></div>
+      <div class="status-summary"><span class="status-pill"><span class="email-status" data-t="demoConnected"></span></span><span class="status-pill"><strong>2</strong> <span data-t="toReplyLower"></span></span></div>
+    </div>
+    <div class="seg" id="segEmail">
+      <button class="on" type="button" data-mail-filter="all" data-t="fAll"></button>
+      <button type="button" data-mail-filter="reply" data-t="toReply"></button>
+      <button type="button" data-mail-filter="handled" data-t="handledCap"></button>
+    </div>
+    <div class="email-workspace">
+      <section class="card email-list-card">
+        <div class="email-list-tools"><label class="search email-search" for="emailSearch"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input type="search" id="emailSearch"></label></div>
+        <div id="emailList"></div>
+      </section>
+      <section class="card email-detail" id="emailDetail" aria-live="polite"></section>
+    </div>
+    <div class="foot-note" data-t="emailFoot"></div>
+  </div>
+
+  <!-- ===== AGENDA ===== -->
+  <div class="pane" id="pane-agenda">
+    <div class="page-intro">
+      <div><h2 data-t="agendaTitle"></h2><p data-t="agendaSub"></p></div>
+      <div class="status-summary"><span class="status-pill"><strong id="evCount">14</strong> <span data-t="confirmedLower"></span></span></div>
+    </div>
+    <div class="agenda-layout">
+      <section class="card calendar-shell">
+        <div class="calendar-toolbar">
+          <div class="month-label" id="monthLabel"></div>
+          <div class="calendar-nav"><button type="button" class="square" id="prevMonth" aria-label="‹">‹</button><button type="button" class="today-button" id="todayMonth" data-t="today"></button><button type="button" class="square" id="nextMonth" aria-label="›">›</button></div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </section>
+      <aside class="card day-panel" id="dayPanel" aria-live="polite"></aside>
+    </div>
+    <div class="foot-note" data-t="agendaFoot"></div>
+  </div>
+
+  <!-- ===== BRIEFINGS ===== -->
+  <div class="pane" id="pane-briefings">
+    <div class="page-intro">
+      <div><h2 data-t="briefTitle"></h2><p data-t="briefSub"></p></div>
+      <div class="status-summary"><span class="status-pill" id="briefPill"></span></div>
+    </div>
+    <div class="brief-layout">
+      <div>
+        <div class="card">
+          <h3 data-t="schedule"></h3>
+          <div class="hint" data-t="scheduleHint"></div>
+          <div id="slots"></div>
+          <div class="human-note" data-t="consentNote"></div>
+        </div>
+        <div class="card" style="padding:8px 14px;">
+          <div class="section-title" style="margin:10px 4px 4px;"><h2 style="font-size:15px;" data-t="history"></h2></div>
+          <div id="briefList"></div>
+        </div>
+      </div>
+      <section class="card call-detail" id="briefDetail" style="position:static;"></section>
+    </div>
+  </div>
+
+  <!-- ===== RÉSEAUX ===== -->
+  <div class="pane" id="pane-reseaux">
+    <div class="page-intro">
+      <div><h2 data-t="socTitle"></h2><p data-t="socSub"></p></div>
+      <div class="status-summary"><span class="status-pill"><span class="email-status" data-t="demoConnected"></span></span></div>
+    </div>
+    <div class="soc-grid" id="socGrid"></div>
+    <div class="section-title"><h2 data-t="pendingDms"></h2><a href="#" data-go-link="messages" data-t="openMessages"></a></div>
+    <div class="card" style="padding:6px 18px;" id="dmList"></div>
+    <div class="foot-note" data-t="socFoot"></div>
+  </div>
+
+  <!-- ===== CONTACTS ===== -->
+  <div class="pane" id="pane-contacts">
+    <label class="search" for="q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input type="text" id="q"></label>
+    <div class="card" style="padding:6px 18px;" id="contactList"></div>
+  </div>
+
+  <!-- ===== ASSISTANT ===== -->
+  <div class="pane" id="pane-assistant">
+    <div class="asst-layout">
+      <div>
+        <div class="card alex-hero">
+          <div class="orb" id="bigOrb">S</div>
+          <h3 id="asstTitle"></h3>
+          <div class="hint" style="margin:8px 0 0;" data-t="asstHint"></div>
+          <div class="persona-row" id="personaRow"></div>
+          <div class="lang-row">
+            <button class="lang on" type="button" data-voice="fr"><span aria-hidden="true">FR</span> Français</button>
+            <button class="lang on" type="button" data-voice="en"><span aria-hidden="true">EN</span> English</button>
+            <button class="lang on" type="button" data-voice="es"><span aria-hidden="true">ES</span> Español</button>
+          </div>
+          <button class="cta" id="simulateCallAsst" type="button"></button>
+        </div>
+        <div class="card">
+          <h3 id="doesTitle"></h3>
+          <div class="hint" data-t="doesHint"></div>
+          <div id="doesList"></div>
+          <div class="human-note" data-t="humanNote"></div>
+        </div>
+      </div>
+      <section class="card chat" aria-label="Chat">
+        <div class="chat-head"><div class="mini-orb" id="chatOrb">S</div><div><b id="chatName"></b><span data-t="chatOnline"></span></div></div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-sugg" id="chatSugg"></div>
+        <form class="chat-form" id="chatForm"><input id="chatInput" autocomplete="off"><button type="submit" data-t="send"></button></form>
+      </section>
+    </div>
+  </div>
+
+  <div class="foot-note"><span data-t="footer1"></span><br><span data-t="footer2"></span><br><a class="variant-link" href="/immobilier/demo/" data-t="variantLink"></a></div>
+</div>
+
+<!-- ===== TAB BAR ===== -->
+<nav class="tabbar" id="tabbar">
+  <button class="tab on" data-go="apercu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span data-t="tabApercu"></span></button>
+  <button class="tab" data-go="appels"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg><span data-t="tabAppels"></span></button>
+  <button class="tab" data-go="messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-t="tabMessages"></span></button>
+  <button class="tab" data-go="email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><span data-t="tabEmail"></span></button>
+  <button class="tab" data-go="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-t="tabAgenda"></span></button>
+  <button class="tab" data-go="briefings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-t="tabBriefings"></span></button>
+  <button class="tab" data-go="reseaux"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg><span data-t="tabReseaux"></span></button>
+  <button class="tab" data-go="contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span data-t="tabContacts"></span></button>
+  <button class="tab" data-go="assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 15l.9 2.6 2.6.9-2.6.9L19 22l-.9-2.6-2.6-.9 2.6-.9z"/></svg><span id="tabAsst">Sofía</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const qs = new URLSearchParams(location.search);
+/* Real-estate variant kept as its own page */
+if (qs.get("v") === "immobilier") { location.replace("/immobilier/demo/"); return; }
+
+const PERSONAS = {
+  sofia:{name:"Sofía",ini:"S",g:"f"},
+  alex:{name:"Alex",ini:"A",g:"m"},
+  tomas:{name:"Tomás",ini:"T",g:"m"}
+};
+let uiLang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : "sofia";
+const client = (qs.get("n") || "Marie").replace(/[<>&"]/g,"").slice(0,30) || "Marie";
+
+/* role words that depend on persona gender */
+const ROLE = {
+  fr:{f:{role:"assistante",the:"l'assistante",your:"votre assistante"},m:{role:"assistant",the:"l'assistant",your:"votre assistant"}},
+  en:{f:{role:"assistant",the:"the assistant",your:"your assistant"},m:{role:"assistant",the:"the assistant",your:"your assistant"}},
+  es:{f:{role:"asistente",the:"la asistente",your:"tu asistente"},m:{role:"asistente",the:"el asistente",your:"tu asistente"}}
+};
+function P(){ return PERSONAS[persona]; }
+function fill(s){
+  const r = ROLE[uiLang][P().g];
+  return String(s).split("{a}").join(P().name).split("{n}").join(client)
+    .split("{role}").join(r.role).split("{the}").join(r.the).split("{your}").join(r.your);
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function F(s){ return fill(esc(s)); }
+
+/* ================= UI STRINGS ================= */
+const U = {
+fr:{
+sub:"Voici ce que {a}, {your} IA, a géré pour vous.",demo:"Données de démonstration",
+live:"{a} est en ligne",simIdle:"Simuler un appel",simShort:"Simuler",simRun:"{a} répond à Jordan P.",simProg:"En cours…",simAdded:"Ajouté ✓",
+simStart:"Appel simulé en cours…",simRepeat:"Cet appel de démonstration est déjà ajouté",simDone:"Appel qualifié et rendez-vous ajouté à l'agenda",
+heroLabel:"conversations gérées cette semaine · appels, messages, courriels",heroFoot1:"Dernier appel sans réponse : <b>aucun cette semaine</b>",heroFoot2:"Réponse en <b>7 s</b>",
+nextBrief:"Prochain briefing : <b>aujourd'hui, 18 h 00</b>",lastBrief:"Écouter le dernier",
+activity:"Activité",activityHint:"Conversations gérées · 7 derniers jours",recent:"Dernières interactions",seeAll:"Tout voir",
+upcoming:"Prochains rendez-vous",agendaLink:"Agenda",
+callsTitle:"Centre d'appels",callsSub:"Entrants, sortants et conversations prises en charge par {a}.",
+fAll:"Tous",fIn:"Entrants",fOut:"Sortants",fMissed:"Sans réponse",inW:"entrants",outW:"sortants",answeredW:"répondus",
+callsFoot:"Sélectionnez un appel pour voir le résumé, la prochaine action et la transcription.",
+msgTitle:"Messages",msgSub:"SMS, WhatsApp, Instagram et Facebook réunis au même endroit.",msgFoot:"Les canaux WhatsApp, Instagram et Facebook s'activent par phases. Aucun message réel n'est envoyé depuis cet aperçu.",
+pendingW:"à valider",handledW:"traités",approve:"Approuver et envoyer",edit:"Modifier",approved:"Réponse approuvée ✓",waitingYou:"{a} attend votre feu vert pour répondre.",
+emailTitle:"Boîte courriel",emailSub:"Vos courriels triés et résumés, avec des brouillons prêts à approuver.",demoConnected:"Connexion démo active",
+toReplyLower:"à répondre",toReply:"À répondre",handledCap:"Traités",search:"Rechercher un courriel…",
+emailFoot:"Aucun courriel réel n'est envoyé depuis cet aperçu. Les brouillons s'ouvrent dans votre application courriel.",
+aiSummary:"Résumé IA",suggested:"Action suggérée",conversation:"Conversation",draft:"Réponse préparée par {a}",to:"À",subject:"Objet",
+copy:"Copier le brouillon",open:"Ouvrir dans Courriel",copied:"Brouillon copié",noResults:"Aucun courriel ne correspond à cette recherche.",
+replyTag:"À répondre",handledTag:"Traité",inbound:"Reçu",outbound:"Envoyé",
+agendaTitle:"Agenda",agendaSub:"Rendez-vous, rencontres et suivis planifiés par {a}.",confirmedLower:"rendez-vous ce mois-ci",today:"Aujourd'hui",
+agendaFoot:"Cliquez sur une journée pour voir les rendez-vous. Toutes les entrées sont des données de démonstration.",
+dailySched:"Horaire du jour",noEvents:"Aucun rendez-vous. {a} peut proposer cette disponibilité à vos clients.",evOne:"rendez-vous",evMany:"rendez-vous",
+briefTitle:"Briefings",briefSub:"{a} vous appelle aux heures que vous choisissez pour vous résumer votre journée.",
+schedule:"Heures d'appel",scheduleHint:"Activez ou désactivez chaque appel. Jusqu'à 3 par jour avec le plan Exécutive.",
+consentNote:"{a} n'appelle que vous, au numéro que vous avez autorisé. Vous pouvez suspendre les briefings en tout temps.",
+history:"Historique",slotsOn:"{x} appels programmés par jour",slotOn:"Activé",slotOff:"Désactivé",
+briefSummary:"Ce que {a} vous a dit",briefActions:"Ce que vous avez demandé",transcript:"Transcription",duration:"Durée",when:"Quand",type:"Type",
+socTitle:"Réseaux sociaux",socSub:"Les résultats de votre dernier post et les DM qui attendent une réponse.",pendingDms:"DM en attente",openMessages:"Ouvrir les messages",
+socFoot:"Statistiques lues via l'API Meta une fois votre compte connecté. Données de démonstration.",lastPost:"Dernier post",reach7:"Portée · 7 derniers jours",
+qph:"Rechercher un contact…",
+asstTitle:"{a}, {your} IA",asstHint:"Répond à vos appels, messages et courriels — en français, anglais et espagnol.",
+doesTitle:"Ce que {a} fait pour vous",doesHint:"Configuré pour votre entreprise",active:"Actif",soon:"Par phases",
+humanNote:"Notre équipe à Montréal configure et supervise {a}. Si une demande sort du cadre prévu, {a} prend le message et un humain prend le relais.",
+chatOnline:"En ligne · répond en quelques secondes",send:"Envoyer",chatPh:"Écrivez à {a}…",
+footer1:"AI Staff · Tableau de bord client",footer2:"Données de démonstration — aperçu interactif",variantLink:"Voir la version courtier immobilier →",
+tabApercu:"Aperçu",tabAppels:"Appels",tabMessages:"Messages",tabEmail:"Courriel",tabAgenda:"Agenda",tabBriefings:"Briefings",tabReseaux:"Réseaux",tabContacts:"Contacts",
+voiceOn:" activé ✓",hot:"Chaud",warm:"Tiède",cold:"Froid",ok:"Confirmé",proposed:"Proposé",
+dirIn:"Entrant",dirOut:"Sortant",dirMissed:"Sans réponse",labSummary:"Résumé IA",labNext:"Prochaine action",labDir:"Direction",labDur:"Durée",labScore:"Score",labNote:"Note",recording:"enregistrement démo",noTranscript:"Aucune transcription : l'appelant a raccroché avant la prise en charge.",
+greet:["Bonjour","Bon après-midi","Bonsoir"],locale:"fr-CA"
+},
+en:{
+sub:"Here's what {a}, {your}, handled for you.",demo:"Demo data",
+live:"{a} is online",simIdle:"Simulate a call",simShort:"Simulate",simRun:"{a} is answering Jordan P.",simProg:"In progress…",simAdded:"Added ✓",
+simStart:"Simulated call in progress…",simRepeat:"This demo call has already been added",simDone:"Call qualified and appointment added to the calendar",
+heroLabel:"conversations handled this week · calls, messages, email",heroFoot1:"Unanswered calls: <b>none this week</b>",heroFoot2:"Answered in <b>7 sec</b>",
+nextBrief:"Next briefing: <b>today, 6:00 PM</b>",lastBrief:"Play the last one",
+activity:"Activity",activityHint:"Conversations handled · last 7 days",recent:"Latest interactions",seeAll:"View all",
+upcoming:"Upcoming appointments",agendaLink:"Calendar",
+callsTitle:"Call center",callsSub:"Incoming, outgoing and conversations handled by {a}.",
+fAll:"All",fIn:"Incoming",fOut:"Outgoing",fMissed:"Unanswered",inW:"incoming",outW:"outgoing",answeredW:"answered",
+callsFoot:"Select a call to view the summary, next action and transcript.",
+msgTitle:"Messages",msgSub:"SMS, WhatsApp, Instagram and Facebook in one place.",msgFoot:"WhatsApp, Instagram and Facebook are enabled in phases. No real message is sent from this preview.",
+pendingW:"to approve",handledW:"handled",approve:"Approve & send",edit:"Edit",approved:"Reply approved ✓",waitingYou:"{a} is waiting for your go-ahead to reply.",
+emailTitle:"Email inbox",emailSub:"Your email sorted and summarized, with drafts ready to approve.",demoConnected:"Demo connection active",
+toReplyLower:"need a reply",toReply:"Needs reply",handledCap:"Handled",search:"Search email…",
+emailFoot:"No real email is sent from this preview. Drafts open in your email app.",
+aiSummary:"AI summary",suggested:"Suggested action",conversation:"Conversation",draft:"Reply prepared by {a}",to:"To",subject:"Subject",
+copy:"Copy draft",open:"Open in Mail",copied:"Draft copied",noResults:"No email matches this search.",
+replyTag:"Needs reply",handledTag:"Handled",inbound:"Received",outbound:"Sent",
+agendaTitle:"Calendar",agendaSub:"Appointments, meetings and follow-ups scheduled by {a}.",confirmedLower:"appointments this month",today:"Today",
+agendaFoot:"Select a day to view appointments. All entries are demo data.",
+dailySched:"Daily schedule",noEvents:"No appointments. {a} can offer this time to your clients.",evOne:"event",evMany:"events",
+briefTitle:"Briefings",briefSub:"{a} calls you at the times you choose to walk you through your day.",
+schedule:"Call times",scheduleHint:"Turn each call on or off. Up to 3 per day on the Executive plan.",
+consentNote:"{a} only calls you, at the number you authorized. You can pause briefings anytime.",
+history:"History",slotsOn:"{x} calls scheduled per day",slotOn:"On",slotOff:"Off",
+briefSummary:"What {a} told you",briefActions:"What you asked for",transcript:"Transcript",duration:"Duration",when:"When",type:"Type",
+socTitle:"Social media",socSub:"Your latest post's results and the DMs waiting for a reply.",pendingDms:"Pending DMs",openMessages:"Open messages",
+socFoot:"Stats read through the Meta API once your account is connected. Demo data.",lastPost:"Latest post",reach7:"Reach · last 7 days",
+qph:"Search contacts…",
+asstTitle:"{a}, {your}",asstHint:"Answers your calls, messages and email — in French, English and Spanish.",
+doesTitle:"What {a} does for you",doesHint:"Configured for your business",active:"Active",soon:"In phases",
+humanNote:"Our team in Montréal configures and supervises {a}. If a request falls outside the plan, {a} takes a message and a human takes over.",
+chatOnline:"Online · replies in seconds",send:"Send",chatPh:"Message {a}…",
+footer1:"AI Staff · Client dashboard",footer2:"Demo data — interactive preview",variantLink:"See the real estate broker version →",
+tabApercu:"Overview",tabAppels:"Calls",tabMessages:"Messages",tabEmail:"Email",tabAgenda:"Calendar",tabBriefings:"Briefings",tabReseaux:"Social",tabContacts:"Contacts",
+voiceOn:" enabled ✓",hot:"Hot",warm:"Warm",cold:"Cold",ok:"Confirmed",proposed:"Suggested",
+dirIn:"Incoming",dirOut:"Outgoing",dirMissed:"Unanswered",labSummary:"AI summary",labNext:"Next action",labDir:"Direction",labDur:"Duration",labScore:"Score",labNote:"Note",recording:"demo recording",noTranscript:"No transcript: the caller hung up before pickup.",
+greet:["Good morning","Good afternoon","Good evening"],locale:"en-CA"
+},
+es:{
+sub:"Esto es lo que {a}, {your} con IA, gestionó por ti.",demo:"Datos de demostración",
+live:"{a} está en línea",simIdle:"Simular una llamada",simShort:"Simular",simRun:"{a} atiende a Jordan P.",simProg:"En curso…",simAdded:"Añadida ✓",
+simStart:"Llamada simulada en curso…",simRepeat:"Esta llamada de demostración ya fue añadida",simDone:"Llamada calificada y cita añadida a la agenda",
+heroLabel:"conversaciones gestionadas esta semana · llamadas, mensajes, correos",heroFoot1:"Llamadas sin respuesta: <b>ninguna esta semana</b>",heroFoot2:"Respuesta en <b>7 s</b>",
+nextBrief:"Próximo briefing: <b>hoy, 18:00</b>",lastBrief:"Escuchar el último",
+activity:"Actividad",activityHint:"Conversaciones gestionadas · últimos 7 días",recent:"Últimas interacciones",seeAll:"Ver todo",
+upcoming:"Próximas citas",agendaLink:"Agenda",
+callsTitle:"Centro de llamadas",callsSub:"Entrantes, salientes y conversaciones gestionadas por {a}.",
+fAll:"Todos",fIn:"Entrantes",fOut:"Salientes",fMissed:"Sin respuesta",inW:"entrantes",outW:"salientes",answeredW:"atendidas",
+callsFoot:"Selecciona una llamada para ver el resumen, la próxima acción y la transcripción.",
+msgTitle:"Mensajes",msgSub:"SMS, WhatsApp, Instagram y Facebook en un solo lugar.",msgFoot:"WhatsApp, Instagram y Facebook se activan por fases. No se envía ningún mensaje real desde esta vista.",
+pendingW:"por aprobar",handledW:"gestionados",approve:"Aprobar y enviar",edit:"Editar",approved:"Respuesta aprobada ✓",waitingYou:"{a} espera tu luz verde para responder.",
+emailTitle:"Correo",emailSub:"Tus correos ordenados y resumidos, con borradores listos para aprobar.",demoConnected:"Conexión demo activa",
+toReplyLower:"por responder",toReply:"Por responder",handledCap:"Gestionados",search:"Buscar correo…",
+emailFoot:"No se envía ningún correo real desde esta vista. Los borradores se abren en tu app de correo.",
+aiSummary:"Resumen IA",suggested:"Acción sugerida",conversation:"Conversación",draft:"Respuesta preparada por {a}",to:"Para",subject:"Asunto",
+copy:"Copiar borrador",open:"Abrir en Correo",copied:"Borrador copiado",noResults:"Ningún correo coincide con la búsqueda.",
+replyTag:"Por responder",handledTag:"Gestionado",inbound:"Recibido",outbound:"Enviado",
+agendaTitle:"Agenda",agendaSub:"Citas, reuniones y seguimientos programados por {a}.",confirmedLower:"citas este mes",today:"Hoy",
+agendaFoot:"Selecciona un día para ver las citas. Todas las entradas son datos de demostración.",
+dailySched:"Agenda del día",noEvents:"No hay citas. {a} puede ofrecer este horario a tus clientes.",evOne:"cita",evMany:"citas",
+briefTitle:"Briefings",briefSub:"{a} te llama a las horas que elijas para contarte tu día.",
+schedule:"Horas de llamada",scheduleHint:"Activa o desactiva cada llamada. Hasta 3 al día con el plan Ejecutiva.",
+consentNote:"{a} solo te llama a ti, al número que autorizaste. Puedes pausar los briefings cuando quieras.",
+history:"Historial",slotsOn:"{x} llamadas programadas al día",slotOn:"Activada",slotOff:"Desactivada",
+briefSummary:"Lo que {a} te contó",briefActions:"Lo que pediste",transcript:"Transcripción",duration:"Duración",when:"Cuándo",type:"Tipo",
+socTitle:"Redes sociales",socSub:"Los resultados de tu último post y los DMs que esperan respuesta.",pendingDms:"DMs pendientes",openMessages:"Abrir mensajes",
+socFoot:"Métricas leídas con la API de Meta una vez conectada tu cuenta. Datos de demostración.",lastPost:"Último post",reach7:"Alcance · últimos 7 días",
+qph:"Buscar un contacto…",
+asstTitle:"{a}, {your} con IA",asstHint:"Contesta tus llamadas, mensajes y correos — en francés, inglés y español.",
+doesTitle:"Lo que {a} hace por ti",doesHint:"Configurado para tu negocio",active:"Activo",soon:"Por fases",
+humanNote:"Nuestro equipo en Montreal configura y supervisa a {a}. Si algo se sale de sus instrucciones, {a} toma el mensaje y un humano retoma.",
+chatOnline:"En línea · responde en segundos",send:"Enviar",chatPh:"Escríbele a {a}…",
+footer1:"AI Staff · Panel del cliente",footer2:"Datos de demostración — vista interactiva",variantLink:"Ver la versión para courtiers inmobiliarios →",
+tabApercu:"Resumen",tabAppels:"Llamadas",tabMessages:"Mensajes",tabEmail:"Correo",tabAgenda:"Agenda",tabBriefings:"Briefings",tabReseaux:"Redes",tabContacts:"Contactos",
+voiceOn:" activado ✓",hot:"Caliente",warm:"Tibio",cold:"Frío",ok:"Confirmado",proposed:"Propuesto",
+dirIn:"Entrante",dirOut:"Saliente",dirMissed:"Sin respuesta",labSummary:"Resumen IA",labNext:"Próxima acción",labDir:"Dirección",labDur:"Duración",labScore:"Puntuación",labNote:"Nota",recording:"grabación demo",noTranscript:"Sin transcripción: quien llamó colgó antes de ser atendido.",
+greet:["Buenos días","Buenas tardes","Buenas noches"],locale:"es-ES"
+}};
+function u(k){ return U[uiLang][k] !== undefined ? U[uiLang][k] : U.fr[k]; }
+
+/* ================= DEMO DATA ================= */
+const COLORS = {KB:"#1F6FEB",JT:"#62856C",NR:"#39778F",IN:"#697386",PG:"#805B99",JP:"#2563EB",ML:"#B88624",SN:"#08765B",LF:"#A0296A",CM:"#2D4FA3"};
+const D = {
+fr:{
+kpis:[["41","Appels répondus","↑ 6 cette semaine",1],["58","Messages traités","SMS · WhatsApp · DM",0],["12","Rendez-vous pris","↑ 3 cette semaine",1],["≈ 9 h","Temps libéré","estimation cette semaine",0]],
+recent:[["KB","Karim Benali","Appel · cette nuit 23 h 48 · soumission","hot"],["LF","@lea.fitmtl","Instagram · il y a 2 h · partenariat","warm"],["JT","Julie Tanguay","Courriel · il y a 20 min · rendez-vous jeudi","ok"]],
+visits:[["Auj.","22","11:00 — Karim Benali","Appel découverte · nouveau client","ok"],["Mer","23","10:00 — Pierre Gagnon","Première rencontre · gratuite","ok"]],
+calls:{
+karim:{ini:"KB",name:"Karim Benali",num:"514 ••• ••48",dir:"in",time:"Cette nuit · 23:48",dur:"3 min 12",score:"91 / 100",tag:"hot",sum:"Nouveau client potentiel : demande une soumission, budget confirmé, veut commencer ce mois-ci.",next:"Appel découverte · aujourd'hui à 11:00",tr:[["A","Bonsoir, bureau de {n}, c'est {a}. Comment puis-je vous aider?"],["Karim","J'aimerais une soumission. Mon budget est prêt, je veux commencer ce mois-ci."],["A","Parfait. Puis-je avoir votre courriel pour vous envoyer la confirmation?"],["Karim","karim.b@example.com."],["A","Merci. {n} est libre demain à 11 h pour un appel découverte. Je vous le réserve?"],["Karim","Oui, parfait."]]},
+julie:{ini:"JT",name:"Julie Tanguay",num:"438 ••• ••21",dir:"in",time:"Hier · 18:20",dur:"1 min 04",score:"—",tag:"ok",sum:"Cliente existante. Confirme son rendez-vous de jeudi 9 h 30 et demande où se stationner.",next:"Fait : texto envoyé avec le plan d'accès",tr:[["A","Bonjour Julie, c'est {a}, {the} de {n}."],["Julie","Je confirme jeudi 9 h 30. Où est-ce que je me stationne?"],["A","Je vous envoie l'adresse et le plan d'accès par texto tout de suite."]]},
+nadia:{ini:"NR",name:"Nadia Roy",num:"514 ••• ••07",dir:"out",time:"Hier · 10:15",dur:"2 min 05",score:"—",tag:"ok",sum:"Rappel sortant : Nadia ne pouvait plus mardi. Suivi déplacé à aujourd'hui 14:00.",next:"Fait : agenda mis à jour · 22 sept. à 14:00",tr:[["A","Bonjour Nadia, c'est {a}, {the} de {n}. Je vois que mardi ne vous convient plus."],["Nadia","Oui, désolée. Vous avez autre chose cette semaine?"],["A","Demain à 14 h, ça vous va? Je mets à jour l'agenda de {n}."],["Nadia","Parfait, merci."]]},
+unknown:{ini:"IN",name:"Numéro inconnu",num:"Numéro masqué",dir:"missed",time:"20 sept. · 07:02",dur:"0 min 00",score:"—",tag:"cold",sum:"L'appelant a raccroché avant la prise en charge. Numéro masqué : aucun suivi possible.",next:"Aucune action",tr:[]},
+pierre:{ini:"PG",name:"Pierre Gagnon",num:"450 ••• ••63",dir:"in",time:"20 sept. · 14:40",dur:"4 min 30",score:"78 / 100",tag:"warm",sum:"Demande le prix d'une première rencontre. {a} a expliqué qu'elle est gratuite et l'a réservée.",next:"Première rencontre · 23 sept. à 10:00",tr:[["A","Bonjour, bureau de {n}, c'est {a}."],["Pierre","Combien coûte une première rencontre?"],["A","La première rencontre est gratuite. {n} a une disponibilité mercredi à 10 h. Ça vous convient?"],["Pierre","Oui, réservez-moi."]]}},
+msgs:{
+marc:{ch:"sms",name:"Marc Lefebvre",ini:"ML",time:"il y a 12 min",status:"done",preview:"Est-ce que vous êtes ouverts samedi?",thread:[["them","Bonjour! Est-ce que vous êtes ouverts samedi?","09:41"],["ai","Bonjour Marc! Oui, samedi de 9 h à 13 h. Voulez-vous que je vous réserve une plage?","09:41"],["them","Oui, 10 h si possible.","09:43"],["ai","C'est réservé : samedi 10 h. Vous recevrez un rappel vendredi soir.","09:43"]]},
+sophie:{ch:"wa",name:"Sophie Nguyen",ini:"SN",time:"il y a 40 min",status:"done",preview:"Je peux payer par virement?",thread:[["them","Bonjour, je peux payer par virement Interac?","09:14"],["ai","Bonjour Sophie! Oui, je vous envoie les coordonnées tout de suite.","09:14"]]},
+lea:{ch:"ig",name:"@lea.fitmtl",ini:"LF",time:"il y a 2 h",status:"wait",preview:"Tu fais des collaborations avec des marques?",thread:[["them","Salut! Tu fais des collaborations avec des marques? J'ai 18 k abonnés.","07:52"],["ai","Merci pour ton message! Peux-tu m'en dire plus sur ton audience et le type de collaboration?","07:52"],["them","Surtout des femmes 25-40 à Montréal. Je pensais à un reel + 3 stories.","07:58"]],draft:"Merci Léa! Je transmets ta proposition à {n} et je te reviens d'ici vendredi avec une réponse."},
+pierre:{ch:"fb",name:"Pierre Gagnon",ini:"PG",time:"hier",status:"done",preview:"Combien pour une première rencontre?",thread:[["them","Combien pour une première rencontre?","hier 14:31"],["ai","Bonjour Pierre! La première rencontre est gratuite. Mercredi 10 h, ça vous va?","hier 14:31"],["them","Parfait.","hier 14:36"]]},
+caroline:{ch:"ig",name:"Caroline M.",ini:"CM",time:"hier",status:"done",preview:"C'est quoi vos prix?",thread:[["them","Allo! C'est quoi vos prix?","hier 20:12"],["ai","Bonsoir Caroline! Je t'envoie la grille de prix en message privé. Veux-tu que je te réserve un appel de 15 min avec {n}?","hier 20:12"]]}},
+emails:{
+julie:{sender:"Julie Tanguay",email:"julie.tanguay@example.com",time:"08:12",status:"reply",subject:"Rendez-vous de jeudi",preview:"Est-ce que je peux venir accompagnée?",summary:"Julie confirme jeudi 9 h 30 et demande si elle peut venir accompagnée.",next:"Confirmer que c'est possible et rappeler l'adresse.",score:"—",context:["Cliente existante","Rendez-vous · jeu. 9:30","Appel · hier 18:20"],thread:[["Julie Tanguay","08:12","in","Bonjour {n},\n\nJe confirme jeudi 9 h 30. Est-ce que je peux venir accompagnée?\n\nMerci,\nJulie"]],draft:["Re: Rendez-vous de jeudi","Bonjour Julie,\n\nBien sûr, aucun problème. Au plaisir de vous voir jeudi à 9 h 30.\n\nBonne journée,\n{n}"]},
+karim:{sender:"Karim Benali",email:"karim.b@example.com",time:"07:40",status:"reply",subject:"Documents pour la soumission",preview:"Voici mes plans en pièces jointes.",summary:"Karim envoie ses plans avant l'appel découverte de 11 h.",next:"Accuser réception et confirmer l'appel de 11 h.",score:"91",context:["Lead chaud · 91/100","Appel · cette nuit","Découverte · auj. 11:00"],thread:[["Karim Benali","07:40","in","Bonjour,\n\nComme discuté avec {a}, voici mes plans en pièces jointes.\n\nKarim"]],draft:["Re: Documents pour la soumission","Bonjour Karim,\n\nMerci, j'ai bien reçu vos plans. On se parle aujourd'hui à 11 h comme prévu.\n\nÀ tantôt,\n{n}"]},
+alpha:{sender:"Fournisseur Alpha",email:"factures@alpha.example.com",time:"Hier",status:"handled",subject:"Facture #4821 — échéance vendredi",preview:"Montant dû : 640 $.",summary:"Facture de 640 $ à payer d'ici vendredi.",next:"Ajoutée à votre bilan de 18 h, rappel jeudi.",score:"—",context:["Facture · 640 $","Échéance · ven. 25 sept."],thread:[["Fournisseur Alpha","Hier · 16:02","in","Bonjour,\n\nVeuillez trouver ci-joint la facture #4821 de 640 $, payable d'ici le 25 septembre.\n\nMerci"]],draft:["Re: Facture #4821","Bonjour,\n\nMerci, bien reçu. Le paiement sera effectué d'ici vendredi.\n\n{n}"]},
+nadia:{sender:"Nadia Roy",email:"nadia.roy@example.com",time:"Lun",status:"handled",subject:"Changement de rendez-vous",preview:"Mardi ne fonctionne plus pour moi.",summary:"Nadia a demandé à déplacer son suivi. {a} l'a rappelée et l'a déplacé à aujourd'hui 14 h.",next:"Fait : suivi confirmé aujourd'hui à 14:00.",score:"—",context:["Suivi · auj. 14:00","Appel sortant · hier"],thread:[["Nadia Roy","Lun · 17:05","in","Bonjour, mardi ne fonctionne plus pour moi. Pouvez-vous me rappeler?"],["{a} pour {n}","Lun · 17:06","out","Bonjour Nadia, c'est noté. Je vous rappelle demain matin pour trouver un autre moment."]],draft:["Re: Changement de rendez-vous","Bonjour Nadia,\n\nC'est confirmé pour aujourd'hui 14 h. À tantôt!\n\n{n}"]}},
+events:{
+"2026-09-03":[["10:00","Rencontre · L. Gagnon","","Première rencontre"]],
+"2026-09-08":[["13:00","Rendez-vous · N. Chen","","Rendez-vous client"]],
+"2026-09-11":[["10:15","Suivi · P. Morin","outbound","Appel sortant par {a}"]],
+"2026-09-15":[["16:00","Consultation · E. Wilson","","Consultation"]],
+"2026-09-18":[["11:30","Rendez-vous · R. Fortin","","Rendez-vous client"]],
+"2026-09-22":[["09:30","Julie T.","","Rendez-vous client"],["11:00","Karim B.","","Appel découverte · nouveau client"],["14:00","Nadia R.","follow","Suivi · déplacé par {a}"],["16:30","Comptable","","Revue mensuelle"]],
+"2026-09-23":[["10:00","Pierre G.","","Première rencontre · gratuite"]],
+"2026-09-24":[["09:30","Julie T.","","Rendez-vous · confirmé"]],
+"2026-09-25":[["11:15","Suivi · Sophie N.","outbound","Appel sortant proposé par {a}"]],
+"2026-09-26":[["10:00","Marc L.","","Rendez-vous · réservé par SMS"]],
+"2026-09-28":[["09:00","Rendez-vous · C. Nguyen","","Rendez-vous client"]],
+"2026-09-30":[["16:30","Relance · Karim B.","outbound","Appel sortant par {a}"]]},
+slots:[["07:30","Briefing du matin","Agenda, appels de la nuit, courriels urgents, stats",true],["13:00","Point de midi","Ce qui est arrivé ce matin",false],["18:00","Bilan du soir","Ce qui est réglé, ce qui vous attend demain",true]],
+briefs:[
+{when:"Auj. · 07:30",type:"Matin",dur:"1 min 48",said:["4 rendez-vous aujourd'hui, le premier à 9 h 30","11 appels répondus cette nuit, 2 chauds","3 courriels attendent votre réponse","Post Instagram d'hier : 1 240 vues"],asked:["Répondre à Julie : confirmé jeudi → brouillon prêt à approuver","Rappel à 18 h pour le bilan"],tr:[["A","Bonjour {n}, c'est {a}. Voici ta journée : 4 rendez-vous, le premier à 9 h 30."],["A","J'ai répondu à 11 appels cette nuit, 2 sont chauds. 3 courriels attendent ta réponse."],["A","Et ton post Instagram d'hier : 1 240 vues."],["{n}","Réponds à Julie que je confirme jeudi."],["A","C'est fait. Je te rappelle à 18 h pour le bilan."]]},
+{when:"Hier · 18:00",type:"Soir",dur:"2 min 05",said:["Nadia déplacée à demain 14 h","Facture Alpha de 640 $ due vendredi","Nouveau lead : Pierre Gagnon, rencontre mercredi"],asked:["Rappel jeudi pour la facture","Préparer l'agenda de demain"],tr:[["A","Bonsoir {n}, c'est {a} pour le bilan. Nadia est déplacée à demain 14 h."],["A","La facture d'Alpha, 640 $, est due vendredi. Et Pierre Gagnon vient mercredi pour une première rencontre."],["{n}","Rappelle-moi la facture jeudi."],["A","C'est noté. Bonne soirée!"]]},
+{when:"Hier · 07:30",type:"Matin",dur:"1 min 36",said:["3 rendez-vous","6 appels répondus, 1 chaud","Post Facebook : 430 personnes atteintes"],asked:["Déplacer le suivi de Nadia"],tr:[["A","Bonjour {n}, c'est {a}. 3 rendez-vous aujourd'hui, le premier à 10 h."],["A","6 appels cette nuit, dont un chaud. Ton post Facebook a atteint 430 personnes."],["{n}","Nadia ne peut pas mardi, trouve-lui autre chose."],["A","Je la rappelle ce matin et je te confirme."]]}],
+social:[
+{net:"ig",name:"Instagram",handle:"@votrecommerce",post:"Carrousel · 5 conseils pour bien commencer",when:"Hier · 19:00",metrics:[["1 240","vues"],["86","j'aime"],["12","commentaires"],["9","partages"],["31","enregistrements"],["+14","abonnés"]],bars:[320,410,380,520,460,610,1240]},
+{net:"fb",name:"Facebook",handle:"Votre page",post:"Photo · nos horaires d'automne",when:"Lun · 12:10",metrics:[["430","personnes atteintes"],["21","réactions"],["3","commentaires"],["4","partages"],["18","clics"],["+3","mentions J'aime"]],bars:[120,180,150,430,210,190,240]}],
+dms:[["lea","LF","@lea.fitmtl","Instagram · partenariat · attend votre feu vert","warm"],["caroline","CM","Caroline M.","Instagram · prix · {a} a répondu","ok"],["pierre","PG","Pierre Gagnon","Facebook · rencontre réservée mercredi","ok"]],
+contacts:[["KB","Karim Benali","Nouveau client · soumission","hot"],["JT","Julie Tanguay","Cliente depuis 2024","ok"],["PG","Pierre Gagnon","Nouveau · première rencontre mer.","warm"],["NR","Nadia Roy","Cliente · suivi aujourd'hui","ok"],["ML","Marc Lefebvre","Client · RDV samedi","ok"],["LF","@lea.fitmtl","Créatrice · partenariat","warm"]],
+does:[["Répond en moins de 10 secondes","24 h / 24, 7 j / 7, FR · EN · ES","active"],["Prend et confirme vos rendez-vous","Directement dans votre calendrier","active"],["Répond aux textos","Confirmations et rappels","active"],["Briefings par téléphone","Aux heures que vous choisissez","soon"],["WhatsApp et DM Instagram / Facebook","Réponses et qualification","soon"],["Courriel unifié","Résumés et brouillons à approuver","soon"]],
+chatHello:"Bonjour {n}! Je suis {a}. Demandez-moi votre agenda, vos messages ou vos courriels — ou dites-moi quoi répondre à un client.",
+sugg:["Qu'est-ce que j'ai demain?","Des appels importants?","Réponds à Julie que je confirme jeudi","Mes courriels urgents?"],
+chat:[
+[/demain|tomorrow|mañana/i,"Demain, mercredi 23 : 1 rendez-vous.\n• 10 h 00 — Pierre Gagnon, première rencontre (gratuite)\nJ'ai bloqué 12 h à 13 h pour votre dîner."],
+[/aujourd|today|hoy|journée/i,"Aujourd'hui : 4 rendez-vous.\n• 9 h 30 — Julie Tanguay\n• 11 h 00 — Karim Benali (appel découverte)\n• 14 h 00 — Nadia Roy (suivi)\n• 16 h 30 — Comptable"],
+[/julie/i,"C'est fait : brouillon prêt pour Julie — « Bien sûr, au plaisir de vous voir jeudi à 9 h 30. » Je l'envoie dès que vous l'approuvez dans Courriel."],
+[/appel|call|llamad/i,"2 appels importants depuis hier :\n• Karim Benali — soumission, budget confirmé (chaud)\n• Pierre Gagnon — première rencontre mercredi\nLe reste est réglé."],
+[/courriel|email|correo|mail/i,"2 courriels attendent votre réponse (Julie et Karim) — les brouillons sont prêts. La facture Alpha (640 $) est due vendredi : je vous le rappelle jeudi."],
+[/instagram|post|réseau|reseau|dm/i,"Votre post d'hier a fait 1 240 vues, 86 j'aime et 12 commentaires. @lea.fitmtl propose une collaboration : j'attends votre feu vert."],
+[/déplace|deplace|move|mueve|annule|cancel/i,"D'accord. Quel rendez-vous voulez-vous déplacer, et à quel moment? Je confirme ensuite avec le client par texto."],
+[/merci|thanks|gracias/i,"Avec plaisir! Je vous rappelle à 18 h pour le bilan."]],
+chatFallback:"Je note votre demande. Si c'est hors de mes instructions, notre équipe prend le relais et vous revient rapidement.",
+sim:{call:{ini:"JP",name:"Jordan P.",num:"514 ••• ••19",dir:"in",time:"À l'instant",dur:"3 min 08",score:"84 / 100",tag:"hot",sum:"Veut un rendez-vous cette semaine, budget confirmé.",next:"Rendez-vous · 25 sept. à 11:30",tr:[["A","Bonjour, bureau de {n}, c'est {a}. Comment puis-je vous aider?"],["Jordan","J'aimerais prendre rendez-vous cette semaine."],["A","J'ai une disponibilité vendredi à 11 h 30. Je vous la réserve?"],["Jordan","Oui, merci."]]},recent:["JP","Jordan P.","Appel · à l'instant · rendez-vous vendredi","hot"],ev:["11:30","Jordan P.","","Rendez-vous · réservé par {a}"]}
+},
+en:{
+kpis:[["41","Calls answered","↑ 6 this week",1],["58","Messages handled","SMS · WhatsApp · DM",0],["12","Appointments booked","↑ 3 this week",1],["≈ 9 h","Time saved","estimate this week",0]],
+recent:[["KB","Karim Benali","Call · last night 11:48 PM · quote","hot"],["LF","@lea.fitmtl","Instagram · 2 hrs ago · partnership","warm"],["JT","Julie Tanguay","Email · 20 min ago · Thursday appointment","ok"]],
+visits:[["Today","22","11:00 — Karim Benali","Discovery call · new client","ok"],["Wed","23","10:00 — Pierre Gagnon","First meeting · free","ok"]],
+calls:{
+karim:{ini:"KB",name:"Karim Benali",num:"514 ••• ••48",dir:"in",time:"Last night · 11:48 PM",dur:"3 min 12",score:"91 / 100",tag:"hot",sum:"New prospect: wants a quote, budget confirmed, wants to start this month.",next:"Discovery call · today at 11:00",tr:[["A","Good evening, {n}'s office, this is {a}. How can I help?"],["Karim","I'd like a quote. My budget is ready and I want to start this month."],["A","Perfect. May I have your email to send you the confirmation?"],["Karim","karim.b@example.com."],["A","Thank you. {n} is free tomorrow at 11 for a discovery call. Shall I book it?"],["Karim","Yes, perfect."]]},
+julie:{ini:"JT",name:"Julie Tanguay",num:"438 ••• ••21",dir:"in",time:"Yesterday · 6:20 PM",dur:"1 min 04",score:"—",tag:"ok",sum:"Existing client. Confirms her Thursday 9:30 appointment and asks where to park.",next:"Done: text sent with directions",tr:[["A","Hi Julie, it's {a}, {n}'s assistant."],["Julie","Confirming Thursday at 9:30. Where do I park?"],["A","I'm texting you the address and directions right now."]]},
+nadia:{ini:"NR",name:"Nadia Roy",num:"514 ••• ••07",dir:"out",time:"Yesterday · 10:15 AM",dur:"2 min 05",score:"—",tag:"ok",sum:"Outbound callback: Tuesday no longer worked for Nadia. Follow-up moved to today at 2 PM.",next:"Done: calendar updated · Sep 22 at 2:00 PM",tr:[["A","Hi Nadia, it's {a}, {n}'s assistant. I see Tuesday no longer works for you."],["Nadia","Yes, sorry. Anything else this week?"],["A","Tomorrow at 2 PM? I'll update {n}'s calendar."],["Nadia","Perfect, thanks."]]},
+unknown:{ini:"IN",name:"Unknown number",num:"Hidden number",dir:"missed",time:"Sep 20 · 7:02 AM",dur:"0 min 00",score:"—",tag:"cold",sum:"The caller hung up before pickup. Hidden number: no follow-up possible.",next:"No action",tr:[]},
+pierre:{ini:"PG",name:"Pierre Gagnon",num:"450 ••• ••63",dir:"in",time:"Sep 20 · 2:40 PM",dur:"4 min 30",score:"78 / 100",tag:"warm",sum:"Asked the price of a first meeting. {a} explained it's free and booked it.",next:"First meeting · Sep 23 at 10:00",tr:[["A","Hello, {n}'s office, this is {a}."],["Pierre","How much is a first meeting?"],["A","The first meeting is free. {n} is available Wednesday at 10. Does that work?"],["Pierre","Yes, book me in."]]}},
+msgs:{
+marc:{ch:"sms",name:"Marc Lefebvre",ini:"ML",time:"12 min ago",status:"done",preview:"Are you open Saturday?",thread:[["them","Hi! Are you open Saturday?","9:41"],["ai","Hi Marc! Yes, Saturday 9 AM to 1 PM. Want me to book you a slot?","9:41"],["them","Yes, 10 if possible.","9:43"],["ai","Booked: Saturday at 10. You'll get a reminder Friday evening.","9:43"]]},
+sophie:{ch:"wa",name:"Sophie Nguyen",ini:"SN",time:"40 min ago",status:"done",preview:"Can I pay by e-transfer?",thread:[["them","Hi, can I pay by Interac e-transfer?","9:14"],["ai","Hi Sophie! Yes — sending you the details right now.","9:14"]]},
+lea:{ch:"ig",name:"@lea.fitmtl",ini:"LF",time:"2 hrs ago",status:"wait",preview:"Do you do brand collaborations?",thread:[["them","Hey! Do you do brand collaborations? I have 18K followers.","7:52"],["ai","Thanks for reaching out! Can you tell me more about your audience and the kind of collaboration?","7:52"],["them","Mostly women 25–40 in Montréal. I was thinking one reel + 3 stories.","7:58"]],draft:"Thanks Léa! I'm passing your proposal on to {n} and will get back to you by Friday."},
+pierre:{ch:"fb",name:"Pierre Gagnon",ini:"PG",time:"yesterday",status:"done",preview:"How much for a first meeting?",thread:[["them","How much for a first meeting?","yest. 2:31"],["ai","Hi Pierre! The first meeting is free. Does Wednesday at 10 work?","yest. 2:31"],["them","Perfect.","yest. 2:36"]]},
+caroline:{ch:"ig",name:"Caroline M.",ini:"CM",time:"yesterday",status:"done",preview:"What are your prices?",thread:[["them","Hi! What are your prices?","yest. 8:12 PM"],["ai","Hi Caroline! I'm sending you the price list by DM. Want me to book a 15-min call with {n}?","yest. 8:12 PM"]]}},
+emails:{
+julie:{sender:"Julie Tanguay",email:"julie.tanguay@example.com",time:"8:12",status:"reply",subject:"Thursday's appointment",preview:"Can I bring someone with me?",summary:"Julie confirms Thursday 9:30 and asks if she can bring someone.",next:"Confirm it's fine and remind her of the address.",score:"—",context:["Existing client","Appointment · Thu 9:30","Call · yesterday 6:20 PM"],thread:[["Julie Tanguay","8:12","in","Hi {n},\n\nConfirming Thursday at 9:30. Can I bring someone with me?\n\nThanks,\nJulie"]],draft:["Re: Thursday's appointment","Hi Julie,\n\nOf course, no problem at all. See you Thursday at 9:30.\n\nHave a great day,\n{n}"]},
+karim:{sender:"Karim Benali",email:"karim.b@example.com",time:"7:40",status:"reply",subject:"Documents for the quote",preview:"Here are my plans attached.",summary:"Karim sent his plans ahead of the 11:00 discovery call.",next:"Acknowledge and confirm the 11:00 call.",score:"91",context:["Hot lead · 91/100","Call · last night","Discovery · today 11:00"],thread:[["Karim Benali","7:40","in","Hello,\n\nAs discussed with {a}, here are my plans attached.\n\nKarim"]],draft:["Re: Documents for the quote","Hi Karim,\n\nThanks, I've received your plans. Talk to you today at 11 as planned.\n\nSee you soon,\n{n}"]},
+alpha:{sender:"Alpha Supplies",email:"billing@alpha.example.com",time:"Yesterday",status:"handled",subject:"Invoice #4821 — due Friday",preview:"Amount due: $640.",summary:"$640 invoice due by Friday.",next:"Added to your 6 PM wrap-up, reminder Thursday.",score:"—",context:["Invoice · $640","Due · Fri Sep 25"],thread:[["Alpha Supplies","Yesterday · 4:02 PM","in","Hello,\n\nPlease find attached invoice #4821 for $640, payable by September 25.\n\nThank you"]],draft:["Re: Invoice #4821","Hello,\n\nThanks, received. Payment will be made by Friday.\n\n{n}"]},
+nadia:{sender:"Nadia Roy",email:"nadia.roy@example.com",time:"Mon",status:"handled",subject:"Appointment change",preview:"Tuesday no longer works for me.",summary:"Nadia asked to move her follow-up. {a} called her back and moved it to today at 2 PM.",next:"Done: follow-up confirmed today at 2:00 PM.",score:"—",context:["Follow-up · today 2:00 PM","Outbound call · yesterday"],thread:[["Nadia Roy","Mon · 5:05 PM","in","Hi, Tuesday no longer works for me. Could you call me back?"],["{a} for {n}","Mon · 5:06 PM","out","Hi Nadia, noted. I'll call you tomorrow morning to find another time."]],draft:["Re: Appointment change","Hi Nadia,\n\nConfirmed for today at 2 PM. See you then!\n\n{n}"]}},
+events:{
+"2026-09-03":[["10:00","Meeting · L. Gagnon","","First meeting"]],
+"2026-09-08":[["13:00","Appointment · N. Chen","","Client appointment"]],
+"2026-09-11":[["10:15","Follow-up · P. Morin","outbound","Outbound call by {a}"]],
+"2026-09-15":[["16:00","Consultation · E. Wilson","","Consultation"]],
+"2026-09-18":[["11:30","Appointment · R. Fortin","","Client appointment"]],
+"2026-09-22":[["09:30","Julie T.","","Client appointment"],["11:00","Karim B.","","Discovery call · new client"],["14:00","Nadia R.","follow","Follow-up · moved by {a}"],["16:30","Accountant","","Monthly review"]],
+"2026-09-23":[["10:00","Pierre G.","","First meeting · free"]],
+"2026-09-24":[["09:30","Julie T.","","Appointment · confirmed"]],
+"2026-09-25":[["11:15","Follow-up · Sophie N.","outbound","Outbound call suggested by {a}"]],
+"2026-09-26":[["10:00","Marc L.","","Appointment · booked by SMS"]],
+"2026-09-28":[["09:00","Appointment · C. Nguyen","","Client appointment"]],
+"2026-09-30":[["16:30","Follow-up · Karim B.","outbound","Outbound call by {a}"]]},
+slots:[["07:30","Morning briefing","Schedule, overnight calls, urgent email, stats",true],["13:00","Midday check-in","What happened this morning",false],["18:00","Evening wrap-up","What's done, what's waiting tomorrow",true]],
+briefs:[
+{when:"Today · 7:30 AM",type:"Morning",dur:"1 min 48",said:["4 appointments today, first at 9:30","11 calls answered overnight, 2 hot","3 emails waiting for your reply","Yesterday's Instagram post: 1,240 views"],asked:["Reply to Julie: confirmed Thursday → draft ready to approve","Call back at 6 PM for the wrap-up"],tr:[["A","Good morning {n}, it's {a}. Here's your day: 4 appointments, the first at 9:30."],["A","I answered 11 calls overnight — 2 are hot. 3 emails are waiting for your reply."],["A","And yesterday's Instagram post: 1,240 views."],["{n}","Tell Julie I'm confirmed for Thursday."],["A","Done. I'll call you back at 6 PM for the wrap-up."]]},
+{when:"Yesterday · 6:00 PM",type:"Evening",dur:"2 min 05",said:["Nadia moved to tomorrow at 2 PM","Alpha invoice of $640 due Friday","New lead: Pierre Gagnon, meeting Wednesday"],asked:["Reminder Thursday for the invoice","Prepare tomorrow's schedule"],tr:[["A","Good evening {n}, it's {a} with your wrap-up. Nadia is moved to tomorrow at 2 PM."],["A","Alpha's invoice, $640, is due Friday. And Pierre Gagnon is coming Wednesday for a first meeting."],["{n}","Remind me about the invoice Thursday."],["A","Noted. Have a good evening!"]]},
+{when:"Yesterday · 7:30 AM",type:"Morning",dur:"1 min 36",said:["3 appointments","6 calls answered, 1 hot","Facebook post: 430 people reached"],asked:["Move Nadia's follow-up"],tr:[["A","Good morning {n}, it's {a}. 3 appointments today, the first at 10."],["A","6 calls overnight, one of them hot. Your Facebook post reached 430 people."],["{n}","Nadia can't do Tuesday — find her something else."],["A","I'll call her this morning and confirm with you."]]}],
+social:[
+{net:"ig",name:"Instagram",handle:"@yourbusiness",post:"Carousel · 5 tips to get started",when:"Yesterday · 7:00 PM",metrics:[["1,240","views"],["86","likes"],["12","comments"],["9","shares"],["31","saves"],["+14","followers"]],bars:[320,410,380,520,460,610,1240]},
+{net:"fb",name:"Facebook",handle:"Your page",post:"Photo · our fall hours",when:"Mon · 12:10 PM",metrics:[["430","people reached"],["21","reactions"],["3","comments"],["4","shares"],["18","clicks"],["+3","page likes"]],bars:[120,180,150,430,210,190,240]}],
+dms:[["lea","LF","@lea.fitmtl","Instagram · partnership · waiting for your go-ahead","warm"],["caroline","CM","Caroline M.","Instagram · pricing · {a} replied","ok"],["pierre","PG","Pierre Gagnon","Facebook · meeting booked Wednesday","ok"]],
+contacts:[["KB","Karim Benali","New client · quote","hot"],["JT","Julie Tanguay","Client since 2024","ok"],["PG","Pierre Gagnon","New · first meeting Wed","warm"],["NR","Nadia Roy","Client · follow-up today","ok"],["ML","Marc Lefebvre","Client · appt Saturday","ok"],["LF","@lea.fitmtl","Creator · partnership","warm"]],
+does:[["Answers in under 10 seconds","24/7, FR · EN · ES","active"],["Books and confirms appointments","Right in your calendar","active"],["Replies to texts","Confirmations and reminders","active"],["Phone briefings","At the times you choose","soon"],["WhatsApp and Instagram / Facebook DMs","Replies and qualification","soon"],["Unified email","Summaries and drafts to approve","soon"]],
+chatHello:"Hi {n}! I'm {a}. Ask me about your schedule, messages or email — or tell me what to reply to a client.",
+sugg:["What do I have tomorrow?","Any important calls?","Tell Julie I'm confirmed Thursday","Any urgent emails?"],
+chat:[
+[/demain|tomorrow|mañana/i,"Tomorrow, Wednesday the 23rd: 1 appointment.\n• 10:00 — Pierre Gagnon, first meeting (free)\nI blocked 12–1 PM for lunch."],
+[/aujourd|today|hoy/i,"Today: 4 appointments.\n• 9:30 — Julie Tanguay\n• 11:00 — Karim Benali (discovery call)\n• 2:00 PM — Nadia Roy (follow-up)\n• 4:30 PM — Accountant"],
+[/julie/i,"Done: draft ready for Julie — “Of course, see you Thursday at 9:30.” I'll send it as soon as you approve it in Email."],
+[/appel|call|llamad/i,"2 important calls since yesterday:\n• Karim Benali — quote, budget confirmed (hot)\n• Pierre Gagnon — first meeting Wednesday\nEverything else is handled."],
+[/courriel|email|correo|mail/i,"2 emails need your reply (Julie and Karim) — drafts are ready. The Alpha invoice ($640) is due Friday: I'll remind you Thursday."],
+[/instagram|post|social|dm/i,"Yesterday's post got 1,240 views, 86 likes and 12 comments. @lea.fitmtl is proposing a collaboration — waiting for your go-ahead."],
+[/move|déplace|mueve|cancel|reschedule/i,"Sure. Which appointment should I move, and to when? I'll confirm with the client by text."],
+[/thanks|thank you|merci|gracias/i,"My pleasure! I'll call you at 6 PM for the wrap-up."]],
+chatFallback:"Noted. If this is outside my instructions, our team will take over and get back to you quickly.",
+sim:{call:{ini:"JP",name:"Jordan P.",num:"514 ••• ••19",dir:"in",time:"Just now",dur:"3 min 08",score:"84 / 100",tag:"hot",sum:"Wants an appointment this week, budget confirmed.",next:"Appointment · Sep 25 at 11:30",tr:[["A","Hello, {n}'s office, this is {a}. How can I help?"],["Jordan","I'd like to book an appointment this week."],["A","I have Friday at 11:30 available. Shall I book it?"],["Jordan","Yes, thanks."]]},recent:["JP","Jordan P.","Call · just now · appointment Friday","hot"],ev:["11:30","Jordan P.","","Appointment · booked by {a}"]}
+},
+es:{
+kpis:[["41","Llamadas atendidas","↑ 6 esta semana",1],["58","Mensajes gestionados","SMS · WhatsApp · DM",0],["12","Citas agendadas","↑ 3 esta semana",1],["≈ 9 h","Tiempo liberado","estimación esta semana",0]],
+recent:[["KB","Karim Benali","Llamada · anoche 23:48 · presupuesto","hot"],["LF","@lea.fitmtl","Instagram · hace 2 h · alianza","warm"],["JT","Julie Tanguay","Correo · hace 20 min · cita del jueves","ok"]],
+visits:[["Hoy","22","11:00 — Karim Benali","Llamada de descubrimiento · cliente nuevo","ok"],["Mié","23","10:00 — Pierre Gagnon","Primera reunión · gratis","ok"]],
+calls:{
+karim:{ini:"KB",name:"Karim Benali",num:"514 ••• ••48",dir:"in",time:"Anoche · 23:48",dur:"3 min 12",score:"91 / 100",tag:"hot",sum:"Cliente potencial: pide presupuesto, presupuesto confirmado, quiere empezar este mes.",next:"Llamada de descubrimiento · hoy a las 11:00",tr:[["A","Buenas noches, oficina de {n}, habla {a}. ¿En qué le puedo ayudar?"],["Karim","Quisiera un presupuesto. Tengo el dinero listo y quiero empezar este mes."],["A","Perfecto. ¿Me da su correo para enviarle la confirmación?"],["Karim","karim.b@example.com."],["A","Gracias. {n} tiene libre mañana a las 11:00 para una llamada de descubrimiento. ¿Se la agendo?"],["Karim","Sí, perfecto."]]},
+julie:{ini:"JT",name:"Julie Tanguay",num:"438 ••• ••21",dir:"in",time:"Ayer · 18:20",dur:"1 min 04",score:"—",tag:"ok",sum:"Clienta existente. Confirma su cita del jueves 9:30 y pregunta dónde estacionar.",next:"Hecho: mensaje enviado con el mapa",tr:[["A","Hola Julie, soy {a}, {the} de {n}."],["Julie","Confirmo el jueves a las 9:30. ¿Dónde me estaciono?"],["A","Le envío la dirección y el mapa por mensaje ahora mismo."]]},
+nadia:{ini:"NR",name:"Nadia Roy",num:"514 ••• ••07",dir:"out",time:"Ayer · 10:15",dur:"2 min 05",score:"—",tag:"ok",sum:"Llamada saliente: el martes ya no le funcionaba a Nadia. Seguimiento movido a hoy a las 14:00.",next:"Hecho: agenda actualizada · 22 sept. a las 14:00",tr:[["A","Hola Nadia, soy {a}, {the} de {n}. Veo que el martes ya no le funciona."],["Nadia","Sí, perdón. ¿Tienen otro espacio esta semana?"],["A","¿Mañana a las 14:00? Actualizo la agenda de {n}."],["Nadia","Perfecto, gracias."]]},
+unknown:{ini:"IN",name:"Número desconocido",num:"Número oculto",dir:"missed",time:"20 sept. · 07:02",dur:"0 min 00",score:"—",tag:"cold",sum:"Quien llamó colgó antes de ser atendido. Número oculto: no es posible hacer seguimiento.",next:"Sin acción",tr:[]},
+pierre:{ini:"PG",name:"Pierre Gagnon",num:"450 ••• ••63",dir:"in",time:"20 sept. · 14:40",dur:"4 min 30",score:"78 / 100",tag:"warm",sum:"Preguntó el precio de una primera reunión. {a} le explicó que es gratis y la agendó.",next:"Primera reunión · 23 sept. a las 10:00",tr:[["A","Hola, oficina de {n}, habla {a}."],["Pierre","¿Cuánto cuesta una primera reunión?"],["A","La primera reunión es gratis. {n} tiene libre el miércoles a las 10:00. ¿Le funciona?"],["Pierre","Sí, agéndeme."]]}},
+msgs:{
+marc:{ch:"sms",name:"Marc Lefebvre",ini:"ML",time:"hace 12 min",status:"done",preview:"¿Abren el sábado?",thread:[["them","¡Hola! ¿Abren el sábado?","09:41"],["ai","¡Hola Marc! Sí, el sábado de 9:00 a 13:00. ¿Quiere que le reserve un espacio?","09:41"],["them","Sí, a las 10 si se puede.","09:43"],["ai","Reservado: sábado a las 10:00. Le llegará un recordatorio el viernes en la noche.","09:43"]]},
+sophie:{ch:"wa",name:"Sophie Nguyen",ini:"SN",time:"hace 40 min",status:"done",preview:"¿Puedo pagar por transferencia?",thread:[["them","Hola, ¿puedo pagar por transferencia Interac?","09:14"],["ai","¡Hola Sophie! Sí, le envío los datos ahora mismo.","09:14"]]},
+lea:{ch:"ig",name:"@lea.fitmtl",ini:"LF",time:"hace 2 h",status:"wait",preview:"¿Haces colaboraciones con marcas?",thread:[["them","¡Hola! ¿Haces colaboraciones con marcas? Tengo 18 mil seguidores.","07:52"],["ai","¡Gracias por escribir! ¿Me cuentas más sobre tu audiencia y el tipo de colaboración?","07:52"],["them","Sobre todo mujeres de 25 a 40 en Montreal. Pensaba en un reel + 3 stories.","07:58"]],draft:"¡Gracias Léa! Le paso tu propuesta a {n} y te respondo antes del viernes."},
+pierre:{ch:"fb",name:"Pierre Gagnon",ini:"PG",time:"ayer",status:"done",preview:"¿Cuánto cuesta una primera reunión?",thread:[["them","¿Cuánto cuesta una primera reunión?","ayer 14:31"],["ai","¡Hola Pierre! La primera reunión es gratis. ¿Le va el miércoles a las 10:00?","ayer 14:31"],["them","Perfecto.","ayer 14:36"]]},
+caroline:{ch:"ig",name:"Caroline M.",ini:"CM",time:"ayer",status:"done",preview:"¿Cuáles son sus precios?",thread:[["them","¡Hola! ¿Cuáles son sus precios?","ayer 20:12"],["ai","¡Hola Caroline! Te envío la lista de precios por DM. ¿Quieres que te agende una llamada de 15 min con {n}?","ayer 20:12"]]}},
+emails:{
+julie:{sender:"Julie Tanguay",email:"julie.tanguay@example.com",time:"08:12",status:"reply",subject:"Cita del jueves",preview:"¿Puedo ir acompañada?",summary:"Julie confirma el jueves 9:30 y pregunta si puede ir acompañada.",next:"Confirmar que sí y recordarle la dirección.",score:"—",context:["Clienta existente","Cita · jue. 9:30","Llamada · ayer 18:20"],thread:[["Julie Tanguay","08:12","in","Hola {n}:\n\nConfirmo el jueves a las 9:30. ¿Puedo ir acompañada?\n\nGracias,\nJulie"]],draft:["Re: Cita del jueves","Hola Julie:\n\nClaro, sin problema. Nos vemos el jueves a las 9:30.\n\nBuen día,\n{n}"]},
+karim:{sender:"Karim Benali",email:"karim.b@example.com",time:"07:40",status:"reply",subject:"Documentos para el presupuesto",preview:"Adjunto mis planos.",summary:"Karim envió sus planos antes de la llamada de descubrimiento de las 11:00.",next:"Acusar recibo y confirmar la llamada de las 11:00.",score:"91",context:["Lead caliente · 91/100","Llamada · anoche","Descubrimiento · hoy 11:00"],thread:[["Karim Benali","07:40","in","Hola:\n\nComo hablé con {a}, adjunto mis planos.\n\nKarim"]],draft:["Re: Documentos para el presupuesto","Hola Karim:\n\nGracias, recibí tus planos. Hablamos hoy a las 11:00 como quedamos.\n\nSaludos,\n{n}"]},
+alpha:{sender:"Proveedor Alpha",email:"facturas@alpha.example.com",time:"Ayer",status:"handled",subject:"Factura #4821 — vence el viernes",preview:"Monto: 640 $.",summary:"Factura de 640 $ por pagar antes del viernes.",next:"Agregada a tu balance de las 18:00, recordatorio el jueves.",score:"—",context:["Factura · 640 $","Vence · vie. 25 sept."],thread:[["Proveedor Alpha","Ayer · 16:02","in","Hola:\n\nAdjuntamos la factura #4821 por 640 $, pagadera antes del 25 de septiembre.\n\nGracias"]],draft:["Re: Factura #4821","Hola:\n\nGracias, recibida. El pago se hará antes del viernes.\n\n{n}"]},
+nadia:{sender:"Nadia Roy",email:"nadia.roy@example.com",time:"Lun",status:"handled",subject:"Cambio de cita",preview:"El martes ya no me funciona.",summary:"Nadia pidió mover su seguimiento. {a} la llamó y lo movió a hoy a las 14:00.",next:"Hecho: seguimiento confirmado hoy a las 14:00.",score:"—",context:["Seguimiento · hoy 14:00","Llamada saliente · ayer"],thread:[["Nadia Roy","Lun · 17:05","in","Hola, el martes ya no me funciona. ¿Me pueden llamar?"],["{a} para {n}","Lun · 17:06","out","Hola Nadia, anotado. La llamo mañana temprano para encontrar otro horario."]],draft:["Re: Cambio de cita","Hola Nadia:\n\nConfirmado para hoy a las 14:00. ¡Nos vemos!\n\n{n}"]}},
+events:{
+"2026-09-03":[["10:00","Reunión · L. Gagnon","","Primera reunión"]],
+"2026-09-08":[["13:00","Cita · N. Chen","","Cita con cliente"]],
+"2026-09-11":[["10:15","Seguimiento · P. Morin","outbound","Llamada saliente de {a}"]],
+"2026-09-15":[["16:00","Consulta · E. Wilson","","Consulta"]],
+"2026-09-18":[["11:30","Cita · R. Fortin","","Cita con cliente"]],
+"2026-09-22":[["09:30","Julie T.","","Cita con cliente"],["11:00","Karim B.","","Llamada de descubrimiento · cliente nuevo"],["14:00","Nadia R.","follow","Seguimiento · movido por {a}"],["16:30","Contador","","Revisión mensual"]],
+"2026-09-23":[["10:00","Pierre G.","","Primera reunión · gratis"]],
+"2026-09-24":[["09:30","Julie T.","","Cita · confirmada"]],
+"2026-09-25":[["11:15","Seguimiento · Sophie N.","outbound","Llamada saliente propuesta por {a}"]],
+"2026-09-26":[["10:00","Marc L.","","Cita · reservada por SMS"]],
+"2026-09-28":[["09:00","Cita · C. Nguyen","","Cita con cliente"]],
+"2026-09-30":[["16:30","Seguimiento · Karim B.","outbound","Llamada saliente de {a}"]]},
+slots:[["07:30","Briefing de la mañana","Agenda, llamadas de la noche, correos urgentes, métricas",true],["13:00","Punto del mediodía","Lo que pasó en la mañana",false],["18:00","Balance de la tarde","Lo resuelto y lo que te espera mañana",true]],
+briefs:[
+{when:"Hoy · 07:30",type:"Mañana",dur:"1 min 48",said:["4 citas hoy, la primera a las 9:30","11 llamadas atendidas anoche, 2 calientes","3 correos esperan tu respuesta","Post de Instagram de ayer: 1 240 vistas"],asked:["Responder a Julie: confirmado el jueves → borrador listo para aprobar","Llamar a las 18:00 para el balance"],tr:[["A","Buenos días {n}, soy {a}. Tu día: 4 citas, la primera a las 9:30."],["A","Contesté 11 llamadas anoche, 2 están calientes. 3 correos esperan tu respuesta."],["A","Y tu post de Instagram de ayer: 1 240 vistas."],["{n}","Respóndele a Julie que confirmo el jueves."],["A","Listo. Te llamo a las 18:00 para el balance."]]},
+{when:"Ayer · 18:00",type:"Tarde",dur:"2 min 05",said:["Nadia movida a mañana a las 14:00","Factura de Alpha de 640 $ vence el viernes","Lead nuevo: Pierre Gagnon, reunión el miércoles"],asked:["Recordatorio el jueves para la factura","Preparar la agenda de mañana"],tr:[["A","Buenas tardes {n}, soy {a} con el balance. Nadia quedó para mañana a las 14:00."],["A","La factura de Alpha, 640 $, vence el viernes. Y Pierre Gagnon viene el miércoles a una primera reunión."],["{n}","Recuérdame la factura el jueves."],["A","Anotado. ¡Buena noche!"]]},
+{when:"Ayer · 07:30",type:"Mañana",dur:"1 min 36",said:["3 citas","6 llamadas atendidas, 1 caliente","Post de Facebook: 430 personas alcanzadas"],asked:["Mover el seguimiento de Nadia"],tr:[["A","Buenos días {n}, soy {a}. 3 citas hoy, la primera a las 10:00."],["A","6 llamadas anoche, una caliente. Tu post de Facebook llegó a 430 personas."],["{n}","Nadia no puede el martes, búscale otro horario."],["A","La llamo esta mañana y te confirmo."]]}],
+social:[
+{net:"ig",name:"Instagram",handle:"@tunegocio",post:"Carrusel · 5 consejos para empezar",when:"Ayer · 19:00",metrics:[["1 240","vistas"],["86","me gusta"],["12","comentarios"],["9","compartidos"],["31","guardados"],["+14","seguidores"]],bars:[320,410,380,520,460,610,1240]},
+{net:"fb",name:"Facebook",handle:"Tu página",post:"Foto · nuestro horario de otoño",when:"Lun · 12:10",metrics:[["430","personas alcanzadas"],["21","reacciones"],["3","comentarios"],["4","compartidos"],["18","clics"],["+3","me gusta de la página"]],bars:[120,180,150,430,210,190,240]}],
+dms:[["lea","LF","@lea.fitmtl","Instagram · alianza · espera tu luz verde","warm"],["caroline","CM","Caroline M.","Instagram · precios · {a} respondió","ok"],["pierre","PG","Pierre Gagnon","Facebook · reunión agendada el miércoles","ok"]],
+contacts:[["KB","Karim Benali","Cliente nuevo · presupuesto","hot"],["JT","Julie Tanguay","Clienta desde 2024","ok"],["PG","Pierre Gagnon","Nuevo · primera reunión mié.","warm"],["NR","Nadia Roy","Clienta · seguimiento hoy","ok"],["ML","Marc Lefebvre","Cliente · cita el sábado","ok"],["LF","@lea.fitmtl","Creadora · alianza","warm"]],
+does:[["Responde en menos de 10 segundos","24/7, FR · EN · ES","active"],["Agenda y confirma tus citas","Directamente en tu calendario","active"],["Responde SMS","Confirmaciones y recordatorios","active"],["Briefings por llamada","A las horas que elijas","soon"],["WhatsApp y DMs de Instagram / Facebook","Respuestas y calificación","soon"],["Correo unificado","Resúmenes y borradores para aprobar","soon"]],
+chatHello:"¡Hola {n}! Soy {a}. Pregúntame por tu agenda, tus mensajes o tus correos — o dime qué responderle a un cliente.",
+sugg:["¿Qué tengo mañana?","¿Llamadas importantes?","Respóndele a Julie que confirmo el jueves","¿Correos urgentes?"],
+chat:[
+[/mañana|manana|tomorrow|demain/i,"Mañana, miércoles 23: 1 cita.\n• 10:00 — Pierre Gagnon, primera reunión (gratis)\nBloqueé de 12:00 a 13:00 para tu almuerzo."],
+[/hoy|today|aujourd/i,"Hoy: 4 citas.\n• 9:30 — Julie Tanguay\n• 11:00 — Karim Benali (descubrimiento)\n• 14:00 — Nadia Roy (seguimiento)\n• 16:30 — Contador"],
+[/julie/i,"Listo: borrador preparado para Julie — «Claro, nos vemos el jueves a las 9:30.» Lo envío en cuanto lo apruebes en Correo."],
+[/llamad|call|appel/i,"2 llamadas importantes desde ayer:\n• Karim Benali — presupuesto, dinero confirmado (caliente)\n• Pierre Gagnon — primera reunión el miércoles\nLo demás está resuelto."],
+[/correo|email|courriel|mail/i,"2 correos esperan tu respuesta (Julie y Karim) — los borradores están listos. La factura de Alpha (640 $) vence el viernes: te lo recuerdo el jueves."],
+[/instagram|post|redes|dm/i,"Tu post de ayer tuvo 1 240 vistas, 86 me gusta y 12 comentarios. @lea.fitmtl propone una colaboración: espero tu luz verde."],
+[/mueve|mover|cambia|cancela|move|déplace/i,"De acuerdo. ¿Qué cita quieres mover y para cuándo? Luego confirmo con el cliente por mensaje."],
+[/gracias|thanks|merci/i,"¡Con gusto! Te llamo a las 18:00 para el balance."]],
+chatFallback:"Anotado. Si esto está fuera de mis instrucciones, nuestro equipo retoma y te responde pronto.",
+sim:{call:{ini:"JP",name:"Jordan P.",num:"514 ••• ••19",dir:"in",time:"Ahora",dur:"3 min 08",score:"84 / 100",tag:"hot",sum:"Quiere una cita esta semana, presupuesto confirmado.",next:"Cita · 25 sept. a las 11:30",tr:[["A","Hola, oficina de {n}, habla {a}. ¿En qué le puedo ayudar?"],["Jordan","Quisiera agendar una cita esta semana."],["A","Tengo el viernes a las 11:30 disponible. ¿Se lo reservo?"],["Jordan","Sí, gracias."]]},recent:["JP","Jordan P.","Llamada · ahora · cita el viernes","hot"],ev:["11:30","Jordan P.","","Cita · agendada por {a}"]}
+}};
+function d(){ return D[uiLang]; }
+
+/* ================= STATE ================= */
+let activeCall = "karim", callFilter = "all";
+let activeMsg = "lea", msgFilter = "all";
+let activeEmail = "julie", emailFilter = "all", emailQuery = "";
+let activeBrief = 0;
+let calendarCursor = new Date(2026,8,1), selectedDate = "2026-09-22";
+let slotState = null;
+let simAdded = false, simRunning = false;
+const approvedMsgs = new Set();
+const chatLog = [];
+
+/* ================= HELPERS ================= */
+const badgeCls = {hot:"b-chaud",warm:"b-tiede",cold:"b-froid",ok:"b-ok"};
+function badge(tag){ const l = {hot:u("hot"),warm:u("warm"),cold:u("cold"),ok:u("ok")}[tag]; return `<span class="badge ${badgeCls[tag]}">${l}</span>`; }
+const CH = {sms:["ch-sms","SMS"],wa:["ch-wa","WhatsApp"],ig:["ch-ig","Instagram"],fb:["ch-fb","Facebook"]};
+function chip(ch){ return `<span class="ch ${CH[ch][0]}">${CH[ch][1]}</span>`; }
+function pic(ini, size){ return `<span class="pic" style="background:${COLORS[ini]||"#2563EB"};${size?`width:${size}px;height:${size}px;`:""}">${ini}</span>`; }
+const DIR_SVG = {
+  in:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 7 7 17M7 8v9h9"/></svg>',
+  out:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 17 10-10M17 16V7H8"/></svg>',
+  missed:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 7 7 17M7 8v9h9"/><path d="m3 3 18 18"/></svg>'};
+function speaker(s){ return s==="A" ? P().name : fill(s); }
+
+/* ================= STATIC TEXT ================= */
+function applyStatic(){
+  document.documentElement.lang = uiLang;
+  document.querySelectorAll("[data-t]").forEach(el=>{ const k = el.dataset.t; if(U[uiLang][k]!==undefined) el.innerHTML = fill(U[uiLang][k]); });
+  document.querySelectorAll("[data-ui-lang]").forEach(b=>b.classList.toggle("on", b.dataset.uiLang===uiLang));
+  document.getElementById("tabAsst").textContent = P().name;
+  document.getElementById("emailSearch").placeholder = u("search");
+  document.getElementById("q").placeholder = u("qph");
+  document.getElementById("chatInput").placeholder = fill(u("chatPh"));
+  document.getElementById("clientAv").textContent = client.slice(0,2).toUpperCase();
+  const now = new Date(2026,8,22,8,5,0), h = now.getHours();
+  document.getElementById("greeting").textContent = u("greet")[h<12?0:h<18?1:2]+", "+client;
+  document.getElementById("dateLine").textContent = now.toLocaleDateString(u("locale"),{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase());
+  document.title = "AI Staff — "+(uiLang==="en"?"Dashboard":uiLang==="es"?"Panel":"Tableau de bord")+" · "+P().name;
+  paintSim();
+}
+function paintSim(){
+  const top = document.getElementById("simulateCall"), big = document.getElementById("simulateCallAsst");
+  if(simRunning){ document.getElementById("liveLabel").textContent = fill(u("simRun")); top.textContent = big.textContent = u("simProg"); }
+  else { document.getElementById("liveLabel").textContent = fill(u("live")); top.textContent = simAdded ? u("simAdded") : u("simShort"); big.textContent = u("simIdle"); }
+}
+
+/* ================= OVERVIEW ================= */
+function renderOverview(){
+  const x = d();
+  document.getElementById("heroNum").textContent = simAdded ? "105" : "104";
+  document.getElementById("kpis").innerHTML = x.kpis.map((k,i)=>`<div class="kpi"><div class="v${k[3]?" gold":""}">${i===0&&simAdded?"42":i===2&&simAdded?"13":esc(k[0])}</div><div class="l">${esc(k[1])}</div><div class="d">${esc(k[2])}</div></div>`).join("");
+  const rec = (simAdded?[x.sim.recent]:[]).concat(x.recent);
+  document.getElementById("recentCalls").innerHTML = rec.map(r=>`<div class="row">${pic(r[0])}<div class="info"><div class="name">${esc(r[1])}</div><div class="meta">${F(r[2])}</div></div>${badge(r[3])}</div>`).join("");
+  const v = x.visits.map(v=>`<div class="visit"><div class="vdate"><span>${esc(v[0])}</span><b>${v[1]}</b></div><div class="info"><div class="t">${esc(v[2])}</div><div class="a">${F(v[3])}</div></div>${badge(v[4])}</div>`);
+  document.getElementById("overviewVisitOne").innerHTML = v[0];
+  document.getElementById("overviewVisitTwo").innerHTML = v[1];
+  const days = {fr:["M","J","V","S","D","L","M"],en:["W","T","F","S","S","M","T"],es:["X","J","V","S","D","L","M"]}[uiLang];
+  const data = [12,17,9,6,4,21,simAdded?16:15], max = Math.max(...data);
+  document.getElementById("bars").innerHTML = data.map((val,i)=>`<div class="bar-col${i===6?" today":""}"><div class="bar${i===6?" today":""}" style="height:${Math.round(val/max*100)}%;animation-delay:${i*0.07}s"></div><span>${days[i]}</span></div>`).join("");
+}
+function buildWave(){
+  const wave = document.getElementById("wave");
+  for(let i=0;i<34;i++){ const s=document.createElement("span"); s.style.height=(10+Math.random()*24)+"px"; s.style.animationDelay=(Math.random()*1.1)+"s"; s.style.animationDuration=(0.8+Math.random()*0.7)+"s"; wave.appendChild(s); }
+}
+
+/* ================= CALLS ================= */
+function allCalls(){ const c = Object.assign({}, simAdded?{jordan:d().sim.call}:{}, d().calls); return c; }
+function renderCallList(){
+  const calls = allCalls(), dirL = {in:u("dirIn"),out:u("dirOut"),missed:u("dirMissed")};
+  const entries = Object.entries(calls).filter(([,c])=>callFilter==="all"||c.dir===callFilter);
+  document.getElementById("callList").innerHTML = entries.map(([k,c])=>
+    `<button class="row call-row${k===activeCall?" active":""}" type="button" data-call="${k}"><span class="call-main"><span class="direction ${c.dir==="in"?"":c.dir}">${DIR_SVG[c.dir]}</span>${pic(c.ini)}</span>`+
+    `<span class="info"><span class="name">${esc(c.name)}</span><span class="meta">${dirL[c.dir]} · ${esc(c.time)} · ${esc(c.dur)}</span></span>${badge(c.tag)}</button>`).join("");
+  document.querySelectorAll("#callList [data-call]").forEach(b=>b.addEventListener("click",()=>{ activeCall=b.dataset.call; renderCallList(); renderCallDetail(); }));
+  const all = Object.values(calls);
+  document.getElementById("callPills").innerHTML = `<span class="status-pill"><strong>${all.filter(c=>c.dir==="in").length+30}</strong> ${u("inW")}</span><span class="status-pill"><strong>${all.filter(c=>c.dir==="out").length+9}</strong> ${u("outW")}</span><span class="status-pill"><strong>98 %</strong> ${u("answeredW")}</span>`;
+}
+function renderCallDetail(){
+  const calls = allCalls(); if(!calls[activeCall]) activeCall = Object.keys(calls)[0];
+  const c = calls[activeCall], dirL = {in:u("dirIn"),out:u("dirOut"),missed:u("dirMissed")};
+  const tr = c.tr.length ? c.tr.map(l=>`<div class="utterance ${l[0]==="A"?"alex":""}"><div class="speaker">${esc(speaker(l[0]))}</div><div class="bubble">${F(l[1])}</div></div>`).join("") : `<div class="detail-empty">${u("noTranscript")}</div>`;
+  document.getElementById("callDetail").innerHTML =
+    `<div class="detail-head"><div class="detail-person">${pic(c.ini,44)}<div><div class="detail-name">${esc(c.name)}</div><div class="detail-number">${esc(c.num)} · ${esc(c.time)}</div></div></div>${badge(c.tag)}</div>`+
+    `<div class="detail-stats"><div class="detail-stat"><span>${u("labDir")}</span><strong>${dirL[c.dir]}</strong></div><div class="detail-stat"><span>${u("labDur")}</span><strong>${esc(c.dur)}</strong></div><div class="detail-stat"><span>${u("labScore")}</span><strong>${esc(c.score)}</strong></div></div>`+
+    `<div class="insight-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${u("labSummary")}</strong><span>${F(c.sum)}</span><strong style="margin-top:8px">${u("labNext")}</strong><span>${F(c.next)}</span></div></div>`+
+    `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3><span class="recording">${u("recording")}</span></div>${tr}</div>`;
+}
+document.querySelectorAll("#segAppels button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#segAppels button").forEach(x=>x.classList.toggle("on",x===b));
+  callFilter = b.dataset.f;
+  const first = Object.entries(allCalls()).find(([,c])=>callFilter==="all"||c.dir===callFilter);
+  if(first) activeCall = first[0];
+  renderCallList(); renderCallDetail();
+}));
+
+/* ================= MESSAGES ================= */
+function renderMsgList(){
+  const m = d().msgs;
+  const entries = Object.entries(m).filter(([,x])=>msgFilter==="all"||x.ch===msgFilter);
+  document.getElementById("msgList").innerHTML = entries.length ? entries.map(([k,x])=>{
+    const pending = x.status==="wait" && !approvedMsgs.has(k);
+    return `<button class="email-row${k===activeMsg?" active":""}" type="button" data-msg="${k}"><span class="mail-dot ${pending?"":"handled"}"></span><span><span class="email-sender">${esc(x.name)}</span><span class="email-subject">${chip(x.ch)}</span><span class="email-preview">${esc(x.preview)}</span></span><span class="email-time">${esc(x.time)}</span></button>`;
+  }).join("") : `<div class="detail-empty">—</div>`;
+  document.querySelectorAll("#msgList [data-msg]").forEach(b=>b.addEventListener("click",()=>{ activeMsg=b.dataset.msg; renderMsgList(); renderMsgDetail(); }));
+  const all = Object.entries(m), pend = all.filter(([k,x])=>x.status==="wait"&&!approvedMsgs.has(k)).length;
+  document.getElementById("msgPills").innerHTML = `<span class="status-pill"><strong>${pend}</strong> ${u("pendingW")}</span><span class="status-pill"><strong>${all.length-pend+53}</strong> ${u("handledW")}</span>`;
+}
+function renderMsgDetail(){
+  const m = d().msgs; if(!m[activeMsg]) activeMsg = Object.keys(m)[0];
+  const x = m[activeMsg], pending = x.status==="wait" && !approvedMsgs.has(activeMsg);
+  const thread = x.thread.map(t=>`<div class="msg-bubble-row ${t[0]==="ai"?"ai":""}"><div class="msg-bubble">${F(t[1])}<small>${t[0]==="ai"?P().name+" · ":""}${esc(t[2])}</small></div></div>`).join("")
+    + (x.draft && approvedMsgs.has(activeMsg) ? `<div class="msg-bubble-row ai"><div class="msg-bubble">${F(x.draft)}<small>${P().name} · ✓</small></div></div>` : "");
+  document.getElementById("msgDetail").innerHTML =
+    `<div class="email-detail-head"><div class="email-detail-top"><div style="display:flex;gap:10px;align-items:center;">${pic(x.ini)}<div><h3>${esc(x.name)}</h3><div class="email-meta">${chip(x.ch)} · ${esc(x.time)}</div></div></div>${pending?`<span class="badge b-tiede">${u("pendingW")}</span>`:`<span class="badge b-ok">${u("handledTag")}</span>`}</div></div>`+
+    `<div class="email-thread">${thread}</div>`+
+    (pending ? `<div class="email-ai-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${fill(u("draft"))}</strong><span>${F(x.draft)}</span></div></div><div class="approve-bar"><span>${fill(u("waitingYou"))}</span><button class="secondary-button" type="button" id="msgEdit">${u("edit")}</button><button class="primary-button" type="button" id="msgApprove">${u("approve")}</button></div>` : "");
+  if(pending){
+    document.getElementById("msgApprove").addEventListener("click",()=>{ approvedMsgs.add(activeMsg); toast(u("approved")); renderMsgList(); renderMsgDetail(); renderSocial(); });
+    document.getElementById("msgEdit").addEventListener("click",()=>{ go("assistant"); document.getElementById("chatInput").focus(); });
+  }
+}
+document.querySelectorAll("#segMsg button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#segMsg button").forEach(x=>x.classList.toggle("on",x===b));
+  msgFilter = b.dataset.mf;
+  const first = Object.entries(d().msgs).find(([,x])=>msgFilter==="all"||x.ch===msgFilter);
+  if(first) activeMsg = first[0];
+  renderMsgList(); renderMsgDetail();
+}));
+
+/* ================= EMAIL ================= */
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+function renderEmailList(){
+  const e = d().emails;
+  const entries = Object.entries(e).filter(([,m])=>(emailFilter==="all"||m.status===emailFilter)&&norm(`${m.sender} ${m.subject} ${m.preview}`).includes(emailQuery));
+  document.getElementById("emailList").innerHTML = entries.length ? entries.map(([k,m])=>
+    `<button class="email-row${k===activeEmail?" active":""}" type="button" data-email-key="${k}"><span class="mail-dot ${m.status==="handled"?"handled":""}"></span><span><span class="email-sender">${esc(m.sender)}</span><span class="email-subject">${esc(m.subject)}</span><span class="email-preview">${esc(m.preview)}</span></span><span class="email-time">${esc(m.time)}</span></button>`).join("")
+    : `<div class="detail-empty">${u("noResults")}</div>`;
+  document.querySelectorAll("#emailList [data-email-key]").forEach(b=>b.addEventListener("click",()=>{ activeEmail=b.dataset.emailKey; renderEmailList(); renderEmailDetail(); }));
+}
+function renderEmailDetail(){
+  const e = d().emails; if(!e[activeEmail]) activeEmail = Object.keys(e)[0];
+  const m = e[activeEmail], subj = fill(m.draft[0]), body = fill(m.draft[1]);
+  const tag = m.status==="reply" ? `<span class="badge b-tiede">${u("replyTag")}</span>` : `<span class="badge b-ok">${u("handledTag")}</span>`;
+  const thread = m.thread.map(t=>`<div class="email-message ${t[2]==="out"?"alex":""}"><div class="email-message-head"><strong>${F(t[0])}</strong><span>${esc(t[1])} · ${t[2]==="out"?u("outbound"):u("inbound")}</span></div><div class="email-message-body">${F(t[3])}</div></div>`).join("");
+  document.getElementById("emailDetail").innerHTML =
+    `<div class="email-detail-head"><div class="email-detail-top"><div><h3>${esc(m.subject)}</h3><div class="email-meta">${esc(m.sender)} &lt;${esc(m.email)}&gt; · ${esc(m.time)}</div></div>${tag}</div><div class="email-tags">${m.context.map(c=>`<span class="context-chip">${esc(c)}</span>`).join("")}</div></div>`+
+    `<div class="email-ai-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${u("aiSummary")}</strong><span>${F(m.summary)}</span><strong style="margin-top:7px">${u("suggested")}</strong><span>${F(m.next)}</span></div>${m.score!=="—"?`<span class="badge b-chaud">${m.score}/100</span>`:""}</div>`+
+    `<div class="email-thread"><h3 style="font-size:13px;margin-bottom:12px">${u("conversation")}</h3>${thread}</div>`+
+    `<div class="email-compose"><div class="compose-head"><strong>${fill(u("draft"))}</strong><span class="badge b-froid">${P().name}</span></div><div class="compose-fields"><label class="compose-line"><span>${u("to")}</span><input id="draftTo" value="${esc(m.email)}"></label><label class="compose-line"><span>${u("subject")}</span><input id="draftSubject" value="${esc(subj)}"></label><textarea class="compose-body" id="draftBody">${esc(body)}</textarea></div>`+
+    `<div class="compose-actions"><span class="email-note">${u("emailFoot")}</span><button class="secondary-button" type="button" id="copyDraft">${u("copy")}</button><a class="primary-button" id="openDraft" href="#">${u("open")}</a></div></div>`;
+  const upd = ()=>{ document.getElementById("openDraft").href = `mailto:${encodeURIComponent(document.getElementById("draftTo").value)}?subject=${encodeURIComponent(document.getElementById("draftSubject").value)}&body=${encodeURIComponent(document.getElementById("draftBody").value)}`; };
+  upd(); ["draftTo","draftSubject","draftBody"].forEach(id=>document.getElementById(id).addEventListener("input",upd));
+  document.getElementById("copyDraft").addEventListener("click",()=>{
+    const text = document.getElementById("draftSubject").value+"\n\n"+document.getElementById("draftBody").value;
+    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(()=>toast(u("copied")),()=>toast(u("copied")));
+    else toast(u("copied"));
+  });
+}
+document.querySelectorAll("#segEmail button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#segEmail button").forEach(x=>x.classList.toggle("on",x===b));
+  emailFilter = b.dataset.mailFilter;
+  const first = Object.entries(d().emails).find(([,m])=>emailFilter==="all"||m.status===emailFilter);
+  if(first) activeEmail = first[0];
+  renderEmailList(); renderEmailDetail();
+}));
+document.getElementById("emailSearch").addEventListener("input",e=>{ emailQuery = norm(e.target.value); renderEmailList(); });
+
+/* ================= AGENDA ================= */
+function events(){
+  const ev = JSON.parse(JSON.stringify(d().events));
+  if(simAdded) ev["2026-09-25"] = (ev["2026-09-25"]||[]).concat([d().sim.ev]);
+  return ev;
+}
+function dateKey(x){ return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`; }
+function renderDayPanel(){
+  const ev = events()[selectedDate] || [], dt = new Date(selectedDate+"T12:00:00");
+  const label = dt.toLocaleDateString(u("locale"),{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase());
+  const list = ev.length ? ev.map(e=>`<div class="timeline-event ${e[2]==="follow"?"follow":""}"><div class="timeline-time">${e[0]}</div><div class="timeline-line"></div><div class="timeline-body"><strong>${esc(e[1])}</strong><span>${F(e[3])}</span></div></div>`).join("") : `<div class="empty-day">${fill(u("noEvents"))}</div>`;
+  document.getElementById("dayPanel").innerHTML = `<div class="day-panel-head"><h3>${label}</h3><span class="badge ${ev.length?"b-ok":"b-froid"}">${ev.length} ${ev.length===1?u("evOne"):u("evMany")}</span></div><div class="hint">${u("dailySched")}</div>${list}`;
+}
+function renderCalendar(){
+  const grid = document.getElementById("calendarGrid"), ev = events();
+  const wd = {fr:["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],es:["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"]}[uiLang];
+  const y = calendarCursor.getFullYear(), mo = calendarCursor.getMonth(), first = new Date(y,mo,1), start = new Date(y,mo,1-first.getDay());
+  document.getElementById("monthLabel").textContent = first.toLocaleDateString(u("locale"),{month:"long",year:"numeric"}).replace(/^./,c=>c.toUpperCase());
+  let html = wd.map(x=>`<div class="cal-weekday">${x}</div>`).join("");
+  for(let i=0;i<42;i++){
+    const dd = new Date(start); dd.setDate(start.getDate()+i); const k = dateKey(dd), e = ev[k]||[];
+    html += `<button type="button" class="cal-day${dd.getMonth()!==mo?" outside":""}${k===selectedDate?" selected":""}" data-date="${k}"><span class="cal-number"><span class="${k==="2026-09-22"?"today-dot":""}">${dd.getDate()}</span></span>${e.slice(0,2).map(x=>`<span class="cal-event ${x[2]}">${x[0]} ${esc(x[1])}</span>`).join("")}</button>`;
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll("[data-date]").forEach(b=>b.addEventListener("click",()=>{ selectedDate=b.dataset.date; renderCalendar(); }));
+  document.getElementById("evCount").textContent = Object.keys(ev).filter(k=>k.startsWith("2026-09")).reduce((n,k)=>n+ev[k].length,0);
+  renderDayPanel();
+}
+document.getElementById("prevMonth").addEventListener("click",()=>{ calendarCursor.setMonth(calendarCursor.getMonth()-1); selectedDate=dateKey(calendarCursor); renderCalendar(); });
+document.getElementById("nextMonth").addEventListener("click",()=>{ calendarCursor.setMonth(calendarCursor.getMonth()+1); selectedDate=dateKey(calendarCursor); renderCalendar(); });
+document.getElementById("todayMonth").addEventListener("click",()=>{ calendarCursor=new Date(2026,8,1); selectedDate="2026-09-22"; renderCalendar(); });
+
+/* ================= BRIEFINGS ================= */
+function renderBriefings(){
+  const x = d();
+  if(!slotState) slotState = x.slots.map(s=>s[3]);
+  document.getElementById("slots").innerHTML = x.slots.map((s,i)=>
+    `<div class="slot"><div class="slot-time">${s[0]}</div><div class="slot-info"><b>${esc(s[1])}</b><span>${esc(s[2])}</span></div><button type="button" class="switch${slotState[i]?" on":""}" data-slot="${i}" role="switch" aria-checked="${slotState[i]}" aria-label="${esc(s[1])}"></button></div>`).join("");
+  document.querySelectorAll("[data-slot]").forEach(b=>b.addEventListener("click",()=>{
+    const i = +b.dataset.slot; slotState[i] = !slotState[i];
+    toast(x.slots[i][0]+" · "+(slotState[i]?u("slotOn"):u("slotOff")));
+    renderBriefings();
+  }));
+  document.getElementById("briefPill").innerHTML = `<strong>${slotState.filter(Boolean).length}</strong>&nbsp;${u("slotsOn").replace("{x} ","")}`;
+  document.getElementById("briefList").innerHTML = x.briefs.map((b,i)=>
+    `<button type="button" class="brief-row${i===activeBrief?" active":""}" data-brief="${i}"><span class="brief-ico">${/Soir|Evening|Tarde/.test(b.type)?"🌙":"☀️"}</span><span class="info"><b>${esc(b.type)} · ${esc(b.when)}</b><span>${esc(b.dur)} · ${esc(b.said[0])}</span></span></button>`).join("");
+  document.querySelectorAll("[data-brief]").forEach(b=>b.addEventListener("click",()=>{ activeBrief=+b.dataset.brief; renderBriefings(); }));
+  const b = x.briefs[activeBrief];
+  document.getElementById("briefDetail").innerHTML =
+    `<div class="detail-head"><div class="detail-person"><span class="pic" style="background:linear-gradient(135deg,#0A1A33,#1F6FEB);width:44px;height:44px;">${P().ini}</span><div><div class="detail-name">${esc(b.type)} · ${esc(b.when)}</div><div class="detail-number">${P().name} → ${esc(client)}</div></div></div><span class="badge b-ok">✓</span></div>`+
+    `<div class="detail-stats"><div class="detail-stat"><span>${u("when")}</span><strong>${esc(b.when)}</strong></div><div class="detail-stat"><span>${u("duration")}</span><strong>${esc(b.dur)}</strong></div><div class="detail-stat"><span>${u("type")}</span><strong>${esc(b.type)}</strong></div></div>`+
+    `<div class="insight-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div style="flex:1"><strong>${fill(u("briefSummary"))}</strong><ul class="action-list">${b.said.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><strong style="margin-top:10px">${u("briefActions")}</strong><ul class="action-list">${b.asked.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div></div>`+
+    `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3><span class="recording">${u("recording")}</span></div>${b.tr.map(l=>`<div class="utterance ${l[0]==="A"?"alex":""}"><div class="speaker">${esc(speaker(l[0]))}</div><div class="bubble">${F(l[1])}</div></div>`).join("")}</div>`;
+}
+
+/* ================= SOCIAL ================= */
+function renderSocial(){
+  const x = d();
+  document.getElementById("socGrid").innerHTML = x.social.map(s=>{
+    const max = Math.max(...s.bars);
+    return `<div class="card"><div class="soc-head"><span class="soc-logo ${s.net}">${s.net==="ig"?"◎":"f"}</span><div><h3>${s.name}</h3><div class="hint" style="margin:0">${esc(s.handle)}</div></div></div>`+
+      `<div class="post-thumb"><div class="img">${s.net==="ig"?"🖼️":"📷"}</div><div><b>${esc(s.post)}</b><span>${u("lastPost")} · ${esc(s.when)}</span></div></div>`+
+      `<div class="metric-grid">${s.metrics.map(m=>`<div class="metric"><b>${esc(m[0])}</b><span>${esc(m[1])}</span></div>`).join("")}</div>`+
+      `<div class="hint" style="margin:14px 0 0">${u("reach7")}</div><div class="mini-bars">${s.bars.map((v,i)=>`<div class="${i===6?"last":""}" style="height:${Math.round(v/max*100)}%"></div>`).join("")}</div></div>`;
+  }).join("");
+  document.getElementById("dmList").innerHTML = x.dms.map(m=>{
+    const done = m[0]==="lea" && approvedMsgs.has("lea"), tag = done ? "ok" : m[4];
+    return `<div class="row" style="cursor:pointer" data-dm="${m[0]}">${pic(m[1])}<div class="info"><div class="name">${esc(m[2])}</div><div class="meta">${done?esc(u("approved")):F(m[3])}</div></div>${badge(tag)}<span class="chev">›</span></div>`;
+  }).join("");
+  document.querySelectorAll("[data-dm]").forEach(r=>r.addEventListener("click",()=>{ activeMsg=r.dataset.dm; msgFilter="all"; document.querySelectorAll("#segMsg button").forEach(x=>x.classList.toggle("on",x.dataset.mf==="all")); renderMsgList(); renderMsgDetail(); go("messages"); }));
+}
+
+/* ================= CONTACTS ================= */
+function renderContacts(){
+  document.getElementById("contactList").innerHTML = d().contacts.map(c=>
+    `<div class="row" data-name="${esc(norm(c[1]+" "+c[2]))}">${pic(c[0])}<div class="info"><div class="name">${esc(c[1])}</div><div class="meta">${esc(c[2])}</div></div>${badge(c[3])}<span class="chev">›</span></div>`).join("");
+  filterContacts();
+}
+function filterContacts(){
+  const q = norm(document.getElementById("q").value);
+  document.querySelectorAll("#contactList .row").forEach(r=>{ r.style.display = r.dataset.name.includes(q) ? "" : "none"; });
+}
+document.getElementById("q").addEventListener("input", filterContacts);
+
+/* ================= ASSISTANT + CHAT ================= */
+function renderAssistant(){
+  document.getElementById("bigOrb").textContent = P().ini;
+  document.getElementById("chatOrb").textContent = P().ini;
+  document.getElementById("chatName").textContent = P().name+" · AI Staff";
+  document.getElementById("asstTitle").innerHTML = fill(u("asstTitle"));
+  document.getElementById("doesTitle").innerHTML = fill(u("doesTitle"));
+  document.getElementById("personaRow").innerHTML = Object.entries(PERSONAS).map(([k,p])=>`<button type="button" class="persona-btn${k===persona?" on":""}" data-persona="${k}">${p.name}</button>`).join("");
+  document.querySelectorAll("[data-persona]").forEach(b=>b.addEventListener("click",()=>{ persona=b.dataset.persona; syncUrl(); renderAll(); toast("✓ "+P().name); }));
+  document.getElementById("doesList").innerHTML = d().does.map(x=>`<div class="row"><div class="info"><div class="name">${esc(x[0])}</div><div class="meta">${esc(x[1])}</div></div><span class="badge ${x[2]==="active"?"b-ok":"b-tiede"}">${x[2]==="active"?u("active"):u("soon")}</span></div>`).join("");
+  document.getElementById("chatSugg").innerHTML = d().sugg.map(s=>`<button type="button">${esc(s)}</button>`).join("");
+  document.querySelectorAll("#chatSugg button").forEach(b=>b.addEventListener("click",()=>sendChat(b.textContent)));
+  renderChat();
+}
+function renderChat(){
+  const body = document.getElementById("chatBody");
+  body.innerHTML = `<div class="cmsg ai">${F(d().chatHello)}</div>` + chatLog.map(m=>`<div class="cmsg ${m[0]}">${m[0]==="ai"?F(m[1]):esc(m[1])}</div>`).join("");
+  body.scrollTop = body.scrollHeight;
+}
+function answer(text){
+  const hit = d().chat.find(r=>r[0].test(text));
+  return hit ? hit[1] : d().chatFallback;
+}
+function sendChat(text){
+  text = String(text||"").trim(); if(!text) return;
+  chatLog.push(["me",text]); renderChat();
+  const body = document.getElementById("chatBody"), ty = document.createElement("div");
+  ty.className = "cmsg ai typing"; ty.innerHTML = "<i></i><i></i><i></i>"; body.appendChild(ty); body.scrollTop = body.scrollHeight;
+  setTimeout(()=>{ chatLog.push(["ai",answer(text)]); renderChat(); }, 900);
+}
+document.getElementById("chatForm").addEventListener("submit",e=>{ e.preventDefault(); const i=document.getElementById("chatInput"); sendChat(i.value); i.value=""; });
+document.querySelectorAll("[data-voice]").forEach(b=>b.addEventListener("click",()=>{
+  const n = {fr:{fr:"Français",en:"French",es:"Francés"},en:{fr:"Anglais",en:"English",es:"Inglés"},es:{fr:"Espagnol",en:"Spanish",es:"Español"}};
+  toast(n[b.dataset.voice][uiLang]+u("voiceOn"));
+}));
+
+/* ================= SIMULATED CALL ================= */
+function simulateCall(){
+  if(simRunning) return;
+  if(simAdded){ toast(u("simRepeat")); return; }
+  simRunning = true; document.getElementById("livePill").classList.add("running");
+  document.getElementById("simulateCall").disabled = document.getElementById("simulateCallAsst").disabled = true;
+  paintSim(); toast(u("simStart"));
+  setTimeout(()=>{
+    simRunning = false; simAdded = true; activeCall = "jordan";
+    document.getElementById("livePill").classList.remove("running");
+    document.getElementById("simulateCall").disabled = document.getElementById("simulateCallAsst").disabled = false;
+    renderAll(); toast(u("simDone"));
+  }, 3200);
+}
+document.getElementById("simulateCall").addEventListener("click", simulateCall);
+document.getElementById("simulateCallAsst").addEventListener("click", simulateCall);
+
+/* ================= NAV / THEME / LANG ================= */
+function go(name){
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on", p.id==="pane-"+name));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on", t.dataset.go===name));
+  const tab = document.querySelector(`.tab[data-go="${name}"]`); if(tab && tab.scrollIntoView) tab.scrollIntoView({block:"nearest",inline:"center"});
+  window.scrollTo({top:0,behavior:"smooth"});
+  try{ history.replaceState(null,"","#"+name); }catch(e){}
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>go(t.dataset.go)));
+document.addEventListener("click",e=>{
+  const a = e.target.closest("[data-go-link],[data-go-btn]"); if(!a) return;
+  e.preventDefault(); go(a.dataset.goLink || a.dataset.goBtn);
+});
+document.getElementById("themeToggle").addEventListener("click",()=>{
+  const next = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("aistaff-theme", next); }catch(e){}
+});
+function syncUrl(){
+  try{
+    const p = new URLSearchParams(location.search);
+    uiLang==="fr" ? p.delete("lang") : p.set("lang", uiLang);
+    persona==="sofia" ? p.delete("a") : p.set("a", persona);
+    const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash);
+  }catch(e){}
+}
+document.querySelectorAll("[data-ui-lang]").forEach(b=>b.addEventListener("click",()=>{ uiLang=b.dataset.uiLang; syncUrl(); renderAll(); }));
+
+let toastT;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2200); }
+
+function renderAll(){
+  applyStatic(); renderOverview(); renderCallList(); renderCallDetail();
+  renderMsgList(); renderMsgDetail(); renderEmailList(); renderEmailDetail();
+  renderCalendar(); renderBriefings(); renderSocial(); renderContacts(); renderAssistant();
+}
+buildWave();
+renderAll();
+const startPane = (location.hash||"").slice(1);
+if(document.getElementById("pane-"+startPane)) go(startPane);
+})();
+</script>
+</body>
+</html>

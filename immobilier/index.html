@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){try{var t=localStorage.getItem("aistaff-theme");if(!t){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();
+</script>
+<title>AI Staff — L'adjoint personnel IA des courtiers du Québec</title>
+<meta name="description" content="Alex, l'adjoint personnel IA des courtiers du Québec : répond pendant vos visites, pré-qualifie l'acheteur, propose la visite et vous appelle chaque matin avec votre journée.">
+<link rel="canonical" href="https://meetaistaff.com/immobilier/">
+<style>
+:root{
+  --navy:#0A1A33; --navy-2:#10254a;
+  --blue:#1F6FEB; --blue-d:#1858C4; --blue-soft:rgba(31,111,235,.1);
+  --bg:#EDF0F6; --bg-2:#E4E9F2;
+  --card:#FFFFFF; --ink:#0B1B33; --muted:#5B6B82;
+  --line:rgba(11,27,51,.1);
+  --green:#1FA855; --green-soft:rgba(31,168,85,.12);
+  --amber:#DD7A0A; --amber-soft:rgba(221,122,10,.13);
+  --red:#DF5454; --red-soft:rgba(223,84,84,.12);
+  --r:22px;
+  --shadow:0 10px 30px rgba(10,26,51,.08);
+  --shadow-lg:0 24px 60px rgba(10,26,51,.14);
+  color-scheme:light dark;
+}
+html[data-theme="dark"]{
+  --bg:#071120; --bg-2:#0A1830;
+  --card:#0D1C36; --ink:#EAF0FA; --muted:#93A3BD;
+  --line:rgba(148,178,226,.14);
+  --blue-soft:rgba(64,130,246,.16);
+  --green-soft:rgba(46,204,113,.14);
+  --amber-soft:rgba(240,165,60,.15);
+  --red-soft:rgba(240,110,110,.15);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
+  border-bottom:1px solid var(--line);}
+.nav-in{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:19px;letter-spacing:-.3px;}
+.brand .mk{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;
+  box-shadow:0 6px 16px rgba(31,111,235,.35);}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.nav-links a.nl{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none;padding:9px 12px;border-radius:12px;}
+.nav-links a.nl:hover{color:var(--ink);background:var(--blue-soft);}
+.seg{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.seg button{border:none;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);
+  padding:7px 12px;border-radius:999px;cursor:pointer;min-width:40px;}
+.seg button.active{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(10,26,51,.16);}
+.tbtn{border:1px solid var(--line);background:var(--card);width:38px;height:38px;border-radius:999px;cursor:pointer;
+  font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--ink);box-shadow:var(--shadow);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;cursor:pointer;font:inherit;
+  font-weight:700;border-radius:16px;padding:15px 30px;font-size:16px;text-decoration:none;transition:transform .15s, box-shadow .2s;}
+.btn:active{transform:scale(.97);}
+.btn-blue{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;
+  box-shadow:0 10px 26px rgba(31,111,235,.4), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-blue:hover{box-shadow:0 14px 32px rgba(31,111,235,.5), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:var(--shadow);}
+.btn-navy{background:linear-gradient(135deg,#16294d,#0A1A33);color:#fff;box-shadow:0 10px 26px rgba(10,26,51,.4);}
+html[data-theme="dark"] .btn-navy{background:linear-gradient(135deg,#2a4a80,#16294d);}
+.btn-sm{padding:10px 18px;font-size:13.5px;border-radius:13px;}
+@media(max-width:760px){.nav-links a.nl{display:none;}}
+
+/* ---------- Hero ---------- */
+.hero{padding:128px 0 46px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-160px;right:-120px;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(31,111,235,.16),transparent 65%);pointer-events:none;}
+html[data-theme="dark"] .hero::before{background:radial-gradient(circle,rgba(64,130,246,.22),transparent 65%);}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:36px;}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--blue-d);background:var(--blue-soft);border:1px solid var(--line);
+  padding:8px 16px;border-radius:999px;margin-bottom:20px;}
+html[data-theme="dark"] .eyebrow{color:#7FA8F5;}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(.7);opacity:.6;}}
+h1{font-size:clamp(38px,5.6vw,62px);font-weight:800;letter-spacing:-1.6px;line-height:1.05;max-width:620px;}
+h1 em{font-style:normal;color:var(--blue);}
+html[data-theme="dark"] h1 em{color:#6EA3F8;}
+.lead{font-size:18.5px;line-height:1.6;color:var(--muted);max-width:600px;margin:18px 0 28px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;}
+.trust{display:flex;gap:36px;flex-wrap:wrap;}
+.trust .n{font-size:28px;font-weight:800;letter-spacing:-.6px;color:var(--navy);}
+html[data-theme="dark"] .trust .n{color:#fff;}
+.trust .l{font-size:13px;color:var(--muted);margin-top:2px;max-width:150px;}
+
+/* ---------- Phone ---------- */
+.phone{width:300px;margin:6px auto 0;background:#0A1A33;border-radius:52px;padding:12px;
+  box-shadow:var(--shadow-lg), inset 0 2px 4px rgba(255,255,255,.18);}
+.screen{background:var(--card);border-radius:42px;overflow:hidden;height:610px;display:flex;flex-direction:column;position:relative;}
+.notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:108px;height:25px;background:#0A1A33;border-radius:14px;z-index:2;}
+.call-head{padding:54px 20px 14px;text-align:center;border-bottom:1px solid var(--line);}
+.agent-av{width:66px;height:66px;margin:0 auto 10px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;
+  font-size:25px;font-weight:800;color:#fff;box-shadow:0 8px 22px rgba(31,111,235,.45);}
+.call-head .nm{font-weight:700;font-size:16px;}
+.call-head .st{font-size:12.5px;color:var(--muted);margin-top:4px;font-weight:600;}
+.call-head .st.live{color:var(--green);}
+.transcript{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;}
+.bubble{max-width:84%;padding:10px 14px;border-radius:17px;font-size:13.5px;line-height:1.45;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.bubble.agent{background:var(--bg-2);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start;}
+.bubble.lead{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;border-bottom-right-radius:5px;align-self:flex-end;}
+.typing{align-self:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:17px;border-bottom-left-radius:5px;
+  padding:12px 15px;display:flex;gap:5px;}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:tp 1s infinite;}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{opacity:.3;transform:none;}50%{opacity:1;transform:translateY(-3px);}}
+.call-foot{padding:14px 16px 24px;border-top:1px solid var(--line);}
+.call-btn{width:100%;border:none;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;border-radius:16px;
+  padding:14px;background:linear-gradient(135deg,#3B82F6,#1858C4);
+  box-shadow:0 8px 20px rgba(31,111,235,.42), inset 0 1px 2px rgba(255,255,255,.35);}
+.call-btn.hang{background:linear-gradient(135deg,#E0655A,#B03227);box-shadow:0 8px 20px rgba(180,60,40,.35);}
+.call-btn:disabled{opacity:.55;cursor:default;}
+.voice-row{display:flex;gap:8px;justify-content:center;margin-top:10px;}
+.voice-chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 15px;font-size:12.5px;
+  font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;}
+.voice-chip.active{border-color:var(--blue);color:var(--blue-d);background:var(--blue-soft);}
+html[data-theme="dark"] .voice-chip.active{color:#7FA8F5;}
+.phone-hint{text-align:center;font-size:12.5px;color:var(--muted);margin-top:12px;font-weight:500;}
+.phone-hint a{color:var(--blue-d);font-weight:800;text-decoration:none;}
+html[data-theme="dark"] .phone-hint a{color:#7FA8F5;}
+
+/* ---------- Sections ---------- */
+section.block{padding:66px 0;}
+.sec-eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d);margin-bottom:12px;}
+html[data-theme="dark"] .sec-eyebrow{color:#7FA8F5;}
+h2.sec-title{font-size:clamp(29px,4vw,43px);font-weight:800;letter-spacing:-1px;line-height:1.12;margin-bottom:14px;max-width:700px;}
+.price-note{max-width:660px;margin:20px auto 0;text-align:center;font-size:13px;color:var(--muted);line-height:1.6;}
+.sec-lead{font-size:17px;color:var(--muted);line-height:1.62;max-width:660px;margin-bottom:32px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);}
+.demo-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--blue-d);
+  background:var(--blue-soft);border:1px solid var(--line);padding:7px 14px;border-radius:999px;margin-bottom:18px;}
+html[data-theme="dark"] .demo-badge{color:#7FA8F5;}
+
+/* ---------- Dashboard preview ---------- */
+.dash{overflow:hidden;}
+.dash-top{display:flex;align-items:center;gap:14px;padding:22px 24px;border-bottom:1px solid var(--line);}
+.dash-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:18px;flex-shrink:0;}
+.dash-top .nm{font-weight:700;font-size:16px;}
+.dash-top .sb{font-size:12.5px;color:var(--muted);}
+.dash-tabs{display:flex;gap:4px;padding:14px 24px 0;border-bottom:1px solid var(--line);overflow-x:auto;}
+.dtab{border:none;background:none;font:inherit;font-size:14px;font-weight:700;color:var(--muted);padding:12px 16px;
+  cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;}
+.dtab.active{color:var(--ink);border-color:var(--blue);}
+.dpane{display:none;padding:24px;animation:fadeUp .3s ease;}
+.dpane.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr;}}
+.stat-tile{padding:18px;border-radius:18px;background:var(--bg-2);border:1px solid var(--line);}
+.stat-tile .lbl{font-size:12px;color:var(--muted);font-weight:600;}
+.stat-tile .val{font-size:27px;font-weight:800;letter-spacing:-.6px;margin-top:6px;color:var(--navy);}
+html[data-theme="dark"] .stat-tile .val{color:#fff;}
+.stat-tile .delta{font-size:12px;margin-top:4px;color:var(--green);font-weight:700;}
+.feed-row{display:flex;gap:13px;align-items:center;padding:13px 4px;border-bottom:1px solid var(--line);}
+.feed-row:last-child{border:none;}
+.feed-ico{width:38px;height:38px;border-radius:12px;background:var(--blue-soft);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.feed-row .tx{flex:1;font-size:14px;line-height:1.45;}
+.feed-row .tm{font-size:12px;color:var(--muted);white-space:nowrap;}
+.tag{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+.tag.hot{background:var(--red-soft);color:var(--red);}
+.tag.warm{background:var(--amber-soft);color:var(--amber);}
+.tag.cold{background:var(--bg-2);color:var(--muted);border:1px solid var(--line);}
+.tag.new{background:var(--green-soft);color:var(--green);}
+.tag.info{background:var(--blue-soft);color:var(--blue-d);}
+html[data-theme="dark"] .tag.info{color:#7FA8F5;}
+.call-card{border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px;background:var(--bg-2);}
+.call-card .who{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.call-card .ini{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#fff;font-size:14px;flex-shrink:0;}
+.call-card .nm{font-weight:700;font-size:15px;}
+.call-card .mt{font-size:12.5px;color:var(--muted);}
+.call-card .sm{font-size:14px;color:var(--muted);line-height:1.55;margin-top:8px;}
+.call-card .nx{margin-top:10px;font-size:13px;font-weight:700;color:var(--blue-d);display:flex;gap:8px;align-items:center;}
+html[data-theme="dark"] .call-card .nx{color:#7FA8F5;}
+.tr-box{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;}
+.tr-line{font-size:13px;color:var(--muted);margin:5px 0;line-height:1.5;}
+.tr-line b{color:var(--ink);}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.cal-head b{font-size:16px;}
+.cal-hint{font-size:12.5px;color:var(--muted);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.cal-dow{font-size:11px;font-weight:700;color:var(--muted);text-align:center;padding:6px 0;}
+.cal-day{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13.5px;
+  font-weight:600;color:var(--muted);background:var(--bg-2);border:1px solid transparent;}
+.cal-day.hl{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;cursor:pointer;font-weight:800;
+  box-shadow:0 4px 12px rgba(31,111,235,.4);}
+.cal-day.hl:hover{transform:scale(1.07);}
+.cal-day.dim{opacity:.3;}
+.msg-row{display:flex;gap:13px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line);}
+.msg-row:last-child{border:none;}
+.msg-ico{width:42px;height:42px;border-radius:14px;background:var(--blue-soft);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.msg-row .nm{font-weight:700;font-size:14.5px;}
+.msg-row .tx{font-size:13.5px;color:var(--muted);margin-top:2px;}
+.msg-row .dr{margin-left:auto;flex-shrink:0;}
+.draft{margin-top:6px;font-size:12.5px;background:var(--bg-2);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);line-height:1.5;}
+.draft b{color:var(--ink);}
+
+/* ---------- Feature cards ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:820px){.feat-grid{grid-template-columns:1fr;}}
+.feat{padding:26px 24px;}
+.feat .ic{width:46px;height:46px;border-radius:15px;background:var(--blue-soft);display:flex;align-items:center;
+  justify-content:center;font-size:22px;margin-bottom:16px;}
+.feat h3{font-size:17px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px;}
+.feat p{font-size:14.5px;color:var(--muted);line-height:1.6;}
+.feat ul{list-style:none;margin-top:12px;}
+.feat li{font-size:13.5px;color:var(--muted);padding:5px 0 5px 24px;position:relative;line-height:1.5;}
+.feat li::before{content:"✓";position:absolute;left:2px;color:var(--blue);font-weight:800;}
+
+/* ---------- Steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step;}
+@media(max-width:820px){.steps{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.steps{grid-template-columns:1fr;}}
+.step{padding:24px 20px;position:relative;}
+.step .num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:14px;
+  box-shadow:0 6px 14px rgba(31,111,235,.35);}
+.step h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.55;}
+
+/* ---------- Calculator ---------- */
+.calc{padding:30px 28px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+@media(max-width:760px){.calc-grid{grid-template-columns:1fr;}}
+.calc label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;}
+.calc label .v{color:var(--blue-d);font-weight:800;}
+html[data-theme="dark"] .calc label .v{color:#7FA8F5;}
+.calc input[type=range]{width:100%;margin:6px 0 20px;accent-color:var(--blue);height:28px;}
+.calc-out{background:linear-gradient(135deg,var(--navy),#14315e);border-radius:18px;padding:28px 26px;color:#fff;
+  display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-lg);}
+.calc-out .big{font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.calc-out .cap{font-size:14.5px;color:rgba(255,255,255,.85);margin-top:8px;line-height:1.55;}
+.calc-out .note{font-size:12px;color:rgba(255,255,255,.6);margin-top:14px;line-height:1.5;}
+.calc-disc{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6;}
+
+/* ---------- Pricing ---------- */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr;}}
+.plan{padding:30px 28px;display:flex;flex-direction:column;position:relative;}
+.plan.feat{border:2px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(135deg,#3B82F6,#0A1A33) border-box;
+  box-shadow:var(--shadow-lg);}
+.plan .pname{font-size:20px;font-weight:800;letter-spacing:-.3px;}
+.plan .ptag{font-size:14px;color:var(--muted);margin:8px 0 18px;line-height:1.5;}
+.plan .pnum{font-size:46px;font-weight:800;letter-spacing:-1.2px;color:var(--navy);}
+html[data-theme="dark"] .plan .pnum{color:#fff;}
+.plan .pper{font-size:14px;color:var(--muted);font-weight:600;}
+.plan ul{list-style:none;margin:20px 0 24px;flex:1;}
+.plan li{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:7px 0;line-height:1.45;}
+.plan li .ck{color:var(--blue);font-weight:800;flex-shrink:0;}
+.plan li.off{color:var(--muted);opacity:.65;}
+.soon{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  background:var(--bg-2);color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+.plan .btn{width:100%;}
+
+/* ---------- FAQ ---------- */
+.faq-item{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
+.faq-q{width:100%;border:none;background:none;font:inherit;text-align:left;padding:20px 22px;font-size:15.5px;font-weight:700;
+  color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.faq-q .pl{font-size:20px;color:var(--blue);flex-shrink:0;font-weight:400;transition:transform .2s;}
+.faq-item.open .faq-q .pl{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a p{padding:0 22px 20px;font-size:14.5px;color:var(--muted);line-height:1.65;}
+
+/* ---------- OACIQ / compliance ---------- */
+.oaciq{padding:26px 28px;display:flex;gap:16px;align-items:flex-start;background:var(--blue-soft);border:1px solid var(--line);}
+.oaciq .ic{font-size:26px;flex-shrink:0;}
+.oaciq p{font-size:14px;color:var(--muted);line-height:1.65;}
+.oaciq b{color:var(--ink);}
+
+/* ---------- Final CTA ---------- */
+.final{border-radius:30px;padding:58px 40px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#12294f,#0A1A33 70%);box-shadow:var(--shadow-lg);}
+.final::before{content:"";position:absolute;top:-90px;right:8%;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(64,130,246,.35),transparent 65%);}
+.final h2{font-size:clamp(30px,4.5vw,46px);font-weight:800;letter-spacing:-1px;color:#fff;line-height:1.12;position:relative;}
+.final p{color:rgba(255,255,255,.85);font-size:17px;margin:14px auto 28px;max-width:540px;line-height:1.6;position:relative;}
+.final-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-white{background:#fff;color:var(--navy);box-shadow:0 10px 26px rgba(0,0,0,.3);}
+.final .tel{display:block;margin-top:22px;color:#fff;font-weight:800;font-size:21px;letter-spacing:.02em;text-decoration:none;position:relative;}
+
+footer{padding:42px 0 90px;text-align:center;font-size:13px;color:var(--muted);line-height:1.7;}
+footer .demo{display:inline-block;margin-top:10px;font-size:11.5px;border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;color:var(--muted);background:var(--blue-soft);}
+
+/* ---------- Sticky mobile CTA ---------- */
+.sticky-cta{position:fixed;left:14px;right:14px;bottom:14px;z-index:55;display:none;gap:10px;}
+.sticky-cta .btn{flex:1;padding:15px 10px;font-size:14.5px;}
+@media(max-width:760px){.sticky-cta{display:flex;} footer{padding-bottom:110px;}}
+
+/* ---------- Modal / toast ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(7,17,32,.55);backdrop-filter:blur(6px);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:22px;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--card);border-radius:26px;padding:32px 28px;max-width:400px;width:100%;text-align:center;
+  box-shadow:var(--shadow-lg);animation:fadeUp .35s ease;border:1px solid var(--line);}
+.modal .ok{width:62px;height:62px;margin:0 auto 16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;
+  font-size:27px;color:#fff;box-shadow:0 10px 24px rgba(31,111,235,.4);}
+.modal h3{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;}
+.modal p{font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:18px;}
+.modal .kv{display:flex;justify-content:space-between;font-size:14px;padding:9px 2px;border-bottom:1px solid var(--line);gap:10px;}
+.modal .kv b{font-weight:700;text-align:right;}
+.modal .kv span{color:var(--muted);flex-shrink:0;}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--navy);
+  color:#fff;font-size:14px;font-weight:600;padding:13px 22px;border-radius:999px;z-index:120;transition:all .3s;pointer-events:none;
+  box-shadow:var(--shadow-lg);max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:640px){
+  .wrap{padding:0 16px;}
+  .nav-in{padding:10px 14px;gap:8px;}
+  .brand{font-size:17px;}
+  .seg button{padding:6px 10px;font-size:12px;min-width:36px;}
+  .tbtn{width:36px;height:36px;}
+  .hero{padding:112px 0 34px;}
+  .lead{font-size:17px;}
+  .hero-ctas .btn{flex:1 1 100%;}
+  .trust{gap:22px;}
+  .phone{width:min(300px,100%);}
+  section.block{padding:48px 0;}
+  .dash-top{padding:18px 16px;}
+  .dash-tabs{padding:12px 16px 0;}
+  .dpane{padding:20px 14px;}
+  .calc{padding:24px 18px;}
+  .calc-out .big{font-size:44px;}
+  .final{padding:44px 22px;border-radius:24px;}
+  .final-ctas .btn{flex:1 1 100%;}
+  .oaciq{padding:22px 18px;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="/"><span class="mk" style="font-size:13.5px;">AI</span>AI Staff</a>
+    <div class="nav-links">
+      <a class="nl" href="#apercu" data-i18n="nav.demo">La démo</a>
+      <a class="nl" href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
+      <a class="nl" href="#faq" data-i18n="nav.faq">FAQ</a>
+      <div class="seg" id="langSeg">
+        <button data-lang="fr" class="active">FR</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="es">ES</button>
+      </div>
+      <button class="tbtn" id="themeToggle" aria-label="theme">🌙</button>
+      <a href="#apercu" class="btn btn-blue btn-sm" data-i18n="nav.cta">Voir la démo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span data-i18n="hero.eyebrow">Conçu pour les courtiers du Québec</span></span>
+        <h1 data-i18n="hero.title">Alex répond pendant vos visites. <em>Et vous appelle chaque matin.</em></h1>
+        <p class="lead" data-i18n="hero.lead">Une adjointe IA bilingue qui décroche vos appels, aide à qualifier l'acheteur et propose la visite — pendant vos signatures, vos visites ou vos congés.</p>
+        <div class="hero-ctas">
+          <a href="#apercu" class="btn btn-blue" data-i18n="hero.cta1">Voir le panneau en action</a>
+          <a href="tel:+14388058804" class="btn btn-ghost" data-i18n="hero.cta2">📞 Parler à Alex</a>
+        </div>
+        <div class="trust">
+          <div><div class="n">24/7</div><div class="l" data-i18n="hero.t1">même pendant vos visites et vos congés</div></div>
+          <div><div class="n" data-i18n="hero.t2n">7 h 30</div><div class="l" data-i18n="hero.t2">votre briefing du matin, au téléphone</div></div>
+          <div><div class="n">FR·EN</div><div class="l" data-i18n="hero.t3">un seul agent, deux langues</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="call-head">
+              <div class="agent-av">A</div>
+              <div class="nm" id="phoneName">Alex · AI Staff</div>
+              <div class="st" id="callStatus" data-i18n="phone.idle">Touchez « appeler » pour essayer</div>
+            </div>
+            <div class="transcript" id="transcript"></div>
+            <div class="call-foot">
+              <button class="call-btn" id="callBtn" data-i18n="phone.call">📞 Appeler Alex</button>
+              <div class="voice-row">
+                <button class="voice-chip active" data-voice="Alex">Alex</button>
+                <button class="voice-chip" data-voice="Sofía">Sofía</button>
+                <button class="voice-chip" data-voice="Léa">Léa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-hint"><a href="tel:+14388058804">+1 (438) 805-8804</a> · <span data-i18n="phone.hint">ligne démo — décrochez pour vrai</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ PERSONNALISATION ============ -->
+  <section class="block" id="apercu" style="padding-top:20px;">
+    <div class="sec-eyebrow" data-i18n="pers.eyebrow">Démo interactive</div>
+    <h2 class="sec-title" data-i18n="pers.title">Votre panneau, avec votre nom dessus.</h2>
+    <p class="sec-lead" data-i18n="pers.lead">Écrivez votre nom et votre agence — le tableau de bord et le script d'appel ci-dessous se personnalisent instantanément.</p>
+    <div class="card" style="padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="persCard">
+      <div>
+        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;" data-i18n="pers.l1">Votre nom</label>
+        <input id="inpName" data-i18n-ph="pers.ph1" placeholder="ex. Marie Dubois" style="width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);outline:none;">
+      </div>
+      <div>
+        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;" data-i18n="pers.l2">Votre agence</label>
+        <input id="inpBrokerage" data-i18n-ph="pers.ph2" placeholder="ex. RE/MAX Plateau" style="width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);outline:none;">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="block" style="padding-top:0;">
+    <span class="demo-badge" data-i18n="dash.badge">◆ Données de démonstration</span>
+    <div class="sec-eyebrow" data-i18n="dash.eyebrow">Ce que vous verrez chaque matin</div>
+    <h2 class="sec-title" data-i18n="dash.title">Un seul panneau. Chaque conversation.</h2>
+    <p class="sec-lead" data-i18n="dash.lead">Dès qu'un appel se termine, il est déjà qualifié, transcrit et — si le client est prêt — inscrit à votre agenda.</p>
+    <div class="card dash">
+      <div class="dash-top">
+        <div class="dash-av" id="dashInitial">M</div>
+        <div><div class="nm" id="dashName">Marie Dubois</div><div class="sb" id="dashSub">RE/MAX Plateau · AI Staff Exécutive</div></div>
+      </div>
+      <div class="dash-tabs" id="dashTabs">
+        <button class="dtab active" data-pane="overview" data-i18n="tabs.overview">Aperçu</button>
+        <button class="dtab" data-pane="calls" data-i18n="tabs.calls">Appels</button>
+        <button class="dtab" data-pane="calendar" data-i18n="tabs.calendar">Agenda</button>
+        <button class="dtab" data-pane="email" data-i18n="tabs.email">Courriel</button>
+      </div>
+      <div class="dpane active" id="dp-overview">
+        <div class="stats">
+          <div class="stat-tile"><div class="lbl" data-i18n="stat.calls">Appels traités</div><div class="val" data-count="63">0</div><div class="delta" data-i18n="stat.d1">↑ 8 cette semaine</div></div>
+          <div class="stat-tile"><div class="lbl" data-i18n="stat.leads">Leads qualifiés</div><div class="val" data-count="32">0</div><div class="delta" data-i18n="stat.d2">↑ 8 cette semaine</div></div>
+          <div class="stat-tile"><div class="lbl" data-i18n="stat.visits">Visites confirmées</div><div class="val" data-count="11">0</div><div class="delta" data-i18n="stat.d3">↑ 3 cette semaine</div></div>
+          <div class="stat-tile"><div class="lbl" data-i18n="stat.rate">Taux de qualification</div><div class="val" data-count="68" data-suffix=" %">0</div><div class="delta" data-i18n="stat.d4">↑ 5 pts</div></div>
+        </div>
+        <div id="activityFeed"></div>
+      </div>
+      <div class="dpane" id="dp-calls"><div id="callsList"></div></div>
+      <div class="dpane" id="dp-calendar">
+        <div class="cal-head"><b data-i18n="cal.title">Septembre 2026</b><span class="cal-hint" data-i18n="cal.hint">Touchez un jour en surbrillance</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="dpane" id="dp-email">
+        <div id="emailList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CENTRE D'APPELS ============ -->
+  <section class="block" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="cc.eyebrow">Centre d'appels</div>
+    <h2 class="sec-title" data-i18n="cc.title">Chaque appel compte. Aucun ne se perd.</h2>
+    <p class="sec-lead" data-i18n="cc.lead">Entrants, sortants, manqués : Alex décroche, rappelle et vous laisse un dossier complet pour chaque conversation.</p>
+    <div class="feat-grid">
+      <div class="card feat">
+        <div class="ic">📥</div>
+        <h3 data-i18n="cc.f1t">Appels entrants</h3>
+        <p data-i18n="cc.f1p">Alex décroche à votre place, en français ou en anglais selon l'appelant.</p>
+        <ul>
+          <li data-i18n="cc.f1a">Transcription intégrale de l'appel</li>
+          <li data-i18n="cc.f1b">Résumé IA en 3 lignes</li>
+          <li data-i18n="cc.f1c">Qualification : chaud, tiède ou froid</li>
+        </ul>
+      </div>
+      <div class="card feat">
+        <div class="ic">📤</div>
+        <h3 data-i18n="cc.f2t">Appels sortants</h3>
+        <p data-i18n="cc.f2p">Relances automatiques sur vos anciens leads et vos demandes de visite en attente.</p>
+        <ul>
+          <li data-i18n="cc.f2a">Rappels planifiés, sans charge mentale</li>
+          <li data-i18n="cc.f2b">Script adapté à chaque propriété</li>
+          <li data-i18n="cc.f2c">Compte rendu après chaque appel</li>
+        </ul>
+      </div>
+      <div class="card feat">
+        <div class="ic">🎯</div>
+        <h3 data-i18n="cc.f3t">Prochaine action claire</h3>
+        <p data-i18n="cc.f3p">Chaque appel se termine par une action proposée : rappeler, visiter, envoyer un courriel.</p>
+        <ul>
+          <li data-i18n="cc.f3a">Visite réservée dans votre agenda</li>
+          <li data-i18n="cc.f3b">Courriel de suivi prêt à envoyer</li>
+          <li data-i18n="cc.f3c">Priorités du jour chaque matin</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BRIEFING / ADJOINT PERSONNEL ============ -->
+  <section class="block" id="briefing" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="br.eyebrow">Votre adjoint personnel</div>
+    <h2 class="sec-title" data-i18n="br.title">Chaque matin à 7 h 30, Alex vous appelle.</h2>
+    <p class="sec-lead" data-i18n="br.lead">Alex ne fait pas que répondre à vos clients : il organise votre journée. Vous choisissez les heures, et vous pouvez l'appeler quand vous voulez.</p>
+    <div class="feat-grid">
+      <div class="card feat">
+        <div class="ic">☀️</div>
+        <h3 data-i18n="br.f1t">Briefing du matin</h3>
+        <p data-i18n="br.f1p">Vos visites du jour, les leads chauds de la nuit, les suivis à faire et les courriels urgents — en deux minutes, au téléphone.</p>
+      </div>
+      <div class="card feat">
+        <div class="ic">📲</div>
+        <h3 data-i18n="br.f2t">Appelez Alex quand vous voulez</h3>
+        <p data-i18n="br.f2p">Alex reconnaît votre numéro. « Qu'est-ce que j'ai demain? » « Confirme la visite de 16 h avec Sophie. » C'est réglé.</p>
+      </div>
+      <div class="card feat">
+        <div class="ic">🌙</div>
+        <h3 data-i18n="br.f3t">Bilan du soir</h3>
+        <p data-i18n="br.f3p">Ce qui est réglé, les offres et documents qui attendent votre décision, et les visites de demain déjà confirmées.</p>
+      </div>
+    </div>
+    <div class="card oaciq" style="margin-top:16px;">
+      <div class="ic">🎧</div>
+      <p data-i18n="br.sample"><b>Exemple de briefing :</b> « Bonjour Marie, c'est Alex. 3 visites aujourd'hui, la première à 10 h au 482, rue Saint-Urbain. Cette nuit, j'ai pré-qualifié 2 acheteurs, dont un préapprouvé à 700 000 $. Philippe attend son rapport d'évaluation. Je te rappelle à 18 h. »</p>
+    </div>
+    <p class="price-note" data-i18n="br.note">Déploiement progressif : les briefings et les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.</p>
+  </section>
+
+  <!-- ============ COMMENT ÇA MARCHE ============ -->
+  <section class="block" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="how.eyebrow">Simple comme bonjour</div>
+    <h2 class="sec-title" data-i18n="how.title">De l'appel à la visite, sans toucher votre téléphone.</h2>
+    <div class="steps">
+      <div class="card step"><div class="num">1</div><h3 data-i18n="how.s1t">L'appel arrive</h3><p data-i18n="how.s1p">Un acheteur appelle pendant votre visite. Alex décroche quand vous ne pouvez pas.</p></div>
+      <div class="card step"><div class="num">2</div><h3 data-i18n="how.s2t">Alex qualifie</h3><p data-i18n="how.s2p">Budget, préapprobation, secteur, échéancier : les bonnes questions, en FR ou EN.</p></div>
+      <div class="card step"><div class="num">3</div><h3 data-i18n="how.s3t">La visite se réserve</h3><p data-i18n="how.s3p">Le créneau se bloque dans votre agenda et le client reçoit sa confirmation.</p></div>
+      <div class="card step"><div class="num">4</div><h3 data-i18n="how.s4t">Vous recevez le résumé</h3><p data-i18n="how.s4p">Transcription, résumé IA et prochaine action : vous n'avez qu'à conclure.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATEUR ============ -->
+  <section class="block" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="calc.eyebrow">Faites le calcul</div>
+    <h2 class="sec-title" data-i18n="calc.title">Combien coûtent vos appels manqués?</h2>
+    <p class="sec-lead" data-i18n="calc.lead">Déplacez les curseurs avec vos chiffres — l'estimation se met à jour toute seule.</p>
+    <div class="card calc">
+      <div class="calc-grid">
+        <div>
+          <label><span data-i18n="calc.l1">Appels manqués par semaine</span> : <span class="v" id="vMissed">5</span></label>
+          <input type="range" id="rMissed" min="0" max="20" value="5">
+          <label><span data-i18n="calc.l2">Vos visites concluent à</span> : <span class="v" id="vConv">10 %</span></label>
+          <input type="range" id="rConv" min="1" max="30" value="10">
+          <label><span data-i18n="calc.l3">Commission moyenne</span> : <span class="v" id="vComm">12 000 $</span></label>
+          <input type="range" id="rComm" min="2000" max="40000" step="500" value="12000">
+        </div>
+        <div class="calc-out">
+          <div class="big" id="calcBig">≈ 10 400 $</div>
+          <div class="cap" data-i18n="calc.cap">de commissions potentielles manquées par mois, selon vos chiffres.</div>
+          <div class="note" data-i18n="calc.note">Estimation indicative calculée à partir de vos propres données. Vos résultats réels dépendent de votre marché et de votre pratique.</div>
+        </div>
+      </div>
+      <p class="calc-disc" data-i18n="calc.disc">Un appel manqué n'est pas qu'un appel : c'est un acheteur qui appelle le courtier suivant sur Centris.</p>
+    </div>
+  </section>
+
+  <!-- ============ TARIFS ============ -->
+  <section class="block" id="tarifs" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="price.eyebrow">Tarifs</div>
+    <h2 class="sec-title" data-i18n="price.title">Un plan pour chaque rythme.</h2>
+    <p class="sec-lead" data-i18n="price.lead">Commencez par la voix. Ajoutez la boîte courriel unifiée et les suivis proactifs quand vous êtes prêt.</p>
+    <div class="price-grid" id="priceGrid"></div>
+    <p class="price-note" data-i18n="price.note"></p>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="block" id="faq" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="faq.eyebrow">Questions fréquentes</div>
+    <h2 class="sec-title" data-i18n="faq.title">Ce que les courtiers nous demandent.</h2>
+    <div id="faqList" style="margin-top:26px;"></div>
+    <div class="card oaciq" style="margin-top:22px;">
+      <div class="ic">⚖️</div>
+      <p data-i18n="oaciq.text"><b>Conformité OACIQ :</b> Alex ne donne jamais de conseils en courtage et ne remplace pas votre jugement professionnel. Chaque interaction est transcrite et archivée : vous gardez le contrôle total de vos dossiers et de vos communications clients, comme l'exigent vos obligations déontologiques.</p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="block" style="padding-top:10px;">
+    <div class="final">
+      <h2 data-i18n="final.title">Le prochain appel ne doit pas se perdre.</h2>
+      <p data-i18n="final.lead">15 minutes pour voir Alex fonctionner avec vos vraies inscriptions et votre vrai numéro.</p>
+      <div class="final-ctas">
+        <a href="mailto:hello@meetaistaff.com?subject=AI%20Staff%20—%20Démo%20courtier" class="btn btn-white" data-i18n="final.cta1">Réserver ma démo</a>
+        <a href="#apercu" class="btn btn-blue" data-i18n="final.cta2">Revoir le panneau</a>
+      </div>
+      <a class="tel" href="tel:+14388058804">+1 (438) 805-8804</a>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>AI Staff</b> · <span data-i18n="footer.tag">l'adjointe IA bilingue des courtiers du Québec</span></div>
+    <div style="margin-top:6px;"><a href="/" style="color:inherit;font-weight:700;" data-i18n="footer.home">Accueil AI Staff</a> · <a href="/immobilier/demo/" style="color:inherit;font-weight:700;" data-i18n="footer.dash">Tableau de bord démo</a></div>
+    <div>meetaistaff.com · © 2026 AI Staff</div>
+    <div><span class="demo" data-i18n="footer.line">◆ cette page utilise des données d'exemple à titre de démonstration</span></div>
+  </footer>
+</div>
+
+<div class="sticky-cta">
+  <a href="#apercu" class="btn btn-ghost" data-i18n="sticky.demo">Voir la démo</a>
+  <a href="tel:+14388058804" class="btn btn-blue" data-i18n="sticky.call">📞 Appeler Alex</a>
+</div>
+
+<div class="modal-bg" id="calModal">
+  <div class="modal">
+    <div class="ok">📅</div>
+    <h3 data-i18n="calM.title">Visite confirmée</h3>
+    <p data-i18n="calM.lead">Proposée par Alex après l'appel — vous validez d'un toucher, sans aller-retour.</p>
+    <div style="text-align:left;margin-bottom:20px;">
+      <div class="kv"><span data-i18n="calM.client">Client</span><b>Sophie Nadeau</b></div>
+      <div class="kv"><span data-i18n="calM.time">Heure</span><b id="calModalTime">mer. 23 sept. · 16 h 00</b></div>
+      <div class="kv"><span data-i18n="calM.prop">Propriété</span><b>482, rue Saint-Urbain</b></div>
+      <div class="kv"><span data-i18n="calM.src">Source</span><b>Alex · AI Staff</b></div>
+    </div>
+    <button class="btn btn-blue" style="width:100%;" onclick="closeModal('calModal')" data-i18n="calM.close">Compris</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="priceModal">
+  <div class="modal">
+    <div class="ok">✦</div>
+    <h3 data-i18n="prM.title">Excellent choix</h3>
+    <p data-i18n="prM.lead">Écrivez-nous et nous planifierons votre activation ensemble.</p>
+    <a class="btn btn-blue" style="width:100%;text-decoration:none;" id="priceMailto" href="mailto:hello@meetaistaff.com" data-i18n="prM.cta">Nous écrire</a>
+    <div style="margin-top:12px;"><a href="#" onclick="closeModal('priceModal');return false;" style="font-size:13px;color:var(--muted);" data-i18n="prM.later">Peut-être plus tard</a></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+"use strict";
+const STR = {
+fr:{
+"nav.demo":"La démo","nav.pricing":"Tarifs","nav.faq":"FAQ","nav.cta":"Voir la démo",
+"hero.eyebrow":"L'adjoint personnel des courtiers du Québec",
+"hero.title":"Alex répond pendant vos visites. <em>Et vous appelle chaque matin.</em>",
+"hero.lead":"Un adjoint personnel IA bilingue qui décroche vos appels, pré-qualifie l'acheteur, propose la visite — et vous fait le point chaque matin. Besoin de quelque chose? Appelez-le : « Qu'est-ce que j'ai demain? »",
+"hero.t2n":"7 h 30",
+"br.eyebrow":"Votre adjoint personnel",
+"br.title":"Chaque matin à 7 h 30, Alex vous appelle.",
+"br.lead":"Alex ne fait pas que répondre à vos clients : il organise votre journée. Vous choisissez les heures, et vous pouvez l'appeler quand vous voulez.",
+"br.f1t":"Briefing du matin",
+"br.f1p":"Vos visites du jour, les leads chauds de la nuit, les suivis à faire et les courriels urgents — en deux minutes, au téléphone.",
+"br.f2t":"Appelez Alex quand vous voulez",
+"br.f2p":"Alex reconnaît votre numéro. « Qu'est-ce que j'ai demain? » « Confirme la visite de 16 h avec Sophie. » C'est réglé.",
+"br.f3t":"Bilan du soir",
+"br.f3p":"Ce qui est réglé, les documents qui attendent votre décision, et les visites de demain déjà confirmées.",
+"br.sample":"<b>Exemple de briefing :</b> « Bonjour Marie, c'est Alex. 3 visites aujourd'hui, la première à 10 h au 482, rue Saint-Urbain. Cette nuit, j'ai pré-qualifié 2 acheteurs, dont une préapprouvée à 700 000 $. Philippe attend son rapport d'évaluation. Je te rappelle à 18 h. »",
+"br.note":"Déploiement progressif : les briefings et les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.",
+"footer.home":"Accueil AI Staff",
+"footer.dash":"Tableau de bord démo",
+"planName":"Exécutive",
+"hero.cta1":"Voir le panneau en action","hero.cta2":"📞 Parler à Alex",
+"hero.t1":"même pendant vos visites et vos congés","hero.t2":"votre briefing du matin, au téléphone","hero.t3":"un seul adjoint, deux langues",
+"phone.idle":"Touchez « appeler » pour essayer","phone.call":"📞 Appeler Alex","phone.connecting":"Connexion…",
+"phone.live":"En direct · Alex en ligne","phone.hangup":"Raccrocher","phone.ended":"Appel terminé — visite confirmée ✓",
+"phone.hint":"ligne démo — essayez pour vrai",
+"pers.eyebrow":"Démo interactive","pers.title":"Votre panneau, avec votre nom dessus.",
+"pers.lead":"Écrivez votre nom et votre agence — le tableau de bord et le script d'appel ci-dessous se personnalisent instantanément.",
+"pers.l1":"Votre nom","pers.l2":"Votre agence","pers.ph1":"ex. Marie Dubois","pers.ph2":"ex. RE/MAX Plateau",
+"dash.badge":"◆ Données de démonstration","dash.eyebrow":"Ce que vous verrez chaque matin",
+"dash.title":"Un seul panneau. Chaque conversation.",
+"dash.lead":"Dès qu'un appel se termine, il est transcrit, pré-qualifié et — si le client est prêt — proposé à votre agenda.",
+"tabs.overview":"Aperçu","tabs.calls":"Appels","tabs.calendar":"Agenda","tabs.email":"Courriel",
+"stat.calls":"Appels traités","stat.leads":"Leads pré-qualifiés","stat.visits":"Visites confirmées","stat.rate":"Taux de pré-qualification",
+"stat.d1":"↑ 8 cette semaine","stat.d2":"↑ 8 cette semaine","stat.d3":"↑ 3 cette semaine","stat.d4":"↑ 5 pts",
+"cal.title":"Septembre 2026","cal.hint":"Touchez un jour en surbrillance",
+"cc.eyebrow":"Centre d'appels","cc.title":"Chaque appel compte. Aucun ne se perd.",
+"cc.lead":"Entrants, manqués ou à relancer : Alex décroche, prend le relais et vous laisse un dossier complet pour chaque conversation.",
+"cc.f1t":"Appels entrants","cc.f1p":"Alex décroche à votre place, en français ou en anglais selon l'appelant.",
+"cc.f1a":"Transcription intégrale de l'appel","cc.f1b":"Résumé IA en 3 lignes","cc.f1c":"Pré-qualification : chaud, tiède ou froid",
+"cc.f2t":"Rappels planifiés","cc.f2p":"Suivis programmés de vos anciens leads et de vos demandes de visite en attente.",
+"cc.f2a":"Rappels planifiés, sans charge mentale","cc.f2b":"Script adapté à chaque propriété","cc.f2c":"Compte rendu après chaque appel",
+"cc.f3t":"Prochaine action claire","cc.f3p":"Chaque appel se termine par une action proposée : rappeler, visiter, envoyer un courriel.",
+"cc.f3a":"Visite réservée dans votre agenda","cc.f3b":"Courriel de suivi prêt à envoyer","cc.f3c":"Priorités du jour chaque matin",
+"how.eyebrow":"Simple comme bonjour","how.title":"De l'appel à la visite, sans toucher votre téléphone.",
+"how.s1t":"L'appel arrive","how.s1p":"Un acheteur appelle pendant votre visite. Alex décroche quand vous ne pouvez pas.",
+"how.s2t":"Alex qualifie","how.s2p":"Budget, préapprobation, secteur, échéancier : les bonnes questions, en FR ou EN.",
+"how.s3t":"La visite se réserve","how.s3p":"Le créneau est proposé dans votre agenda et le client reçoit sa confirmation.",
+"how.s4t":"Vous recevez le résumé","how.s4p":"Transcription, résumé IA et prochaine action : vous n'avez qu'à conclure.",
+"calc.eyebrow":"Faites le calcul","calc.title":"Combien coûtent vos appels manqués?",
+"calc.lead":"Déplacez les curseurs avec vos chiffres — l'estimation se met à jour toute seule.",
+"calc.l1":"Appels manqués par semaine","calc.l2":"Vos visites concluent à","calc.l3":"Commission moyenne",
+"calc.cap":"de commissions potentielles manquées par mois, selon vos chiffres.",
+"calc.note":"Estimation indicative calculée à partir de vos propres données. Vos résultats réels dépendent de votre marché et de votre pratique.",
+"calc.disc":"Un appel manqué n'est pas qu'un appel : c'est un acheteur qui appelle le courtier suivant sur Centris.",
+"price.eyebrow":"Tarifs","price.title":"Un adjoint à temps plein, pour une fraction du prix.",
+"price.lead":"CAD, mois par mois, sans contrat. Installation gratuite pendant le lancement.","price.note":"D\u00e9ploiement progressif \u2014 les fonctionnalit\u00e9s sont activ\u00e9es vague par vague et confirm\u00e9es avec vous lors de l'appel d\u00e9couverte.",
+"price.per":"/mois",
+"faq.eyebrow":"Questions fréquentes","faq.title":"Ce que les courtiers nous demandent.",
+"oaciq.text":"<b>Conformité OACIQ :</b> Alex ne donne jamais de conseils en courtage et ne remplace pas votre jugement professionnel. Chaque interaction est transcrite et archivée : vous gardez le contrôle total de vos dossiers et de vos communications clients, comme l'exigent vos obligations déontologiques.",
+"final.title":"Le prochain appel ne doit pas se perdre.",
+"final.lead":"15 minutes pour voir ce qu'Alex ferait avec vos inscriptions et votre numéro.",
+"final.cta1":"Réserver ma démo","final.cta2":"Revoir le panneau",
+"footer.tag":"l'adjoint personnel IA des courtiers du Québec",
+"footer.line":"◆ cette page utilise des données d'exemple à titre de démonstration",
+"sticky.demo":"Voir la démo","sticky.call":"📞 Appeler Alex",
+"calM.title":"Visite confirmée","calM.lead":"Proposée par Alex après l'appel — vous validez d'un toucher, sans aller-retour.",
+"calM.client":"Client","calM.time":"Heure","calM.prop":"Propriété","calM.src":"Source","calM.close":"Compris",
+"prM.title":"Excellent choix","prM.lead":"Écrivez-nous et nous planifierons votre activation ensemble.",
+"prM.cta":"Nous écrire","prM.later":"Peut-être plus tard",
+tagHot:"Chaud",tagWarm:"Tiède",tagCold:"Froid",tagNew:"Nouveau",
+dows:["D","L","M","M","J","V","S"],
+activity:[
+["📞","Lead qualifié · condo, Mile-End, budget 1,8 M$","il y a 3 min","hot"],
+["📅","Visite confirmée · 219, av. du Parc","il y a 41 min","new"],
+["✉️","Courriel de suivi envoyé à Julie Tanguay","il y a 2 h","cold"],
+["📞","Appel manqué rappelé automatiquement","il y a 5 h","warm"]],
+calls:[
+["JT","Julie Tanguay","2:14 · Aujourd'hui, 9 h 12","Cherche un 3 chambres près de Villeray, préapprouvée jusqu'à 650 000 $.","hot","linear-gradient(135deg,#3B82F6,#1858C4)",
+[["A","Bonjour, bureau de {broker}, c'est Alex. Comment puis-je vous aider?"],["J","Je cherche un 3 chambres près de Villeray, préapprouvée jusqu'à 650 000 $."]],
+"Prochaine action : visite proposée mer. 16 h 00"],
+["PB","Philippe Bergeron","3:02 · Hier, 16 h 47","Vend à Verdun, souhaite une évaluation avant de s'inscrire.","warm","linear-gradient(135deg,#4E7A5A,#2C4A35)",
+[["A","Bonjour Philippe, c'est Alex du bureau de {broker}."],["P","Je vends à Verdun et je veux une évaluation avant de m'inscrire."]],
+"Prochaine action : envoyer le rapport d'évaluation"],
+["MK","Mei Kwan","1:08 · Hier, 11 h 03","Curieuse du marché du Plateau, pas de projet immédiat.","cold","linear-gradient(135deg,#7FB3C8,#3E7A94)",
+[["A","Bonjour, c'est Alex. Vous cherchez dans quel secteur?"],["M","Juste curieuse du marché du Plateau pour l'instant."]],
+"Prochaine action : suivi dans 30 jours"]],
+emails:[
+["✉️","Julie Tanguay","Merci pour la visite — on se voit mercredi!","il y a 20 min","new","Brouillon prêt : confirmation de visite + fiche de la propriété (FR)."],
+["✉️","Philippe Bergeron","Re : rapport d'évaluation — Verdun","il y a 3 h","warm","Brouillon prêt : envoi du rapport + proposition d'appel (FR)."],
+["✉️","Nouveau lead · site web","Demande d'info : 77, rue Jarry O.","hier","cold",""]],
+plans:[{"name": "Assistante", "tag": "Vos appels pris en charge, même pendant vos visites.", "price": "997", "cta": "Choisir Assistante", "featured": false, "feat": [["Appels 24/7, en français et en anglais", 1], ["Pré-qualification des acheteurs", 1], ["Visites proposées à votre agenda", 1], ["Réponses par texto (SMS)", 1], ["Tableau de bord et résumés d'appels", 1], ["1 briefing par jour au téléphone", 1]]}, {"name": "Exécutive", "tag": "Tous vos canaux, et un adjoint qui organise votre journée.", "price": "1 497", "cta": "Choisir Exécutive", "featured": true, "feat": [["Tout le plan Assistante", 1], ["WhatsApp et DM Instagram / Facebook", 1], ["Courriel unifié avec brouillons à approuver", 1], ["Jusqu'à 3 briefings par jour", 1], ["Appelez Alex quand vous voulez", 1], ["Relances sortantes de vos leads", 1], ["Statistiques de vos réseaux sociaux", 1]]}, {"name": "Dédiée", "tag": "Pour les équipes et les courtiers à fort volume.", "price": "2 497", "cta": "Choisir Dédiée", "featured": false, "feat": [["Tout le plan Exécutive", 1], ["Instance cloud privée et dédiée", 1], ["Intégrations sur mesure (CRM, Centris)", 1], ["Supervision humaine prioritaire", 1], ["Ligne locale dédiée", 1], ["Revue mensuelle avec notre équipe", 1]]}],
+soon:"Bientôt",
+faq:[
+["Alex peut-il m'appeler chaque matin?", "Oui. Vous choisissez les heures (par exemple 7 h 30 et 18 h) : Alex vous appelle avec vos visites, vos leads chauds, vos suivis et vos courriels urgents. Il n'appelle que vous, au numéro que vous avez autorisé."],
+["Puis-je appeler Alex moi-même?", "Oui, avec le plan Exécutive. Alex reconnaît votre numéro : demandez votre horaire du lendemain, faites confirmer une visite ou préparer une réponse à un client."],
+["Alex parle-t-il vraiment français et anglais?","Alex est conçu pour détecter la langue de l'appelant et poursuivre en français ou en anglais, avec un vocabulaire adapté à l'immobilier québécois. Essayez la ligne démo ci-dessous pour en juger par vous-même."],
+["Que se passe-t-il si Alex ne peut pas répondre à une question?","Alex ne devine jamais : il prend le message, qualifie ce qu'il peut et vous laisse un résumé avec la prochaine action. Vous rappelez en sachant déjà tout du dossier."],
+["En combien de temps suis-je opérationnel?","L'activation se planifie avec vous : on intègre vos inscriptions, on règle votre script d'accueil et on branche votre numéro. Vous validez tout avant la mise en service."],
+["Mes données et celles de mes clients sont-elles protégées?","Chaque appel est transcrit et archivé dans votre panneau privé. Vos données restent les vôtres : elles ne sont ni revendues ni partagées."],
+["Puis-je essayer avant de m'abonner?","Oui : appelez la ligne démo au +1 (438) 805-8804 et essayez Alex vous-même. Vous entendrez le type d'accueil que vos appelants recevront."]],
+ptscript:[
+["agent","Bureau de {broker}, bonjour, c'est {voice}. Comment puis-je vous aider?"],
+["lead","Bonjour, j'ai vu l'inscription sur Saint-Urbain. Elle est toujours disponible?"],
+["agent","Oui! Deux chambres, 850 pi², à 649 000 $. Puis-je avoir votre nom et votre préapprobation?"],
+["lead","Sophie Nadeau — préapprouvée jusqu'à 700 000 $."],
+["agent","Parfait Sophie, ça correspond bien. {broker} est libre demain à 14 h ou 16 h pour une visite — lequel vous convient?"],
+["lead","16 h, parfait."],
+["agent","C'est confirmé pour 16 h demain. J'envoie la confirmation tout de suite — à bientôt!"]]
+},
+en:{
+"nav.demo":"Live demo","nav.pricing":"Pricing","nav.faq":"FAQ","nav.cta":"See the demo",
+"hero.eyebrow":"The personal assistant for Québec brokers",
+"hero.title":"Alex answers while you're showing. <em>And calls you every morning.</em>",
+"hero.lead":"A bilingual AI personal assistant that answers your calls, pre-qualifies the buyer, proposes the showing — and briefs you every morning. Need something? Just call: “What do I have tomorrow?”",
+"hero.t2n":"7:30 AM",
+"br.eyebrow":"Your personal assistant",
+"br.title":"Every morning at 7:30, Alex calls you.",
+"br.lead":"Alex doesn't just answer your clients: Alex runs your day. You choose the times, and you can call Alex anytime.",
+"br.f1t":"Morning briefing",
+"br.f1p":"Today's showings, overnight hot leads, follow-ups due and urgent emails — in two minutes, by phone.",
+"br.f2t":"Call Alex anytime",
+"br.f2p":"Alex recognizes your number. “What do I have tomorrow?” “Confirm the 4 PM showing with Sophie.” Done.",
+"br.f3t":"Evening wrap-up",
+"br.f3p":"What's handled, the documents waiting for your decision, and tomorrow's showings already confirmed.",
+"br.sample":"<b>Sample briefing:</b> “Good morning Marie, it's Alex. 3 showings today, the first at 10 at 482 Saint-Urbain. Overnight I pre-qualified 2 buyers, one pre-approved up to $700K. Philippe is waiting for his valuation report. I'll call you back at 6.”",
+"br.note":"Progressive rollout: briefings and channels are enabled in phases and confirmed with you on the discovery call.",
+"footer.home":"AI Staff home",
+"footer.dash":"Demo dashboard",
+"planName":"Executive",
+"hero.cta1":"See the dashboard in action","hero.cta2":"📞 Talk to Alex",
+"hero.t1":"even during showings and time off","hero.t2":"your morning briefing, by phone","hero.t3":"one assistant, two languages",
+"phone.idle":"Tap “call” to try it","phone.call":"📞 Call Alex","phone.connecting":"Connecting…",
+"phone.live":"Live · Alex on the line","phone.hangup":"Hang up","phone.ended":"Call ended — showing booked ✓",
+"phone.hint":"demo line — try it for real",
+"pers.eyebrow":"Interactive demo","pers.title":"Your dashboard, with your name on it.",
+"pers.lead":"Type your name and brokerage — the dashboard and the call script below personalize instantly.",
+"pers.l1":"Your name","pers.l2":"Your brokerage","pers.ph1":"e.g. Marie Dubois","pers.ph2":"e.g. RE/MAX Plateau",
+"dash.badge":"◆ Demo data","dash.eyebrow":"What you'll see every morning",
+"dash.title":"One dashboard. Every conversation.",
+"dash.lead":"As soon as a call ends, it is transcribed, pre-qualified and — if the client is ready — proposed to your calendar.",
+"tabs.overview":"Overview","tabs.calls":"Calls","tabs.calendar":"Calendar","tabs.email":"Email",
+"stat.calls":"Calls handled","stat.leads":"Pre-qualified leads","stat.visits":"Showings booked","stat.rate":"Pre-qualification rate",
+"stat.d1":"↑ 8 this week","stat.d2":"↑ 8 this week","stat.d3":"↑ 3 this week","stat.d4":"↑ 5 pts",
+"cal.title":"September 2026","cal.hint":"Tap a highlighted day",
+"cc.eyebrow":"Call center","cc.title":"Every call counts. None gets lost.",
+"cc.lead":"Inbound, missed or due for follow-up: Alex answers, takes over and leaves you a complete file for every conversation.",
+"cc.f1t":"Inbound calls","cc.f1p":"Alex picks up for you, in French or English depending on the caller.",
+"cc.f1a":"Full call transcription","cc.f1b":"3-line AI summary","cc.f1c":"Pre-qualification: hot, warm or cold",
+"cc.f2t":"Scheduled callbacks","cc.f2p":"Scheduled follow-ups on your past leads and pending showing requests.",
+"cc.f2a":"Scheduled callbacks, zero mental load","cc.f2b":"Script adapted to each listing","cc.f2c":"Debrief after every call",
+"cc.f3t":"Clear next action","cc.f3p":"Every call ends with a suggested action: call back, book a visit, send an email.",
+"cc.f3a":"Showing booked in your calendar","cc.f3b":"Follow-up email ready to send","cc.f3c":"Daily priorities every morning",
+"how.eyebrow":"Simple as hello","how.title":"From call to showing, without touching your phone.",
+"how.s1t":"The call comes in","how.s1p":"A buyer calls during your showing. Alex picks up when you can't.",
+"how.s2t":"Alex qualifies","how.s2p":"Budget, pre-approval, area, timeline: the right questions, in FR or EN.",
+"how.s3t":"The showing gets booked","how.s3p":"The time slot is proposed in your calendar and the client receives confirmation.",
+"how.s4t":"You get the summary","how.s4p":"Transcript, AI summary and next action: all you do is close.",
+"calc.eyebrow":"Do the math","calc.title":"What do your missed calls cost?",
+"calc.lead":"Move the sliders with your numbers — the estimate updates live.",
+"calc.l1":"Missed calls per week","calc.l2":"Your showings close at","calc.l3":"Average commission",
+"calc.cap":"in potentially missed commissions per month, based on your numbers.",
+"calc.note":"Indicative estimate computed from your own data. Your actual results depend on your market and your practice.",
+"calc.disc":"A missed call isn't just a call: it's a buyer calling the next broker on Centris.",
+"price.eyebrow":"Pricing","price.title":"A full-time assistant, for a fraction of the cost.",
+"price.lead":"CAD, month to month, no contract. Free setup during launch.","price.note":"Progressive rollout \u2014 features are enabled wave by wave and confirmed with you on the discovery call.",
+"price.per":"/month",
+"faq.eyebrow":"FAQ","faq.title":"What brokers ask us.",
+"oaciq.text":"<b>OACIQ compliance:</b> Alex never gives brokerage advice and never replaces your professional judgment. Every interaction is transcribed and archived: you keep full control of your files and client communications, as your ethical obligations require.",
+"final.title":"The next call shouldn't be lost.",
+"final.lead":"15 minutes to see what Alex would do with your listings and your number.",
+"final.cta1":"Book my demo","final.cta2":"Replay the dashboard",
+"footer.tag":"the AI personal assistant for Québec brokers",
+"footer.line":"◆ this page uses sample data for demonstration",
+"sticky.demo":"See the demo","sticky.call":"📞 Call Alex",
+"calM.title":"Showing confirmed","calM.lead":"Proposed by Alex after the call — you confirm in one tap, no back-and-forth.",
+"calM.client":"Client","calM.time":"Time","calM.prop":"Property","calM.src":"Source","calM.close":"Got it",
+"prM.title":"Great choice","prM.lead":"Email us and we'll plan your activation together.",
+"prM.cta":"Email us","prM.later":"Maybe later",
+tagHot:"Hot",tagWarm:"Warm",tagCold:"Cold",tagNew:"New",
+dows:["S","M","T","W","T","F","S"],
+activity:[
+["📞","Qualified lead · condo, Mile End, $1.8M budget","3 min ago","hot"],
+["📅","Showing booked · 219 Parc Ave.","41 min ago","new"],
+["✉️","Follow-up email sent to Julie Tanguay","2 hrs ago","cold"],
+["📞","Missed call auto-called back","5 hrs ago","warm"]],
+calls:[
+["JT","Julie Tanguay","2:14 · Today, 9:12 AM","Looking for a 3-bedroom near Villeray, pre-approved up to $650K.","hot","linear-gradient(135deg,#3B82F6,#1858C4)",
+[["A","Hello, {broker}'s office, this is Alex. How can I help?"],["J","I'm looking for a 3-bedroom near Villeray, pre-approved up to $650K."]],
+"Next action: showing proposed Wed 4:00 PM"],
+["PB","Philippe Bergeron","3:02 · Yesterday, 4:47 PM","Selling in Verdun, wants a valuation before listing.","warm","linear-gradient(135deg,#4E7A5A,#2C4A35)",
+[["A","Hi Philippe, Alex here from {broker}'s office."],["P","I'm selling in Verdun and I'd like a valuation first."]],
+"Next action: send the valuation report"],
+["MK","Mei Kwan","1:08 · Yesterday, 11:03 AM","Browsing the Plateau market, no immediate plans.","cold","linear-gradient(135deg,#7FB3C8,#3E7A94)",
+[["A","Hi, this is Alex. Which area are you looking in?"],["M","Just browsing the Plateau market for now."]],
+"Next action: follow up in 30 days"]],
+emails:[
+["✉️","Julie Tanguay","Thanks for the showing — see you Wednesday!","20 min ago","new","Draft ready: showing confirmation + property sheet (EN)."],
+["✉️","Philippe Bergeron","Re: valuation report — Verdun","3 hrs ago","warm","Draft ready: send report + call proposal (EN)."],
+["✉️","New lead · website","Info request: 77 Jarry St. W.","yesterday","cold",""]],
+plans:[{"name": "Assistant", "tag": "Your calls handled, even during showings.", "price": "997", "cta": "Choose Assistant", "featured": false, "feat": [["24/7 calls in French and English", 1], ["Buyer pre-qualification", 1], ["Showings proposed to your calendar", 1], ["Text message (SMS) replies", 1], ["Dashboard and call summaries", 1], ["1 phone briefing per day", 1]]}, {"name": "Executive", "tag": "Every channel, plus an assistant who runs your day.", "price": "1,497", "cta": "Choose Executive", "featured": true, "feat": [["Everything in Assistant", 1], ["WhatsApp and Instagram / Facebook DMs", 1], ["Unified email with drafts to approve", 1], ["Up to 3 briefings per day", 1], ["Call Alex whenever you want", 1], ["Outbound follow-ups on your leads", 1], ["Social media stats", 1]]}, {"name": "Dedicated", "tag": "For teams and high-volume brokers.", "price": "2,497", "cta": "Choose Dedicated", "featured": false, "feat": [["Everything in Executive", 1], ["Private, dedicated cloud instance", 1], ["Custom integrations (CRM, Centris)", 1], ["Priority human supervision", 1], ["Dedicated local line", 1], ["Monthly review with our team", 1]]}],
+soon:"Soon",
+faq:[
+["Can Alex call me every morning?", "Yes. You choose the times (for example 7:30 AM and 6 PM): Alex calls you with your showings, hot leads, follow-ups and urgent emails. Alex only calls you, at the number you authorized."],
+["Can I call Alex myself?", "Yes, on the Executive plan. Alex recognizes your number: ask for tomorrow's schedule, have a showing confirmed or a client reply drafted."],
+["Does Alex really speak French and English?","Alex is designed to detect the caller's language and continue in French or English, with vocabulary adapted to Québec real estate. Try the demo line below and judge for yourself."],
+["What happens when Alex can't answer a question?","Alex never guesses: it takes the message, qualifies what it can and leaves you a summary with the next action. You call back already knowing the whole file."],
+["How fast can I go live?","Activation is planned with you: we integrate your listings, set up your greeting script and connect your number. You approve everything before go-live."],
+["Are my data and my clients' data safe?","Every call is transcribed and archived in your private dashboard. Your data stays yours: it is never resold or shared."],
+["Can I try before subscribing?","Yes: call the demo line at +1 (438) 805-8804 and try Alex yourself. You'll hear the kind of greeting your callers will receive."]],
+ptscript:[
+["agent","{broker}'s office, this is {voice}. How can I help you today?"],
+["lead","Hi, I saw the listing on Saint-Urbain. Is it still available?"],
+["agent","It is! Two bedrooms, 850 sq ft, listed at $649,000. May I have your name and pre-approval?"],
+["lead","Sophie Nadeau — pre-approved up to $700K."],
+["agent","Perfect Sophie, that fits well. {broker} is free tomorrow at 2 or 4 PM for a showing — which works?"],
+["lead","4 PM works great."],
+["agent","You're booked for 4 PM tomorrow. Sending the confirmation now — talk soon!"]]
+},
+es:{
+"nav.demo":"La demo","nav.pricing":"Precios","nav.faq":"FAQ","nav.cta":"Ver la demo",
+"hero.eyebrow":"El asistente personal de los courtiers de Quebec",
+"hero.title":"Alex contesta durante tus visitas. <em>Y te llama cada mañana.</em>",
+"hero.lead":"Un asistente personal con IA, bilingüe, que contesta tus llamadas, precalifica al comprador, propone la visita — y te pone al día cada mañana. ¿Necesitas algo? Llámalo: «¿Qué tengo mañana?»",
+"hero.t2n":"7:30",
+"br.eyebrow":"Tu asistente personal",
+"br.title":"Cada mañana a las 7:30, Alex te llama.",
+"br.lead":"Alex no solo atiende a tus clientes: organiza tu día. Tú eliges las horas, y puedes llamarlo cuando quieras.",
+"br.f1t":"Briefing de la mañana",
+"br.f1p":"Tus visitas del día, los leads calientes de la noche, los seguimientos pendientes y los correos urgentes — en dos minutos, por teléfono.",
+"br.f2t":"Llama a Alex cuando quieras",
+"br.f2p":"Alex reconoce tu número. «¿Qué tengo mañana?» «Confirma la visita de las 16:00 con Sophie.» Listo.",
+"br.f3t":"Balance de la tarde",
+"br.f3p":"Lo resuelto, los documentos que esperan tu decisión y las visitas de mañana ya confirmadas.",
+"br.sample":"<b>Ejemplo de briefing:</b> «Buenos días Marie, soy Alex. 3 visitas hoy, la primera a las 10:00 en 482, rue Saint-Urbain. Anoche precalifiqué a 2 compradores, una preaprobada hasta $700K. Philippe espera su reporte de valuación. Te llamo a las 18:00.»",
+"br.note":"Despliegue progresivo: los briefings y los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.",
+"footer.home":"Inicio AI Staff",
+"footer.dash":"Panel demo",
+"planName":"Ejecutiva",
+"hero.cta1":"Ver el panel en acción","hero.cta2":"📞 Hablar con Alex",
+"hero.t1":"incluso durante tus visitas y tus días libres","hero.t2":"tu briefing de la mañana, por teléfono","hero.t3":"un solo asistente, dos idiomas",
+"phone.idle":"Toca «llamar» para probar","phone.call":"📞 Llamar a Alex","phone.connecting":"Conectando…",
+"phone.live":"En vivo · Alex en línea","phone.hangup":"Colgar","phone.ended":"Llamada terminada — visita agendada ✓",
+"phone.hint":"línea demo — pruébala de verdad",
+"pers.eyebrow":"Demo interactiva","pers.title":"Tu panel, con tu nombre.",
+"pers.lead":"Escribe tu nombre y tu agencia — el tablero y el guion de llamada se personalizan al instante.",
+"pers.l1":"Tu nombre","pers.l2":"Tu agencia","pers.ph1":"ej. Marie Dubois","pers.ph2":"ej. RE/MAX Plateau",
+"dash.badge":"◆ Datos de demostración","dash.eyebrow":"Lo que verás cada mañana",
+"dash.title":"Un solo panel. Cada conversación.",
+"dash.lead":"En cuanto termina una llamada, queda transcrita, precalificada y — si el cliente está listo — propuesta en tu agenda.",
+"tabs.overview":"Resumen","tabs.calls":"Llamadas","tabs.calendar":"Agenda","tabs.email":"Correo",
+"stat.calls":"Llamadas atendidas","stat.leads":"Leads precalificados","stat.visits":"Visitas confirmadas","stat.rate":"Tasa de precalificación",
+"stat.d1":"↑ 8 esta semana","stat.d2":"↑ 8 esta semana","stat.d3":"↑ 3 esta semana","stat.d4":"↑ 5 pts",
+"cal.title":"Septiembre de 2026","cal.hint":"Toca un día resaltado",
+"cc.eyebrow":"Centro de llamadas","cc.title":"Cada llamada cuenta. Ninguna se pierde.",
+"cc.lead":"Entrantes, perdidas o por retomar: Alex contesta, toma el relevo y te deja un expediente completo de cada conversación.",
+"cc.f1t":"Llamadas entrantes","cc.f1p":"Alex contesta por ti, en francés o inglés según quien llame.",
+"cc.f1a":"Transcripción integral de la llamada","cc.f1b":"Resumen IA en 3 líneas","cc.f1c":"Precalificación: caliente, tibio o frío",
+"cc.f2t":"Devoluciones programadas","cc.f2p":"Seguimientos programados de tus antiguos leads y solicitudes de visita pendientes.",
+"cc.f2a":"Devoluciones programadas, sin carga mental","cc.f2b":"Guion adaptado a cada propiedad","cc.f2c":"Reporte después de cada llamada",
+"cc.f3t":"Próxima acción clara","cc.f3p":"Cada llamada termina con una acción sugerida: devolver, agendar, enviar correo.",
+"cc.f3a":"Visita agendada en tu calendario","cc.f3b":"Correo de seguimiento listo para enviar","cc.f3c":"Prioridades del día cada mañana",
+"how.eyebrow":"Simple como hola","how.title":"De la llamada a la visita, sin tocar tu teléfono.",
+"how.s1t":"Llega la llamada","how.s1p":"Un comprador llama durante tu visita. Alex contesta cuando tú no puedes.",
+"how.s2t":"Alex califica","how.s2p":"Presupuesto, preaprobación, zona, plazos: las preguntas correctas, en FR o EN.",
+"how.s3t":"Se agenda la visita","how.s3p":"El horario se propone en tu agenda y el cliente recibe su confirmación.",
+"how.s4t":"Recibes el resumen","how.s4p":"Transcripción, resumen IA y próxima acción: tú solo cierras.",
+"calc.eyebrow":"Haz la cuenta","calc.title":"¿Cuánto cuestan tus llamadas perdidas?",
+"calc.lead":"Mueve los controles con tus cifras — la estimación se actualiza sola.",
+"calc.l1":"Llamadas perdidas por semana","calc.l2":"Tus visitas cierran al","calc.l3":"Comisión promedio",
+"calc.cap":"en comisiones potenciales perdidas al mes, según tus cifras.",
+"calc.note":"Estimación indicativa calculada con tus propios datos. Tus resultados reales dependen de tu mercado y tu práctica.",
+"calc.disc":"Una llamada perdida no es solo una llamada: es un comprador llamando al siguiente courtier en Centris.",
+"price.eyebrow":"Precios","price.title":"Un asistente a tiempo completo, por una fracción del costo.",
+"price.lead":"CAD, mes a mes, sin contrato. Instalación gratis durante el lanzamiento.","price.note":"Despliegue progresivo \u2014 las funciones se activan por fases y se confirman contigo en la llamada de descubrimiento.",
+"price.per":"/mes",
+"faq.eyebrow":"Preguntas frecuentes","faq.title":"Lo que nos preguntan los courtiers.",
+"oaciq.text":"<b>Cumplimiento OACIQ:</b> Alex nunca da consejos de corretaje ni reemplaza tu juicio profesional. Cada interacción se transcribe y archiva: mantienes el control total de tus expedientes y comunicaciones con clientes, como exigen tus obligaciones deontológicas.",
+"final.title":"La próxima llamada no debería perderse.",
+"final.lead":"15 minutos para ver lo que Alex haría con tus propiedades y tu número.",
+"final.cta1":"Agendar mi demo","final.cta2":"Ver el panel de nuevo",
+"footer.tag":"el asistente personal con IA de los courtiers de Quebec",
+"footer.line":"◆ esta página usa datos de ejemplo para demostración",
+"sticky.demo":"Ver la demo","sticky.call":"📞 Llamar a Alex",
+"calM.title":"Visita confirmada","calM.lead":"Propuesta por Alex después de la llamada — la confirmas con un toque, sin idas y vueltas.",
+"calM.client":"Cliente","calM.time":"Hora","calM.prop":"Propiedad","calM.src":"Fuente","calM.close":"Entendido",
+"prM.title":"Excelente elección","prM.lead":"Escríbenos y planificaremos tu activación juntos.",
+"prM.cta":"Escríbenos","prM.later":"Quizás después",
+tagHot:"Caliente",tagWarm:"Tibio",tagCold:"Frío",tagNew:"Nuevo",
+dows:["D","L","M","M","J","V","S"],
+activity:[
+["📞","Lead calificado · condo, Mile-End, presupuesto 1,8 M$","hace 3 min","hot"],
+["📅","Visita confirmada · 219, av. du Parc","hace 41 min","new"],
+["✉️","Correo de seguimiento enviado a Julie Tanguay","hace 2 h","cold"],
+["📞","Llamada perdida devuelta automáticamente","hace 5 h","warm"]],
+calls:[
+["JT","Julie Tanguay","2:14 · Hoy, 9:12 AM","Busca 3 habitaciones cerca de Villeray, preaprobada hasta $650K.","hot","linear-gradient(135deg,#3B82F6,#1858C4)",
+[["A","Hola, oficina de {broker}, soy Alex. ¿En qué puedo ayudar?"],["J","Busco un 3 habitaciones cerca de Villeray, preaprobada hasta $650K."]],
+"Próxima acción: visita propuesta mié. 4:00 PM"],
+["PB","Philippe Bergeron","3:02 · Ayer, 4:47 PM","Vende en Verdun, quiere una valuación antes de listar.","warm","linear-gradient(135deg,#4E7A5A,#2C4A35)",
+[["A","Hola Philippe, soy Alex de la oficina de {broker}."],["P","Vendo en Verdun y quiero una valuación antes de listar."]],
+"Próxima acción: enviar el reporte de valuación"],
+["MK","Mei Kwan","1:08 · Ayer, 11:03 AM","Explora el mercado del Plateau, sin planes inmediatos.","cold","linear-gradient(135deg,#7FB3C8,#3E7A94)",
+[["A","Hola, soy Alex. ¿En qué zona buscas?"],["M","Solo exploro el mercado del Plateau por ahora."]],
+"Próxima acción: seguimiento en 30 días"]],
+emails:[
+["✉️","Julie Tanguay","Gracias por la visita — ¡nos vemos el miércoles!","hace 20 min","new","Borrador listo: confirmación de visita + ficha de la propiedad (ES)."],
+["✉️","Philippe Bergeron","Re: reporte de valuación — Verdun","hace 3 h","warm","Borrador listo: envío del reporte + propuesta de llamada (ES)."],
+["✉️","Nuevo lead · sitio web","Solicitud de info: 77, rue Jarry O.","ayer","cold",""]],
+plans:[{"name": "Asistente", "tag": "Tus llamadas atendidas, incluso durante tus visitas.", "price": "997", "cta": "Elegir Asistente", "featured": false, "feat": [["Llamadas 24/7 en francés e inglés", 1], ["Precalificación de compradores", 1], ["Visitas propuestas en tu agenda", 1], ["Respuestas por SMS", 1], ["Panel y resúmenes de llamadas", 1], ["1 briefing por llamada al día", 1]]}, {"name": "Ejecutiva", "tag": "Todos tus canales, y un asistente que organiza tu día.", "price": "1 497", "cta": "Elegir Ejecutiva", "featured": true, "feat": [["Todo el plan Asistente", 1], ["WhatsApp y DMs de Instagram / Facebook", 1], ["Correo unificado con borradores para aprobar", 1], ["Hasta 3 briefings al día", 1], ["Llama a Alex cuando quieras", 1], ["Seguimientos salientes a tus leads", 1], ["Métricas de tus redes sociales", 1]]}, {"name": "Dedicada", "tag": "Para equipos y courtiers con alto volumen.", "price": "2 497", "cta": "Elegir Dedicada", "featured": false, "feat": [["Todo el plan Ejecutiva", 1], ["Instancia cloud privada y dedicada", 1], ["Integraciones a medida (CRM, Centris)", 1], ["Supervisión humana prioritaria", 1], ["Línea local dedicada", 1], ["Revisión mensual con nuestro equipo", 1]]}],
+soon:"Pronto",
+faq:[
+["¿Alex me puede llamar cada mañana?", "Sí. Tú eliges las horas (por ejemplo 7:30 y 18:00): Alex te llama con tus visitas, leads calientes, seguimientos y correos urgentes. Solo te llama a ti, al número que autorizaste."],
+["¿Puedo llamar a Alex yo mismo?", "Sí, con el plan Ejecutiva. Alex reconoce tu número: pídele tu agenda de mañana, que confirme una visita o que prepare una respuesta a un cliente."],
+["¿Alex habla de verdad francés e inglés?","Alex está diseñado para detectar el idioma de quien llama y continuar en francés o inglés, con vocabulario adaptado al sector inmobiliario de Quebec. Prueba la línea demo y júzgalo tú mismo."],
+["¿Qué pasa si Alex no puede responder una pregunta?","Alex nunca adivina: toma el mensaje, califica lo que puede y te deja un resumen con la próxima acción. Devuelves la llamada sabiendo ya todo del caso."],
+["¿En cuánto tiempo estoy operativo?","La activación se planifica contigo: integramos tus propiedades, configuramos tu guion de bienvenida y conectamos tu número. Lo apruebas todo antes del lanzamiento."],
+["¿Mis datos y los de mis clientes están protegidos?","Cada llamada se transcribe y archiva en tu panel privado. Tus datos siguen siendo tuyos: nunca se revenden ni se comparten."],
+["¿Puedo probar antes de suscribirme?","Sí: llama a la línea demo al +1 (438) 805-8804 y prueba a Alex tú mismo. Escucharás el tipo de bienvenida que recibirán tus llamadas."]],
+ptscript:[
+["agent","Oficina de {broker}, habla {voice}. ¿En qué puedo ayudar hoy?"],
+["lead","Hola, vi la propiedad en Saint-Urbain. ¿Sigue disponible?"],
+["agent","¡Sí! Dos habitaciones, 850 pi², en $649,000. ¿Su nombre y preaprobación?"],
+["lead","Sophie Nadeau — preaprobada hasta $700K."],
+["agent","Perfecto Sophie, encaja bien. {broker} está libre mañana a las 2 o 4 PM para una visita — ¿cuál le va?"],
+["lead","Las 4 PM, perfecto."],
+["agent","Listo, agendada para mañana a las 4 PM. Envío la confirmación ahora — ¡hablamos pronto!"]]
+}};
+
+let lang = "fr";
+let voiceName = "Alex";
+let callTimers = [];
+
+function t(k){ return STR[lang][k] !== undefined ? STR[lang][k] : STR.fr[k]; }
+function brokerName(){
+  const v = document.getElementById("inpName").value.trim();
+  return v || t("pers.ph1").replace(/^ex\. |^e\.g\. |^ej\. /,"");
+}
+function esc(s){ return String(s).replace(/</g,"&lt;"); }
+function tagLabel(k){
+  return k==="hot"?t("tagHot"):k==="warm"?t("tagWarm"):k==="new"?t("tagNew"):t("tagCold");
+}
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById("themeToggle");
+function paintTheme(){
+  const dark = document.documentElement.getAttribute("data-theme")==="dark";
+  themeBtn.textContent = dark ? "☀️" : "🌙";
+}
+themeBtn.addEventListener("click", ()=>{
+  const next = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("aistaff-theme", next); }catch(e){}
+  paintTheme();
+});
+paintTheme();
+
+/* ---------- i18n ---------- */
+function applyStatic(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(STR[lang][k] !== undefined) el.innerHTML = STR[lang][k];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    const k = el.getAttribute("data-i18n-ph");
+    if(STR[lang][k] !== undefined) el.setAttribute("placeholder", STR[lang][k]);
+  });
+  document.querySelectorAll("#langSeg button").forEach(b=>
+    b.classList.toggle("active", b.getAttribute("data-lang")===lang));
+  document.documentElement.lang = lang;
+}
+function refreshAll(){
+  applyStatic(); refreshPersonalization();
+  buildActivity(); buildCalls(); buildEmails(); buildPricing(); buildCalendar(); buildFaq(); updateCalc();
+  resetPhone();
+}
+document.querySelectorAll("#langSeg button").forEach(b=>{
+  b.addEventListener("click", ()=>{ lang = b.getAttribute("data-lang"); refreshAll(); });
+});
+
+/* ---------- personalization ---------- */
+function refreshPersonalization(){
+  const nv = document.getElementById("inpName").value.trim();
+  const fv = document.getElementById("inpBrokerage").value.trim();
+  document.getElementById("dashName").textContent = nv || "Marie Dubois";
+  document.getElementById("dashSub").textContent = (fv || "RE/MAX Plateau") + " · AI Staff " + t("planName");
+  document.getElementById("dashInitial").textContent = (nv || "M").trim().charAt(0).toUpperCase();
+}
+document.getElementById("inpName").addEventListener("input", refreshPersonalization);
+document.getElementById("inpBrokerage").addEventListener("input", refreshPersonalization);
+
+/* ---------- dashboard tabs ---------- */
+document.querySelectorAll(".dtab").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll(".dtab").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.querySelectorAll(".dpane").forEach(p=>p.classList.remove("active"));
+    document.getElementById("dp-"+b.dataset.pane).classList.add("active");
+    if(b.dataset.pane==="overview") animateCounts();
+  });
+});
+
+/* ---------- builders ---------- */
+function buildActivity(){
+  document.getElementById("activityFeed").innerHTML = STR[lang].activity.map(a=>
+    `<div class="feed-row"><div class="feed-ico">${a[0]}</div><div class="tx">${esc(a[1])}</div>`+
+    `<span class="tag ${a[3]}">${tagLabel(a[3])}</span><div class="tm">${esc(a[2])}</div></div>`).join("");
+}
+function buildCalls(){
+  document.getElementById("callsList").innerHTML = STR[lang].calls.map(c=>
+    `<div class="call-card"><div class="who"><div class="ini" style="background:${c[5]}">${c[0]}</div>`+
+    `<div><div class="nm">${esc(c[1])}</div><div class="mt">${esc(c[2])}</div></div>`+
+    `<span class="tag ${c[4]}" style="margin-left:auto;">${tagLabel(c[4])}</span></div>`+
+    `<div class="sm">${esc(c[3])}</div>`+
+    `<div class="tr-box">${c[6].map(l=>`<div class="tr-line"><b>${l[0]==="A"?"Alex":esc(c[1].split(" ")[0])} :</b> ${esc(l[1].replace("{broker}",brokerName()))}</div>`).join("")}</div>`+
+    `<div class="nx">→ ${esc(c[7])}</div></div>`).join("");
+}
+function buildEmails(){
+  document.getElementById("emailList").innerHTML = STR[lang].emails.map(m=>
+    `<div class="msg-row"><div class="msg-ico">${m[0]}</div><div style="flex:1;">`+
+    `<div class="nm">${esc(m[1])}</div><div class="tx">${esc(m[2])}</div>`+
+    (m[5] ? `<div class="draft">✦ <b>DRAFT</b> — ${esc(m[5])}</div>` : "")+
+    `</div><span class="tag ${m[4]}">${tagLabel(m[4])}</span></div>`).join("");
+}
+function buildPricing(){
+  const soon = t("soon");
+  document.getElementById("priceGrid").innerHTML = STR[lang].plans.map(p=>
+    `<div class="card plan${p.featured?" feat":""}">`+
+    `<div class="pname">${esc(p.name)}</div><div class="ptag">${esc(p.tag)}</div>`+
+    `<div><span class="pnum">${lang==="en"?"$"+p.price:p.price+" $"}</span> <span class="pper">${t("price.per")}</span></div>`+
+    `<ul>${p.feat.map(f=>`<li class="${f[1]?"":"off"}"><span class="ck">${f[1]?"✓":"○"}</span>`+
+      `<span>${esc(f[0])}${f[1]?"":` <span class="soon">${soon}</span>`}</span></li>`).join("")}</ul>`+
+    `<button class="btn ${p.featured?"btn-blue":"btn-ghost"}" onclick="openPrice('${esc(p.name)}')">${esc(p.cta)}</button></div>`).join("");
+}
+function buildCalendar(){
+  const grid = document.getElementById("calGrid");
+  let html = STR[lang].dows.map(d=>`<div class="cal-dow">${d}</div>`).join("");
+  const labels = lang==="fr"
+    ? {3:"mer. 23 sept. · 16 h 00",9:"mer. 9 sept. · 10 h 30",16:"mer. 16 sept. · 14 h 00",23:"mer. 23 sept. · 16 h 00"}
+    : lang==="es"
+    ? {3:"mié. 23 sept. · 4:00 PM",9:"mié. 9 sept. · 10:30 AM",16:"mié. 16 sept. · 2:00 PM",23:"mié. 23 sept. · 4:00 PM"}
+    : {3:"Wed, Sep 23 · 4:00 PM",9:"Wed, Sep 9 · 10:30 AM",16:"Wed, Sep 16 · 2:00 PM",23:"Wed, Sep 23 · 4:00 PM"};
+  for(let i=0;i<2;i++) html += `<div class="cal-day dim"></div>`;
+  for(let d=1;d<=30;d++){
+    html += labels[d]
+      ? `<div class="cal-day hl" onclick="openCal('${labels[d]}')">${d}</div>`
+      : `<div class="cal-day">${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+function buildFaq(){
+  document.getElementById("faqList").innerHTML = STR[lang].faq.map((f,i)=>
+    `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(${i})"><span>${esc(f[0])}</span><span class="pl">+</span></button>`+
+    `<div class="faq-a" id="faq-${i}"><p>${esc(f[1])}</p></div></div>`).join("");
+}
+function toggleFaq(i){
+  const item = document.querySelectorAll(".faq-item")[i];
+  const ans = document.getElementById("faq-"+i);
+  const open = item.classList.toggle("open");
+  ans.style.maxHeight = open ? ans.scrollHeight+"px" : "0";
+}
+
+/* ---------- calculator ---------- */
+function fmt(n){
+  return n.toLocaleString(lang==="en"?"en-CA":"fr-CA",{maximumFractionDigits:0});
+}
+function updateCalc(){
+  const missed = +document.getElementById("rMissed").value;
+  const conv = +document.getElementById("rConv").value;
+  const comm = +document.getElementById("rComm").value;
+  document.getElementById("vMissed").textContent = missed;
+  document.getElementById("vConv").textContent = conv+" %";
+  document.getElementById("vComm").textContent = fmt(comm)+" $";
+  const monthly = Math.round(missed*4.33*(conv/100)*comm);
+  document.getElementById("calcBig").textContent = "≈ "+fmt(monthly)+" $";
+}
+["rMissed","rConv","rComm"].forEach(id=>
+  document.getElementById(id).addEventListener("input", updateCalc));
+
+/* ---------- count-up ---------- */
+let counted = false;
+function animateCounts(){
+  document.querySelectorAll(".stat-tile .val").forEach(el=>{
+    const target = parseInt(el.getAttribute("data-count"),10);
+    const suffix = el.getAttribute("data-suffix")||"";
+    let cur = 0; const inc = target/34;
+    const timer = setInterval(()=>{
+      cur += inc;
+      if(cur>=target){ cur = target; clearInterval(timer); }
+      el.textContent = Math.round(cur)+suffix;
+    },28);
+  });
+}
+
+/* ---------- phone demo ---------- */
+const callBtn = document.getElementById("callBtn");
+const callStatus = document.getElementById("callStatus");
+const transcriptEl = document.getElementById("transcript");
+function resetPhone(){
+  callTimers.forEach(clearTimeout); callTimers = [];
+  transcriptEl.innerHTML = "";
+  callBtn.textContent = t("phone.call");
+  callBtn.classList.remove("hang"); callBtn.disabled = false;
+  callStatus.textContent = t("phone.idle");
+  callStatus.classList.remove("live");
+  callBtn.onclick = startCall;
+}
+function bubble(who, text){
+  const d = document.createElement("div");
+  d.className = "bubble "+who; d.textContent = text;
+  transcriptEl.appendChild(d);
+  transcriptEl.scrollTop = transcriptEl.scrollHeight;
+}
+function startCall(){
+  callBtn.disabled = true;
+  callStatus.textContent = t("phone.connecting");
+  transcriptEl.innerHTML = "";
+  callTimers.push(setTimeout(()=>{
+    callStatus.textContent = t("phone.live");
+    callStatus.classList.add("live");
+    callBtn.textContent = t("phone.hangup");
+    callBtn.classList.add("hang"); callBtn.disabled = false;
+    callBtn.onclick = ()=>endCall(false);
+    const lines = STR[lang].ptscript;
+    lines.forEach((ln,i)=>{
+      callTimers.push(setTimeout(()=>{
+        const ty = document.createElement("div");
+        ty.className = "typing"; ty.innerHTML = "<i></i><i></i><i></i>";
+        transcriptEl.appendChild(ty);
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+        callTimers.push(setTimeout(()=>{
+          ty.remove();
+          bubble(ln[0], ln[1].replace("{broker}",brokerName()).replace("{voice}",voiceName));
+        },900));
+      }, i*2600));
+    });
+    callTimers.push(setTimeout(()=>{
+      endCall(true);
+      setTimeout(()=>openModal("calModal"), 900);
+    }, lines.length*2600+1200));
+  },1400));
+}
+function endCall(finished){
+  callTimers.forEach(clearTimeout); callTimers = [];
+  callStatus.textContent = finished ? t("phone.ended") : t("phone.idle");
+  callStatus.classList.remove("live");
+  callBtn.textContent = t("phone.call");
+  callBtn.classList.remove("hang"); callBtn.disabled = false;
+  callBtn.onclick = startCall;
+}
+document.querySelectorAll(".voice-chip").forEach(chip=>{
+  chip.addEventListener("click", ()=>{
+    document.querySelectorAll(".voice-chip").forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    voiceName = chip.getAttribute("data-voice");
+    document.getElementById("phoneName").textContent = voiceName + " · AI Staff";
+    document.querySelector(".agent-av").textContent = voiceName.charAt(0);
+    resetPhone();
+  });
+});
+
+/* ---------- modals / toast ---------- */
+function openModal(id){ document.getElementById(id).classList.add("show"); }
+function closeModal(id){ document.getElementById(id).classList.remove("show"); }
+document.querySelectorAll(".modal-bg").forEach(m=>
+  m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));
+function openCal(label){
+  document.getElementById("calModalTime").textContent = label;
+  openModal("calModal");
+}
+function openPrice(plan){
+  document.getElementById("priceMailto").href =
+    "mailto:hello@meetaistaff.com?subject="+encodeURIComponent("AI Staff — Courtier — "+plan);
+  openModal("priceModal");
+}
+let toastT;
+function toast(msg){
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"),2400);
+}
+
+/* ---------- init ---------- */
+refreshAll();
+if("IntersectionObserver" in window){
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting && !counted){ counted = true; animateCounts(); io.disconnect(); } });
+  },{threshold:.3});
+  const dpO = document.getElementById("dp-overview");
+  if(dpO) io.observe(dpO); else animateCounts();
+}else{ animateCounts(); }
+
+/* expose handlers used by inline onclick attributes */
+window.toggleFaq = toggleFaq;
+window.openPrice = openPrice;
+window.openCal = openCal;
+window.closeModal = closeModal;
+})();
+</script>
+</body>
+</html>
