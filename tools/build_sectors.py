@@ -340,7 +340,7 @@ function render(){
   document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
   document.querySelectorAll(".persona").forEach(b=>b.classList.toggle("active", b.dataset.persona===persona));
   const subj = encodeURIComponent("AI Staff — "+s.name);
-  document.querySelectorAll(".mailcta").forEach(a=>a.href = "mailto:hello@meetaistaff.com?subject="+subj);
+  document.querySelectorAll(".mailcta").forEach(a=>a.href = "/onboarding/?secteur="+SECTOR_ID+(lang==="fr"?"":"&lang="+lang));
   document.getElementById("trust").innerHTML = s.trust.map(t=>`<div><div class="n">${esc(t[0])}</div><div class="l">${esc(fill(t[1]))}</div></div>`).join("");
   document.getElementById("doesList").innerHTML = s.does.map(d=>`<li>${esc(fill(d))}</li>`).join("");
   document.getElementById("featGrid").innerHTML = s.features.map(f=>`<div class="card feat"><div class="top"><div class="ic">${f[0]}</div></div><h3>${esc(fill(f[1]))}</h3><p>${esc(fill(f[2]))}</p></div>`).join("");
@@ -366,7 +366,7 @@ function render(){
   const list = SECTORS[lang];
   const q = lang==="fr" ? "" : "?lang="+lang;
   document.getElementById("ddMenu").innerHTML = `<a href="/${q}"><span>🏠</span>${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}"${x.id===SECTOR_ID?' class="cur"':""}><span>${x.ic}</span>${esc(x.name)}</a>`).join("");
-  document.getElementById("footLinks").innerHTML = `<a href="/${q}">${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("")+`<a href="/demo/${q}">Demo</a>`;
+  document.getElementById("footLinks").innerHTML = `<a href="/${q}">${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("")+`<a href="/demo/${q}">Demo</a><a href="/confidentialite/${q}">${({fr:"Confidentialité",en:"Privacy",es:"Privacidad"})[lang]}</a>`;
   document.getElementById("dashMore").href = "/demo/"+q;
   buildCalc(); buildFcards(); resetPhone();
 }
