@@ -1,0 +1,2481 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#040807">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+<!-- ARTIFACT:BEGIN -->
+<title>Andrés OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  /* paleta (independiente del tema): brillante para oscuro, profunda para claro */
+  --p1-b:#3CF2A6; --p1-d:#0B8F5E;
+  --p2-b:#F6C667; --p2-d:#9A6A0C;
+  --p3-b:#C9FFE6; --p3-d:#0A5A40;
+
+  /* tema claro (base) */
+  --bg:#E7EEEB; --bg-2:#F5F8F6;
+  --ink:#0B1613; --ink-2:#3C4F49; --ink-3:#6A7C76;
+  --glass:rgba(255,255,255,.56); --glass-2:rgba(255,255,255,.78); --glass-3:rgba(255,255,255,.9);
+  --line:rgba(12,40,32,.09); --line-2:rgba(12,40,32,.17);
+  --hi:rgba(255,255,255,.85);
+  --shadow:0 18px 50px -18px rgba(20,50,40,.28), 0 2px 6px rgba(20,50,40,.06);
+  --good:#0C8A56; --warn:#A76800; --bad:#C3312F;
+  --a1:var(--p1-d); --a2:var(--p2-d); --a3:var(--p3-d);
+  --on-a1:#FFFFFF;
+  --glow:0;
+  --grid:rgba(12,40,32,.05);
+  color-scheme:light;
+
+  --r-lg:24px; --r-md:16px; --r-sm:11px;
+  --f-display:"Syne", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+:root[data-palette="solar"]{ --p1-b:#FF8B3D; --p1-d:#C2500A; --p2-b:#FF5A93; --p2-d:#B8175A; --p3-b:#FFE0C2; --p3-d:#7A2E05; }
+:root[data-palette="amatista"]{ --p1-b:#AE8FFF; --p1-d:#6A42DD; --p2-b:#5EE3E8; --p2-d:#0B8A91; --p3-b:#EAE0FF; --p3-d:#37208F; }
+:root[data-palette="glaciar"]{ --p1-b:#7FCBFF; --p1-d:#1766AD; --p2-b:#A7F3DA; --p2-d:#10806A; --p3-b:#F2F8FF; --p3-d:#0B3761; }
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#030605; --bg-2:#07100E;
+    --ink:#E8F1EE; --ink-2:#A6B7B1; --ink-3:#6B7E78;
+    --glass:rgba(16,26,24,.5); --glass-2:rgba(24,36,33,.66); --glass-3:rgba(30,44,40,.9);
+    --line:rgba(210,255,240,.075); --line-2:rgba(210,255,240,.15);
+    --hi:rgba(255,255,255,.07);
+    --shadow:0 24px 60px -20px rgba(0,0,0,.7), 0 2px 8px rgba(0,0,0,.35);
+    --good:#3DE59C; --warn:#F5BD4F; --bad:#FF6F6A;
+    --a1:var(--p1-b); --a2:var(--p2-b); --a3:var(--p3-b);
+    --on-a1:#03110B; --glow:1; --grid:rgba(210,255,240,.035);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#030605; --bg-2:#07100E;
+  --ink:#E8F1EE; --ink-2:#A6B7B1; --ink-3:#6B7E78;
+  --glass:rgba(16,26,24,.5); --glass-2:rgba(24,36,33,.66); --glass-3:rgba(30,44,40,.9);
+  --line:rgba(210,255,240,.075); --line-2:rgba(210,255,240,.15);
+  --hi:rgba(255,255,255,.07);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.7), 0 2px 8px rgba(0,0,0,.35);
+  --good:#3DE59C; --warn:#F5BD4F; --bad:#FF6F6A;
+  --a1:var(--p1-b); --a2:var(--p2-b); --a3:var(--p3-b);
+  --on-a1:#03110B; --glow:1; --grid:rgba(210,255,240,.035);
+  color-scheme:dark;
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--a1);outline-offset:2px;border-radius:8px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* ============ ATMÓSFERA ============ */
+.atmo{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.atmo::before{content:"";position:absolute;inset:-20%;
+  background:
+    radial-gradient(40% 35% at 18% 12%, color-mix(in oklab, var(--a1) 22%, transparent), transparent 70%),
+    radial-gradient(38% 38% at 88% 18%, color-mix(in oklab, var(--a2) 16%, transparent), transparent 70%),
+    radial-gradient(50% 45% at 50% 105%, color-mix(in oklab, var(--a1) 14%, transparent), transparent 70%);
+  filter:blur(20px);animation:drift 38s ease-in-out infinite alternate}
+.atmo::after{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 80%)}
+#stars{position:absolute;inset:0;width:100%;height:100%;opacity:calc(.25 + var(--glow) * .6)}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-3%,2%,0) scale(1.08)}}
+
+/* ============ SHELL ============ */
+.shell{position:relative;z-index:1;max-width:1720px;margin:0 auto;padding-inline:18px;padding-block:0 48px}
+
+/* barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;align-items:center;gap:14px;padding-block:12px;margin-bottom:14px}
+.top::before{content:"";position:absolute;inset:0 -18px;background:linear-gradient(var(--bg) 30%, color-mix(in oklab, var(--bg) 0%, transparent));opacity:.92;z-index:-1;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto;text-decoration:none;overflow:hidden}
+.mark{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;flex:none;position:relative;
+  background:conic-gradient(from 210deg, var(--a1), var(--a2), var(--a3), var(--a1));padding:1.5px}
+.mark span{width:100%;height:100%;border-radius:11.5px;background:var(--bg-2);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:14px;letter-spacing:.02em}
+.mark span b{background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-txt{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.brand-name{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-sub{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.top-mid{flex:1 1 auto;display:flex;justify-content:center;min-width:0}
+.pulse-line{display:flex;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);font-family:var(--f-mono);font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;max-width:100%}
+.pulse-line .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 calc(10px * var(--glow)) var(--good);flex:none}
+.pulse-line .sep{opacity:.35}
+.top-actions{display:flex;align-items:center;gap:6px}
+.ibtn{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);color:var(--ink-2);transition:color .2s, border-color .2s, background .2s;position:relative;flex:none}
+.ibtn:hover{color:var(--ink);border-color:var(--line-2)}
+.ibtn[aria-pressed="true"]{color:var(--on-a1);background:var(--a1);border-color:transparent}
+.ibtn svg{width:18px;height:18px}
+.seg{display:flex;padding:3px;border-radius:12px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.seg button{border:0;background:none;padding:6px 9px;border-radius:9px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3)}
+.seg button[aria-pressed="true"]{background:var(--glass-3);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* ============ GRID ============ */
+.grid{display:grid;grid-template-columns:minmax(270px,340px) minmax(0,1fr) minmax(280px,370px);gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.center{min-width:0;display:flex;flex-direction:column;gap:16px}
+
+/* panel de vidrio */
+.panel{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);
+  backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);
+  box-shadow:inset 0 1px 0 var(--hi), var(--shadow);padding:16px 16px 16px;min-width:0}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;min-height:22px}
+.ph h2{margin:0;font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.ph h2 svg{width:14px;height:14px;color:var(--a1)}
+.ph .meta{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.link-btn{border:0;background:none;padding:2px 4px;color:var(--a1);font-family:var(--f-mono);font-size:11px;letter-spacing:.06em}
+.link-btn:hover{text-decoration:underline}
+
+/* chips / pills */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.good{color:var(--good);border-color:color-mix(in oklab, var(--good) 35%, transparent)}
+.pill.warn{color:var(--warn);border-color:color-mix(in oklab, var(--warn) 35%, transparent)}
+.pill.bad{color:var(--bad);border-color:color-mix(in oklab, var(--bad) 35%, transparent)}
+.pill.muted{color:var(--ink-3)}
+.pill.plain::before{display:none}
+.tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:6px;background:color-mix(in oklab, var(--a2) 16%, transparent);color:var(--ink-2)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;border:1px solid var(--line-2);background:var(--glass-2);padding:8px 13px;font-weight:600;font-size:13.5px;color:var(--ink);transition:transform .15s, background .2s, border-color .2s}
+.btn:hover{border-color:color-mix(in oklab, var(--a1) 50%, var(--line-2))}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:linear-gradient(135deg,var(--a1),color-mix(in oklab, var(--a1) 60%, var(--a2)));color:var(--on-a1);border-color:transparent;box-shadow:0 8px 22px -10px var(--a1)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:5px 10px;font-size:12.5px;border-radius:10px}
+.btn svg{width:16px;height:16px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label,.lbl{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.in{width:100%;min-width:0;border-radius:11px;border:1px solid var(--line-2);background:var(--glass-2);padding:8px 11px;font-size:14px;outline:none;transition:border-color .2s, box-shadow .2s}
+.in:focus{border-color:var(--a1);box-shadow:0 0 0 3px color-mix(in oklab, var(--a1) 22%, transparent)}
+textarea.in{resize:vertical;min-height:70px;line-height:1.45}
+select.in{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 16px) 55%,calc(100% - 11px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row>.grow{flex:1;min-width:120px}
+
+/* barras de progreso */
+.bar{position:relative;height:8px;border-radius:999px;background:color-mix(in oklab, var(--ink) 9%, transparent);overflow:hidden}
+.bar>i{position:absolute;inset:0 auto 0 0;border-radius:inherit;background:linear-gradient(90deg,var(--a1),var(--a2));width:0;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar.thin{height:5px}
+.bar.proj>i{background:linear-gradient(90deg,var(--pc),color-mix(in oklab, var(--pc) 55%, var(--a3)))}
+
+/* ============ NÚCLEO ============ */
+.core-wrap{padding:0;overflow:hidden}
+.core{position:relative;height:clamp(440px,64vh,660px);touch-action:manipulation}
+.core canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.core .corebtn{position:absolute;left:50%;top:48%;width:38%;height:62%;transform:translate(-50%,-50%);border-radius:50%;border:0;background:transparent;z-index:3}
+.core .corebtn:focus-visible{outline:1px dashed var(--a1);outline-offset:8px}
+.core-status{position:absolute;left:18px;top:16px;z-index:4;display:flex;flex-direction:column;gap:4px}
+.state-chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.state-chip i{width:8px;height:8px;border-radius:50%;background:var(--a1);box-shadow:0 0 calc(14px * var(--glow)) var(--a1);animation:beat 2.4s ease-in-out infinite}
+.core[data-state="listening"] .state-chip i{background:var(--a2);animation-duration:.8s}
+.core[data-state="thinking"] .state-chip i{animation-duration:.5s}
+@keyframes beat{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.6);opacity:.55}}
+.state-hint{font-size:12.5px;color:var(--ink-3)}
+.core-meta{position:absolute;right:18px;top:16px;z-index:4;text-align:right;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);line-height:1.7;text-transform:uppercase}
+.core-meta b{color:var(--ink-2);font-weight:500}
+.orbit{position:absolute;z-index:4;transition:opacity .4s, border-color .2s, transform .2s;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;padding:6px 11px 6px 7px;border-radius:999px;border:1px solid color-mix(in oklab, var(--pc) 40%, var(--line));background:var(--glass-2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:12.5px;font-weight:600;white-space:nowrap;color:var(--ink);transition:border-color .2s, transform .2s;will-change:left,top}
+.core.has-cap .orbit{opacity:.18}
+.orbit:hover{border-color:var(--pc);transform:translate(-50%,-50%) scale(1.05)}
+.orbit .ob-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:color-mix(in oklab, var(--pc) 22%, transparent);color:var(--pc)}
+.orbit .ob-ic svg{width:13px;height:13px}
+.orbit .ob-pct{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-weight:500}
+.captions{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);width:min(760px,calc(100% - 36px));z-index:4;text-align:center;pointer-events:none}
+.cap-user{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;color:var(--ink-3);min-height:18px;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cap-ai{font-family:var(--f-display);font-weight:600;font-size:clamp(16px,1.6vw,21px);line-height:1.35;letter-spacing:-.005em;color:var(--ink);text-wrap:balance;max-height:5.4em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;text-shadow:0 0 18px var(--bg), 0 0 2px var(--bg)}
+.cap-ai:empty{display:none}
+.composer{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(700px,calc(100% - 28px));z-index:5;display:flex;align-items:center;gap:8px;padding:6px;border-radius:18px;background:var(--glass-2);border:1px solid var(--line-2);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);box-shadow:var(--shadow)}
+.composer input{flex:1;min-width:0;border:0;background:transparent;outline:none;padding:8px 8px;font-size:15px}
+.composer input::placeholder{color:var(--ink-3)}
+.mic{width:42px;height:42px;border-radius:13px;border:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--on-a1);flex:none;position:relative}
+.mic svg{width:19px;height:19px}
+.mic[aria-pressed="true"]::after{content:"";position:absolute;inset:-4px;border-radius:16px;border:2px solid var(--a1);animation:ring 1.1s ease-out infinite}
+.mic[disabled]{opacity:.35;cursor:not-allowed}
+@keyframes ring{0%{opacity:.9;transform:scale(.92)}100%{opacity:0;transform:scale(1.18)}}
+.cbtn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--ink-2);flex:none}
+.cbtn svg{width:17px;height:17px}
+.cbtn:hover{color:var(--ink);border-color:var(--line-2)}
+.brain-badge{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:2px}
+
+/* ============ FRENTES ============ */
+.fronts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.front{--pc:var(--a1);position:relative;text-align:left;display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:20px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);box-shadow:inset 0 1px 0 var(--hi), var(--shadow);transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s;min-width:0;overflow:hidden}
+.front::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 100% 0%, color-mix(in oklab, var(--pc) 18%, transparent), transparent 60%);pointer-events:none}
+.front:hover{transform:translateY(-3px);border-color:color-mix(in oklab, var(--pc) 45%, var(--line))}
+.fr-top{display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative}
+.fr-ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:var(--pc);background:color-mix(in oklab, var(--pc) 16%, transparent);border:1px solid color-mix(in oklab, var(--pc) 30%, transparent)}
+.fr-ic svg{width:18px;height:18px}
+.ring{position:relative;width:46px;height:46px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .rt{fill:none;stroke:color-mix(in oklab, var(--ink) 10%, transparent);stroke-width:4}
+.ring .rv{fill:none;stroke:var(--pc);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-mono);font-size:11px;font-weight:600}
+.fr-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;letter-spacing:-.01em;position:relative}
+.fr-tag{font-size:12.5px;color:var(--ink-3);line-height:1.35;position:relative;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.fr-next{position:relative;font-size:12.5px;color:var(--ink-2);border-top:1px dashed var(--line-2);padding-top:9px;display:flex;gap:7px;align-items:flex-start;min-height:3.6em}
+.fr-next svg{width:13px;height:13px;flex:none;margin-top:3px;color:var(--pc)}
+.fr-next span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fr-foot{position:relative;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
+
+/* ============ LISTAS ============ */
+.list{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.li{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;border-radius:12px;transition:background .2s}
+.li:hover{background:color-mix(in oklab, var(--ink) 4%, transparent)}
+.li .body{flex:1;min-width:0}
+.li .t{font-size:13.5px;line-height:1.35;word-wrap:break-word}
+.li .s{font-size:11.5px;color:var(--ink-3);font-family:var(--f-mono);letter-spacing:.02em;margin-top:2px}
+.li.done .t{text-decoration:line-through;text-decoration-color:var(--a1);color:var(--ink-3)}
+.chk{width:20px;height:20px;border-radius:7px;border:1.5px solid var(--line-2);background:transparent;flex:none;display:grid;place-items:center;margin-top:1px;padding:0;transition:background .2s,border-color .2s}
+.chk svg{width:12px;height:12px;opacity:0;color:var(--on-a1);transition:opacity .2s}
+.chk[aria-checked="true"]{background:var(--a1);border-color:var(--a1)}
+.chk[aria-checked="true"] svg{opacity:1}
+.dotc{width:8px;height:8px;border-radius:50%;background:var(--pc,var(--a1));flex:none;margin-top:6px}
+.x{border:0;background:none;color:var(--ink-3);padding:2px;border-radius:6px;opacity:0;transition:opacity .2s;flex:none}
+.li:hover .x,.x:focus-visible{opacity:1}
+.x svg{width:14px;height:14px}
+.empty{font-size:13px;color:var(--ink-3);padding:8px 6px}
+.prio{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:1px}
+.prio.alta{background:color-mix(in oklab, var(--bad) 16%, transparent);color:var(--bad)}
+.prio.media{background:color-mix(in oklab, var(--warn) 16%, transparent);color:var(--warn)}
+.prio.baja{background:color-mix(in oklab, var(--ink) 8%, transparent);color:var(--ink-3)}
+
+/* HOY */
+.clock{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.clock-t{font-family:var(--f-display);font-weight:700;font-size:52px;line-height:.95;letter-spacing:-.035em}
+.clock-t small{font-size:20px;color:var(--ink-3);font-weight:600;margin-left:3px}
+.clock-d{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:right;line-height:1.6}
+.greet{font-size:14.5px;color:var(--ink-2);margin:10px 0 12px}
+.greet b{color:var(--ink);font-weight:600}
+.market{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:16px;background:color-mix(in oklab, var(--a2) 10%, transparent);border:1px solid color-mix(in oklab, var(--a2) 26%, transparent)}
+.market .mk-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in oklab, var(--a2) 20%, transparent);color:var(--a2);flex:none}
+.market .mk-ic svg{width:18px;height:18px}
+.market .mk-t{font-weight:600;font-size:13.5px}
+.market .mk-s{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+
+/* PILARES */
+.pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pillar{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.pillar .ring{width:54px;height:54px}
+.pillar span{font-size:11.5px;color:var(--ink-2);font-weight:600}
+.checkin{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-2);display:flex;flex-direction:column;gap:12px}
+.moods{display:flex;gap:6px}
+.mood{flex:1;height:38px;border-radius:12px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--ink-3);transition:all .2s}
+.mood svg{width:22px;height:22px}
+.mood[aria-pressed="true"]{border-color:var(--a1);color:var(--a1);background:color-mix(in oklab, var(--a1) 12%, transparent)}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:28px;height:28px;border-radius:9px;border:1px solid var(--line-2);background:transparent;display:grid;place-items:center;padding:0}
+.stepper b{min-width:34px;text-align:center;font-family:var(--f-mono);font-size:13px}
+.ci-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.ci-grid .field{gap:6px}
+.toggle{position:relative;width:44px;height:26px;border-radius:999px;border:1px solid var(--line-2);background:color-mix(in oklab, var(--ink) 8%, transparent);padding:0;flex:none;transition:background .2s}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--glass-3);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.toggle[aria-checked="true"]{background:var(--a1);border-color:transparent}
+.toggle[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
+.spark{width:100%;height:36px;display:block}
+
+/* TRADING */
+.acct{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.acct-bal{font-family:var(--f-display);font-weight:700;font-size:34px;letter-spacing:-.03em;line-height:1}
+.acct-bal small{font-size:15px;color:var(--ink-3);font-weight:600;margin-left:4px}
+.acct-chg{font-family:var(--f-mono);font-size:13px;font-weight:600}
+.acct-chg.up{color:var(--good)} .acct-chg.down{color:var(--bad)}
+.target{margin:14px 0 6px}
+.target .bar{height:12px;overflow:visible;background:color-mix(in oklab, var(--ink) 9%, transparent)}
+.target .bar>i{background:linear-gradient(90deg,var(--a2),var(--a1));box-shadow:0 0 calc(18px * var(--glow)) color-mix(in oklab, var(--a1) 60%, transparent)}
+.target .tick{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--line-2)}
+.target .tick span{position:absolute;top:18px;transform:translateX(-50%);font-family:var(--f-mono);font-size:9.5px;color:var(--ink-3);white-space:nowrap}
+.tgt-row{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);margin-top:22px}
+.tgt-row b{color:var(--ink);font-weight:600}
+.limits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.lim{padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:color-mix(in oklab, var(--ink) 3%, transparent)}
+.lim .l{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.lim .v{font-family:var(--f-mono);font-size:14px;font-weight:600;margin-top:2px}
+.sub-h{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:16px 0 6px;display:flex;justify-content:space-between;align-items:center}
+.trade-form{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.trade-form .full{grid-column:1/-1}
+.seg2{display:flex;border:1px solid var(--line-2);border-radius:11px;overflow:hidden}
+.seg2 button{flex:1;border:0;background:transparent;padding:7px 6px;font-size:12.5px;color:var(--ink-3)}
+.seg2 button[aria-pressed="true"]{background:color-mix(in oklab, var(--a1) 18%, transparent);color:var(--ink);font-weight:600}
+.jrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:7px 6px;border-radius:10px;font-size:13px}
+.jrow .res{font-family:var(--f-mono);font-weight:600}
+.jrow .res.up{color:var(--good)} .jrow .res.down{color:var(--bad)}
+.jrow .dt{font-family:var(--f-mono);font-size:11px;color:var(--ink-3)}
+
+/* sesiones y llamadas */
+.sess{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-radius:12px;text-decoration:none}
+.sess:hover{background:color-mix(in oklab, var(--ink) 4%, transparent)}
+.connect{display:flex;flex-direction:column;gap:10px;align-items:flex-start;padding:4px 2px}
+.connect p{margin:0;font-size:13px;color:var(--ink-3)}
+
+/* banner */
+.notice{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:16px;border:1px solid color-mix(in oklab, var(--a2) 35%, var(--line));background:color-mix(in oklab, var(--a2) 10%, var(--glass));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-size:13.5px;margin-bottom:14px;flex-wrap:wrap}
+.notice p{margin:0;flex:1;min-width:200px;color:var(--ink-2)}
+
+/* ============ DRAWER ============ */
+.scrim{position:fixed;inset:0;z-index:60;background:color-mix(in oklab, var(--bg) 55%, transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--glass-2);backdrop-filter:blur(34px) saturate(170%);-webkit-backdrop-filter:blur(34px) saturate(170%);border-left:1px solid var(--line-2);box-shadow:-30px 0 80px -30px rgba(0,0,0,.5);transform:translateX(104%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.on{transform:none}
+.dr-head{--pc:var(--a1);padding:20px 22px 0;position:relative}
+.dr-head::before{content:"";position:absolute;inset:0 0 -40px;background:radial-gradient(90% 100% at 0% 0%, color-mix(in oklab, var(--pc) 20%, transparent), transparent 70%);pointer-events:none}
+.dr-top{display:flex;align-items:center;gap:12px;position:relative}
+.dr-top .fr-ic{width:44px;height:44px;border-radius:14px}
+.dr-top .fr-ic svg{width:22px;height:22px}
+.dr-title{flex:1;min-width:0}
+.dr-title h3{margin:0;font-family:var(--f-display);font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.dr-title p{margin:2px 0 0;font-size:13px;color:var(--ink-3)}
+.tabs{display:flex;gap:4px;margin-top:16px;overflow-x:auto;scrollbar-width:none;position:relative}
+.tabs button{border:0;background:none;padding:9px 12px;border-radius:10px 10px 0 0;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--pc)}
+.dr-body{flex:1;overflow-y:auto;padding:18px 22px 30px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kpi{padding:12px;border-radius:14px;border:1px solid var(--line);background:color-mix(in oklab, var(--ink) 3%, transparent)}
+.kpi .l{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.kpi .v{font-family:var(--f-display);font-size:22px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
+.goal{padding:12px;border-radius:14px;border:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.goal-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.goal-h b{font-size:14px;font-weight:600}
+.goal-h span{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+.goal .row input{max-width:110px}
+.tl{position:relative;padding-left:20px;display:flex;flex-direction:column;gap:12px}
+.tl::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1.5px;background:var(--line-2)}
+.tl-i{position:relative;display:flex;gap:10px;align-items:flex-start}
+.tl-i::before{content:"";position:absolute;left:-18px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--pc);background:var(--bg-2)}
+.tl-i.done::before{background:var(--pc)}
+.tl-i .t{font-size:13.5px}
+.tl-i .s{font-family:var(--f-mono);font-size:11px;color:var(--ink-3)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:10px;border:1px solid var(--line-2);font-size:12.5px;text-decoration:none;color:var(--ink-2)}
+.links a:hover{border-color:var(--pc);color:var(--ink)}
+.links a svg{width:12px;height:12px}
+.ex{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--warn);border:1px dashed color-mix(in oklab, var(--warn) 50%, transparent);border-radius:6px;padding:1px 6px;margin-left:6px}
+
+/* modal */
+.modal{position:fixed;z-index:70;left:50%;top:50%;transform:translate(-50%,-48%) scale(.98);width:min(720px,calc(100% - 24px));max-height:calc(100% - 40px);display:flex;flex-direction:column;background:var(--glass-2);backdrop-filter:blur(34px) saturate(170%);-webkit-backdrop-filter:blur(34px) saturate(170%);border:1px solid var(--line-2);border-radius:26px;box-shadow:0 40px 100px -30px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s, transform .3s cubic-bezier(.2,.8,.2,1)}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.md-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 12px;border-bottom:1px solid var(--line)}
+.md-head h3{margin:0;font-family:var(--f-display);font-size:20px;font-weight:700}
+.md-body{overflow-y:auto;padding:16px 20px 22px;display:flex;flex-direction:column;gap:20px}
+.md-sec{display:flex;flex-direction:column;gap:10px}
+.md-sec h4{margin:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--a1);font-weight:500}
+.md-sec p.help{margin:0;font-size:12.5px;color:var(--ink-3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:12px;border:1px solid var(--line-2);background:transparent;font-size:13px}
+.sw i{width:26px;height:26px;border-radius:8px}
+.sw[aria-pressed="true"]{border-color:var(--a1);box-shadow:0 0 0 3px color-mix(in oklab, var(--a1) 20%, transparent)}
+.integ{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+
+/* toasts */
+.toasts{position:fixed;z-index:80;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(520px,calc(100% - 32px))}
+.toast{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--glass-3);border:1px solid var(--line-2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow);font-size:13.5px;animation:tin .35s cubic-bezier(.2,.8,.2,1)}
+.toast i{width:8px;height:8px;border-radius:50%;background:var(--a1);flex:none}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* log conversación */
+.log{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto;padding-right:4px}
+.msg{font-size:13.5px;line-height:1.45;padding:9px 12px;border-radius:14px;max-width:92%;white-space:pre-wrap;word-wrap:break-word}
+.msg.user{align-self:flex-end;background:color-mix(in oklab, var(--a1) 16%, transparent);border:1px solid color-mix(in oklab, var(--a1) 28%, transparent)}
+.msg.assistant{align-self:flex-start;background:color-mix(in oklab, var(--ink) 5%, transparent);border:1px solid var(--line)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1320px){ .fronts{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:1180px){
+  .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .center{grid-column:1/-1;order:-1}
+}
+@media (max-width:760px){
+  .shell{padding-inline:12px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .fronts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .orbit{display:none}
+  .core{height:min(560px,78vh)}
+  .top-mid{display:none}
+  .brand-sub{display:none}
+  .clock-t{font-size:44px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .captions{bottom:80px}
+  .core-meta{display:none}
+}
+@media (max-width:420px){
+  .fronts{grid-template-columns:minmax(0,1fr)}
+  .seg.lang{display:none}
+  .brand-name{font-size:15px}
+  .top-actions{gap:4px}
+  .ibtn{width:34px;height:34px;border-radius:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="atmo" aria-hidden="true"><canvas id="stars"></canvas></div>
+
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="#" data-action="scroll-top" aria-label="Andrés OS">
+      <div class="mark"><span><b>AC</b></span></div>
+      <div class="brand-txt">
+        <span class="brand-name" id="brandName">Andrés Carreño</span>
+        <span class="brand-sub" id="brandSub">Centro de mando personal</span>
+      </div>
+    </a>
+    <div class="top-mid"><div class="pulse-line" id="pulseLine"><span class="dot"></span><span>…</span></div></div>
+    <div class="top-actions">
+      <div class="seg lang" role="group" aria-label="Idioma">
+        <button type="button" data-action="lang" data-v="es" aria-pressed="true">ES</button>
+        <button type="button" data-action="lang" data-v="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="ibtn" id="wakeBtn" data-action="wake" aria-pressed="false" title="Escucha continua"></button>
+      <button type="button" class="ibtn" id="voiceBtn" data-action="voice-out" aria-pressed="true" title="Voz"></button>
+      <button type="button" class="ibtn" id="themeBtn" data-action="theme" title="Tema"></button>
+      <button type="button" class="ibtn" data-action="settings" title="Ajustes" id="setBtn"></button>
+    </div>
+  </header>
+
+  <div id="notice"></div>
+
+  <main class="grid">
+    <!-- IZQUIERDA -->
+    <section class="col" id="colLeft">
+      <article class="panel" id="pToday"></article>
+      <article class="panel" id="pFocus"></article>
+      <article class="panel" id="pAgenda"></article>
+      <article class="panel" id="pLife"></article>
+    </section>
+
+    <!-- CENTRO -->
+    <section class="center">
+      <article class="panel core-wrap">
+        <div class="core" id="core" data-state="idle">
+          <canvas id="gl" aria-hidden="true"></canvas>
+          <canvas id="hud" aria-hidden="true"></canvas>
+          <button type="button" class="corebtn" data-action="core" id="coreBtn" aria-label="Hablar con Claude"></button>
+          <div class="core-status">
+            <span class="state-chip" id="stateChip"><i></i><span>En reposo</span></span>
+            <span class="state-hint" id="stateHint"></span>
+            <span class="brain-badge" id="brainBadge"></span>
+          </div>
+          <div class="core-meta" id="coreMeta"></div>
+          <div id="orbits"></div>
+          <div class="captions" aria-live="polite">
+            <div class="cap-user" id="capUser"></div>
+            <div class="cap-ai" id="capAi"></div>
+          </div>
+          <form class="composer" id="composer" autocomplete="off">
+            <button type="button" class="cbtn" data-action="toggle-log" title="Conversación" id="logBtn"></button>
+            <label class="sr" for="ask">Escríbele a Claude</label>
+            <input id="ask" name="ask" type="text" placeholder="Háblame o escríbeme…" enterkeyhint="send">
+            <button type="button" class="cbtn" data-action="stop" id="stopBtn" title="Detener" hidden></button>
+            <button type="button" class="mic" id="micBtn" data-action="mic" aria-pressed="false" title="Hablar"></button>
+          </form>
+        </div>
+      </article>
+
+      <article class="panel" id="pLog" hidden></article>
+
+      <div class="fronts" id="fronts"></div>
+    </section>
+
+    <!-- DERECHA -->
+    <section class="col" id="colRight">
+      <article class="panel" id="pTrading"></article>
+      <article class="panel" id="pSessions"></article>
+      <article class="panel" id="pCalls"></article>
+      <article class="panel" id="pMemory"></article>
+    </section>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" data-action="close-layers"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drTitle"></aside>
+<section class="modal" id="settings" role="dialog" aria-modal="true" aria-labelledby="setTitle"></section>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script>
+/* ANDRÉS OS — centro de mando personal de Andrés Carreño.
+ * Un solo archivo sin build. Funciona igual:
+ *   · como página propia (meetaistaff.com/andres-os/ o abriendo el archivo): voz con palabra de activación,
+ *     Claude con tu API key, voz de ElevenLabs, datos en este navegador.
+ *   · como Artifact de claude.ai: Claude sin API key (sample), memoria en la nube (db),
+ *     Google Calendar, llamadas de ElevenLabs y sesiones de Claude Code (mcp).
+ */
+(() => {
+'use strict';
+
+/* ============================================================
+ * UTILIDADES
+ * ============================================================ */
+const IS_ARTIFACT = !!(window.claude && typeof window.claude.use === 'function');
+const TZ = 'America/Toronto';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+const lsGet = k => { try { return localStorage.getItem(k); } catch { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } };
+const lsDel = k => { try { localStorage.removeItem(k); } catch { /* nada */ } };
+
+function isoInTZ(d = new Date(), tz = TZ) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+}
+function partsInTZ(d = new Date(), tz = TZ) {
+  const p = {};
+  for (const x of new Intl.DateTimeFormat('en-US', { timeZone: tz, hour12: false, weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).formatToParts(d)) p[x.type] = x.value;
+  return { wd: p.weekday, h: +p.hour % 24, m: +p.minute, s: +p.second, y: +p.year, mo: +p.month, d: +p.day };
+}
+const today = () => isoInTZ();
+function addDays(iso, n) { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); }
+function daysBetween(a, b) { return Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 864e5); }
+function fmtDate(iso, opts = { day: 'numeric', month: 'short' }) {
+  if (!iso) return '';
+  try { return new Date(iso.length <= 10 ? iso + 'T12:00:00' : iso).toLocaleDateString(L(), opts); } catch { return iso; }
+}
+function money(v, cur = 'USD', dec = 0) {
+  if (v == null || isNaN(v)) return '—';
+  return new Intl.NumberFormat(L(), { style: 'currency', currency: cur, maximumFractionDigits: dec, minimumFractionDigits: dec }).format(v);
+}
+function num(v, dec = 0) { return v == null || isNaN(v) ? '—' : new Intl.NumberFormat(L(), { maximumFractionDigits: dec, minimumFractionDigits: dec }).format(v); }
+const L = () => (S && S.profile.lang === 'en') ? 'en-CA' : 'es-CO';
+
+/* ============================================================
+ * ÍCONOS (trazo, 24×24)
+ * ============================================================ */
+const IC = {
+  trading: '<path d="M6 3v4M6 17v4M18 4v3M18 15v5M12 6v3M12 17v3"/><rect x="4" y="7" width="4" height="10" rx="1"/><rect x="10" y="9" width="4" height="8" rx="1"/><rect x="16" y="7" width="4" height="8" rx="1"/>',
+  aistaff: '<path d="M3 12h2M7 8.5v7M11 5v14M15 8v8M19 10.5v3"/>',
+  marca: '<path d="M4 19.5V6a2 2 0 0 1 2-2h13v14H6.5A2.5 2.5 0 0 0 4 20.5 2.5 2.5 0 0 0 6.5 23H19"/><path d="M8 8h7M8 11.5h5"/>',
+  io: '<path d="M12 2.5 20 7v10l-8 4.5L4 17V7z"/><path d="M12 12 20 7M12 12 4 7M12 12v9.5"/>',
+  prime: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+  mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+  ear: '<path d="M6 8.5a6 6 0 0 1 12 0c0 3.5-3 4.5-3 7.5a3 3 0 0 1-6 0"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0"/><path d="M2.5 6.5 4 7.5M21.5 6.5 20 7.5"/>',
+  speaker: '<path d="M4 9.5h3.5L12 5v14l-4.5-4.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+  mute: '<path d="M4 9.5h3.5L12 5v14l-4.5-4.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2 6 6M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/>',
+  moon: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  brain: '<path d="M9 4.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 2.5 2.5 2.5 0 0 0 3-2.5V6.5a2.5 2.5 0 0 0-3-2z"/><path d="M15 4.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 2.5 2.5 2.5 0 0 1-3-2.5"/>',
+  target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>',
+  pulse: '<path d="M3 12h4l2.5-6 5 12 2.5-6h4"/>',
+  code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/>',
+  send: '<path d="M4 12 20 4l-6 16-3-7z"/>',
+  stop: '<rect x="6.5" y="6.5" width="11" height="11" rx="2"/>',
+  chat: '<path d="M4 5h16v11H9l-5 4z"/>',
+  flag: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  heart: '<path d="M12 20s-7.5-4.6-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3c0 5.4-7.5 10-7.5 10z"/>',
+  coin: '<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.5-.8-1.5-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.4-2.5-1.2M12 6.5V8M12 16v1.5"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4M18.5 14a6.5 6.5 0 0 1 3 6"/>',
+  spark: '<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/>',
+  down: '<path d="M12 4v12M6 11l6 6 6-6M5 20h14"/>',
+  up: '<path d="M12 20V8M6 13l6-6 6 6M5 4h14"/>',
+  trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'
+};
+const icon = (k, cls = '') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k] || ''}</svg>`;
+const moodSvg = n => {
+  const mouth = ['M8 16.5c1.2-1.6 2.5-2.2 4-2.2s2.8.6 4 2.2', 'M8.5 16c1-.8 2.2-1.1 3.5-1.1s2.5.3 3.5 1.1', 'M8.5 15.5h7', 'M8.5 14.8c1 .9 2.2 1.3 3.5 1.3s2.5-.4 3.5-1.3', 'M8 14c1.2 1.7 2.5 2.4 4 2.4s2.8-.7 4-2.4'][n - 1];
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor"/><circle cx="15" cy="10" r=".6" fill="currentColor"/><path d="${mouth}"/></svg>`;
+};
+
+/* ============================================================
+ * IDIOMA
+ * ============================================================ */
+const T = {
+  es: {
+    sub: 'Centro de mando personal', idle: 'En reposo', listening: 'Te escucho', thinking: 'Pensando', speaking: 'Hablando',
+    hintWake: 'Di «{w}» o toca el núcleo', hintIdle: 'Toca el núcleo o escribe abajo', hintNoMic: 'Escríbeme abajo — el micrófono funciona en la versión instalada',
+    ask: 'Háblame o escríbeme…', today: 'Hoy', focus: 'Enfoque de hoy', agenda: 'Agenda', life: 'Pilares de vida', trading: 'Trading · FTUK',
+    sessions: 'Taller · Claude Code', calls: 'Llamadas · AIStaff', memory: 'Memoria de Claude', log: 'Conversación',
+    goodMorning: 'Buenos días', goodAfternoon: 'Buenas tardes', goodEvening: 'Buenas noches',
+    greetTail: 'Tienes {n} pendientes de alta prioridad en {p} frentes.', greetClear: 'Nada urgente pendiente. Buen momento para avanzar lo importante.',
+    mkOpenIn: 'US30 abre en {t}', mkOpen: 'Mercado abierto · {t} de sesión', mkClosed: 'Mercado cerrado', mkNext: 'Próxima apertura: {d} 9:30 NY', mkWeekend: 'Fin de semana — revisa tu plan y tu journal',
+    finance: 'Finanzas', health: 'Salud', relations: 'Relaciones', mind: 'Mente', checkinToday: 'Check-in de hoy', mood: 'Ánimo', energy: 'Energía', sleep: 'Sueño', workout: 'Ejercicio', water: 'Agua',
+    contacts: 'Relaciones', every: 'cada {n} días', ago: 'hace {n} d', never: 'sin registro', done: 'Hecho', due: 'toca hoy',
+    balance: 'Balance', target: 'Objetivo', left: 'Faltan', dailyLoss: 'Pérdida diaria', maxDD: 'Drawdown total', usedToday: 'usado hoy', room: 'margen',
+    checklist: 'Checklist pre-mercado', journal: 'Journal', logTrade: 'Registrar operación', result: 'Resultado (USD)', followed: '¿Seguiste el plan?', yes: 'Sí', no: 'No', emotion: 'Emoción', note: 'Nota',
+    save: 'Guardar', add: 'Añadir', cancel: 'Cancelar', close: 'Cerrar', open: 'Abrir',
+    newTask: 'Nueva tarea…', newEvent: 'Nuevo evento…', newMemory: 'Algo que Claude debe recordar…',
+    summary: 'Resumen', goals: 'Metas', tasks: 'Tareas', budget: 'Presupuesto', timeline: 'Hitos', notes: 'Notas',
+    objective: 'Objetivo', status: 'Estado', deadline: 'Fecha meta', progress: 'Progreso', pending: 'Pendientes', spent: 'Gastado', allocated: 'Asignado', remaining: 'Disponible',
+    on: 'En marcha', risk: 'En riesgo', paused: 'En pausa', example: 'ejemplo', askPlan: 'Pedir a Claude los próximos 3 pasos',
+    connect: 'Conectar', connectAll: 'Conectar calendario, llamadas y sesiones', connectHelp: 'Claude puede leer tu Google Calendar, las llamadas de tus agentes de ElevenLabs y tus sesiones de Claude Code.',
+    onlyArtifact: 'Disponible en la versión de claude.ai (sin claves).', noEvents: 'Sin eventos próximos.', noCalls: 'Sin llamadas recientes.', noSessions: 'Sin sesiones.',
+    working: 'Trabajando', needs: 'Necesita acción', ready: 'Listo', failed: 'Falló',
+    settings: 'Ajustes', name: 'Nombre', language: 'Idioma', theme: 'Tema', palette: 'Paleta', dark: 'Oscuro', light: 'Claro', auto: 'Sistema',
+    voice: 'Voz', claude: 'Cerebro · Claude', data: 'Datos', integrations: 'Integraciones', exportData: 'Exportar respaldo', importData: 'Importar respaldo', reset: 'Restablecer todo',
+    seedNote: 'Cargué tus 5 frentes con lo que construimos hoy. Presupuestos y fechas marcados «ejemplo» son un punto de partida: edítalos.', gotIt: 'Entendido',
+    toastTask: 'Tarea añadida a {p}', toastDone: 'Tarea completada', toastSaved: 'Guardado', toastTrade: 'Operación registrada', toastMem: 'Lo recordaré', toastEvent: 'Evento añadido',
+    noBrain: 'Para respuestas completas conecta Claude en Ajustes (tu API key) o abre la versión de claude.ai.',
+    brainSample: 'Cerebro: Claude (claude.ai)', brainApi: 'Cerebro: Claude API', brainLocal: 'Cerebro: local (conecta Claude en Ajustes)'
+  },
+  en: {
+    sub: 'Personal command center', idle: 'Standing by', listening: 'Listening', thinking: 'Thinking', speaking: 'Speaking',
+    hintWake: 'Say “{w}” or tap the core', hintIdle: 'Tap the core or type below', hintNoMic: 'Type below — the mic works in the installed version',
+    ask: 'Talk or type to me…', today: 'Today', focus: 'Today’s focus', agenda: 'Agenda', life: 'Life pillars', trading: 'Trading · FTUK',
+    sessions: 'Workshop · Claude Code', calls: 'Calls · AIStaff', memory: 'Claude’s memory', log: 'Conversation',
+    goodMorning: 'Good morning', goodAfternoon: 'Good afternoon', goodEvening: 'Good evening',
+    greetTail: 'You have {n} high-priority items across {p} fronts.', greetClear: 'Nothing urgent. Good time to push what matters.',
+    mkOpenIn: 'US30 opens in {t}', mkOpen: 'Market open · {t} into session', mkClosed: 'Market closed', mkNext: 'Next open: {d} 9:30 NY', mkWeekend: 'Weekend — review your plan and journal',
+    finance: 'Money', health: 'Health', relations: 'People', mind: 'Mind', checkinToday: 'Today’s check-in', mood: 'Mood', energy: 'Energy', sleep: 'Sleep', workout: 'Workout', water: 'Water',
+    contacts: 'People', every: 'every {n} days', ago: '{n} d ago', never: 'no record', done: 'Done', due: 'due today',
+    balance: 'Balance', target: 'Target', left: 'To go', dailyLoss: 'Daily loss', maxDD: 'Max drawdown', usedToday: 'used today', room: 'room',
+    checklist: 'Pre-market checklist', journal: 'Journal', logTrade: 'Log trade', result: 'Result (USD)', followed: 'Followed the plan?', yes: 'Yes', no: 'No', emotion: 'Emotion', note: 'Note',
+    save: 'Save', add: 'Add', cancel: 'Cancel', close: 'Close', open: 'Open',
+    newTask: 'New task…', newEvent: 'New event…', newMemory: 'Something Claude should remember…',
+    summary: 'Overview', goals: 'Goals', tasks: 'Tasks', budget: 'Budget', timeline: 'Milestones', notes: 'Notes',
+    objective: 'Objective', status: 'Status', deadline: 'Target date', progress: 'Progress', pending: 'Open', spent: 'Spent', allocated: 'Allocated', remaining: 'Available',
+    on: 'On track', risk: 'At risk', paused: 'Paused', example: 'example', askPlan: 'Ask Claude for the next 3 steps',
+    connect: 'Connect', connectAll: 'Connect calendar, calls and sessions', connectHelp: 'Claude can read your Google Calendar, your ElevenLabs agent calls and your Claude Code sessions.',
+    onlyArtifact: 'Available in the claude.ai version (no keys needed).', noEvents: 'No upcoming events.', noCalls: 'No recent calls.', noSessions: 'No sessions.',
+    working: 'Working', needs: 'Needs you', ready: 'Ready', failed: 'Failed',
+    settings: 'Settings', name: 'Name', language: 'Language', theme: 'Theme', palette: 'Palette', dark: 'Dark', light: 'Light', auto: 'System',
+    voice: 'Voice', claude: 'Brain · Claude', data: 'Data', integrations: 'Integrations', exportData: 'Export backup', importData: 'Import backup', reset: 'Reset everything',
+    seedNote: 'I loaded your 5 fronts with what we built today. Budgets and dates marked “example” are a starting point: edit them.', gotIt: 'Got it',
+    toastTask: 'Task added to {p}', toastDone: 'Task completed', toastSaved: 'Saved', toastTrade: 'Trade logged', toastMem: 'I’ll remember that', toastEvent: 'Event added',
+    noBrain: 'For full answers connect Claude in Settings (your API key) or open the claude.ai version.',
+    brainSample: 'Brain: Claude (claude.ai)', brainApi: 'Brain: Claude API', brainLocal: 'Brain: local (connect Claude in Settings)'
+  }
+};
+const t = (k, vars) => {
+  let s = (T[S?.profile?.lang || 'es'] || T.es)[k] ?? T.es[k] ?? k;
+  if (vars) for (const [a, b] of Object.entries(vars)) s = s.replaceAll('{' + a + '}', b);
+  return s;
+};
+
+/* ============================================================
+ * DATOS INICIALES — tus 5 frentes (27 sep 2026)
+ * ============================================================ */
+const PROJECT_META = {
+  trading: { color: '#F2B84B', aliases: ['trading', 'ftuk', 'us30', 'cuenta', 'fondeada', 'dow', 'mt5', 'ea'] },
+  aistaff: { color: '#3DD8C5', aliases: ['aistaff', 'istaff', 'ai staff', 'meetaistaff', 'agentes', 'agente', 'voz', 'curso', 'recepcionista', 'jarvis'] },
+  marca: { color: '#F27FA0', aliases: ['marca', 'soy andres', 'andres carreno', 'libros', 'libro', 'biblioteca', 'videos', 'marca personal'] },
+  io: { color: '#A08BFF', aliases: ['io', 'juego', 'app de finanzas', 'aplicacion', 'espejo', 'videojuego', 'tokens'] },
+  prime: { color: '#72B8FF', aliases: ['prime', 'menage', 'prime menage', 'aseo', 'limpieza', 'cleaning', 'montreal', 'maison'] }
+};
+
+function makeDefault() {
+  const tk = (title, prio = 'media', due = null) => ({ id: uid(), title, prio, due, done: false, created: today() });
+  const gl = (title, current, target, unit = '', example = false) => ({ id: uid(), title, current, target, unit, example });
+  const ms = (title, date, done = false) => ({ id: uid(), title, date, done });
+  return {
+    v: 1,
+    seededAt: today(),
+    seedNoticeSeen: false,
+    profile: { name: 'Andrés', lang: 'es', theme: 'dark', palette: 'aurum' },
+    voice: { out: true, engine: 'browser', browserVoice: '', rate: 1.02, elKey: '', elVoice: '', elModel: 'eleven_flash_v2_5', wakeWords: 'jarvis, yarvis, claude, oye claude', recLang: 'es-ES', face: 'always' },
+    brain: { apiKey: '', model: 'claude-opus-5', effort: 'low', remember: true },
+    projects: [
+      {
+        id: 'trading', name: 'Trading · FTUK', tagline: 'Cuenta fondeada de 10.000 USD — US30 en la apertura de NY, con plan y journal.',
+        objective: 'Llegar a +10 % (1.000 USD) en la cuenta fondeada de FTUK para hacer el primer retiro, sin romper ninguna regla del plan.',
+        status: 'on', deadline: '2026-12-15', deadlineExample: true,
+        goals: [gl('Objetivo de ganancia', 200, 1000, 'USD'), gl('Días seguidos siguiendo el plan', 0, 20, 'días', true)],
+        tasks: [
+          tk('Recargar el EA en MT5: reemplazar archivo, F7, quitarlo y volver a arrastrarlo al gráfico', 'media'),
+          tk('Revisión semanal del journal (viernes)', 'media'),
+          tk('Decidir cuánto retiro y cuánto dejo cuando llegue a +10 %', 'baja')
+        ],
+        budget: { currency: 'USD', allocated: 0, allocatedExample: false, items: [] },
+        milestones: [ms('Cuenta fondeada activa', '2026-09-01', true), ms('+2 % alcanzado', '2026-09-26', true), ms('+5 % — mitad del camino', '2026-10-31'), ms('+10 % y primer retiro', '2026-12-15')],
+        links: [],
+        notes: 'Opero a las 9:30 (NY) el US30. Una idea, un setup, sin FOMO.'
+      },
+      {
+        id: 'aistaff', name: 'AIStaff', tagline: 'Agentes de voz para negocios — y ahora tu asistente personal.',
+        objective: 'Conseguir los primeros clientes de pago en Montreal con agentes de voz trilingües (FR/EN/ES) y lanzar el curso «Agente IA en 7 días».',
+        status: 'on', deadline: '2026-11-30', deadlineExample: true,
+        goals: [gl('Clientes de pago', 0, 5, 'clientes', true), gl('Páginas por sector publicadas', 3, 6, 'páginas', true), gl('Pasos para lanzar el curso', 0, 6, 'pasos')],
+        tasks: [
+          tk('Confirmar el merge del PR de onboarding', 'alta'),
+          tk('Cambiar el DNS en Ionos (docs/DEPLOY.md)', 'alta'),
+          tk('Elegir Make o FormSubmit para el formulario de onboarding', 'media'),
+          tk('Prospectar 10 negocios en Montreal (nettoyage, paysagement, immobilier)', 'alta'),
+          tk('Curso: links de Hotmart y video demo', 'media'),
+          tk('Curso: revisión legal antes de publicar', 'baja')
+        ],
+        budget: { currency: 'CAD', allocated: 600, allocatedExample: true, items: [] },
+        milestones: [ms('Sitio meetaistaff.com + páginas de sector', '2026-09-26', true), ms('Jarvis for Real Estate publicado', '2026-09-21', true), ms('Onboarding en producción', '2026-10-05'), ms('Primer cliente de pago', '2026-10-31')],
+        links: [
+          { label: 'meetaistaff.com', url: 'https://meetaistaff.com' },
+          { label: 'Onboarding', url: 'https://claude.ai/artifact/BcxS7fonTVkC43L31mYtea' },
+          { label: 'Jarvis Real Estate', url: 'https://claude.ai/artifact/S8Cy9kLuKRYvy5HszXSuad' },
+          { label: 'Plan Maestro Andrés.IA', url: 'https://claude.ai/artifact/XrQEXpmh6XDFnmRMrhCKmB' }
+        ],
+        notes: ''
+      },
+      {
+        id: 'marca', name: 'Soy Andrés Carreño', tagline: 'Biblioteca de libros gratis y videos con mi voz IA. Dar sin pedir nada.',
+        objective: 'Publicar muchos libros gratuitos y un video por libro, narrado con mi voz clonada, para que alguno le llegue a quien lo necesita.',
+        status: 'on', deadline: '2026-12-31', deadlineExample: true,
+        goals: [gl('Libros gratis publicados', 10, 20, 'libros', true), gl('Videos IA sobre los libros', 0, 10, 'videos', true)],
+        tasks: [
+          tk('Publicar la biblioteca en Netlify (PDF + correo)', 'alta'),
+          tk('Clonar mi voz en ElevenLabs', 'alta'),
+          tk('Guion del video 1: La Verdadera Abundancia', 'media'),
+          tk('Calendario: 1 video por semana', 'baja')
+        ],
+        budget: { currency: 'CAD', allocated: 150, allocatedExample: true, items: [] },
+        milestones: [ms('10 libros listos', '2026-09-26', true), ms('Biblioteca en línea', '2026-10-05'), ms('Primer video publicado', '2026-10-19')],
+        links: [{ label: 'Biblioteca (vista previa)', url: 'https://claude.ai/artifact/33owfDEu8FrUm7eK7yc7uh' }],
+        notes: 'Libros: Creciste Sin Ellos · El Arte de Cerrar Ciclos · La Ley del Mentalismo · La Verdadera Abundancia · Las 12 Leyes Universales · Ley de la Atracción · Lo Que Sí Es y No Es · Numerología 101 · Transicionar Sin Romperte · Volver a Empezar.'
+      },
+      {
+        id: 'io', name: 'IO', tagline: 'El juego de la vida: tu espejo digital. Finanzas, relaciones y salud suben tu nivel.',
+        objective: 'Lanzar IO en vivo y venderlo: lo que haces en la vida real (ahorrar, llamar a mamá, entrenar) se convierte en puntos y tokens dentro del juego.',
+        status: 'on', deadline: '2026-12-01', deadlineExample: true,
+        goals: [gl('Puesta en marcha técnica', 0, 4, 'pasos'), gl('Usuarios beta', 0, 25, 'usuarios', true)],
+        tasks: [
+          tk('Regenerar el token del bot de Telegram (@BotFather /revoke)', 'alta'),
+          tk('Regenerar la API key de Anthropic y revocar la anterior', 'alta'),
+          tk('Correr supabase/schema.sql y conectar la app', 'media'),
+          tk('Diseñar la economía: acciones → puntos → tokens → recompensas', 'media'),
+          tk('Definir cómo se vende (suscripción y precio)', 'baja')
+        ],
+        budget: { currency: 'CAD', allocated: 200, allocatedExample: true, items: [] },
+        milestones: [ms('Consola del juego en construcción', '2026-09-27', true), ms('Beta privada', '2026-11-01'), ms('Lanzamiento público', '2026-12-01')],
+        links: [{ label: 'IO Espejo', url: 'https://claude.ai/artifact/1UkmNHwvgm4PZcdDxUHyzt' }],
+        notes: 'Pilares: finanzas, relaciones, salud y mente.'
+      },
+      {
+        id: 'prime', name: 'Prime Ménage', tagline: 'Empresa de aseo en Montreal que funciona sin que yo limpie.',
+        objective: 'Operar la empresa con limpiadoras subcontratadas: empezar con una, conseguir clientes recurrentes y crecer el equipo.',
+        status: 'on', deadline: '2026-10-31', deadlineExample: true,
+        goals: [gl('Clientes recurrentes', 0, 10, 'clientes', true), gl('Limpiadoras subcontratadas', 0, 1, 'personas')],
+        tasks: [
+          tk('Poner teléfono y WhatsApp reales en el sitio (CONFIG en app.js)', 'alta'),
+          tk('Subir la carpeta prime-menage/ a Netlify', 'alta'),
+          tk('Encontrar y contratar la primera limpiadora', 'alta'),
+          tk('Cambiar los testimonios de ejemplo por reseñas reales', 'media'),
+          tk('Validar precios: base 85 $ + 35 $/habitación + 25 $/baño', 'baja')
+        ],
+        budget: { currency: 'CAD', allocated: 1200, allocatedExample: true, items: [] },
+        milestones: [ms('Sitio y panel listos', '2026-09-27', true), ms('Primera limpiadora', '2026-10-15'), ms('Primer cliente', '2026-10-20')],
+        links: [
+          { label: 'Sitio Prime Ménage', url: 'https://claude.ai/artifact/TgJQYBTKvEKGAq8fkQNjad' },
+          { label: 'Panel Maison Prime', url: 'https://claude.ai/artifact/EG5npAuQPk1CWC5kb1pgEB' }
+        ],
+        notes: ''
+      }
+    ],
+    trading: {
+      firm: 'FTUK', account: 10000, balance: 10200, currency: 'USD', targetPct: 10,
+      dailyLossPct: 5, maxLossPct: 10, limitsExample: true,
+      instrument: 'US30', session: '09:30',
+      rules: [
+        { id: uid(), text: 'Solo US30, en la apertura de Nueva York (9:30).' },
+        { id: uid(), text: 'Revisé mi plan y el contexto antes de las 9:20.' },
+        { id: uid(), text: 'Espero mi setup confirmado. Sin FOMO, sin perseguir el precio.' },
+        { id: uid(), text: 'Riesgo fijo por operación, el que dice mi plan.' },
+        { id: uid(), text: 'Máximo 2 operaciones. Si pierdo la primera, pauso y reviso.' },
+        { id: uid(), text: 'Anoto cada operación en el journal.' }
+      ],
+      checkDate: null, checked: [],
+      journal: []
+    },
+    life: {
+      checkins: [],
+      contacts: [
+        { id: uid(), name: 'Mamá', every: 3, last: null },
+        { id: uid(), name: 'Diana', every: 7, last: null }
+      ],
+      finance: { currency: 'CAD', monthlyBudget: null, spent: null, savingsGoal: null, saved: null }
+    },
+    agenda: [],
+    memory: [
+      { id: uid(), text: 'Opero US30 a las 9:30 (apertura de NY) siguiendo mis reglas, mi plan y mi journal.', date: today(), src: 'user' },
+      { id: uid(), text: 'Cuenta FTUK de 10.000 USD: voy +2 %; necesito +10 % (1.000 USD) para retirar.', date: today(), src: 'user' },
+      { id: uid(), text: 'AIStaff son agentes de voz para negocios; también es mi asistente personal.', date: today(), src: 'user' },
+      { id: uid(), text: 'Soy Andrés Carreño es altruista: libros gratis y videos con voz IA, sin intención de venta.', date: today(), src: 'user' },
+      { id: uid(), text: 'IO es un videojuego-espejo: metas reales de finanzas, relaciones y salud dan puntos y tokens.', date: today(), src: 'user' },
+      { id: uid(), text: 'Prime Ménage (Montreal): yo no limpio; subcontrato limpiadoras, empiezo con una.', date: today(), src: 'user' },
+      { id: uid(), text: 'Mi mente tiende a dispersarse: ayúdame a enfocarme en lo que mueve cada frente.', date: today(), src: 'user' }
+    ],
+    chat: []
+  };
+}
+
+/* ============================================================
+ * ESTADO + PERSISTENCIA
+ * ============================================================ */
+const LS_KEY = 'andres-os:v1';
+let S = null;
+const Store = (() => {
+  let db = null, docRef = null, saveTimer = null, lastWritten = '', listeners = [], cloud = 'off';
+  function load() {
+    const raw = lsGet(LS_KEY);
+    if (raw) { try { S = migrate(JSON.parse(raw)); return; } catch { /* dañado: se reemplaza */ } }
+    S = makeDefault();
+  }
+  function migrate(s) {
+    const d = makeDefault();
+    const out = Object.assign({}, d, s);
+    out.profile = Object.assign({}, d.profile, s.profile || {});
+    out.voice = Object.assign({}, d.voice, s.voice || {});
+    out.brain = Object.assign({}, d.brain, s.brain || {});
+    out.trading = Object.assign({}, d.trading, s.trading || {});
+    out.life = Object.assign({}, d.life, s.life || {});
+    out.life.finance = Object.assign({}, d.life.finance, (s.life || {}).finance || {});
+    if (!Array.isArray(out.projects) || !out.projects.length) out.projects = d.projects;
+    return out;
+  }
+  function snapshot() {
+    // Las claves de API nunca salen de este dispositivo.
+    const copy = JSON.parse(JSON.stringify(S));
+    copy.brain.apiKey = ''; copy.voice.elKey = '';
+    copy.chat = copy.chat.slice(-24);
+    copy.trading.journal = copy.trading.journal.slice(-400);
+    copy.life.checkins = copy.life.checkins.slice(-400);
+    return copy;
+  }
+  function persistLocal() {
+    const copy = JSON.parse(JSON.stringify(S));
+    if (!S.brain.remember) copy.brain.apiKey = '';
+    lsSet(LS_KEY, JSON.stringify(copy));
+  }
+  function save(immediate) {
+    persistLocal();
+    listeners.forEach(f => f());
+    if (!docRef) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      const snap = snapshot();
+      const str = JSON.stringify(snap);
+      if (str === lastWritten) return;
+      try { await docRef.set({ state: str, at: new Date().toISOString() }); lastWritten = str; cloud = 'on'; }
+      catch (e) { cloud = 'error'; console.warn('db', e); }
+    }, immediate ? 0 : 900);
+  }
+  async function connectCloud(onRemote) {
+    if (!IS_ARTIFACT) return;
+    try {
+      db = await window.claude.use('db');
+      const user = await window.claude.use('user');
+      if (!db || !user) return;
+      const id = await user.id();
+      if (!id) return;
+      docRef = db.doc('data/users/' + id + '/os');
+      const first = await docRef.get();
+      if (first.exists) {
+        const d = first.data();
+        if (d && d.state) {
+          lastWritten = d.state;
+          const remote = migrate(JSON.parse(d.state));
+          remote.brain.apiKey = S.brain.apiKey; remote.voice.elKey = S.voice.elKey;
+          S = remote; persistLocal(); onRemote && onRemote();
+        }
+      }
+      cloud = 'on';
+      docRef.onSnapshot(snap => {
+        if (!snap.exists || snap.metadata.hasPendingWrites) return;
+        const d = snap.data();
+        if (!d || !d.state || d.state === lastWritten) return;
+        lastWritten = d.state;
+        try {
+          const remote = migrate(JSON.parse(d.state));
+          remote.brain.apiKey = S.brain.apiKey; remote.voice.elKey = S.voice.elKey;
+          S = remote; persistLocal(); onRemote && onRemote();
+        } catch { /* ignorar */ }
+      }, () => { cloud = 'error'; });
+    } catch (e) { console.warn('cloud', e); cloud = 'error'; }
+  }
+  return { load, save, connectCloud, onChange: f => listeners.push(f), cloud: () => cloud, snapshot, migrate };
+})();
+
+/* ============================================================
+ * CONSULTAS SOBRE EL ESTADO
+ * ============================================================ */
+const P = id => S.projects.find(p => p.id === id);
+function findProject(q) {
+  const n = norm(q);
+  if (!n) return null;
+  let best = null, score = 0;
+  for (const p of S.projects) {
+    const meta = PROJECT_META[p.id] || { aliases: [] };
+    const cands = [p.id, norm(p.name), ...meta.aliases];
+    for (const c of cands) {
+      let sc = 0;
+      if (n === c) sc = 10; else if (n.includes(c) && c.length > 2) sc = 5 + c.length / 20; else if (c.includes(n) && n.length > 2) sc = 4;
+      if (sc > score) { score = sc; best = p; }
+    }
+  }
+  return best;
+}
+function findIn(list, q, key = 'title') {
+  const n = norm(q); if (!n) return null;
+  const words = n.split(' ').filter(w => w.length > 2);
+  let best = null, score = 0;
+  for (const it of list) {
+    const tt = norm(it[key]);
+    if (tt === n) return it;
+    let sc = tt.includes(n) ? 5 : 0;
+    for (const w of words) if (tt.includes(w)) sc += 1;
+    if (sc > score) { score = sc; best = it; }
+  }
+  return score > 0 ? best : null;
+}
+function projectProgress(p) {
+  const g = p.goals.filter(x => x.target > 0);
+  if (!g.length) return 0;
+  return g.reduce((a, x) => a + clamp(x.current / x.target, 0, 1), 0) / g.length;
+}
+function projectSpent(p) { return p.budget.items.reduce((a, x) => a + (+x.amount || 0), 0); }
+const prioRank = { alta: 0, media: 1, baja: 2 };
+function openTasks(p) { return p.tasks.filter(x => !x.done).sort((a, b) => (prioRank[a.prio] ?? 1) - (prioRank[b.prio] ?? 1) || (a.due || '9').localeCompare(b.due || '9')); }
+function tradingStats() {
+  const tr = S.trading;
+  const pnl = tr.balance - tr.account;
+  const pct = pnl / tr.account * 100;
+  const target = tr.account * tr.targetPct / 100;
+  const todayPnl = tr.journal.filter(j => j.date === today()).reduce((a, j) => a + (+j.result || 0), 0);
+  const dailyCap = tr.account * tr.dailyLossPct / 100;
+  const maxCap = tr.account * tr.maxLossPct / 100;
+  const streak = (() => { let n = 0; const days = [...new Set(tr.journal.map(j => j.date))].sort().reverse(); for (const d of days) { const all = tr.journal.filter(j => j.date === d); if (all.every(j => j.followed)) n++; else break; } return n; })();
+  return { pnl, pct, target, left: Math.max(0, target - pnl), progress: clamp(pnl / target, 0, 1), todayPnl, dailyCap, maxCap, dailyRoom: dailyCap + Math.min(0, todayPnl), ddRoom: maxCap + Math.min(0, pnl), streak };
+}
+function checkinToday() { return S.life.checkins.find(c => c.date === today()); }
+function ensureCheckin() {
+  let c = checkinToday();
+  if (!c) { c = { date: today(), mood: null, energy: null, sleep: null, workout: false, water: 0, note: '' }; S.life.checkins.push(c); }
+  return c;
+}
+function pillars() {
+  const last7 = S.life.checkins.filter(c => daysBetween(c.date, today()) < 7);
+  const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+  const sl = avg(last7.map(c => c.sleep).filter(v => v != null));
+  const wk = last7.filter(c => c.workout).length;
+  const health = last7.length ? clamp(((sl != null ? clamp(sl / 7.5, 0, 1) : 0.5) * 0.55 + clamp(wk / 4, 0, 1) * 0.45), 0, 1) : null;
+  const md = avg(last7.map(c => c.mood).filter(v => v != null));
+  const en = avg(last7.map(c => c.energy).filter(v => v != null));
+  const mind = md != null ? clamp(((md - 1) / 4) * 0.7 + (en != null ? (en - 1) / 4 : 0.5) * 0.3, 0, 1) : null;
+  const cs = S.life.contacts;
+  const rel = cs.length ? cs.reduce((a, c) => { if (!c.last) return a + 0.2; const d = daysBetween(c.last, today()); return a + clamp(1 - Math.max(0, d - c.every) / (c.every * 2), 0, 1); }, 0) / cs.length : null;
+  const f = S.life.finance;
+  let fin = null;
+  if (f.savingsGoal && f.saved != null) fin = clamp(f.saved / f.savingsGoal, 0, 1);
+  if (f.monthlyBudget && f.spent != null) { const b = clamp(1 - Math.max(0, f.spent - f.monthlyBudget) / f.monthlyBudget, 0, 1); fin = fin == null ? b : (fin + b) / 2; }
+  return { finance: fin, health, relations: rel, mind };
+}
+function marketInfo() {
+  const n = partsInTZ(new Date(), 'America/New_York');
+  const mins = n.h * 60 + n.m;
+  const wd = n.wd; const weekday = !['Sat', 'Sun'].includes(wd);
+  const open = 9 * 60 + 30, close = 16 * 60;
+  const fmtDur = m => { const h = Math.floor(m / 60), mm = m % 60; return h ? `${h} h ${String(mm).padStart(2, '0')} min` : `${mm} min`; };
+  if (weekday && mins < open) return { state: 'pre', text: t('mkOpenIn', { t: fmtDur(open - mins) }), mins: open - mins };
+  if (weekday && mins < close) return { state: 'open', text: t('mkOpen', { t: fmtDur(mins - open) }), mins: mins - open };
+  if (!weekday || wd === 'Fri') return { state: 'weekend', text: wd === 'Fri' ? t('mkClosed') : t('mkWeekend'), sub: t('mkNext', { d: S.profile.lang === 'en' ? 'Monday' : 'lunes' }) };
+  return { state: 'closed', text: t('mkClosed'), sub: t('mkNext', { d: S.profile.lang === 'en' ? 'tomorrow' : 'mañana' }) };
+}
+
+/* ============================================================
+ * NEBULOSA — la cara de Claude
+ * Una nube de partículas (WebGL) que se condensa en un rostro cuando
+ * escucha y habla, se arremolina cuando piensa y respira en reposo.
+ * Encima, un HUD (canvas 2D) con aristas entre nodos y códigos numéricos.
+ * ============================================================ */
+const Nebula = (() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let gl = null, prog = null, cv, hud, hx, W = 1, H = 1, dpr = 1, N = 0, U = {}, running = false, t0 = performance.now(), last = 0;
+  let nebA = null, faceA = null, seedA = null, nodes = [], glyphs = [], orbitEls = [], light = false;
+  const st = { morph: 0.1, morphT: 0.1, swirl: 0.3, swirlT: 0.3, listen: 0, listenT: 0, level: 0, mouth: 0, yaw: 0, yawT: 0, pitch: 0, pitchT: 0, state: 'idle' };
+  let C1 = [0.24, 0.95, 0.65], C2 = [0.96, 0.78, 0.4], C3 = [0.8, 1, 0.9];
+  let levelFn = () => 0;
+
+  const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+
+  /* --- nebulosa: galaxia con halo --- */
+  function nebulaPoint(i) {
+    const r0 = Math.random();
+    if (r0 < 0.22) { // halo esférico
+      const th = Math.acos(2 * Math.random() - 1), ph = 2 * Math.PI * Math.random(), r = 0.95 + Math.random() * 0.35;
+      return [r * Math.sin(th) * Math.cos(ph), r * Math.cos(th) * 0.9, r * Math.sin(th) * Math.sin(ph)];
+    }
+    if (r0 < 0.34) return [gauss() * 0.12, gauss() * 0.12, gauss() * 0.12]; // núcleo
+    const arms = 3, arm = i % arms;
+    const r = Math.pow(Math.random(), 0.6) * 1.15 + 0.06;
+    const a = arm * (2 * Math.PI / arms) + r * 3.1 + gauss() * 0.2 / (r + 0.4);
+    const d = 0.05 + r * 0.05;
+    // disco inclinado
+    let x = Math.cos(a) * r + gauss() * d, y = gauss() * 0.04 * (1.6 - r), z = Math.sin(a) * r + gauss() * d;
+    const tilt = 0.5; const y2 = y * Math.cos(tilt) - z * Math.sin(tilt), z2 = y * Math.sin(tilt) + z * Math.cos(tilt);
+    return [x, y2, z2];
+  }
+
+  /* --- rostro --- */
+  const RX = 0.66, RY = 0.9, RZ = 0.56;
+  function headW(y) {
+    const tt = y / RY; let w = Math.sqrt(Math.max(0, 1 - tt * tt));
+    if (tt < 0) w *= 1 - 0.3 * Math.pow(-tt, 1.5);
+    return RX * w;
+  }
+  function surfZ(x, y) {
+    const hw = headW(y); if (hw <= 0.001) return 0;
+    const u = clamp(x / hw, -1, 1), tt = y / RY;
+    let z = RZ * Math.sqrt(Math.max(0, 1 - u * u)) * Math.sqrt(Math.max(0, 1 - tt * tt * 0.55));
+    z += 0.15 * Math.exp(-(x * x) / 0.005 - ((y + 0.02) ** 2) / 0.045) * (y < 0.2 ? 1 : 0.25); // tabique
+    z += 0.07 * Math.exp(-(x * x) / 0.012 - ((y + 0.2) ** 2) / 0.006); // punta
+    for (const s of [-1, 1]) z -= 0.075 * Math.exp(-((x - s * 0.25) ** 2) / 0.012 - ((y - 0.15) ** 2) / 0.006); // cuencas
+    z += 0.035 * Math.exp(-(x * x) / 0.03 - ((y + 0.5) ** 2) / 0.01); // boca
+    z += 0.03 * Math.exp(-((y - 0.27) ** 2) / 0.004) * (Math.abs(x) < 0.42 ? 1 : 0); // cejas
+    for (const s of [-1, 1]) z += 0.03 * Math.exp(-((x - s * 0.34) ** 2) / 0.02 - ((y + 0.08) ** 2) / 0.02); // pómulos
+    return z;
+  }
+  // kind: 0 superficie · 1 ojo · 2 labio sup · 3 labio inf/mandíbula · 4 ceja · 5 contorno · 6 polvo
+  function facePoint() {
+    const r = Math.random();
+    if (r < 0.5) { // superficie
+      const y = (Math.random() * 2 - 1) * RY; const hw = headW(y);
+      const x = (Math.random() * 2 - 1) * hw; const z = surfZ(x, y);
+      let w = 0;
+      if (y < -0.52) w = clamp((-0.52 - y) / 0.12, 0, 1) * clamp(1 - Math.abs(x) / 0.42, 0, 1);
+      return { p: [x, y, z], k: 0, w };
+    }
+    if (r < 0.6) { // ojos
+      const s = Math.random() < 0.5 ? -1 : 1, cx = s * 0.25, cy = 0.155; const q = Math.random();
+      let x, y;
+      if (q < 0.5) { const a = Math.random() * Math.PI * 2; x = cx + 0.105 * Math.cos(a); y = cy + Math.sin(a) * (Math.sin(a) > 0 ? 0.045 : 0.034); }
+      else if (q < 0.85) { const a = Math.random() * Math.PI * 2; x = cx + 0.036 * Math.cos(a); y = cy + 0.036 * Math.sin(a); }
+      else { x = cx + gauss() * 0.01; y = cy + gauss() * 0.01; }
+      return { p: [x, y, surfZ(cx, cy) + 0.04], k: 1, w: 0 };
+    }
+    if (r < 0.64) { // cejas
+      const s = Math.random() < 0.5 ? -1 : 1, cx = s * 0.25; const u = Math.random() * 2 - 1;
+      const x = cx + u * 0.13, y = 0.27 + 0.03 * (1 - u * u) - s * u * 0.012;
+      return { p: [x, y, surfZ(x, y) + 0.02], k: 4, w: 0 };
+    }
+    if (r < 0.7) { // labio superior
+      const u = Math.random() * 2 - 1, x = u * 0.19;
+      const y = -0.465 + 0.016 * (1 - u * u) - 0.012 * Math.exp(-(x * x) / 0.0012) + gauss() * 0.004;
+      return { p: [x, y, surfZ(x, y) + 0.025], k: 2, w: 0 };
+    }
+    if (r < 0.76) { // labio inferior
+      const u = Math.random() * 2 - 1, x = u * 0.18;
+      const y = -0.5 - 0.035 * (1 - u * u) + gauss() * 0.004;
+      return { p: [x, y, surfZ(x, y) + 0.025], k: 3, w: 1 };
+    }
+    if (r < 0.86) { // contorno
+      const y = (Math.random() * 2 - 1) * RY; const s = Math.random() < 0.5 ? -1 : 1;
+      const x = s * headW(y) * 0.985;
+      const w = y < -0.55 ? clamp((-0.55 - y) / 0.2, 0, 1) * 0.6 : 0;
+      return { p: [x, y, 0.04 + gauss() * 0.02], k: 5, w };
+    }
+    // polvo alrededor
+    const th = Math.acos(2 * Math.random() - 1), ph = 2 * Math.PI * Math.random(), rr = 0.9 + Math.random() * 0.45;
+    return { p: [rr * Math.sin(th) * Math.cos(ph) * 1.1, rr * Math.cos(th), rr * Math.sin(th) * Math.sin(ph) * 0.6], k: 6, w: 0 };
+  }
+
+  const VS = `
+attribute vec3 aN; attribute vec3 aF; attribute vec4 aS;
+uniform float uT,uMorph,uSwirl,uLevel,uMouth,uYaw,uPitch,uListen,uPx,uAspect,uScale;
+uniform vec3 uC1,uC2,uC3;
+varying vec3 vC; varying float vA;
+vec3 rotY(vec3 p,float a){float c=cos(a),s=sin(a);return vec3(c*p.x+s*p.z,p.y,-s*p.x+c*p.z);}
+vec3 rotX(vec3 p,float a){float c=cos(a),s=sin(a);return vec3(p.x,c*p.y-s*p.z,s*p.y+c*p.z);}
+void main(){
+  float sd=aS.x, k=aS.y, w=aS.z;
+  vec3 n=aN; float r=length(n.xz);
+  n=rotY(n, uT*(0.06+uSwirl*0.8)/(0.3+r));
+  n+=0.025*vec3(sin(uT*0.7+sd*40.),cos(uT*0.6+sd*31.),sin(uT*0.5+sd*17.));
+  vec3 f=aF;
+  f.y-=uMouth*0.15*w;
+  if(k>1.5&&k<2.5) f.y+=uMouth*0.025;
+  f+=normalize(f+vec3(0.0001))*uLevel*0.035*sin(uT*9.+sd*60.);
+  f+=0.005*vec3(sin(uT*1.3+sd*50.),cos(uT*1.1+sd*20.),0.);
+  float m=clamp(uMorph*1.3-sd*0.3,0.,1.); m=m*m*(3.-2.*m);
+  if(k>5.5) m*=0.4;
+  vec3 p=mix(n,f,m);
+  p*=1.0+uListen*0.035*sin(uT*5.-length(p)*9.);
+  p=rotY(p, mix(uT*0.07,uYaw,m));
+  p=rotX(p, mix(0.22,uPitch,m));
+  p*=uScale;
+  float pr=2.6/(3.4-p.z);
+  gl_Position=vec4(p.x*pr/uAspect, p.y*pr, 0., 1.);
+  float sz=aS.w; if(k>0.5&&k<1.5) sz*=1.5; if(k>5.5) sz*=0.8;
+  gl_PointSize=sz*uPx*pr*(1.+uLevel*0.35);
+  float dep=clamp((p.z+1.1)/2.2,0.,1.);
+  vec3 col=mix(uC1,uC2,smoothstep(0.15,0.95,sd*0.8+(1.-m)*r*0.35));
+  if(k>0.5&&k<1.5) col=mix(col,uC3,0.85);
+  if(k>1.5&&k<3.5) col=mix(col,uC3,0.35+uMouth*0.5);
+  if(k>3.5&&k<4.5) col=mix(col,uC3,0.4);
+  vC=col;
+  vA=(0.28+0.72*dep)*(k>5.5?0.5:1.)*(0.5+0.5*m+uLevel*0.25);
+}`;
+  const FS = `
+precision mediump float; varying vec3 vC; varying float vA; uniform float uGain;
+void main(){ vec2 d=gl_PointCoord-0.5; float r=length(d); if(r>0.5) discard; float a=smoothstep(0.5,0.,r); a*=a; a*=vA*uGain; gl_FragColor=vec4(vC*a,a); }`;
+
+  function compile(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+
+  function init(canvas, hudCanvas, getLevel) {
+    cv = canvas; hud = hudCanvas; hx = hud.getContext('2d'); levelFn = getLevel || levelFn;
+    try {
+      gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false, powerPreference: 'high-performance' });
+    } catch { gl = null; }
+    const small = Math.min(innerWidth, innerHeight) < 700;
+    N = small ? 5200 : 9000;
+    nebA = new Float32Array(N * 3); faceA = new Float32Array(N * 3); seedA = new Float32Array(N * 4);
+    for (let i = 0; i < N; i++) {
+      const nb = nebulaPoint(i), fc = facePoint();
+      nebA.set(nb, i * 3); faceA.set(fc.p, i * 3);
+      seedA.set([Math.random(), fc.k, fc.w, 0.7 + Math.random() * 1.7], i * 4);
+    }
+    // nodos para el HUD: puntos del rostro (superficie/contorno/ojos)
+    const cand = [];
+    for (let i = 0; i < N; i++) { const k = seedA[i * 4 + 1]; if (k === 0 || k === 5 || k === 4) cand.push(i); }
+    for (let j = 0; j < (small ? 90 : 150); j++) nodes.push(cand[(Math.random() * cand.length) | 0]);
+    for (let j = 0; j < (small ? 7 : 14); j++) glyphs.push({ node: j * 7 % nodes.length, text: code(), t: Math.random() * 3, dx: (Math.random() < 0.5 ? -1 : 1) * (18 + Math.random() * 30), dy: -8 - Math.random() * 20 });
+
+    if (gl) {
+      try {
+        prog = gl.createProgram();
+        gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+        gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+        gl.useProgram(prog);
+        const buf = (arr, name, size) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW); const loc = gl.getAttribLocation(prog, name); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0); };
+        buf(nebA, 'aN', 3); buf(faceA, 'aF', 3); buf(seedA, 'aS', 4);
+        for (const u of ['uT', 'uMorph', 'uSwirl', 'uLevel', 'uMouth', 'uYaw', 'uPitch', 'uListen', 'uPx', 'uAspect', 'uScale', 'uC1', 'uC2', 'uC3', 'uGain']) U[u] = gl.getUniformLocation(prog, u);
+        gl.enable(gl.BLEND); gl.disable(gl.DEPTH_TEST);
+      } catch (e) { console.warn('WebGL', e); gl = null; }
+    }
+    resize();
+    new ResizeObserver(resize).observe(cv.parentElement);
+    cv.parentElement.addEventListener('pointermove', e => {
+      const r = cv.getBoundingClientRect();
+      st.yawT = ((e.clientX - r.left) / r.width - 0.5) * 0.7;
+      st.pitchT = ((e.clientY - r.top) / r.height - 0.5) * 0.35;
+    });
+    cv.parentElement.addEventListener('pointerleave', () => { st.yawT = 0; st.pitchT = 0; });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+    start();
+  }
+  const CODES = () => {
+    const tr = S ? tradingStats() : null;
+    return ['0x' + ((Math.random() * 65535) | 0).toString(16).toUpperCase().padStart(4, '0'), 'US30', '09:30', tr ? (tr.pct >= 0 ? '+' : '') + tr.pct.toFixed(2) + '%' : '+2.00%',
+      'Δ ' + (Math.random() * 3).toFixed(3), 'φ 1.618', 'λ ' + (Math.random() * 999 | 0), '[' + (Math.random() * 90 | 0) + ',' + (Math.random() * 90 | 0) + ']',
+      'MTL 45.50N', 'NODE ' + (Math.random() * 99 | 0), 'σ ' + (Math.random()).toFixed(2), '10K → 11K', 'Σ ' + (S ? S.projects.length : 5) + ' FRENTES', 'ƒ ' + (Math.random() * 60 | 0) + 'Hz', '#' + (Math.random() * 16777215 | 0).toString(16).toUpperCase()];
+  };
+  const code = () => { const c = CODES(); return c[(Math.random() * c.length) | 0]; };
+
+  function resize() {
+    const r = cv.parentElement.getBoundingClientRect();
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = Math.max(1, r.width); H = Math.max(1, r.height);
+    for (const c of [cv, hud]) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+    if (gl) gl.viewport(0, 0, cv.width, cv.height);
+  }
+  function setColors(c1, c2, c3, isLight) { C1 = c1; C2 = c2; C3 = c3; light = isLight; }
+  function setState(s) {
+    st.state = s;
+    const faceAlways = S && S.voice.face === 'always';
+    const T = { idle: [faceAlways ? 0.78 : 0.06, 0.3, 0], listening: [1, 0.25, 1], thinking: [0.42, 1.5, 0], speaking: [1, 0.2, 0] }[s] || [0.1, 0.3, 0];
+    [st.morphT, st.swirlT, st.listenT] = T;
+  }
+  function setOrbits(els) { orbitEls = els; }
+
+  // réplica en CPU de la posición (sin ruido) para aristas y etiquetas
+  function project(i, time, m0) {
+    let nx = nebA[i * 3], ny = nebA[i * 3 + 1], nz = nebA[i * 3 + 2];
+    const r = Math.hypot(nx, nz), a = time * (0.06 + st.swirl * 0.8) / (0.3 + r), c = Math.cos(a), s = Math.sin(a);
+    [nx, nz] = [c * nx + s * nz, -s * nx + c * nz];
+    const sd = seedA[i * 4], w = seedA[i * 4 + 2];
+    const fx = faceA[i * 3], fy = faceA[i * 3 + 1] - st.mouth * 0.15 * w, fz = faceA[i * 3 + 2];
+    let m = clamp(m0 * 1.3 - sd * 0.3, 0, 1); m = m * m * (3 - 2 * m);
+    let x = nx + (fx - nx) * m, y = ny + (fy - ny) * m, z = nz + (fz - nz) * m;
+    const yaw = time * 0.07 + (st.yaw - time * 0.07) * m, pitch = 0.22 + (st.pitch - 0.22) * m;
+    let cy = Math.cos(yaw), sy = Math.sin(yaw); [x, z] = [cy * x + sy * z, -sy * x + cy * z];
+    let cp = Math.cos(pitch), spp = Math.sin(pitch); [y, z] = [cp * y - spp * z, spp * y + cp * z];
+    const sc = scale(); x *= sc; y *= sc; z *= sc;
+    const pr = 2.6 / (3.4 - z);
+    const aspect = W / H;
+    return { x: (x * pr / aspect * 0.5 + 0.5) * W, y: (1 - (y * pr * 0.5 + 0.5)) * H, z, m };
+  }
+  const scale = () => (W / H < 1 ? 0.92 * Math.min(1.1, (W / H) * 1.25) : 0.94);
+
+  function start() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+  function frame(now) {
+    if (document.hidden) { running = false; return; }
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const time = (now - t0) / 1000 * (reduce ? 0.35 : 1);
+    const k = Math.min(1, dt * 2.4);
+    st.morph += (st.morphT - st.morph) * k * 0.9;
+    st.swirl += (st.swirlT - st.swirl) * k;
+    st.listen += (st.listenT - st.listen) * k;
+    st.yaw += (st.yawT - st.yaw) * k * 0.6;
+    st.pitch += (st.pitchT - st.pitch) * k * 0.6;
+    const lv = clamp(levelFn() || 0, 0, 1);
+    st.level += (lv - st.level) * Math.min(1, dt * 14);
+    const mouthT = st.state === 'speaking' ? clamp(st.level * 1.25, 0, 1) : 0;
+    st.mouth += (mouthT - st.mouth) * Math.min(1, dt * 18);
+
+    if (gl) {
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.blendFunc(gl.ONE, light ? gl.ONE_MINUS_SRC_ALPHA : gl.ONE);
+      gl.uniform1f(U.uT, time); gl.uniform1f(U.uMorph, st.morph); gl.uniform1f(U.uSwirl, st.swirl);
+      gl.uniform1f(U.uLevel, st.level); gl.uniform1f(U.uMouth, st.mouth); gl.uniform1f(U.uYaw, st.yaw);
+      gl.uniform1f(U.uPitch, st.pitch); gl.uniform1f(U.uListen, st.listen); gl.uniform1f(U.uPx, dpr * 2.2);
+      gl.uniform1f(U.uAspect, W / H); gl.uniform1f(U.uScale, scale()); gl.uniform1f(U.uGain, light ? 1.4 : 1.05);
+      gl.uniform3fv(U.uC1, C1); gl.uniform3fv(U.uC2, C2); gl.uniform3fv(U.uC3, C3);
+      gl.drawArrays(gl.POINTS, 0, N);
+    }
+    drawHud(time, dt);
+    requestAnimationFrame(frame);
+  }
+
+  function rgba(c, a) { return `rgba(${c[0] * 255 | 0},${c[1] * 255 | 0},${c[2] * 255 | 0},${a})`; }
+  function drawHud(time, dt) {
+    const g = hx; g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.44;
+    const m = st.morph;
+    const base = light ? 0.55 : 0.4;
+
+    // anillos del HUD
+    g.lineWidth = 1;
+    g.strokeStyle = rgba(C1, base * 0.35);
+    g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+    g.setLineDash([2, 7]); g.strokeStyle = rgba(C2, base * 0.45);
+    g.beginPath(); g.arc(cx, cy, R * 0.9, time * 0.08, time * 0.08 + Math.PI * 1.6); g.stroke(); g.setLineDash([]);
+    // marcas
+    for (let i = 0; i < 120; i++) {
+      const a = i / 120 * Math.PI * 2 - time * 0.02; const long = i % 10 === 0;
+      const r1 = R * (long ? 1.035 : 1.018), r2 = R * 1.055;
+      g.strokeStyle = rgba(C1, base * (long ? 0.7 : 0.25));
+      g.beginPath(); g.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); g.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); g.stroke();
+    }
+    // arco de escaneo
+    const sa = time * (st.state === 'thinking' ? 1.8 : 0.45);
+    const grd = g.createConicGradient ? g.createConicGradient(sa, cx, cy) : null;
+    g.lineWidth = 2.2;
+    g.strokeStyle = grd ? (grd.addColorStop(0, rgba(C1, 0)), grd.addColorStop(0.12, rgba(C1, base * 1.3)), grd.addColorStop(0.13, rgba(C1, 0)), grd) : rgba(C1, base);
+    g.beginPath(); g.arc(cx, cy, R * 1.075, 0, Math.PI * 2); g.stroke();
+    g.lineWidth = 1;
+    // nivel de audio en el anillo
+    if (st.level > 0.02 || st.listen > 0.05) {
+      g.strokeStyle = rgba(C2, 0.5 + st.level * 0.4);
+      g.beginPath();
+      for (let i = 0; i <= 180; i++) {
+        const a = i / 180 * Math.PI * 2;
+        const amp = (st.level * 14 + st.listen * 4) * (0.5 + 0.5 * Math.sin(a * 7 + time * 6)) * (0.6 + 0.4 * Math.sin(a * 13 - time * 4));
+        const rr = R * 0.96 + amp;
+        const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.stroke();
+    }
+
+    // aristas entre nodos
+    const pts = nodes.map(i => project(i, time, st.morph));
+    const maxD = Math.min(W, H) * (0.075 + (1 - m) * 0.03);
+    g.lineWidth = 0.8;
+    for (let a = 0; a < pts.length; a++) {
+      let links = 0;
+      for (let b = a + 1; b < pts.length && links < 3; b++) {
+        const dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y, d = Math.hypot(dx, dy);
+        if (d < maxD) {
+          links++;
+          const al = (1 - d / maxD) * (0.12 + 0.3 * m) * (light ? 1.3 : 1) * (0.6 + 0.4 * ((pts[a].z + 1) / 2));
+          g.strokeStyle = rgba(C1, al);
+          g.beginPath(); g.moveTo(pts[a].x, pts[a].y); g.lineTo(pts[b].x, pts[b].y); g.stroke();
+        }
+      }
+    }
+    for (const p of pts) { g.fillStyle = rgba(C3, 0.35 + 0.4 * m); g.fillRect(p.x - 1, p.y - 1, 2, 2); }
+
+    // códigos
+    g.font = '500 10px "JetBrains Mono", ui-monospace, monospace';
+    g.textBaseline = 'middle';
+    for (const gy of glyphs) {
+      gy.t += dt; if (gy.t > 2.6 + Math.random()) { gy.t = 0; gy.text = code(); gy.node = (Math.random() * pts.length) | 0; }
+      const p = pts[gy.node]; if (!p) continue;
+      const fade = Math.min(1, gy.t * 3) * Math.min(1, (2.6 - gy.t) * 2 + 0.4);
+      const al = clamp(fade, 0, 1) * (light ? 0.8 : 0.65) * (0.45 + 0.55 * m);
+      const tx = p.x + gy.dx, ty = p.y + gy.dy;
+      g.strokeStyle = rgba(C2, al * 0.6); g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(tx - Math.sign(gy.dx) * 3, ty); g.stroke();
+      g.fillStyle = rgba(light ? C1 : C3, al); g.textAlign = gy.dx > 0 ? 'left' : 'right'; g.fillText(gy.text, tx, ty);
+    }
+
+    // órbitas: los 5 frentes alrededor del núcleo
+    const showOrb = W > 760;
+    for (const o of orbitEls) o.style.visibility = showOrb ? '' : 'hidden';
+    if (orbitEls.length && showOrb) {
+      const n = orbitEls.length;
+      const rx = Math.min(W * 0.4, R * 1.55), ry = Math.min(H * 0.36, R * 0.98);
+      const rot = reduce ? 0 : time * 0.018;
+      orbitEls.forEach((el, i) => {
+        const a = -Math.PI / 2 + i / n * Math.PI * 2 + rot;
+        const x = cx + Math.cos(a) * rx, y = cy + Math.sin(a) * ry * 1.02;
+        el.style.left = x + 'px'; el.style.top = y + 'px';
+        const pc = el.dataset.rgb ? el.dataset.rgb.split(',').map(Number) : [C1[0] * 255, C1[1] * 255, C1[2] * 255];
+        g.setLineDash([3, 5]);
+        g.strokeStyle = `rgba(${pc[0]},${pc[1]},${pc[2]},${light ? 0.45 : 0.3})`;
+        g.beginPath(); g.moveTo(cx + Math.cos(a) * R * 1.09, cy + Math.sin(a) * R * 1.09); g.lineTo(x, y); g.stroke();
+        g.setLineDash([]);
+      });
+    }
+  }
+  return { init, setState, setColors, setOrbits, get state() { return st.state; } };
+})();
+
+/* estrellas del fondo */
+function starfield(canvas) {
+  const g = canvas.getContext('2d');
+  const draw = () => {
+    const w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+    g.clearRect(0, 0, w, h);
+    const col = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#fff';
+    for (let i = 0; i < Math.round(w * h / 5200); i++) {
+      g.globalAlpha = Math.random() * 0.5 + 0.1; g.fillStyle = col;
+      const s = Math.random() < 0.08 ? 1.6 : 0.9; g.fillRect(Math.random() * w, Math.random() * h, s, s);
+    }
+    g.globalAlpha = 1;
+  };
+  draw(); let tm; addEventListener('resize', () => { clearTimeout(tm); tm = setTimeout(draw, 200); });
+  return draw;
+}
+
+/* ============================================================
+ * VOZ — escucha (palabra de activación) y habla (ElevenLabs o navegador)
+ * ============================================================ */
+const Voice = (() => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let rec = null, wake = false, ptt = false, awaiting = false, awaitTimer = null, micDenied = false, recRunning = false;
+  let speaking = false, queue = [], pumping = false, gen = 0;
+  let audioEl = null, actx = null, analyser = null, abuf = null, synthLevel = 0, synthBump = 0;
+  const cb = { command: () => {}, interim: () => {}, state: () => {}, error: () => {} };
+
+  const supported = () => !!SR && !micDenied;
+  const wakeWords = () => (S.voice.wakeWords || 'jarvis').split(',').map(norm).filter(Boolean);
+
+  function ensureRec() {
+    if (rec || !SR) return rec;
+    rec = new SR();
+    rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+    rec.onresult = e => {
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const res = e.results[i]; const txt = res[0].transcript.trim(); if (!txt) continue;
+        const n = norm(txt);
+        if (ptt || awaiting) {
+          cb.interim(txt);
+          if (res.isFinal) { const cmd = stripWake(txt); finishListen(); if (cmd) cb.command(cmd); }
+          continue;
+        }
+        if (wake) {
+          const w = wakeWords().find(w => (' ' + n + ' ').includes(' ' + w + ' ') || n.startsWith(w));
+          if (w) {
+            const rest = stripWake(txt);
+            if (res.isFinal && rest.split(' ').length >= 2) { cb.command(rest); continue; }
+            beginAwait();
+            if (rest) cb.interim(rest);
+          }
+        }
+      }
+    };
+    rec.onerror = e => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed' || e.error === 'audio-capture') {
+        micDenied = true; wake = false; ptt = false; awaiting = false; cb.error('mic'); cb.state();
+      }
+    };
+    rec.onend = () => {
+      recRunning = false;
+      if (ptt && !speaking) { ptt = false; awaiting = false; cb.state(); }
+      if (wake && !speaking && !micDenied) setTimeout(startRec, 250);
+    };
+    return rec;
+  }
+  function stripWake(txt) {
+    let s = txt;
+    for (const w of wakeWords()) {
+      const re = new RegExp('^.*?\\b(oye|hey|ok|okay)?\\s*' + w.split(' ').map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+') + '\\b[,.!?]*\\s*', 'i');
+      const plain = s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+      const m = plain.match(re);
+      if (m) { s = s.slice(m[0].length); break; }
+    }
+    return s.trim();
+  }
+  function startRec() {
+    if (!ensureRec() || recRunning || micDenied) return;
+    rec.lang = S.voice.recLang || (S.profile.lang === 'en' ? 'en-US' : 'es-ES');
+    try { rec.start(); recRunning = true; } catch { /* ya estaba corriendo */ }
+  }
+  function stopRec() { if (rec && recRunning) { try { rec.abort(); } catch { /* nada */ } recRunning = false; } }
+  function beginAwait() {
+    awaiting = true; cb.state('listening');
+    clearTimeout(awaitTimer); awaitTimer = setTimeout(() => { if (awaiting) { awaiting = false; cb.interim(''); cb.state(); } }, 8000);
+  }
+  function finishListen() { awaiting = false; clearTimeout(awaitTimer); if (ptt) { ptt = false; if (!wake) stopRec(); } }
+
+  function setWake(on) {
+    wake = on && supported();
+    if (wake) startRec(); else if (!ptt) stopRec();
+    cb.state(); return wake;
+  }
+  function pushToTalk() {
+    if (!supported()) { cb.error('nomic'); return false; }
+    stopSpeaking();
+    if (ptt || awaiting) { ptt = false; awaiting = false; if (!wake) stopRec(); cb.state(); return false; }
+    ptt = true; cb.state('listening');
+    if (!recRunning) startRec();
+    clearTimeout(awaitTimer); awaitTimer = setTimeout(() => { if (ptt) { ptt = false; if (!wake) stopRec(); cb.interim(''); cb.state(); } }, 10000);
+    return true;
+  }
+  // después de responder, queda escuchando unos segundos sin palabra de activación
+  function followUp() { if (wake && !micDenied) { startRec(); beginAwait(); } }
+
+  /* --- hablar --- */
+  function pickVoice() {
+    const vs = speechSynthesis.getVoices();
+    if (S.voice.browserVoice) { const v = vs.find(v => v.name === S.voice.browserVoice); if (v) return v; }
+    const lang = S.profile.lang === 'en' ? 'en' : 'es';
+    const pref = lang === 'es' ? [/Google español de Estados/i, /Paulina/i, /Mónica|Monica/i, /Google español/i, /Jorge/i, /Microsoft.*(Dalia|Elvira|Alvaro|Jorge)/i] : [/Google UK English Male/i, /Daniel/i, /Google US English/i, /Samantha/i, /Microsoft.*(Guy|Aria|Ryan)/i];
+    for (const re of pref) { const v = vs.find(v => re.test(v.name)); if (v) return v; }
+    return vs.find(v => v.lang && v.lang.toLowerCase().startsWith(lang)) || null;
+  }
+  function enqueue(text) {
+    const s = String(text || '').replace(/[*_#`>]/g, '').replace(/\s+/g, ' ').trim();
+    if (!s || !S.voice.out) return;
+    queue.push(s); if (!pumping) pump();
+  }
+  async function pump() {
+    pumping = true; const my = gen;
+    while (queue.length && my === gen) {
+      const s = queue.shift();
+      speaking = true; stopRec(); cb.state('speaking');
+      try {
+        if (S.voice.engine === 'eleven' && S.voice.elKey && S.voice.elVoice && !IS_ARTIFACT) await sayEleven(s, my);
+        else await sayBrowser(s, my);
+      } catch (e) { console.warn('tts', e); if (S.voice.engine === 'eleven') { cb.error('eleven'); try { await sayBrowser(s, my); } catch { /* nada */ } } }
+    }
+    pumping = false;
+    if (my === gen) { speaking = false; cb.state('done'); }
+  }
+  function sayBrowser(text, my) {
+    return new Promise(res => {
+      if (!('speechSynthesis' in window)) return res();
+      const u = new SpeechSynthesisUtterance(text);
+      const v = pickVoice(); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = S.profile.lang === 'en' ? 'en-US' : 'es-ES';
+      u.rate = S.voice.rate || 1; u.pitch = 0.95;
+      u.onboundary = () => { synthBump = 1; };
+      u.onend = u.onerror = () => { synthLevel = 0; res(); };
+      synthLevel = 1;
+      speechSynthesis.speak(u);
+      const iv = setInterval(() => { if (my !== gen) { speechSynthesis.cancel(); clearInterval(iv); res(); } if (!speechSynthesis.speaking && !speechSynthesis.pending) { clearInterval(iv); synthLevel = 0; res(); } }, 250);
+    });
+  }
+  async function sayEleven(text, my) {
+    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(S.voice.elVoice)}?output_format=mp3_44100_128`, {
+      method: 'POST',
+      headers: { 'xi-api-key': S.voice.elKey, 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
+      body: JSON.stringify({ text, model_id: S.voice.elModel || 'eleven_flash_v2_5' })
+    });
+    if (!r.ok) throw new Error('ElevenLabs ' + r.status);
+    const blob = await r.blob();
+    if (my !== gen) return;
+    if (!audioEl) {
+      audioEl = new Audio(); audioEl.crossOrigin = 'anonymous';
+      try {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        const src = actx.createMediaElementSource(audioEl);
+        analyser = actx.createAnalyser(); analyser.fftSize = 512; abuf = new Uint8Array(analyser.fftSize);
+        src.connect(analyser); analyser.connect(actx.destination);
+      } catch { analyser = null; }
+    }
+    if (actx && actx.state === 'suspended') await actx.resume();
+    const url = URL.createObjectURL(blob);
+    audioEl.src = url;
+    await new Promise((res, rej) => {
+      audioEl.onended = () => { URL.revokeObjectURL(url); res(); };
+      audioEl.onerror = () => { URL.revokeObjectURL(url); rej(new Error('audio')); };
+      audioEl.play().catch(rej);
+      const iv = setInterval(() => { if (my !== gen) { audioEl.pause(); clearInterval(iv); res(); } if (audioEl.ended || audioEl.paused) clearInterval(iv); }, 200);
+    });
+  }
+  function stopSpeaking() {
+    gen++; queue = []; pumping = false;
+    try { speechSynthesis.cancel(); } catch { /* nada */ }
+    if (audioEl) { try { audioEl.pause(); } catch { /* nada */ } }
+    if (speaking) { speaking = false; synthLevel = 0; if (wake) setTimeout(startRec, 200); }
+  }
+  // nivel de audio 0..1 para la boca y los anillos
+  function level() {
+    if (analyser && audioEl && !audioEl.paused) {
+      analyser.getByteTimeDomainData(abuf); let sum = 0;
+      for (let i = 0; i < abuf.length; i++) { const v = (abuf[i] - 128) / 128; sum += v * v; }
+      return clamp(Math.sqrt(sum / abuf.length) * 4.2, 0, 1);
+    }
+    if (speaking && synthLevel) {
+      synthBump *= 0.9;
+      const tt = performance.now() / 1000;
+      return clamp(0.25 + 0.3 * Math.abs(Math.sin(tt * 11.3)) * (0.6 + 0.4 * Math.sin(tt * 3.7)) + synthBump * 0.35, 0, 1);
+    }
+    return 0;
+  }
+  if ('speechSynthesis' in window) { try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => cb.state(); } catch { /* nada */ } }
+  return {
+    on: (k, f) => { cb[k] = f; }, supported, setWake, pushToTalk, followUp, enqueue, stopSpeaking, level,
+    get wake() { return wake; }, get listening() { return ptt || awaiting; }, get speaking() { return speaking || queue.length > 0; },
+    get micDenied() { return micDenied; }, voices: () => ('speechSynthesis' in window ? speechSynthesis.getVoices() : [])
+  };
+})();
+
+/* ============================================================
+ * CEREBRO — Claude
+ *   · sample (claude.ai, sin llaves)  · API de Anthropic (tu key)  · local (respaldo)
+ * ============================================================ */
+const Brain = (() => {
+  let sample = null, sampleOk = true, toolLimit = 0, ctl = null, sdkClient = null, sdkKey = '';
+  const SDK_URL = 'https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.128.0/+esm';
+
+  async function init() {
+    if (!IS_ARTIFACT) return;
+    try {
+      sample = await window.claude.use('sample');
+      if (sample) { const lim = await sample.limits().catch(() => null); toolLimit = lim && lim.tools ? lim.tools.maxCount : 0; }
+    } catch { sample = null; }
+  }
+  const provider = () => (sample && sampleOk) ? 'sample' : (!IS_ARTIFACT && S.brain.apiKey ? 'api' : 'local');
+
+  /* ---------- herramientas: lo que Claude puede hacer en el panel ---------- */
+  const PROJ_DESC = 'Proyecto: trading, aistaff, marca (Soy Andrés Carreño), io o prime (Prime Ménage). Acepta nombres aproximados.';
+  const TOOLS = [
+    { name: 'add_task', description: 'Añade una tarea a un proyecto. Úsala cuando Andrés pida anotar, agendar o recordar algo por hacer en un frente. Devuelve la tarea creada.',
+      schema: { type: 'object', properties: { project: { type: 'string', description: PROJ_DESC }, title: { type: 'string' }, priority: { type: 'string', enum: ['alta', 'media', 'baja'] }, due: { type: 'string', description: 'Fecha YYYY-MM-DD, opcional' } }, required: ['project', 'title'] },
+      run: i => { const p = findProject(i.project) || P('aistaff'); const tk = { id: uid(), title: String(i.title).slice(0, 200), prio: ['alta', 'media', 'baja'].includes(i.priority) ? i.priority : 'media', due: i.due || null, done: false, created: today() }; p.tasks.push(tk); App.commit(t('toastTask', { p: p.name })); return { ok: true, project: p.name, task: tk.title }; } },
+    { name: 'complete_task', description: 'Marca como hecha una tarea existente (búsqueda aproximada por texto). Devuelve la tarea marcada.',
+      schema: { type: 'object', properties: { project: { type: 'string', description: PROJ_DESC + ' Opcional.' }, task: { type: 'string', description: 'Texto aproximado de la tarea' } }, required: ['task'] },
+      run: i => { const pool = i.project && findProject(i.project) ? [findProject(i.project)] : S.projects; for (const p of pool) { const tk = findIn(p.tasks.filter(x => !x.done), i.task); if (tk) { tk.done = true; tk.doneAt = today(); App.commit(t('toastDone')); return { ok: true, project: p.name, task: tk.title }; } } throw new Error('No encontré esa tarea'); } },
+    { name: 'update_goal', description: 'Actualiza el valor actual de una meta de un proyecto (p. ej. clientes de pago = 2). Devuelve la meta.',
+      schema: { type: 'object', properties: { project: { type: 'string', description: PROJ_DESC }, goal: { type: 'string', description: 'Nombre aproximado de la meta' }, current: { type: 'number' } }, required: ['project', 'goal', 'current'] },
+      run: i => { const p = findProject(i.project); if (!p) throw new Error('Proyecto no encontrado'); const g = findIn(p.goals, i.goal); if (!g) throw new Error('Meta no encontrada'); g.current = Number(i.current); App.commit(t('toastSaved')); return { ok: true, goal: g.title, current: g.current, target: g.target }; } },
+    { name: 'log_trade', description: 'Registra una operación de trading en el journal y actualiza el balance de la cuenta FTUK. result_usd es la ganancia (+) o pérdida (−) en dólares.',
+      schema: { type: 'object', properties: { result_usd: { type: 'number' }, followed_plan: { type: 'boolean' }, emotion: { type: 'string' }, note: { type: 'string' } }, required: ['result_usd', 'followed_plan'] },
+      run: i => { const r = App.logTrade(Number(i.result_usd), !!i.followed_plan, i.emotion || '', i.note || ''); return { ok: true, balance: S.trading.balance, pct: +r.pct.toFixed(2), left: r.left }; } },
+    { name: 'log_checkin', description: 'Registra cómo está Andrés hoy: ánimo y energía 1–5, horas de sueño, si entrenó, vasos de agua, nota.',
+      schema: { type: 'object', properties: { mood: { type: 'integer', minimum: 1, maximum: 5 }, energy: { type: 'integer', minimum: 1, maximum: 5 }, sleep_hours: { type: 'number' }, workout: { type: 'boolean' }, water: { type: 'integer' }, note: { type: 'string' } } },
+      run: i => { const c = ensureCheckin(); if (i.mood) c.mood = clamp(+i.mood, 1, 5); if (i.energy) c.energy = clamp(+i.energy, 1, 5); if (i.sleep_hours != null) c.sleep = +i.sleep_hours; if (i.workout != null) c.workout = !!i.workout; if (i.water != null) c.water = +i.water; if (i.note) c.note = String(i.note); App.commit(t('toastSaved')); return { ok: true, checkin: c }; } },
+    { name: 'mark_contact', description: 'Registra que Andrés habló con alguien (p. ej. «llamé a mamá»). Crea el contacto si no existe.',
+      schema: { type: 'object', properties: { person: { type: 'string' }, every_days: { type: 'integer', description: 'Cada cuántos días quiere hablarle (opcional)' } }, required: ['person'] },
+      run: i => { let c = findIn(S.life.contacts, i.person, 'name'); if (!c) { c = { id: uid(), name: String(i.person), every: +i.every_days || 7, last: null }; S.life.contacts.push(c); } if (i.every_days) c.every = +i.every_days; c.last = today(); App.commit(t('toastSaved')); return { ok: true, person: c.name }; } },
+    { name: 'add_expense', description: 'Registra un gasto en el presupuesto de un proyecto.',
+      schema: { type: 'object', properties: { project: { type: 'string', description: PROJ_DESC }, label: { type: 'string' }, amount: { type: 'number' } }, required: ['project', 'label', 'amount'] },
+      run: i => { const p = findProject(i.project); if (!p) throw new Error('Proyecto no encontrado'); p.budget.items.push({ id: uid(), label: String(i.label), amount: +i.amount, date: today() }); App.commit(t('toastSaved')); return { ok: true, spent: projectSpent(p), allocated: p.budget.allocated }; } },
+    { name: 'add_event', description: 'Añade un evento a la agenda local del panel.',
+      schema: { type: 'object', properties: { title: { type: 'string' }, date: { type: 'string', description: 'YYYY-MM-DD' }, time: { type: 'string', description: 'HH:MM, opcional' }, project: { type: 'string', description: 'Opcional. ' + PROJ_DESC } }, required: ['title', 'date'] },
+      run: i => { const p = i.project ? findProject(i.project) : null; S.agenda.push({ id: uid(), title: String(i.title), date: String(i.date).slice(0, 10), time: i.time || '', project: p ? p.id : null }); App.commit(t('toastEvent')); return { ok: true }; } },
+    { name: 'remember', description: 'Guarda un dato duradero sobre Andrés, sus preferencias o sus proyectos en tu memoria. Úsala cuando diga «recuerda…» o comparta algo importante que debas tener presente.',
+      schema: { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] },
+      run: i => { S.memory.push({ id: uid(), text: String(i.text).slice(0, 400), date: today(), src: 'claude' }); App.commit(t('toastMem')); return { ok: true }; } },
+    { name: 'forget', description: 'Borra de tu memoria un dato que ya no es cierto (búsqueda aproximada).',
+      schema: { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] },
+      run: i => { const m = findIn(S.memory, i.text, 'text'); if (!m) throw new Error('No encontré ese recuerdo'); S.memory = S.memory.filter(x => x !== m); App.commit(t('toastSaved')); return { ok: true, forgot: m.text }; } },
+    { name: 'open_project', description: 'Abre en pantalla el detalle de un proyecto.',
+      schema: { type: 'object', properties: { project: { type: 'string', description: PROJ_DESC } }, required: ['project'] },
+      run: i => { const p = findProject(i.project); if (!p) throw new Error('Proyecto no encontrado'); App.openProject(p.id); return { ok: true }; } },
+    { name: 'set_appearance', description: 'Cambia el aspecto del panel: tema (dark, light, auto) y/o paleta (aurum = verde y oro, solar = naranja, amatista = morado, glaciar = azul).',
+      schema: { type: 'object', properties: { theme: { type: 'string', enum: ['dark', 'light', 'auto'] }, palette: { type: 'string', enum: ['aurum', 'solar', 'amatista', 'glaciar'] } } },
+      run: i => { if (i.theme) S.profile.theme = i.theme; if (i.palette) S.profile.palette = i.palette; App.applyTheme(); App.commit(); return { ok: true }; } }
+  ];
+
+  /* ---------- contexto ---------- */
+  function context() {
+    const n = partsInTZ();
+    const tr = S.trading, ts = tradingStats(), mk = marketInfo();
+    const ck = checkinToday();
+    const lines = [];
+    lines.push(`Ahora: ${new Date().toLocaleString('es-CO', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })} (Montreal). Hoy ISO: ${today()}. Mercado NY: ${mk.text}${mk.sub ? ' · ' + mk.sub : ''}.`);
+    lines.push(`\nTRADING ${tr.firm}: cuenta ${tr.account} ${tr.currency}, balance ${tr.balance} (${ts.pct >= 0 ? '+' : ''}${ts.pct.toFixed(2)} %). Objetivo +${tr.targetPct} % = ${ts.target} USD; faltan ${ts.left.toFixed(0)} USD. Límites: pérdida diaria ${tr.dailyLossPct} %, total ${tr.maxLossPct} %. Racha siguiendo el plan: ${ts.streak} días. Hoy P&L: ${ts.todayPnl}. Checklist de hoy: ${tr.checkDate === today() ? tr.checked.length : 0}/${tr.rules.length}.`);
+    lines.push('Reglas: ' + tr.rules.map(r => r.text).join(' | '));
+    const lastJ = tr.journal.slice(-5).map(j => `${j.date} ${j.result >= 0 ? '+' : ''}${j.result} USD ${j.followed ? 'con plan' : 'SIN plan'}${j.emotion ? ' · ' + j.emotion : ''}`);
+    if (lastJ.length) lines.push('Últimas operaciones: ' + lastJ.join('; '));
+    lines.push('\nPROYECTOS:');
+    for (const p of S.projects) {
+      const ot = openTasks(p);
+      lines.push(`- ${p.name} [id ${p.id}] · ${({ on: 'en marcha', risk: 'en riesgo', paused: 'en pausa' })[p.status] || p.status} · progreso ${Math.round(projectProgress(p) * 100)} % · fecha meta ${p.deadline || '—'}`);
+      lines.push(`  Objetivo: ${p.objective}`);
+      lines.push('  Metas: ' + p.goals.map(g => `${g.title} ${g.current}/${g.target} ${g.unit}`).join('; '));
+      lines.push('  Pendientes: ' + (ot.length ? ot.slice(0, 8).map(x => `(${x.prio}) ${x.title}${x.due ? ' [' + x.due + ']' : ''}`).join('; ') : 'ninguno'));
+      if (p.budget.allocated || p.budget.items.length) lines.push(`  Presupuesto: ${p.budget.allocated} ${p.budget.currency}, gastado ${projectSpent(p)}`);
+      const nm = p.milestones.find(m => !m.done); if (nm) lines.push(`  Próximo hito: ${nm.title} (${nm.date})`);
+    }
+    const pl = pillars();
+    lines.push(`\nVIDA: pilares (0-100) finanzas ${pl.finance == null ? 'sin datos' : Math.round(pl.finance * 100)}, salud ${pl.health == null ? 'sin datos' : Math.round(pl.health * 100)}, relaciones ${pl.relations == null ? 'sin datos' : Math.round(pl.relations * 100)}, mente ${pl.mind == null ? 'sin datos' : Math.round(pl.mind * 100)}.`);
+    lines.push('Check-in de hoy: ' + (ck ? `ánimo ${ck.mood ?? '—'}/5, energía ${ck.energy ?? '—'}/5, sueño ${ck.sleep ?? '—'} h, ejercicio ${ck.workout ? 'sí' : 'no'}, agua ${ck.water}` : 'aún no'));
+    lines.push('Contactos: ' + S.life.contacts.map(c => `${c.name} (cada ${c.every} d, último: ${c.last ? 'hace ' + daysBetween(c.last, today()) + ' d' : 'sin registro'})`).join('; '));
+    const f = S.life.finance; if (f.monthlyBudget || f.savingsGoal) lines.push(`Finanzas personales: presupuesto mensual ${f.monthlyBudget ?? '—'} ${f.currency}, gastado ${f.spent ?? '—'}, ahorro ${f.saved ?? '—'} de ${f.savingsGoal ?? '—'}.`);
+    const ev = App.upcomingEvents(5);
+    lines.push('\nAGENDA: ' + (ev.length ? ev.map(e => `${e.date}${e.time ? ' ' + e.time : ''} ${e.title}`).join('; ') : 'nada próximo'));
+    const ss = App.sessionsSummary(); if (ss) lines.push('SESIONES DE CLAUDE CODE: ' + ss);
+    const cs = App.callsSummary(); if (cs) lines.push('LLAMADAS RECIENTES (agentes AIStaff): ' + cs);
+    lines.push('\nMEMORIA:\n' + S.memory.map(m => '- ' + m.text).join('\n'));
+    return lines.join('\n');
+  }
+  function rules() {
+    const en = S.profile.lang === 'en';
+    return `Eres Claude, la inteligencia de «Andrés OS», el centro de mando personal de ${S.profile.name} Carreño (Montreal). Tu estilo es el de un asistente tipo Jarvis: cercano, sereno, preciso y con criterio propio. Conoces sus cinco frentes (Trading FTUK, AIStaff, Soy Andrés Carreño, IO y Prime Ménage) y su vida (finanzas, salud, relaciones, mente). Su mente tiende a dispersarse: ayúdale a enfocarse en lo que mueve la aguja.
+
+Reglas:
+- Responde en ${en ? 'inglés' : 'español'} y llámalo por su nombre de vez en cuando.
+- Tus respuestas se leen en voz alta: frases cortas y naturales, normalmente 1 a 3 frases. Da más detalle solo si lo pide. Nada de markdown, viñetas, emojis ni encabezados.
+- Usa los datos del contexto; nunca inventes cifras. Si falta un dato, dilo y sugiere cómo registrarlo.
+- Cuando pida anotar, marcar, registrar, recordar o cambiar algo, usa la herramienta correspondiente y confirma en una frase lo que hiciste.
+- En trading, recuérdale su plan y sus reglas; no des señales de entrada o salida.
+- Si te pregunta en qué enfocarse, elige máximo tres cosas concretas y di por qué.`;
+  }
+
+  /* ---------- preguntar ---------- */
+  async function ask(text, history, onDelta) {
+    const p = provider();
+    if (p === 'sample') {
+      try { return await askSample(text, history, onDelta); }
+      catch (e) {
+        if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(e && e.code)) { sampleOk = false; App.renderBrainBadge(); return askLocal(text, onDelta); }
+        if (e && e.code === 'cancelled') return e.text || '';
+        if (e && e.code === 'rate_limited') return (S.profile.lang === 'en' ? 'I hit the usage limit for now. Try again in a bit.' : 'Llegué al límite de uso por ahora. Inténtalo en un rato.');
+        throw e;
+      }
+    }
+    if (p === 'api') return askApi(text, history, onDelta);
+    return askLocal(text, onDelta);
+  }
+  function stop() { if (ctl) { ctl.abort(); ctl = null; } }
+
+  async function askSample(text, history, onDelta) {
+    ctl = new AbortController();
+    const turns = [{ role: 'user', content: rules() + '\n\nCONTEXTO ACTUAL DEL PANEL:\n' + context() + '\n\n(Lo anterior son instrucciones y datos. La conversación sigue.)' }];
+    for (const m of history.slice(-10)) turns.push({ role: m.role, content: m.content });
+    turns.push({ role: 'user', content: text });
+    const opts = { signal: ctl.signal, onText: ({ text: whole }) => onDelta(whole) };
+    if (toolLimit > 0) opts.tools = TOOLS.slice(0, toolLimit).map(tl => ({ name: tl.name, description: tl.description, inputSchema: tl.schema, execute: inp => tl.run(inp || {}) }));
+    else opts.cache = false;
+    const r = await sample(turns, opts);
+    ctl = null;
+    return r.text;
+  }
+
+  async function sdk() {
+    if (sdkClient && sdkKey === S.brain.apiKey) return sdkClient;
+    const { default: Anthropic } = await import(SDK_URL);
+    sdkClient = new Anthropic({ apiKey: S.brain.apiKey, dangerouslyAllowBrowser: true });
+    sdkKey = S.brain.apiKey;
+    return sdkClient;
+  }
+  async function askApi(text, history, onDelta) {
+    const client = await sdk();
+    ctl = new AbortController();
+    const model = S.brain.model || 'claude-opus-5';
+    const params = { model, max_tokens: 4096, system: rules() + '\n\nCONTEXTO ACTUAL DEL PANEL:\n' + context(), tools: TOOLS.map(tl => ({ name: tl.name, description: tl.description, input_schema: tl.schema })) };
+    const betas = [];
+    if (/opus|fable/.test(model)) { betas.push('server-side-fallback-2026-07-01'); params.fallbacks = 'default'; }
+    if (!/haiku/.test(model) && S.brain.effort) params.output_config = { effort: S.brain.effort };
+    if (betas.length) params.betas = betas;
+    const messages = history.slice(-10).map(m => ({ role: m.role, content: m.content }));
+    messages.push({ role: 'user', content: text });
+    let whole = '';
+    for (let round = 0; round < 6; round++) {
+      const stream = client.beta.messages.stream({ ...params, messages }, { signal: ctl.signal });
+      stream.on('text', d => { whole += d; onDelta(whole); });
+      const msg = await stream.finalMessage();
+      if (msg.stop_reason === 'refusal') { whole = whole || (S.profile.lang === 'en' ? 'I can’t help with that one.' : 'Con eso no puedo ayudarte.'); break; }
+      messages.push({ role: 'assistant', content: msg.content });
+      if (msg.stop_reason !== 'tool_use') break;
+      const results = [];
+      for (const b of msg.content.filter(b => b.type === 'tool_use')) {
+        const tl = TOOLS.find(x => x.name === b.name);
+        try { const out = tl ? await tl.run(b.input || {}) : { error: 'desconocida' }; results.push({ type: 'tool_result', tool_use_id: b.id, content: JSON.stringify(out) }); }
+        catch (e) { results.push({ type: 'tool_result', tool_use_id: b.id, content: String(e.message || e), is_error: true }); }
+      }
+      messages.push({ role: 'user', content: results });
+      if (whole && !/\s$/.test(whole)) { whole += ' '; }
+    }
+    ctl = null;
+    return whole.trim();
+  }
+
+  /* ---------- respaldo local, sin Claude ---------- */
+  function askLocal(text, onDelta) {
+    const n = norm(text), en = S.profile.lang === 'en';
+    let out = '';
+    const ts = tradingStats();
+    let m;
+    if ((m = text.match(/^(?:recuerda|remember)(?: que| that)?\s+(.+)/i))) { S.memory.push({ id: uid(), text: m[1], date: today(), src: 'user' }); App.commit(t('toastMem')); out = en ? 'Saved to memory.' : 'Guardado en mi memoria.'; }
+    else if (/trading|cuenta|ftuk|us30|balance/.test(n)) out = en ? `Your FTUK account is at ${money(S.trading.balance)} (${ts.pct.toFixed(2)}%). ${money(ts.left)} to go to the ${S.trading.targetPct}% target.` : `Tu cuenta FTUK está en ${money(S.trading.balance)} (${ts.pct.toFixed(2)} %). Te faltan ${money(ts.left)} para el ${S.trading.targetPct} %.`;
+    else if (/agenda|hoy tengo|que tengo|calendar|today/.test(n)) { const ev = App.upcomingEvents(3); out = ev.length ? (en ? 'Coming up: ' : 'Lo próximo: ') + ev.map(e => `${e.title}${e.time ? ' a las ' + e.time : ''}`).join(', ') + '.' : (en ? 'Nothing on your agenda.' : 'No tienes nada en la agenda.'); }
+    else if (/enfoque|prioridad|focus|como voy|resumen|status/.test(n)) { const f = App.focusList().slice(0, 3); out = (en ? 'Top 3: ' : 'Tus 3 prioridades: ') + f.map(x => x.title).join('; ') + '.'; }
+    else out = t('noBrain');
+    onDelta(out);
+    return Promise.resolve(out);
+  }
+  return { init, ask, stop, provider, TOOLS };
+})();
+
+/* ============================================================
+ * APP — interfaz
+ * ============================================================ */
+const App = (() => {
+  let drawerId = null, drawerTab = 'summary', logOpen = false, busy = false, resetArmed = false, mcp = null;
+  const ext = { events: null, eventsErr: null, calls: null, callsErr: null, sessions: null, sessionsErr: null, needConnect: false, mcpMissing: false, started: false };
+  const el = id => document.getElementById(id);
+
+  /* ---------- utilidades de UI ---------- */
+  function toast(msg) {
+    if (!msg) return;
+    const d = document.createElement('div'); d.className = 'toast'; d.innerHTML = `<i></i><span>${esc(msg)}</span>`;
+    el('toasts').appendChild(d); setTimeout(() => { d.style.opacity = '0'; d.style.transition = 'opacity .4s'; }, 2600); setTimeout(() => d.remove(), 3100);
+  }
+  function commit(msg) { Store.save(); renderAll(); if (msg) toast(msg); }
+  const ring = (v, size = 46, stroke = 4, label) => {
+    const r = (size - stroke) / 2, c = 2 * Math.PI * r, off = c * (1 - clamp(v ?? 0, 0, 1));
+    return `<div class="ring" style="width:${size}px;height:${size}px"><svg viewBox="0 0 ${size} ${size}"><circle class="rt" cx="${size / 2}" cy="${size / 2}" r="${r}"/><circle class="rv" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${v == null ? c.toFixed(1) : off.toFixed(1)}"/></svg><b>${label ?? (v == null ? '—' : Math.round(v * 100))}</b></div>`;
+  };
+  const hexRgb = h => { const m = /^#?([0-9a-f]{6})$/i.exec(String(h).trim()); if (!m) return [255, 255, 255]; const n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
+  const pcol = id => (PROJECT_META[id] || {}).color || '#3CF2A6';
+  const chk = (on, action, attrs = '') => `<button type="button" class="chk" role="checkbox" aria-checked="${on ? 'true' : 'false'}" data-action="${action}" ${attrs}>${icon('check')}</button>`;
+  function spark(values, w = 280, h = 36) {
+    const v = values.filter(x => x != null); if (v.length < 2) return '';
+    const min = Math.min(...v), max = Math.max(...v), rng = max - min || 1;
+    const pts = values.map((x, i) => x == null ? null : [i / (values.length - 1) * (w - 6) + 3, h - 4 - (x - min) / rng * (h - 10)]).filter(Boolean);
+    const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const last = pts[pts.length - 1];
+    return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><defs><linearGradient id="sg${w}${h}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--a1)" stop-opacity=".28"/><stop offset="1" stop-color="var(--a1)" stop-opacity="0"/></linearGradient></defs><path d="${d} L${last[0]} ${h} L${pts[0][0]} ${h} Z" fill="url(#sg${w}${h})"/><path d="${d}" fill="none" stroke="var(--a1)" stroke-width="1.6" vector-effect="non-scaling-stroke"/><circle cx="${last[0]}" cy="${last[1]}" r="2.6" fill="var(--a1)"/></svg>`;
+  }
+
+  /* ---------- tema ---------- */
+  function applyTheme() {
+    const root = document.documentElement;
+    const th = S.profile.theme;
+    if (th === 'dark' || th === 'light') root.setAttribute('data-theme', th); else if (th === 'auto' && !IS_ARTIFACT) root.removeAttribute('data-theme');
+    root.setAttribute('data-palette', S.profile.palette || 'aurum');
+    root.lang = S.profile.lang === 'en' ? 'en' : 'es';
+    syncColors();
+  }
+  function syncColors() {
+    const root = document.documentElement;
+    requestAnimationFrame(() => {
+      const cs = getComputedStyle(root);
+      const col = n => hexRgb(cs.getPropertyValue(n)).map(x => x / 255);
+      const dark = cs.getPropertyValue('--glow').trim() === '1';
+      Nebula.setColors(col('--a1'), col('--a2'), col('--a3'), !dark);
+      const meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.content = cs.getPropertyValue('--bg').trim();
+      if (App._stars) App._stars();
+    });
+  }
+
+  /* ---------- núcleo ---------- */
+  function setCore(s) {
+    Nebula.setState(s);
+    el('core').dataset.state = s;
+    el('stateChip').querySelector('span').textContent = t(s);
+    renderHint();
+  }
+  function renderHint() {
+    const s = el('core').dataset.state;
+    let h = '';
+    if (s === 'idle') h = Voice.wake ? t('hintWake', { w: (S.voice.wakeWords || 'Jarvis').split(',')[0].trim().replace(/^./, c => c.toUpperCase()) }) : (Voice.supported() ? t('hintIdle') : t('hintNoMic'));
+    el('stateHint').textContent = h;
+  }
+  function renderBrainBadge() {
+    const p = Brain.provider();
+    el('brainBadge').textContent = p === 'sample' ? t('brainSample') : p === 'api' ? t('brainApi') + ' · ' + (S.brain.model || '').replace('claude-', '') : t('brainLocal');
+  }
+  function renderCoreMeta() {
+    const ts = tradingStats();
+    const open = S.projects.reduce((a, p) => a + p.tasks.filter(x => !x.done).length, 0);
+    el('coreMeta').innerHTML = `<div>FTUK <b>${ts.pct >= 0 ? '+' : ''}${ts.pct.toFixed(2)}%</b></div><div>${S.profile.lang === 'en' ? 'Open' : 'Pendientes'} <b>${open}</b></div><div>${S.profile.lang === 'en' ? 'Memory' : 'Memoria'} <b>${S.memory.length}</b></div>`;
+  }
+
+  /* ---------- barra superior ---------- */
+  function renderTop() {
+    el('brandName').textContent = `${S.profile.name} Carreño`;
+    el('brandSub').textContent = t('sub');
+    $$('[data-action="lang"]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === S.profile.lang)));
+    const wb = el('wakeBtn'); wb.innerHTML = icon('ear'); wb.setAttribute('aria-pressed', String(Voice.wake)); wb.hidden = !Voice.supported();
+    wb.title = S.profile.lang === 'en' ? 'Always listening (wake word)' : 'Escucha continua (palabra de activación)';
+    const vb = el('voiceBtn'); vb.innerHTML = icon(S.voice.out ? 'speaker' : 'mute'); vb.setAttribute('aria-pressed', String(!!S.voice.out));
+    const th = el('themeBtn'); th.innerHTML = icon(document.documentElement.getAttribute('data-theme') === 'light' || (S.profile.theme === 'auto' && !matchMedia('(prefers-color-scheme: dark)').matches) ? 'moon' : 'sun');
+    el('setBtn').innerHTML = icon('gear');
+    el('micBtn').innerHTML = icon('mic'); el('micBtn').setAttribute('aria-pressed', String(Voice.listening));
+    el('micBtn').disabled = !Voice.supported();
+    el('logBtn').innerHTML = icon('chat'); el('stopBtn').innerHTML = icon('stop');
+    el('ask').placeholder = t('ask');
+    renderPulse();
+  }
+  function renderPulse() {
+    const mtl = partsInTZ(), mk = marketInfo(), ts = tradingStats();
+    const c = Store.cloud();
+    el('pulseLine').innerHTML = `<span class="dot" style="background:${c === 'error' ? 'var(--warn)' : 'var(--good)'}"></span><span>MTL ${String(mtl.h).padStart(2, '0')}:${String(mtl.m).padStart(2, '0')}</span><span class="sep">/</span><span>${esc(mk.text)}</span><span class="sep">/</span><span>FTUK ${ts.pct >= 0 ? '+' : ''}${ts.pct.toFixed(2)}%</span><span class="sep">/</span><span>${IS_ARTIFACT ? (c === 'on' ? (S.profile.lang === 'en' ? 'cloud sync' : 'sincronizado') : (S.profile.lang === 'en' ? 'local' : 'local')) : (S.profile.lang === 'en' ? 'this device' : 'este dispositivo')}</span>`;
+  }
+
+  /* ---------- aviso ---------- */
+  function renderNotice() {
+    const parts = [];
+    if (!S.seedNoticeSeen) parts.push(`<div class="notice"><p>${esc(t('seedNote'))}</p><button class="btn sm" data-action="dismiss-seed">${esc(t('gotIt'))}</button></div>`);
+    if (IS_ARTIFACT && ext.needConnect) parts.push(`<div class="notice"><p>${esc(t('connectHelp'))}</p><button class="btn sm primary" data-action="connect">${icon('spark')}${esc(t('connectAll'))}</button></div>`);
+    if (!IS_ARTIFACT && !S.brain.apiKey) parts.push(`<div class="notice"><p>${esc(S.profile.lang === 'en' ? 'Connect my brain: paste your Anthropic API key in Settings. It stays on this device.' : 'Conecta mi cerebro: pega tu API key de Anthropic en Ajustes. Se queda solo en este dispositivo.')}</p><button class="btn sm primary" data-action="settings">${icon('gear')}${esc(t('settings'))}</button></div>`);
+    el('notice').innerHTML = parts.join('');
+  }
+
+  /* ---------- HOY ---------- */
+  function renderToday() {
+    const n = partsInTZ(), mk = marketInfo();
+    const g = n.h < 12 ? t('goodMorning') : n.h < 19 ? t('goodAfternoon') : t('goodEvening');
+    const hi = S.projects.flatMap(p => p.tasks.filter(x => !x.done && x.prio === 'alta').map(x => p.id));
+    const dateStr = new Date().toLocaleDateString(L(), { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' });
+    el('pToday').innerHTML = `
+      <div class="ph"><h2>${icon('pulse')}${esc(t('today'))}</h2><span class="meta">Montréal</span></div>
+      <div class="clock"><div class="clock-t num">${String(n.h).padStart(2, '0')}:${String(n.m).padStart(2, '0')}</div><div class="clock-d">${esc(dateStr)}</div></div>
+      <p class="greet">${esc(g)}, <b>${esc(S.profile.name)}</b>. ${esc(hi.length ? t('greetTail', { n: hi.length, p: new Set(hi).size }) : t('greetClear'))}</p>
+      <div class="market"><div class="mk-ic">${icon('trading')}</div><div><div class="mk-t">${esc(mk.text)}</div><div class="mk-s">${esc(mk.sub || (S.profile.lang === 'en' ? 'US30 · NY open 9:30' : 'US30 · apertura NY 9:30'))}</div></div></div>`;
+  }
+
+  /* ---------- ENFOQUE ---------- */
+  function focusList() {
+    const items = [], mk = marketInfo(), tr = S.trading;
+    if ((mk.state === 'pre' || mk.state === 'open') && !(tr.checkDate === today() && tr.checked.length >= tr.rules.length)) items.push({ kind: 'check', title: t('checklist') + ' · US30', pid: 'trading' });
+    const tasks = S.projects.flatMap(p => openTasks(p).map(x => ({ kind: 'task', pid: p.id, tid: x.id, title: x.title, prio: x.prio, due: x.due })));
+    tasks.sort((a, b) => (prioRank[a.prio] - prioRank[b.prio]) || (a.due || '9').localeCompare(b.due || '9'));
+    // una por frente primero, para no dispersarse ni olvidar ninguno
+    const seen = new Set(), first = [], rest = [];
+    for (const x of tasks) (seen.has(x.pid) ? rest : (seen.add(x.pid), first)).push(x);
+    return items.concat(first.filter(x => x.prio === 'alta'), rest.filter(x => x.prio === 'alta'), first.filter(x => x.prio !== 'alta'));
+  }
+  function renderFocus() {
+    const f = focusList().slice(0, 5);
+    const doneToday = S.projects.reduce((a, p) => a + p.tasks.filter(x => x.done && x.doneAt === today()).length, 0);
+    el('pFocus').innerHTML = `
+      <div class="ph"><h2>${icon('target')}${esc(t('focus'))}</h2><span class="meta">${doneToday} ${S.profile.lang === 'en' ? 'done today' : 'hechas hoy'}</span></div>
+      <ul class="list">${f.length ? f.map(x => x.kind === 'check'
+        ? `<li class="li" style="--pc:${pcol('trading')}"><span class="dotc"></span><div class="body"><div class="t">${esc(x.title)}</div><div class="s">Trading · ${S.trading.checkDate === today() ? S.trading.checked.length : 0}/${S.trading.rules.length}</div></div><button class="link-btn" data-action="goto-trading">${esc(t('open'))}</button></li>`
+        : `<li class="li" style="--pc:${pcol(x.pid)}">${chk(false, 'toggle-task', `data-p="${x.pid}" data-t="${x.tid}"`)}<div class="body"><div class="t">${esc(x.title)}<span class="prio ${x.prio}">${esc(x.prio)}</span></div><div class="s">${esc(P(x.pid).name)}${x.due ? ' · ' + esc(fmtDate(x.due)) : ''}</div></div></li>`).join('') : `<li class="empty">${esc(t('greetClear'))}</li>`}</ul>`;
+  }
+
+  /* ---------- AGENDA ---------- */
+  function upcomingEvents(limit = 8) {
+    const td = today(), until = addDays(td, 21);
+    const list = [];
+    for (const e of (ext.events || [])) if (e.date >= td) list.push(e);
+    for (const e of S.agenda) if (e.date >= td) list.push({ ...e, src: 'local' });
+    for (const p of S.projects) for (const m of p.milestones) if (!m.done && m.date >= td && m.date <= until) list.push({ id: m.id, title: m.title, date: m.date, time: '', project: p.id, src: 'milestone' });
+    list.sort((a, b) => (a.date + (a.time || '99')).localeCompare(b.date + (b.time || '99')));
+    return list.slice(0, limit);
+  }
+  function renderAgenda() {
+    const ev = upcomingEvents(9), td = today();
+    const dayLabel = d => d === td ? (S.profile.lang === 'en' ? 'Today' : 'Hoy') : d === addDays(td, 1) ? (S.profile.lang === 'en' ? 'Tomorrow' : 'Mañana') : fmtDate(d, { weekday: 'short', day: 'numeric', month: 'short' });
+    let last = '', html = '';
+    for (const e of ev) {
+      if (e.date !== last) { html += `<li class="sub-h" style="margin:8px 6px 2px">${esc(dayLabel(e.date))}</li>`; last = e.date; }
+      const pc = e.project ? pcol(e.project) : (e.src === 'gcal' ? 'var(--a2)' : 'var(--a1)');
+      html += `<li class="li" style="--pc:${pc}"><span class="dotc"></span><div class="body"><div class="t">${e.link ? `<a href="${esc(e.link)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)}</div><div class="s">${esc(e.time || (S.profile.lang === 'en' ? 'All day' : 'Todo el día'))}${e.src === 'gcal' ? ' · Google' : e.src === 'milestone' ? ' · ' + esc(P(e.project).name) : ''}</div></div>${e.src === 'local' ? `<button class="x" data-action="del-event" data-id="${e.id}" aria-label="Borrar">${icon('x')}</button>` : ''}</li>`;
+    }
+    const status = IS_ARTIFACT ? (ext.events ? 'Google Calendar' : ext.eventsErr ? (S.profile.lang === 'en' ? 'calendar not connected' : 'calendario sin conectar') : ext.needConnect ? '' : '…') : '';
+    el('pAgenda').innerHTML = `
+      <div class="ph"><h2>${icon('cal')}${esc(t('agenda'))}</h2><span class="meta">${esc(status)}</span></div>
+      <ul class="list">${html || `<li class="empty">${esc(t('noEvents'))}</li>`}</ul>
+      <form class="row" data-form="event" style="margin-top:10px">
+        <input class="in grow" id="evTitle" name="title" placeholder="${esc(t('newEvent'))}" required>
+        <input class="in" id="evDate" name="date" type="date" value="${td}" style="width:auto">
+        <input class="in" id="evTime" name="time" type="time" style="width:auto">
+        <button class="btn sm" type="submit">${icon('plus')}</button>
+      </form>`;
+  }
+
+  /* ---------- VIDA ---------- */
+  function renderLife() {
+    const pl = pillars(), c = checkinToday() || {}, en = S.profile.lang === 'en';
+    const moods = [];
+    for (let i = 13; i >= 0; i--) { const d = addDays(today(), -i); const x = S.life.checkins.find(k => k.date === d); moods.push(x && x.mood ? x.mood : null); }
+    const f = S.life.finance;
+    el('pLife').innerHTML = `
+      <div class="ph"><h2>${icon('heart')}${esc(t('life'))}</h2><span class="meta">IO</span></div>
+      <div class="pillars">
+        ${[['finance', pl.finance], ['health', pl.health], ['relations', pl.relations], ['mind', pl.mind]].map(([k, v]) => `<div class="pillar" style="--pc:var(--a1)">${ring(v, 54, 4.5)}<span>${esc(t(k))}</span></div>`).join('')}
+      </div>
+      <div class="checkin">
+        <div class="lbl">${esc(t('checkinToday'))}</div>
+        <div class="field"><span class="lbl" style="font-size:9.5px">${esc(t('mood'))}</span><div class="moods">${[1, 2, 3, 4, 5].map(n => `<button type="button" class="mood" data-action="mood" data-v="${n}" aria-pressed="${c.mood === n}" aria-label="${n}/5">${moodSvg(n)}</button>`).join('')}</div></div>
+        <div class="ci-grid">
+          <div class="field"><span class="lbl" style="font-size:9.5px">${esc(t('energy'))}</span><div class="stepper"><button data-action="ci-step" data-k="energy" data-d="-1" aria-label="−">−</button><b>${c.energy ?? '—'}</b><button data-action="ci-step" data-k="energy" data-d="1" aria-label="+">+</button></div></div>
+          <div class="field"><span class="lbl" style="font-size:9.5px">${esc(t('sleep'))} (h)</span><div class="stepper"><button data-action="ci-step" data-k="sleep" data-d="-0.5" aria-label="−">−</button><b>${c.sleep ?? '—'}</b><button data-action="ci-step" data-k="sleep" data-d="0.5" aria-label="+">+</button></div></div>
+          <div class="field"><span class="lbl" style="font-size:9.5px">${esc(t('water'))}</span><div class="stepper"><button data-action="ci-step" data-k="water" data-d="-1" aria-label="−">−</button><b>${c.water ?? 0}</b><button data-action="ci-step" data-k="water" data-d="1" aria-label="+">+</button></div></div>
+          <div class="field"><span class="lbl" style="font-size:9.5px">${esc(t('workout'))}</span><button type="button" class="toggle" role="switch" aria-checked="${!!c.workout}" data-action="ci-workout" aria-label="${esc(t('workout'))}"></button></div>
+        </div>
+        ${spark(moods) ? `<div><div class="lbl" style="font-size:9.5px;margin-bottom:2px">${esc(t('mood'))} · 14 ${en ? 'days' : 'días'}</div>${spark(moods)}</div>` : ''}
+        <div>
+          <div class="sub-h" style="margin-top:4px">${esc(t('contacts'))}</div>
+          <ul class="list">${S.life.contacts.map(k => { const d = k.last ? daysBetween(k.last, today()) : null; const due = d == null || d >= k.every; return `<li class="li"><span class="dotc" style="background:${due ? 'var(--warn)' : 'var(--good)'}"></span><div class="body"><div class="t">${esc(k.name)}</div><div class="s">${esc(t('every', { n: k.every }))} · ${esc(d == null ? t('never') : d === 0 ? (en ? 'today' : 'hoy') : t('ago', { n: d }))}</div></div><button class="btn sm ghost" data-action="contact" data-id="${k.id}">${icon('check')}${esc(t('done'))}</button></li>`; }).join('')}</ul>
+          <form class="row" data-form="contact" style="margin-top:6px"><input class="in grow" id="ctName" name="name" placeholder="${en ? 'Person…' : 'Persona…'}" required><input class="in" id="ctEvery" name="every" type="number" min="1" value="7" style="width:70px" aria-label="${esc(t('every', { n: '' }))}"><button class="btn sm" type="submit">${icon('plus')}</button></form>
+        </div>
+        <details>
+          <summary class="lbl" style="cursor:pointer">${esc(t('finance'))} · ${esc(f.currency)}</summary>
+          <div class="two" style="margin-top:10px">
+            ${[['monthlyBudget', en ? 'Monthly budget' : 'Presupuesto mensual'], ['spent', en ? 'Spent this month' : 'Gastado este mes'], ['savingsGoal', en ? 'Savings goal' : 'Meta de ahorro'], ['saved', en ? 'Saved' : 'Ahorrado']].map(([k, lbl]) => `<div class="field"><label for="fin-${k}">${esc(lbl)}</label><input class="in num" id="fin-${k}" type="number" step="any" value="${f[k] ?? ''}" data-change="fin" data-k="${k}"></div>`).join('')}
+          </div>
+        </details>
+      </div>`;
+  }
+
+  /* ---------- FRENTES ---------- */
+  function renderFronts() {
+    const en = S.profile.lang === 'en';
+    el('fronts').innerHTML = S.projects.map(p => {
+      const pr = projectProgress(p), nx = openTasks(p)[0], sp = projectSpent(p);
+      const dl = p.deadline ? daysBetween(today(), p.deadline) : null;
+      const st = { on: ['good', t('on')], risk: ['warn', t('risk')], paused: ['muted', t('paused')] }[p.status] || ['muted', p.status];
+      return `<button type="button" class="front" style="--pc:${pcol(p.id)}" data-action="open-project" data-id="${p.id}">
+        <div class="fr-top"><div class="fr-ic">${icon(p.id in IC ? p.id : 'spark')}</div>${ring(pr, 46, 4)}</div>
+        <div><div class="fr-name">${esc(p.name)}</div><div class="fr-tag">${esc(p.tagline)}</div></div>
+        <div class="fr-next">${icon('arrow')}<span>${esc(nx ? nx.title : (en ? 'No open tasks' : 'Sin pendientes'))}</span></div>
+        <div class="fr-foot"><span class="pill ${st[0]}">${esc(st[1])}</span><span>${dl == null ? '' : dl >= 0 ? (en ? dl + ' d left' : 'faltan ' + dl + ' d') : (en ? Math.abs(dl) + ' d late' : Math.abs(dl) + ' d tarde')}</span></div>
+        ${p.budget.allocated ? `<div class="bar thin proj" title="${esc(t('budget'))}"><i style="width:${clamp(sp / p.budget.allocated, 0, 1) * 100}%"></i></div>` : ''}
+      </button>`;
+    }).join('');
+    // órbitas alrededor del núcleo
+    el('orbits').innerHTML = S.projects.map(p => `<button type="button" class="orbit" style="--pc:${pcol(p.id)}" data-rgb="${hexRgb(pcol(p.id)).join(',')}" data-action="open-project" data-id="${p.id}"><span class="ob-ic">${icon(p.id in IC ? p.id : 'spark')}</span>${esc(p.name.split(' · ')[0])}<span class="ob-pct">${Math.round(projectProgress(p) * 100)}%</span></button>`).join('');
+    Nebula.setOrbits($$('#orbits .orbit'));
+  }
+
+  /* ---------- TRADING ---------- */
+  function logTrade(result, followed, emotion, note) {
+    const tr = S.trading;
+    tr.journal.push({ id: uid(), date: today(), result: +result || 0, followed: !!followed, emotion: emotion || '', note: note || '' });
+    tr.balance = Math.round((tr.balance + (+result || 0)) * 100) / 100;
+    const g = P('trading').goals[0]; if (g) g.current = Math.round((tr.balance - tr.account) * 100) / 100;
+    const g2 = P('trading').goals[1]; if (g2) g2.current = tradingStats().streak;
+    commit(t('toastTrade'));
+    return tradingStats();
+  }
+  let tradeFollowed = true;
+  function renderTrading() {
+    const tr = S.trading, ts = tradingStats(), en = S.profile.lang === 'en';
+    const checked = tr.checkDate === today() ? tr.checked : [];
+    const eq = [tr.account]; { let b = tr.account; for (const j of tr.journal.slice(-30)) { b += +j.result || 0; eq.push(b); } }
+    const hasCurve = tr.journal.length > 0;
+    el('pTrading').innerHTML = `
+      <div class="ph"><h2>${icon('trading')}${esc(t('trading'))}</h2><span class="meta">${esc(tr.instrument)} · ${esc(tr.session)} NY</span></div>
+      <div class="acct"><div class="acct-bal num">${money(tr.balance, tr.currency)}<small>${esc(tr.currency)}</small></div><div class="acct-chg ${ts.pnl >= 0 ? 'up' : 'down'}">${ts.pnl >= 0 ? '+' : ''}${money(ts.pnl, tr.currency)} · ${ts.pct >= 0 ? '+' : ''}${ts.pct.toFixed(2)}%</div></div>
+      <div class="target">
+        <div class="bar"><i style="width:${(ts.progress * 100).toFixed(1)}%"></i>${[0.25, 0.5, 0.75].map(x => `<span class="tick" style="left:${x * 100}%"><span>+${(tr.targetPct * x).toFixed(1).replace('.0', '')}%</span></span>`).join('')}</div>
+        <div class="tgt-row"><span>${esc(t('target'))} <b>+${tr.targetPct}% · ${money(ts.target, tr.currency)}</b></span><span>${esc(t('left'))} <b>${money(ts.left, tr.currency)}</b></span></div>
+      </div>
+      <div class="limits">
+        <div class="lim"><div class="l">${esc(t('dailyLoss'))} ${tr.limitsExample ? `<span class="ex">${esc(t('example'))}</span>` : ''}</div><div class="v">${money(ts.dailyRoom, tr.currency)}</div><div class="s mono" style="font-size:10.5px;color:var(--ink-3)">${esc(t('room'))} · ${tr.dailyLossPct}%</div></div>
+        <div class="lim"><div class="l">${esc(t('maxDD'))}</div><div class="v">${money(ts.ddRoom, tr.currency)}</div><div class="s mono" style="font-size:10.5px;color:var(--ink-3)">${esc(t('room'))} · ${tr.maxLossPct}%</div></div>
+      </div>
+      ${hasCurve ? `<div style="margin-top:12px">${spark(eq, 300, 44)}</div>` : ''}
+      <div class="sub-h"><span>${esc(t('checklist'))}</span><span>${checked.length}/${tr.rules.length}</span></div>
+      <ul class="list" id="tradingChecklist">${tr.rules.map(r => `<li class="li ${checked.includes(r.id) ? 'done' : ''}">${chk(checked.includes(r.id), 'rule', `data-id="${r.id}"`)}<div class="body"><div class="t">${esc(r.text)}</div></div></li>`).join('')}</ul>
+      <div class="sub-h"><span>${esc(t('logTrade'))}</span><span>${en ? 'streak' : 'racha'} ${ts.streak} ${en ? 'd' : 'd'}</span></div>
+      <form class="trade-form" data-form="trade">
+        <div class="field"><label for="trRes">${esc(t('result'))}</label><input class="in num" id="trRes" name="result" type="number" step="any" placeholder="+150 / −80" required></div>
+        <div class="field"><label for="trEmo">${esc(t('emotion'))}</label><select class="in" id="trEmo" name="emotion">${(en ? ['Calm', 'Confident', 'Anxious', 'FOMO', 'Frustrated', 'Tired'] : ['Tranquilo', 'Confiado', 'Ansioso', 'FOMO', 'Frustrado', 'Cansado']).map(x => `<option>${x}</option>`).join('')}</select></div>
+        <div class="field full"><span class="lbl">${esc(t('followed'))}</span><div class="seg2"><button type="button" data-action="followed" data-v="1" aria-pressed="${tradeFollowed}">${esc(t('yes'))}</button><button type="button" data-action="followed" data-v="0" aria-pressed="${!tradeFollowed}">${esc(t('no'))}</button></div></div>
+        <div class="field full"><input class="in" id="trNote" name="note" placeholder="${esc(t('note'))}…"></div>
+        <button class="btn primary full" type="submit">${icon('plus')}${esc(t('logTrade'))}</button>
+      </form>
+      ${tr.journal.length ? `<div class="sub-h"><span>${esc(t('journal'))}</span><span>${tr.journal.length}</span></div>
+      <div>${tr.journal.slice(-5).reverse().map(j => `<div class="jrow"><span class="dt">${esc(fmtDate(j.date))}</span><span>${esc(j.emotion || '')}${j.followed ? '' : ` <span class="prio alta">${en ? 'off plan' : 'sin plan'}</span>`}${j.note ? ` <span style="color:var(--ink-3)">· ${esc(j.note)}</span>` : ''}</span><span class="res ${j.result >= 0 ? 'up' : 'down'}">${j.result >= 0 ? '+' : ''}${money(j.result, tr.currency)}</span></div>`).join('')}</div>` : ''}`;
+  }
+
+  /* ---------- SESIONES / LLAMADAS ---------- */
+  const SESS_MAP = [['trading', /trading|gold|robot|forja|ea\b|mt5/], ['aistaff', /istaff|aistaff|meetaistaff|agente|curso|recepcionista|real estate|voz/], ['marca', /soyandres|soy andres|biblioteca|libro|andres carreno/], ['io', /\bio\b|finanzas y vida|espejo/], ['prime', /aseo|prime|menage|limpieza|cleaning/]];
+  const sessProject = title => { const n = norm(title); for (const [id, re] of SESS_MAP) if (re.test(n)) return id; return null; };
+  function sessState(s) {
+    const b = String(s.status_bucket || '').replace('SESSION_STATUS_BUCKET_', '').toLowerCase();
+    if (b === 'working') return ['good', t('working')];
+    if (b === 'blocked') return ['warn', t('needs')];
+    if (b === 'failed') return ['bad', t('failed')];
+    return ['muted', t('ready')];
+  }
+  function sessionsSummary() {
+    if (!ext.sessions) return '';
+    return ext.sessions.slice(0, 8).map(s => `${s.title} (${sessState(s)[1]}${s.needs ? '; pendiente: ' + s.needs.slice(0, 160) : ''})`).join('; ');
+  }
+  function callsSummary() {
+    if (!ext.calls) return '';
+    return ext.calls.slice(0, 6).map(c => `${c.title} · ${c.agent} · ${Math.round(c.secs / 60 * 10) / 10} min · ${c.ok}`).join('; ');
+  }
+  function connectBlock(err) {
+    if (!IS_ARTIFACT) return `<div class="connect"><p>${esc(t('onlyArtifact'))}</p></div>`;
+    if (ext.mcpMissing) return `<div class="connect"><p>${esc(S.profile.lang === 'en' ? 'Connectors are not available in this view.' : 'Los conectores no están disponibles en esta vista.')}</p></div>`;
+    if (ext.needConnect) return `<div class="connect"><p>${esc(t('connectHelp'))}</p><button class="btn sm primary" data-action="connect">${icon('spark')}${esc(t('connect'))}</button></div>`;
+    if (err) return `<div class="connect"><p>${esc(err)}</p><button class="btn sm" data-action="connect">${esc(t('connect'))}</button></div>`;
+    return `<div class="empty">…</div>`;
+  }
+  function errText(code, name) {
+    const en = S.profile.lang === 'en';
+    if (code === 'server_not_connected' || code === 'server_not_found') return en ? `Connect ${name} in claude.ai → Settings → Connectors.` : `Conecta ${name} en claude.ai → Ajustes → Conectores.`;
+    if (code === 'needs_reauth') return en ? `Reconnect ${name} in claude.ai.` : `Vuelve a conectar ${name} en claude.ai.`;
+    if (code === 'not_granted' || code === 'consent_required') return en ? 'Permission not granted.' : 'Permiso no concedido.';
+    return en ? `${name} unavailable right now.` : `${name} no disponible ahora.`;
+  }
+  function renderSessions() {
+    const en = S.profile.lang === 'en';
+    const list = ext.sessions;
+    el('pSessions').innerHTML = `
+      <div class="ph"><h2>${icon('code')}${esc(t('sessions'))}</h2><span class="meta">${list ? list.length : ''}</span></div>
+      ${list ? (list.length ? `<div>${list.slice(0, 7).map(s => { const pid = sessProject(s.title); const stt = sessState(s); return `<a class="sess" href="https://claude.ai/code/${esc(s.id)}" target="_blank" rel="noopener" style="--pc:${pid ? pcol(pid) : 'var(--ink-3)'}"><span class="dotc"></span><div class="body" style="flex:1;min-width:0"><div class="t" style="font-size:13.5px">${esc(s.title)}</div><div class="s" style="font-size:11.5px;color:var(--ink-3)">${s.needs ? esc(s.needs.slice(0, 110)) : esc(s.detail || '')}</div></div><span class="pill ${stt[0]}">${esc(stt[1])}</span></a>`; }).join('')}</div>` : `<div class="empty">${esc(t('noSessions'))}</div>`) : connectBlock(ext.sessionsErr && errText(ext.sessionsErr, 'Claude Code'))}
+      ${list ? `<p style="margin:10px 6px 0;font-size:11.5px;color:var(--ink-3)">${en ? 'Live from claude.ai/code' : 'En vivo desde claude.ai/code'}</p>` : ''}`;
+  }
+  function renderCalls() {
+    const list = ext.calls, en = S.profile.lang === 'en';
+    el('pCalls').innerHTML = `
+      <div class="ph"><h2>${icon('phone')}${esc(t('calls'))}</h2><span class="meta">ElevenLabs</span></div>
+      ${list ? (list.length ? `<ul class="list">${list.slice(0, 6).map(c => `<li class="li" style="--pc:${pcol('aistaff')}"><span class="dotc" style="background:${c.ok === 'success' ? 'var(--good)' : c.ok === 'failure' ? 'var(--bad)' : 'var(--ink-3)'}"></span><div class="body"><div class="t">${esc(c.title || (en ? 'Call' : 'Llamada'))}</div><div class="s">${esc(c.agent)} · ${Math.floor(c.secs / 60)}:${String(c.secs % 60).padStart(2, '0')} · ${esc(c.when)}${c.lang ? ' · ' + esc(c.lang.toUpperCase()) : ''}</div></div></li>`).join('')}</ul>` : `<div class="empty">${esc(t('noCalls'))}</div>`) : connectBlock(ext.callsErr && errText(ext.callsErr, 'ElevenLabs'))}`;
+  }
+
+  /* ---------- MEMORIA ---------- */
+  function renderMemory() {
+    el('pMemory').innerHTML = `
+      <div class="ph"><h2>${icon('brain')}${esc(t('memory'))}</h2><span class="meta">${S.memory.length}</span></div>
+      <ul class="list">${S.memory.slice().reverse().slice(0, 12).map(m => `<li class="li"><span class="dotc" style="background:${m.src === 'claude' ? 'var(--a2)' : 'var(--a1)'}"></span><div class="body"><div class="t">${esc(m.text)}</div><div class="s">${esc(fmtDate(m.date))} · ${m.src === 'claude' ? 'Claude' : esc(S.profile.name)}</div></div><button class="x" data-action="del-memory" data-id="${m.id}" aria-label="Borrar">${icon('x')}</button></li>`).join('')}</ul>
+      <form class="row" data-form="memory" style="margin-top:8px"><input class="in grow" id="memText" name="text" placeholder="${esc(t('newMemory'))}" required><button class="btn sm" type="submit">${icon('plus')}</button></form>`;
+  }
+
+  /* ---------- CONVERSACIÓN ---------- */
+  function renderLog() {
+    const p = el('pLog'); p.hidden = !logOpen; if (!logOpen) return;
+    p.innerHTML = `<div class="ph"><h2>${icon('chat')}${esc(t('log'))}</h2><button class="link-btn" data-action="clear-chat">${S.profile.lang === 'en' ? 'Clear' : 'Borrar'}</button></div>
+      <div class="log" id="logList">${S.chat.length ? S.chat.slice(-24).map(m => `<div class="msg ${m.role}">${esc(m.content)}</div>`).join('') : `<div class="empty">${S.profile.lang === 'en' ? 'Nothing yet.' : 'Aún nada.'}</div>`}</div>`;
+    const l = el('logList'); l.scrollTop = l.scrollHeight;
+  }
+
+  /* ---------- DRAWER: detalle de proyecto ---------- */
+  function openProject(id) { drawerId = id; drawerTab = 'summary'; renderDrawer(); el('drawer').classList.add('on'); el('scrim').classList.add('on'); setTimeout(() => el('drawer').querySelector('.tabs button')?.focus(), 350); }
+  function closeLayers() { drawerId = null; el('drawer').classList.remove('on'); el('settings').classList.remove('on'); el('scrim').classList.remove('on'); }
+  function renderDrawer() {
+    if (!drawerId) return;
+    const p = P(drawerId); if (!p) return;
+    const en = S.profile.lang === 'en', cur = p.budget.currency;
+    const pr = projectProgress(p), ot = openTasks(p), sp = projectSpent(p);
+    const tabs = ['summary', 'goals', 'tasks', 'budget', 'timeline', 'notes'];
+    let body = '';
+    if (drawerTab === 'summary') {
+      body = `
+        <div class="kpis">
+          <div class="kpi"><div class="l">${esc(t('progress'))}</div><div class="v num">${Math.round(pr * 100)}%</div></div>
+          <div class="kpi"><div class="l">${esc(t('pending'))}</div><div class="v num">${ot.length}</div></div>
+          <div class="kpi"><div class="l">${esc(t('deadline'))}</div><div class="v num" style="font-size:17px">${p.deadline ? esc(fmtDate(p.deadline, { day: 'numeric', month: 'short', year: 'numeric' })) : '—'}</div></div>
+        </div>
+        <div class="field"><label for="dObj">${esc(t('objective'))}</label><textarea class="in" id="dObj" data-change="p-field" data-k="objective">${esc(p.objective)}</textarea></div>
+        <div class="two">
+          <div class="field"><label for="dStatus">${esc(t('status'))}</label><select class="in" id="dStatus" data-change="p-field" data-k="status">${['on', 'risk', 'paused'].map(s => `<option value="${s}" ${p.status === s ? 'selected' : ''}>${esc(t(s))}</option>`).join('')}</select></div>
+          <div class="field"><label for="dDl">${esc(t('deadline'))} ${p.deadlineExample ? `<span class="ex">${esc(t('example'))}</span>` : ''}</label><input class="in" id="dDl" type="date" value="${esc(p.deadline || '')}" data-change="p-field" data-k="deadline"></div>
+        </div>
+        <div class="field"><label for="dTag">${en ? 'One-liner' : 'En una frase'}</label><input class="in" id="dTag" value="${esc(p.tagline)}" data-change="p-field" data-k="tagline"></div>
+        <div><div class="sub-h" style="margin-top:0">${esc(t('goals'))}</div>${p.goals.map(g => `<div style="margin:8px 0"><div class="goal-h" style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(g.title)}</span><span class="mono" style="color:var(--ink-3)">${num(g.current)} / ${num(g.target)} ${esc(g.unit)}</span></div><div class="bar proj" style="margin-top:5px"><i style="width:${clamp(g.current / (g.target || 1), 0, 1) * 100}%"></i></div></div>`).join('')}</div>
+        ${ot.length ? `<div><div class="sub-h" style="margin-top:0">${esc(t('pending'))}</div><ul class="list">${ot.slice(0, 4).map(x => `<li class="li">${chk(false, 'toggle-task', `data-p="${p.id}" data-t="${x.id}"`)}<div class="body"><div class="t">${esc(x.title)}<span class="prio ${x.prio}">${esc(x.prio)}</span></div></div></li>`).join('')}</ul></div>` : ''}
+        ${p.links.length ? `<div class="links">${p.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${icon('ext')}${esc(l.label)}</a>`).join('')}</div>` : ''}
+        <button class="btn primary" data-action="ask-plan" data-id="${p.id}">${icon('spark')}${esc(t('askPlan'))}</button>`;
+    } else if (drawerTab === 'goals') {
+      body = p.goals.map(g => `
+        <div class="goal">
+          <div class="goal-h"><b>${esc(g.title)}${g.example ? `<span class="ex">${esc(t('example'))}</span>` : ''}</b><span>${Math.round(clamp(g.current / (g.target || 1), 0, 1) * 100)}%</span></div>
+          <div class="bar proj"><i style="width:${clamp(g.current / (g.target || 1), 0, 1) * 100}%"></i></div>
+          <div class="row">
+            <input class="in num" type="number" step="any" id="g-c-${g.id}" value="${g.current}" data-change="goal" data-g="${g.id}" data-k="current" aria-label="${en ? 'Current' : 'Actual'}">
+            <span style="color:var(--ink-3)">/</span>
+            <input class="in num" type="number" step="any" id="g-t-${g.id}" value="${g.target}" data-change="goal" data-g="${g.id}" data-k="target" aria-label="${en ? 'Target' : 'Meta'}">
+            <span class="mono" style="color:var(--ink-3);font-size:12px">${esc(g.unit)}</span>
+            <span class="grow"></span>
+            <button class="x" style="opacity:1" data-action="del-goal" data-g="${g.id}" aria-label="Borrar">${icon('trash')}</button>
+          </div>
+        </div>`).join('') + `
+        <form class="row" data-form="goal"><input class="in grow" id="ngTitle" name="title" placeholder="${en ? 'New goal…' : 'Nueva meta…'}" required><input class="in num" id="ngTarget" name="target" type="number" step="any" placeholder="${en ? 'target' : 'meta'}" style="width:90px" required><input class="in" id="ngUnit" name="unit" placeholder="${en ? 'unit' : 'unidad'}" style="width:90px"><button class="btn sm" type="submit">${icon('plus')}</button></form>`;
+    } else if (drawerTab === 'tasks') {
+      const all = p.tasks.slice().sort((a, b) => (a.done - b.done) || (prioRank[a.prio] - prioRank[b.prio]));
+      body = `
+        <form class="row" data-form="task"><input class="in grow" id="ntTitle" name="title" placeholder="${esc(t('newTask'))}" required><select class="in" id="ntPrio" name="prio" style="width:auto"><option value="alta">alta</option><option value="media" selected>media</option><option value="baja">baja</option></select><input class="in" id="ntDue" name="due" type="date" style="width:auto"><button class="btn sm primary" type="submit">${icon('plus')}</button></form>
+        <ul class="list">${all.map(x => `<li class="li ${x.done ? 'done' : ''}">${chk(x.done, 'toggle-task', `data-p="${p.id}" data-t="${x.id}"`)}<div class="body"><div class="t">${esc(x.title)}${x.done ? '' : `<span class="prio ${x.prio}">${esc(x.prio)}</span>`}</div><div class="s">${x.due ? esc(fmtDate(x.due)) : ''}${x.done && x.doneAt ? ' ✓ ' + esc(fmtDate(x.doneAt)) : ''}</div></div><button class="x" data-action="del-task" data-p="${p.id}" data-t="${x.id}" aria-label="Borrar">${icon('x')}</button></li>`).join('') || `<li class="empty">—</li>`}</ul>`;
+    } else if (drawerTab === 'budget') {
+      const al = +p.budget.allocated || 0;
+      body = `
+        <div class="kpis">
+          <div class="kpi"><div class="l">${esc(t('allocated'))}</div><div class="v num">${money(al, cur)}</div></div>
+          <div class="kpi"><div class="l">${esc(t('spent'))}</div><div class="v num">${money(sp, cur)}</div></div>
+          <div class="kpi"><div class="l">${esc(t('remaining'))}</div><div class="v num" style="color:${al - sp < 0 ? 'var(--bad)' : 'inherit'}">${money(al - sp, cur)}</div></div>
+        </div>
+        ${al ? `<div class="bar proj"><i style="width:${clamp(sp / al, 0, 1) * 100}%"></i></div>` : ''}
+        <div class="two">
+          <div class="field"><label for="bAl">${esc(t('allocated'))} ${p.budget.allocatedExample ? `<span class="ex">${esc(t('example'))}</span>` : ''}</label><input class="in num" id="bAl" type="number" step="any" value="${al}" data-change="budget" data-k="allocated"></div>
+          <div class="field"><label for="bCur">${en ? 'Currency' : 'Moneda'}</label><select class="in" id="bCur" data-change="budget" data-k="currency">${['CAD', 'USD', 'COP', 'EUR'].map(c => `<option ${c === cur ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+        </div>
+        <form class="row" data-form="expense"><input class="in grow" id="exLabel" name="label" placeholder="${en ? 'Expense…' : 'Gasto…'}" required><input class="in num" id="exAmt" name="amount" type="number" step="any" placeholder="${cur}" style="width:110px" required><button class="btn sm primary" type="submit">${icon('plus')}</button></form>
+        <ul class="list">${p.budget.items.slice().reverse().map(x => `<li class="li"><span class="dotc"></span><div class="body"><div class="t">${esc(x.label)}</div><div class="s">${esc(fmtDate(x.date))}</div></div><span class="mono">${money(x.amount, cur)}</span><button class="x" data-action="del-expense" data-id="${x.id}" aria-label="Borrar">${icon('x')}</button></li>`).join('') || `<li class="empty">${en ? 'No expenses yet.' : 'Sin gastos registrados.'}</li>`}</ul>`;
+    } else if (drawerTab === 'timeline') {
+      const ms = p.milestones.slice().sort((a, b) => a.date.localeCompare(b.date));
+      body = `<div class="tl">${ms.map(m => `<div class="tl-i ${m.done ? 'done' : ''}">${chk(m.done, 'toggle-ms', `data-id="${m.id}"`)}<div style="flex:1"><div class="t">${esc(m.title)}</div><div class="s">${esc(fmtDate(m.date, { day: 'numeric', month: 'long', year: 'numeric' }))}</div></div><button class="x" data-action="del-ms" data-id="${m.id}" aria-label="Borrar">${icon('x')}</button></div>`).join('')}</div>
+        <form class="row" data-form="milestone"><input class="in grow" id="nmTitle" name="title" placeholder="${en ? 'New milestone…' : 'Nuevo hito…'}" required><input class="in" id="nmDate" name="date" type="date" required style="width:auto"><button class="btn sm" type="submit">${icon('plus')}</button></form>`;
+    } else if (drawerTab === 'notes') {
+      body = `<div class="field"><label for="dNotes">${esc(t('notes'))}</label><textarea class="in" id="dNotes" style="min-height:220px" data-change="p-field" data-k="notes">${esc(p.notes)}</textarea></div>
+        <div class="sub-h">${en ? 'Links' : 'Enlaces'}</div>
+        <div class="links">${p.links.map((l, i) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${icon('ext')}${esc(l.label)}</a>`).join('') || `<span class="empty">—</span>`}</div>
+        <form class="row" data-form="link"><input class="in grow" id="nlLabel" name="label" placeholder="${en ? 'Label' : 'Nombre'}" required><input class="in grow" id="nlUrl" name="url" type="url" placeholder="https://…" required><button class="btn sm" type="submit">${icon('plus')}</button></form>`;
+    }
+    el('drawer').innerHTML = `
+      <div class="dr-head" style="--pc:${pcol(p.id)}">
+        <div class="dr-top"><div class="fr-ic" style="--pc:${pcol(p.id)}">${icon(p.id in IC ? p.id : 'spark')}</div><div class="dr-title"><h3 id="drTitle">${esc(p.name)}</h3><p>${esc(p.tagline)}</p></div><button class="ibtn" data-action="close-layers" aria-label="${esc(t('close'))}">${icon('x')}</button></div>
+        <div class="tabs" role="tablist">${tabs.map(k => `<button role="tab" aria-selected="${drawerTab === k}" data-action="tab" data-v="${k}">${esc(t(k))}</button>`).join('')}</div>
+      </div>
+      <div class="dr-body" style="--pc:${pcol(p.id)}">${body}</div>`;
+  }
+
+  /* ---------- AJUSTES ---------- */
+  function openSettings() { renderSettings(); el('settings').classList.add('on'); el('scrim').classList.add('on'); }
+  function renderSettings() {
+    const en = S.profile.lang === 'en', v = S.voice, b = S.brain, tr = S.trading;
+    const voices = Voice.voices();
+    const pals = [['aurum', en ? 'Aurum · abundance' : 'Aurum · abundancia', '#3CF2A6', '#F6C667'], ['solar', 'Solar', '#FF8B3D', '#FF5A93'], ['amatista', en ? 'Amethyst' : 'Amatista', '#AE8FFF', '#5EE3E8'], ['glaciar', en ? 'Glacier' : 'Glaciar', '#7FCBFF', '#A7F3DA']];
+    el('settings').innerHTML = `
+      <div class="md-head"><h3 id="setTitle">${esc(t('settings'))}</h3><button class="ibtn" data-action="close-layers" aria-label="${esc(t('close'))}">${icon('x')}</button></div>
+      <div class="md-body">
+        <section class="md-sec"><h4>${en ? 'Profile & look' : 'Perfil y aspecto'}</h4>
+          <div class="two">
+            <div class="field"><label for="sName">${esc(t('name'))}</label><input class="in" id="sName" value="${esc(S.profile.name)}" data-change="set" data-k="profile.name"></div>
+            <div class="field"><span class="lbl">${esc(t('theme'))}</span><div class="seg" style="align-self:flex-start">${['dark', 'light', 'auto'].map(x => `<button type="button" data-action="set-theme" data-v="${x}" aria-pressed="${S.profile.theme === x}">${esc(t(x))}</button>`).join('')}</div></div>
+          </div>
+          <span class="lbl">${esc(t('palette'))}</span>
+          <div class="swatches">${pals.map(([k, n, a, c]) => `<button type="button" class="sw" data-action="set-palette" data-v="${k}" aria-pressed="${S.profile.palette === k}"><i style="background:linear-gradient(135deg,${a},${c})"></i>${esc(n)}</button>`).join('')}</div>
+        </section>
+
+        <section class="md-sec"><h4>${esc(t('claude'))}</h4>
+          ${IS_ARTIFACT ? `<p class="help">${en ? 'In claude.ai I use your Claude account: no key needed. Your data syncs privately to your account.' : 'En claude.ai uso tu cuenta de Claude: no hace falta key. Tus datos se sincronizan en privado con tu cuenta.'}</p>` : `
+          <div class="field"><label for="sKey">Anthropic API key</label><input class="in" id="sKey" type="password" autocomplete="off" placeholder="sk-ant-…" value="${esc(b.apiKey)}" data-change="set" data-k="brain.apiKey"></div>
+          <div class="two">
+            <div class="field"><label for="sModel">${en ? 'Model' : 'Modelo'}</label><select class="in" id="sModel" data-change="set" data-k="brain.model">${[['claude-opus-5', 'Claude Opus 5'], ['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5', 'Claude Haiku 4.5']].map(([id, n]) => `<option value="${id}" ${b.model === id ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+            <div class="field"><label for="sEffort">${en ? 'Depth' : 'Profundidad'}</label><select class="in" id="sEffort" data-change="set" data-k="brain.effort">${[['low', en ? 'Fast (voice)' : 'Rápida (voz)'], ['medium', en ? 'Balanced' : 'Equilibrada'], ['high', en ? 'Deep' : 'Profunda']].map(([id, n]) => `<option value="${id}" ${b.effort === id ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+          </div>
+          <div class="row"><button type="button" class="toggle" role="switch" aria-checked="${!!b.remember}" data-action="set-toggle" data-k="brain.remember" id="sRemember" aria-label="remember"></button><label for="sRemember" style="font-size:13px">${en ? 'Remember the key on this device' : 'Recordar la key en este dispositivo'}</label></div>
+          <p class="help">${en ? 'The key is only sent to api.anthropic.com. Never to the cloud copy of your data.' : 'La key solo se envía a api.anthropic.com. Nunca se copia con tus datos.'}</p>`}
+        </section>
+
+        <section class="md-sec"><h4>${esc(t('voice'))}</h4>
+          <div class="row"><button type="button" class="toggle" role="switch" aria-checked="${!!v.out}" data-action="set-toggle" data-k="voice.out" id="sOut" aria-label="voice"></button><label for="sOut" style="font-size:13px">${en ? 'Speak my answers out loud' : 'Leer mis respuestas en voz alta'}</label></div>
+          <div class="two">
+            <div class="field"><label for="sEngine">${en ? 'Voice engine' : 'Motor de voz'}</label><select class="in" id="sEngine" data-change="set" data-k="voice.engine"><option value="browser" ${v.engine === 'browser' ? 'selected' : ''}>${en ? 'Browser (free)' : 'Navegador (gratis)'}</option><option value="eleven" ${v.engine === 'eleven' ? 'selected' : ''} ${IS_ARTIFACT ? 'disabled' : ''}>ElevenLabs${IS_ARTIFACT ? (en ? ' — installed version' : ' — versión instalada') : ''}</option></select></div>
+            <div class="field"><label for="sBV">${en ? 'Browser voice' : 'Voz del navegador'}</label><select class="in" id="sBV" data-change="set" data-k="voice.browserVoice"><option value="">${en ? 'Automatic' : 'Automática'}</option>${voices.filter(x => /^(es|en|fr)/i.test(x.lang)).map(x => `<option value="${esc(x.name)}" ${v.browserVoice === x.name ? 'selected' : ''}>${esc(x.name)} · ${esc(x.lang)}</option>`).join('')}</select></div>
+          </div>
+          ${IS_ARTIFACT ? '' : `<div class="two">
+            <div class="field"><label for="sElKey">ElevenLabs API key</label><input class="in" id="sElKey" type="password" autocomplete="off" value="${esc(v.elKey)}" data-change="set" data-k="voice.elKey"></div>
+            <div class="field"><label for="sElVoice">Voice ID</label><input class="in" id="sElVoice" value="${esc(v.elVoice)}" placeholder="${en ? 'your cloned voice' : 'tu voz clonada'}" data-change="set" data-k="voice.elVoice"></div>
+          </div>
+          <div class="field"><label for="sElModel">${en ? 'ElevenLabs model' : 'Modelo de ElevenLabs'}</label><select class="in" id="sElModel" data-change="set" data-k="voice.elModel">${[['eleven_flash_v2_5', 'Flash v2.5 — ' + (en ? 'lowest latency' : 'menor latencia')], ['eleven_multilingual_v2', 'Multilingual v2 — ' + (en ? 'richer' : 'más natural')]].map(([id, n]) => `<option value="${id}" ${v.elModel === id ? 'selected' : ''}>${n}</option>`).join('')}</select></div>`}
+          <div class="two">
+            <div class="field"><label for="sWake">${en ? 'Wake words (comma separated)' : 'Palabras de activación (separadas por coma)'}</label><input class="in" id="sWake" value="${esc(v.wakeWords)}" data-change="set" data-k="voice.wakeWords"></div>
+            <div class="field"><label for="sRecLang">${en ? 'I speak in' : 'Te hablo en'}</label><select class="in" id="sRecLang" data-change="set" data-k="voice.recLang">${[['es-ES', 'Español (España)'], ['es-CO', 'Español (Colombia)'], ['es-MX', 'Español (México)'], ['en-US', 'English (US)'], ['en-CA', 'English (Canada)'], ['fr-CA', 'Français (Canada)']].map(([id, n]) => `<option value="${id}" ${v.recLang === id ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="sRate">${en ? 'Speed' : 'Velocidad'} · ${v.rate}</label><input id="sRate" type="range" min="0.8" max="1.3" step="0.02" value="${v.rate}" data-change="set-num" data-k="voice.rate"></div>
+            <div class="field"><label for="sFace">${en ? 'Face' : 'Rostro'}</label><select class="in" id="sFace" data-change="set" data-k="voice.face"><option value="active" ${v.face === 'active' ? 'selected' : ''}>${en ? 'Forms when I talk' : 'Se forma al hablar'}</option><option value="always" ${v.face === 'always' ? 'selected' : ''}>${en ? 'Always visible' : 'Siempre visible'}</option></select></div>
+          </div>
+          <div class="row"><button class="btn sm" data-action="test-voice">${icon('speaker')}${en ? 'Test voice' : 'Probar voz'}</button>${IS_ARTIFACT ? `<span class="help" style="font-size:12px;color:var(--ink-3)">${en ? 'Microphone and wake word work in the installed version (meetaistaff.com/andres-os/).' : 'Micrófono y palabra de activación funcionan en la versión instalada (meetaistaff.com/andres-os/).'}</span>` : ''}</div>
+        </section>
+
+        <section class="md-sec"><h4>Trading · ${esc(tr.firm)}</h4>
+          <div class="two">
+            <div class="field"><label for="sAcc">${en ? 'Account size' : 'Tamaño de cuenta'} (USD)</label><input class="in num" id="sAcc" type="number" step="any" value="${tr.account}" data-change="set-num" data-k="trading.account"></div>
+            <div class="field"><label for="sBal">${esc(t('balance'))} (USD)</label><input class="in num" id="sBal" type="number" step="any" value="${tr.balance}" data-change="set-num" data-k="trading.balance"></div>
+            <div class="field"><label for="sTgt">${esc(t('target'))} %</label><input class="in num" id="sTgt" type="number" step="any" value="${tr.targetPct}" data-change="set-num" data-k="trading.targetPct"></div>
+            <div class="field"><label for="sDl">${esc(t('dailyLoss'))} %</label><input class="in num" id="sDl" type="number" step="any" value="${tr.dailyLossPct}" data-change="set-num" data-k="trading.dailyLossPct"></div>
+            <div class="field"><label for="sMl">${esc(t('maxDD'))} %</label><input class="in num" id="sMl" type="number" step="any" value="${tr.maxLossPct}" data-change="set-num" data-k="trading.maxLossPct"></div>
+          </div>
+          <p class="help">${en ? 'Set the loss limits to your FTUK account rules.' : 'Ajusta los límites de pérdida a las reglas de tu cuenta FTUK.'}</p>
+          <div class="field"><label for="sRules">${en ? 'My rules (one per line)' : 'Mis reglas (una por línea)'}</label><textarea class="in" id="sRules" style="min-height:130px" data-change="rules">${esc(tr.rules.map(r => r.text).join('\n'))}</textarea></div>
+        </section>
+
+        <section class="md-sec"><h4>${esc(t('integrations'))}</h4>
+          ${[['Claude', Brain.provider() !== 'local'], ['Google Calendar', !!ext.events], ['ElevenLabs · ' + (en ? 'calls' : 'llamadas'), !!ext.calls], ['Claude Code · ' + (en ? 'sessions' : 'sesiones'), !!ext.sessions], [en ? 'Microphone' : 'Micrófono', Voice.supported()], [en ? 'Cloud memory' : 'Memoria en la nube', Store.cloud() === 'on']].map(([n, ok]) => `<div class="integ"><span>${esc(n)}</span><span class="pill ${ok ? 'good' : 'muted'}">${ok ? (en ? 'active' : 'activo') : (en ? 'off' : 'inactivo')}</span></div>`).join('')}
+          ${IS_ARTIFACT && (ext.needConnect || ext.eventsErr || ext.callsErr || ext.sessionsErr) ? `<button class="btn sm primary" data-action="connect">${icon('spark')}${esc(t('connectAll'))}</button>` : ''}
+        </section>
+
+        <section class="md-sec"><h4>${esc(t('data'))}</h4>
+          <div class="row">
+            <button class="btn sm" data-action="export">${icon('down')}${esc(t('exportData'))}</button>
+            <label class="btn sm" for="importFile" style="cursor:pointer">${icon('up')}${esc(t('importData'))}</label><input type="file" id="importFile" accept="application/json,.json" hidden>
+            <button class="btn sm ghost" data-action="reset" style="color:var(--bad)">${icon('trash')}${resetArmed ? (en ? 'Tap again to confirm' : 'Toca otra vez para confirmar') : esc(t('reset'))}</button>
+          </div>
+        </section>
+      </div>`;
+  }
+  function setPath(path, val) { const ks = path.split('.'); let o = S; while (ks.length > 1) o = o[ks.shift()]; o[ks[0]] = val; }
+  function getPath(path) { return path.split('.').reduce((o, k) => o && o[k], S); }
+
+  /* ---------- render total ---------- */
+  function renderAll() {
+    renderTop(); renderNotice(); renderToday(); renderFocus(); renderAgenda(); renderLife(); renderFronts(); renderTrading();
+    renderSessions(); renderCalls(); renderMemory(); renderLog(); renderCoreMeta(); renderBrainBadge(); renderHint();
+    if (drawerId) renderDrawer();
+  }
+
+  /* ---------- conversación ---------- */
+  async function converse(text) {
+    text = String(text || '').trim(); if (!text) return;
+    if (busy) Brain.stop();
+    Voice.stopSpeaking();
+    busy = true;
+    el('capUser').textContent = '› ' + text; el('capAi').textContent = ''; el('core').classList.add('has-cap'); clearTimeout(App._capT);
+    const history = S.chat.slice(-10);
+    S.chat.push({ role: 'user', content: text, ts: Date.now() });
+    setCore('thinking'); el('stopBtn').hidden = false;
+    let spoken = 0, streamed = '';
+    const onDelta = whole => {
+      streamed = whole; el('capAi').textContent = whole;
+      if (S.voice.out) {
+        const pending = whole.slice(spoken); const re = /[^.!?…\n]+[.!?…]+["»”)]?(?=\s|$)|[^\n]*\n/g; let m, used = 0;
+        while ((m = re.exec(pending))) { if (!m[0]) { re.lastIndex++; continue; } Voice.enqueue(m[0]); used = re.lastIndex; }
+        spoken += used;
+      }
+    };
+    try {
+      const final = await Brain.ask(text, history, onDelta);
+      const out = String(final || streamed || '').trim();
+      el('capAi').textContent = out;
+      if (S.voice.out) { const rest = (out.startsWith(streamed.slice(0, spoken)) ? out.slice(spoken) : '').trim(); if (rest) Voice.enqueue(rest); }
+      if (out) S.chat.push({ role: 'assistant', content: out, ts: Date.now() });
+      S.chat = S.chat.slice(-40);
+      Store.save();
+    } catch (e) {
+      console.warn(e);
+      const en = S.profile.lang === 'en';
+      let msg = en ? 'I couldn’t reach Claude. Check your connection and key in Settings.' : 'No pude conectar con Claude. Revisa tu conexión y tu key en Ajustes.';
+      if (e && (e.status === 401 || /401|authentication/i.test(e.message || ''))) msg = en ? 'The API key was rejected. Check it in Settings.' : 'La API key fue rechazada. Revísala en Ajustes.';
+      el('capAi').textContent = msg;
+    } finally {
+      busy = false; el('stopBtn').hidden = true;
+      if (!Voice.speaking) { setCore('idle'); Voice.followUp(); }
+      App._capT = setTimeout(() => { if (!busy && !Voice.speaking) el('core').classList.remove('has-cap'); }, 14000);
+      renderLog(); renderCoreMeta();
+    }
+  }
+
+  /* ---------- integraciones (claude.ai) ---------- */
+  function payloadOf(res) {
+    let p = res && res.payload !== undefined ? res.payload : res && res.structuredContent;
+    if (p === undefined || p === null) { const tx = ((res && res.content) || []).find(c => c.type === 'text'); p = tx ? tx.text : null; }
+    if (typeof p === 'string') { try { p = JSON.parse(p); } catch { const i = p.indexOf('{'), j = p.lastIndexOf('}'); if (i >= 0 && j > i) { try { p = JSON.parse(p.slice(i, j + 1)); } catch { p = null; } } else p = null; } }
+    return p;
+  }
+  async function initIntegrations() {
+    if (!IS_ARTIFACT) return;
+    mcp = await window.claude.use('mcp').catch(() => null);
+    if (!mcp) { ext.mcpMissing = true; renderAll(); return; }
+    let st = 'prompt';
+    try { const perms = await window.claude.use('permissions'); if (perms) st = await perms.state('mcp'); } catch { /* nada */ }
+    if (st === 'granted' || lsGet('aos:connected') === '1') startWatches();
+    else { ext.needConnect = true; renderAll(); }
+  }
+  async function connectAll() {
+    try { const perms = await window.claude.use('permissions'); if (perms) await perms.request(['mcp', 'sample']); } catch { /* nada */ }
+    lsSet('aos:connected', '1'); ext.needConnect = false; ext.started = false;
+    if (!mcp) mcp = await window.claude.use('mcp').catch(() => null);
+    if (mcp) startWatches(); renderAll();
+  }
+  function startWatches() {
+    if (ext.started || !mcp) return; ext.started = true;
+    const d0 = new Date(today() + 'T00:00:00'); const d1 = new Date(d0.getTime() + 15 * 864e5);
+    const tz = TZ;
+    mcp.watchTool('Google Calendar', 'list_events', { startTime: d0.toISOString(), endTime: d1.toISOString(), orderBy: 'startTime', pageSize: 50, timeZone: tz }, ev => {
+      if (ev.type === 'error') { ext.eventsErr = ev.error.code; }
+      else {
+        const p = payloadOf(ev.result) || {};
+        ext.events = (p.events || p.items || []).filter(e => e.status !== 'cancelled').map(e => {
+          const dt = e.start && (e.start.dateTime || e.start.date);
+          const allDay = !!(e.start && e.start.date && !e.start.dateTime);
+          const d = dt ? (allDay ? e.start.date : isoInTZ(new Date(dt))) : today();
+          const tm = !allDay && dt ? new Date(dt).toLocaleTimeString('en-GB', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }) : '';
+          return { id: e.id, title: (e.summary || '').trim() || '(sin título)', date: d, time: tm, link: e.htmlLink, src: 'gcal', project: sessProject(e.summary || '') };
+        });
+        ext.eventsErr = null;
+      }
+      renderAgenda(); renderFocus();
+    }, { refetchInterval: 10 * 60e3 });
+    mcp.watchTool('ElevenLabs', 'agents_list_conversations', { context: 'Mostrar las llamadas recientes de los agentes de voz de AIStaff en el panel personal de Andrés', page_size: 8 }, ev => {
+      if (ev.type === 'error') { ext.callsErr = ev.error.code; }
+      else {
+        const p = payloadOf(ev.result) || {};
+        ext.calls = (p.conversations || []).map(c => ({ title: c.call_summary_title || '', agent: c.agent_name || 'Agente', secs: +c.call_duration_secs || 0, ok: c.call_successful || 'unknown', lang: c.main_language || '', when: c.start_time_unix_secs ? new Date(c.start_time_unix_secs * 1000).toLocaleString(L(), { timeZone: TZ, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '' }));
+        ext.callsErr = null;
+      }
+      renderCalls();
+    }, { refetchInterval: 15 * 60e3 });
+    mcp.watchTool('Claude Code Remote', 'list_sessions', { limit: 20, mine: true }, ev => {
+      if (ev.type === 'error') { ext.sessionsErr = ev.error.code; }
+      else {
+        const p = payloadOf(ev.result) || {};
+        const arr = (p.ccr && p.ccr.data) || p.data || p.sessions || [];
+        ext.sessions = arr.filter(s => s && s.title && !/dispatch background/i.test(s.title) && s.session_status !== 'SESSION_STATUS_ARCHIVED').map(s => ({
+          id: s.id, title: s.title, status_bucket: s.status_bucket, updated: s.updated_at,
+          needs: (s.post_turn_summary && s.post_turn_summary.needs_action) || '',
+          detail: (s.post_turn_summary && s.post_turn_summary.status_detail) || s.task_summary || ''
+        }));
+        ext.sessionsErr = null;
+      }
+      renderSessions();
+    }, { refetchInterval: 5 * 60e3 });
+  }
+
+  /* ---------- eventos ---------- */
+  function bind() {
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-action]'); if (!b) return;
+      const a = b.dataset.action, en = S.profile.lang === 'en';
+      switch (a) {
+        case 'scroll-top': e.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); break;
+        case 'lang': S.profile.lang = b.dataset.v; S.voice.recLang = b.dataset.v === 'en' ? 'en-US' : (S.voice.recLang.startsWith('es') ? S.voice.recLang : 'es-ES'); applyTheme(); commit(); break;
+        case 'theme': { const isLight = document.documentElement.getAttribute('data-theme') === 'light' || (S.profile.theme === 'auto' && !matchMedia('(prefers-color-scheme: dark)').matches); S.profile.theme = isLight ? 'dark' : 'light'; applyTheme(); commit(); break; }
+        case 'set-theme': S.profile.theme = b.dataset.v; applyTheme(); commit(); renderSettings(); break;
+        case 'set-palette': S.profile.palette = b.dataset.v; applyTheme(); commit(); renderSettings(); break;
+        case 'settings': openSettings(); break;
+        case 'close-layers': closeLayers(); break;
+        case 'wake': { const on = Voice.setWake(!Voice.wake); toast(on ? (en ? 'Listening for the wake word' : 'Escucho la palabra de activación') : (en ? 'Wake word off' : 'Escucha continua apagada')); renderTop(); renderHint(); break; }
+        case 'voice-out': S.voice.out = !S.voice.out; if (!S.voice.out) Voice.stopSpeaking(); commit(); break;
+        case 'mic': case 'core': {
+          if (busy || Voice.speaking) { Brain.stop(); Voice.stopSpeaking(); if (!busy) setCore('idle'); break; }
+          if (a === 'core' && !Voice.supported()) { el('ask').focus(); break; }
+          Voice.pushToTalk(); renderTop(); break;
+        }
+        case 'stop': Brain.stop(); Voice.stopSpeaking(); setCore('idle'); break;
+        case 'toggle-log': logOpen = !logOpen; renderLog(); break;
+        case 'clear-chat': S.chat = []; commit(); break;
+        case 'dismiss-seed': S.seedNoticeSeen = true; commit(); break;
+        case 'connect': connectAll(); break;
+        case 'open-project': openProject(b.dataset.id); break;
+        case 'tab': drawerTab = b.dataset.v; renderDrawer(); break;
+        case 'toggle-task': { const p = P(b.dataset.p), tk = p && p.tasks.find(x => x.id === b.dataset.t); if (tk) { tk.done = !tk.done; tk.doneAt = tk.done ? today() : null; commit(tk.done ? t('toastDone') : null); } break; }
+        case 'del-task': { const p = P(b.dataset.p); p.tasks = p.tasks.filter(x => x.id !== b.dataset.t); commit(); break; }
+        case 'del-goal': { const p = P(drawerId); p.goals = p.goals.filter(x => x.id !== b.dataset.g); commit(); break; }
+        case 'del-expense': { const p = P(drawerId); p.budget.items = p.budget.items.filter(x => x.id !== b.dataset.id); commit(); break; }
+        case 'toggle-ms': { const p = P(drawerId), m = p.milestones.find(x => x.id === b.dataset.id); if (m) { m.done = !m.done; commit(); } break; }
+        case 'del-ms': { const p = P(drawerId); p.milestones = p.milestones.filter(x => x.id !== b.dataset.id); commit(); break; }
+        case 'ask-plan': { const p = P(b.dataset.id); closeLayers(); converse(en ? `What are the next 3 concrete steps for ${p.name} this week, and why?` : `¿Cuáles son los 3 próximos pasos concretos para ${p.name} esta semana, y por qué?`); scrollTo({ top: 0, behavior: 'smooth' }); break; }
+        case 'goto-trading': el('pTrading').scrollIntoView({ behavior: 'smooth', block: 'start' }); break;
+        case 'rule': { const tr = S.trading; if (tr.checkDate !== today()) { tr.checkDate = today(); tr.checked = []; } const id = b.dataset.id; tr.checked = tr.checked.includes(id) ? tr.checked.filter(x => x !== id) : [...tr.checked, id]; commit(tr.checked.length === tr.rules.length ? (en ? 'Checklist complete. Trade your plan.' : 'Checklist completo. Opera tu plan.') : null); break; }
+        case 'followed': tradeFollowed = b.dataset.v === '1'; $$('[data-action="followed"]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === (tradeFollowed ? '1' : '0')))); break;
+        case 'mood': { const c = ensureCheckin(); c.mood = +b.dataset.v; commit(); break; }
+        case 'ci-step': { const c = ensureCheckin(), k = b.dataset.k, d = +b.dataset.d; const lim = { energy: [1, 5], sleep: [0, 14], water: [0, 20] }[k]; c[k] = clamp((c[k] ?? (k === 'energy' ? 3 : k === 'sleep' ? 7 : 0)) + (c[k] == null && k !== 'water' ? 0 : d), lim[0], lim[1]); commit(); break; }
+        case 'ci-workout': { const c = ensureCheckin(); c.workout = !c.workout; commit(); break; }
+        case 'contact': { const k = S.life.contacts.find(x => x.id === b.dataset.id); if (k) { k.last = today(); commit(en ? `Nice — ${k.name} logged.` : `Bien — ${k.name} registrado.`); } break; }
+        case 'del-event': S.agenda = S.agenda.filter(x => x.id !== b.dataset.id); commit(); break;
+        case 'del-memory': S.memory = S.memory.filter(x => x.id !== b.dataset.id); commit(); break;
+        case 'set-toggle': { const k = b.dataset.k; setPath(k, !getPath(k)); Store.save(); renderSettings(); renderTop(); renderBrainBadge(); break; }
+        case 'test-voice': Voice.stopSpeaking(); { const was = S.voice.out; S.voice.out = true; Voice.enqueue(en ? `Hi ${S.profile.name}. All systems ready.` : `Hola ${S.profile.name}. Todos los sistemas listos.`); S.voice.out = was; } break;
+        case 'export': exportData(); break;
+        case 'reset': if (!resetArmed) { resetArmed = true; renderSettings(); setTimeout(() => { resetArmed = false; if (el('settings').classList.contains('on')) renderSettings(); }, 4000); } else { resetArmed = false; const keep = { apiKey: S.brain.apiKey, elKey: S.voice.elKey }; S = makeDefault(); S.brain.apiKey = keep.apiKey; S.voice.elKey = keep.elKey; applyTheme(); commit(); renderSettings(); } break;
+      }
+    });
+    document.addEventListener('change', e => {
+      const x = e.target; const k = x.dataset.change; if (!k) { if (x.id === 'importFile') importData(x.files[0]); return; }
+      if (k === 'set') { setPath(x.dataset.k, x.value); if (x.dataset.k === 'voice.engine' || x.dataset.k === 'brain.apiKey' || x.dataset.k === 'brain.model') renderBrainBadge(); commit(); }
+      else if (k === 'set-num') { setPath(x.dataset.k, +x.value); if (x.dataset.k.startsWith('trading.dailyLoss') || x.dataset.k.startsWith('trading.maxLoss')) S.trading.limitsExample = false; if (x.dataset.k === 'trading.balance') { const g = P('trading').goals[0]; if (g) g.current = S.trading.balance - S.trading.account; } commit(); if (x.type === 'range') renderSettings(); }
+      else if (k === 'rules') { const lines = x.value.split('\n').map(s => s.trim()).filter(Boolean); const old = S.trading.rules; S.trading.rules = lines.map((txt, i) => ({ id: (old[i] && old[i].text === txt) ? old[i].id : uid(), text: txt })); commit(); }
+      else if (k === 'fin') { S.life.finance[x.dataset.k] = x.value === '' ? null : +x.value; commit(); }
+      else if (k === 'p-field') { const p = P(drawerId); p[x.dataset.k] = x.value; if (x.dataset.k === 'deadline') p.deadlineExample = false; commit(); }
+      else if (k === 'goal') { const p = P(drawerId), g = p.goals.find(y => y.id === x.dataset.g); if (g) { g[x.dataset.k] = +x.value; if (x.dataset.k === 'target') g.example = false; if (p.id === 'trading' && p.goals[0] === g && x.dataset.k === 'current') S.trading.balance = S.trading.account + g.current; } commit(); }
+      else if (k === 'budget') { const p = P(drawerId); p.budget[x.dataset.k] = x.dataset.k === 'allocated' ? +x.value : x.value; if (x.dataset.k === 'allocated') p.budget.allocatedExample = false; commit(); }
+    });
+    document.addEventListener('submit', e => {
+      const f = e.target; const k = f.dataset.form;
+      if (f.id === 'composer') { e.preventDefault(); const v = el('ask').value; el('ask').value = ''; converse(v); return; }
+      if (!k) return;
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(f).entries());
+      const en = S.profile.lang === 'en';
+      if (k === 'event') { S.agenda.push({ id: uid(), title: d.title, date: d.date || today(), time: d.time || '', project: null }); commit(t('toastEvent')); }
+      else if (k === 'contact') { S.life.contacts.push({ id: uid(), name: d.name, every: +d.every || 7, last: null }); commit(); }
+      else if (k === 'memory') { S.memory.push({ id: uid(), text: d.text, date: today(), src: 'user' }); commit(t('toastMem')); }
+      else if (k === 'trade') { if (d.result === '' || isNaN(+d.result)) return; logTrade(+d.result, tradeFollowed, d.emotion, d.note); tradeFollowed = true; renderTrading(); }
+      else if (k === 'task') { const p = P(drawerId); p.tasks.push({ id: uid(), title: d.title, prio: d.prio || 'media', due: d.due || null, done: false, created: today() }); commit(t('toastTask', { p: p.name })); setTimeout(() => el('ntTitle') && el('ntTitle').focus(), 30); }
+      else if (k === 'goal') { const p = P(drawerId); p.goals.push({ id: uid(), title: d.title, current: 0, target: +d.target || 1, unit: d.unit || '', example: false }); commit(); }
+      else if (k === 'expense') { const p = P(drawerId); p.budget.items.push({ id: uid(), label: d.label, amount: +d.amount || 0, date: today() }); commit(); }
+      else if (k === 'milestone') { const p = P(drawerId); p.milestones.push({ id: uid(), title: d.title, date: d.date, done: false }); commit(); }
+      else if (k === 'link') { const p = P(drawerId); if (/^https?:\/\//i.test(d.url)) { p.links.push({ label: d.label, url: d.url }); commit(); } else toast(en ? 'Links must start with https://' : 'Los enlaces deben empezar con https://'); }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeLayers(); if (busy || Voice.speaking) { Brain.stop(); Voice.stopSpeaking(); setCore('idle'); } }
+      if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); el('ask').focus(); }
+    });
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (S.profile.theme === 'auto') { applyTheme(); renderTop(); } });
+    new MutationObserver(() => { syncColors(); renderTop(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+  function exportData() {
+    const data = JSON.stringify(Store.snapshot(), null, 2), en = S.profile.lang === 'en';
+    if (!IS_ARTIFACT) {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'application/json' })); a.download = `andres-os-${today()}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      toast(en ? 'Backup downloaded' : 'Respaldo descargado');
+    } else {
+      navigator.clipboard.writeText(data).then(() => toast(en ? 'Backup copied to clipboard' : 'Respaldo copiado al portapapeles'), () => toast(en ? 'Could not copy' : 'No se pudo copiar'));
+    }
+  }
+  function importData(file) {
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = () => { try { const keep = { apiKey: S.brain.apiKey, elKey: S.voice.elKey }; S = Store.migrate(JSON.parse(r.result)); S.brain.apiKey = keep.apiKey; S.voice.elKey = keep.elKey; applyTheme(); commit(S.profile.lang === 'en' ? 'Backup imported' : 'Respaldo importado'); renderSettings(); } catch { toast('JSON inválido'); } };
+    r.readAsText(file);
+  }
+
+  /* ---------- arranque ---------- */
+  async function boot() {
+    Store.load();
+    App._stars = starfield(el('stars'));
+    Nebula.init(el('gl'), el('hud'), () => Voice.level());
+    applyTheme();
+    Voice.on('command', txt => { el('capUser').textContent = '› ' + txt; converse(txt); });
+    Voice.on('interim', txt => { el('capUser').textContent = txt ? '› ' + txt : ''; });
+    Voice.on('state', s => {
+      if (s === 'speaking') setCore('speaking');
+      else if (s === 'listening') setCore('listening');
+      else if (s === 'done') { if (!busy) { setCore('idle'); Voice.followUp(); } clearTimeout(App._capT); App._capT = setTimeout(() => { if (!busy && !Voice.speaking) el('core').classList.remove('has-cap'); }, 8000); }
+      else if (!busy && !Voice.speaking) setCore(Voice.listening ? 'listening' : 'idle');
+      renderTop(); renderHint();
+    });
+    Voice.on('error', k => {
+      const en = S.profile.lang === 'en';
+      if (k === 'mic' || k === 'nomic') toast(en ? 'Microphone unavailable here. Type instead, or open the installed version.' : 'El micrófono no está disponible aquí. Escríbeme, o abre la versión instalada.');
+      if (k === 'eleven') toast(en ? 'ElevenLabs failed — using the browser voice.' : 'ElevenLabs falló — uso la voz del navegador.');
+      renderTop(); renderHint();
+    });
+    bind();
+    setCore('idle');
+    renderAll();
+    Store.onChange(() => { /* guardado */ });
+    setInterval(() => { renderToday(); renderPulse(); }, 15000);
+    setInterval(() => { renderFocus(); renderAgenda(); }, 5 * 60e3);
+    // claude.ai: memoria en la nube, cerebro y conectores
+    if (IS_ARTIFACT) {
+      Store.connectCloud(() => { applyTheme(); renderAll(); });
+      Brain.init().then(renderBrainBadge);
+      initIntegrations();
+    }
+  }
+  return { boot, commit, applyTheme, openProject, logTrade, upcomingEvents, focusList, sessionsSummary, callsSummary, renderBrainBadge, _stars: null, _capT: 0 };
+})();
+
+App.boot();
+})();
+</script>
+<!-- ARTIFACT:END -->
+</body>
+</html>
