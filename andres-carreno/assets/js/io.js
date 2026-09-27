@@ -19,6 +19,7 @@ const $ = (id) => document.getElementById(id);
 const guardar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 const leer = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } };
 const borrar = (k) => { try { localStorage.removeItem(k); } catch {} };
+const reemplazarURL = (...a) => { try { history.replaceState(...a); } catch {} };
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* =========================================================
@@ -150,7 +151,7 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
     requestAnimationFrame(() => requestAnimationFrame(() => app.classList.add("abierto")));
     campo.iniciar();
     setTimeout(() => cosmos && cosmos.pausar(true), 1000);
-    if (location.hash !== "#io") history.replaceState(null, "", location.pathname + location.search + "#io");
+    if (location.hash !== "#io") reemplazarURL(null, "", location.pathname + location.search + "#io");
 
     if (lectura) return cargarLectura(lectura);
 
@@ -180,12 +181,12 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
     setTimeout(() => { app.hidden = true; campo.detener(); }, 950);
     const url = new URL(location.href);
     url.hash = ""; url.searchParams.delete("lectura");
-    history.replaceState(null, "", url.pathname + url.search);
+    reemplazarURL(null, "", url.pathname + url.search);
     alCerrar && alCerrar();
   }
 
   $("ioCerrar").onclick = () => {
-    if (!charla.hidden && i > 2 && !confirm("¿Cerrar IO? Tus respuestas quedan guardadas en este dispositivo para cuando vuelvas.")) return;
+    if (!charla.hidden && i > 0) avisar && avisar("Tus respuestas quedan guardadas en este dispositivo para cuando vuelvas.");
     cerrar();
   };
   $("ioEmpezar").onclick = () => { mostrar(charla); pregunta(); };
@@ -333,7 +334,7 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
     if (id) {
       const url = new URL(location.href);
       url.searchParams.set("lectura", id); url.hash = "io";
-      history.replaceState(null, "", url.pathname + url.search + url.hash);
+      reemplazarURL(null, "", url.pathname + url.search + url.hash);
     }
     pintarResultado(res, { id, local: res.local });
   }
@@ -463,6 +464,7 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
   function enlazarResultado(libros, id) {
     resultado.querySelectorAll("[data-libro]").forEach((b) => (b.onclick = () => document.dispatchEvent(new CustomEvent("abrir-libro", { detail: Number(b.dataset.libro) }))));
     $("rImprimir").onclick = () => window.print();
+    if (window.VISTA_PREVIA) $("rImprimir").hidden = true;
     $("rCompartir").onclick = async () => {
       const url = location.origin + location.pathname + "#io";
       const datos = { title: "IO — Andrés Carreño", text: "Once preguntas que leen la raíz de lo que se te repite. Gratis.", url };
@@ -472,10 +474,11 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
     const en = $("rEnlace");
     if (en) en.onclick = () => copiar(`${location.origin}${location.pathname}?lectura=${id}#io`, "Enlace copiado. Quien lo tenga podrá leer tu análisis.");
     $("rBiblioteca").onclick = () => { cerrar(); setTimeout(() => document.getElementById("biblioteca").scrollIntoView({ behavior: quieto ? "auto" : "smooth" }), 500); };
-    $("rNueva").onclick = () => {
-      if (!confirm("¿Empezar una lectura nueva? La actual seguirá disponible en su enlace si la guardaste.")) return;
+    $("rNueva").onclick = (ev) => {
+      const b = ev.currentTarget;
+      if (!b.dataset.seguro) { b.dataset.seguro = "1"; b.textContent = "¿Seguro? Toca otra vez para empezar de cero"; setTimeout(() => { delete b.dataset.seguro; b.textContent = "Hacer una lectura nueva"; }, 4000); return; }
       borrar(CLAVE_LECTURA); A = {}; i = 0; campo.limpiar(); hilo.style.width = "0";
-      const url = new URL(location.href); url.searchParams.delete("lectura"); history.replaceState(null, "", url.pathname + url.search + "#io");
+      const url = new URL(location.href); url.searchParams.delete("lectura"); reemplazarURL(null, "", url.pathname + url.search + "#io");
       mostrar(portada);
     };
 
@@ -510,7 +513,7 @@ export function crearIO({ cosmos, avisar, alCerrar } = {}) {
   function copiar(texto, msj) {
     (navigator.clipboard ? navigator.clipboard.writeText(texto) : Promise.reject())
       .then(() => avisar && avisar(msj))
-      .catch(() => prompt("Copia este enlace:", texto));
+      .catch(() => avisar && avisar("Copia este enlace: " + texto));
   }
 
   return { abrir, cerrar, get abierto() { return abierto; } };

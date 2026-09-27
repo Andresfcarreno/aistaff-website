@@ -367,6 +367,8 @@ function lista() {
     if (ok) {
       estado.className = "form-estado ok"; estado.textContent = "Listo — quedaste en la lista. El próximo libro te llega directo.";
       form.reset();
+    } else if (window.VISTA_PREVIA) {
+      estado.className = "form-estado ok"; estado.textContent = "Vista previa: en tu sitio publicado este correo queda guardado en tu lista.";
     } else {
       estado.className = "form-estado ok"; estado.textContent = "Se abrirá tu app de correo para confirmar — un solo paso.";
       location.href = "mailto:andycarrenofx@gmail.com?subject=" + encodeURIComponent("Quiero recibir los nuevos libros") + "&body=" + encodeURIComponent("Mi correo para la lista: " + email);
