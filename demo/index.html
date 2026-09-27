@@ -776,6 +776,47 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
   .mini-orb{background:none!important;}
   .persona-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;}
   .persona-btn .av{width:26px;height:26px;}
+
+  /* ===== Voice console (floating nebula + radial voice ring) ===== */
+  .vc-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:18px;
+    background:radial-gradient(ellipse at 50% 40%,rgba(18,40,90,.72),rgba(2,6,16,.9));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+  .vc-overlay.show{display:flex;animation:vcIn .35s ease;}
+  @keyframes vcIn{from{opacity:0;}to{opacity:1;}}
+  .vc{position:relative;width:min(460px,100%);color:#EAF1FF;text-align:center;animation:vcPop .5s cubic-bezier(.2,.8,.2,1);}
+  @keyframes vcPop{from{transform:translateY(24px) scale(.96);opacity:0;}to{transform:none;opacity:1;}}
+  .vc-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;}
+  .vc-top .vc-title{display:flex;align-items:center;gap:10px;text-align:left;}
+  .vc-top .vc-title .av{width:38px;height:38px;}
+  .vc-top b{display:block;font-size:15px;letter-spacing:-.2px;}
+  .vc-top span{display:block;font-size:11.5px;color:#9FB3D9;font-weight:600;}
+  .vc-x{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-size:18px;cursor:pointer;}
+  .vc-x:hover{background:rgba(255,255,255,.14);}
+  .vc-stage{position:relative;width:min(420px,86vw);aspect-ratio:1;margin:0 auto;}
+  .vc-stage canvas{position:absolute;inset:0;width:100%;height:100%;}
+  .vc-state{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(234,241,255,.85);text-shadow:0 0 18px rgba(80,160,255,.9);pointer-events:none;}
+  .vc-cap{min-height:92px;margin:4px auto 0;max-width:420px;}
+  .vc-who{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7FB8FF;margin-bottom:6px;}
+  .vc-who.user{color:#FFB27A;}
+  .vc-line{font-size:17px;line-height:1.5;font-weight:600;color:rgba(234,241,255,.45);}
+  .vc-line .w{transition:color .15s;}
+  .vc-line .w.on{color:#fff;text-shadow:0 0 14px rgba(120,180,255,.55);}
+  .vc-prog{height:3px;border-radius:3px;background:rgba(255,255,255,.12);margin:16px auto 0;max-width:360px;overflow:hidden;}
+  .vc-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3B82F6,#5EE0F5);transition:width .3s;}
+  .vc-ctrl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px;}
+  .vc-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;display:grid;place-items:center;font-size:15px;}
+  .vc-btn:hover{background:rgba(255,255,255,.14);}
+  .vc-btn.main{width:62px;height:62px;font-size:20px;background:linear-gradient(135deg,#3B82F6,#1858C4);border:0;box-shadow:0 0 30px rgba(59,130,246,.6);}
+  .vc-meta{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  .vc-chip{font-size:11px;font-weight:700;color:#BFD0F0;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);padding:6px 10px;border-radius:999px;cursor:pointer;}
+  .vc-chip.on{color:#fff;border-color:rgba(120,180,255,.6);background:rgba(59,130,246,.25);}
+  .listen-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--gold-deep);font:inherit;font-size:11.5px;font-weight:800;padding:7px 11px;border-radius:9px;cursor:pointer;white-space:nowrap;}
+  .listen-btn:hover{background:var(--cream);}
+  .listen-btn .dotw{display:inline-flex;gap:2px;align-items:flex-end;height:11px;}
+  .listen-btn .dotw i{width:2px;background:currentColor;border-radius:1px;animation:eqb 1s ease-in-out infinite;}
+  .listen-btn .dotw i:nth-child(1){height:5px}.listen-btn .dotw i:nth-child(2){height:10px;animation-delay:.15s}.listen-btn .dotw i:nth-child(3){height:7px;animation-delay:.3s}
+  @keyframes eqb{0%,100%{transform:scaleY(.5);}50%{transform:scaleY(1);}}
+  .chat-voice{margin-left:auto;}
+  @media (prefers-reduced-motion:reduce){.vc,.vc-overlay.show{animation:none;}}
 </style>
 </head>
 <body>
@@ -806,7 +847,7 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
       <div class="hero-label" data-t="heroLabel"></div>
       <div class="wave" id="wave"></div>
       <div class="hero-foot"><span data-t="heroFoot1"></span><span data-t="heroFoot2"></span></div>
-      <div class="hero-next"><span>☀️</span><span data-t="nextBrief"></span><button type="button" data-go-btn="briefings" data-t="lastBrief"></button></div>
+      <div class="hero-next"><span>☀️</span><span data-t="nextBrief"></span><button type="button" id="heroListen" data-t="lastBrief"></button></div>
     </div>
     <div class="kpis" id="kpis"></div>
     <div class="card" id="activityCard">
@@ -968,7 +1009,7 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
       </div>
       <div>
       <section class="card chat" aria-label="Chat">
-        <div class="chat-head"><div class="mini-orb" id="chatOrb">S</div><div><b id="chatName"></b><span data-t="chatOnline"></span></div></div>
+        <div class="chat-head"><div class="mini-orb" id="chatOrb">S</div><div><b id="chatName"></b><span data-t="chatOnline"></span></div><span class="chat-voice" id="chatVoiceWrap"></span></div>
         <div class="chat-body" id="chatBody"></div>
         <div class="chat-sugg" id="chatSugg"></div>
         <form class="chat-form" id="chatForm"><input id="chatInput" autocomplete="off"><button type="submit" data-t="send"></button></form>
@@ -1376,6 +1417,208 @@ function avatarSVG(id){
     `<circle cx="32" cy="32" r="${r}" fill="url(#${uid})"/><g clip-path="url(#${uid}c)">${hair}<path d="M9 66c1.5-12.5 10.5-19.5 23-19.5S53.5 53.5 55 66z" fill="#EAF1FF"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#DCE7FB"/><ellipse cx="32" cy="30" rx="10.2" ry="11.4" fill="#EAF1FF"/>${top}</g>${ring}</svg>`;
 }
 
+
+/* ================= Voice console: floating nebula + radial voice ring ================= */
+const VC_TXT = {
+  fr:{listen:"Écouter",speaking:"En train de parler",you:"Vous",paused:"En pause",done:"Terminé",voice:"🔊 Voix",muted:"🔇 Sans son",replay:"Rejouer",speed:"Vitesse",briefing:"Briefing",call:"Appel",chatVoice:"Écouter la réponse"},
+  en:{listen:"Listen",speaking:"Speaking",you:"You",paused:"Paused",done:"Done",voice:"🔊 Voice",muted:"🔇 Muted",replay:"Replay",speed:"Speed",briefing:"Briefing",call:"Call",chatVoice:"Listen to the answer"},
+  es:{listen:"Escuchar",speaking:"Hablando",you:"Tú",paused:"En pausa",done:"Terminado",voice:"🔊 Voz",muted:"🔇 Sin sonido",replay:"Repetir",speed:"Velocidad",briefing:"Briefing",call:"Llamada",chatVoice:"Escuchar la respuesta"}
+};
+function vt(k){ return VC_TXT[uiLang][k]; }
+const VC = {open:false, lines:[], i:0, playing:false, amp:0, pulse:0, user:false, muted:false, rate:1, timers:[], title:"", sub:""};
+function vcBuild(){
+  if(document.getElementById("vcOverlay")) return;
+  const o = document.createElement("div");
+  o.className = "vc-overlay"; o.id = "vcOverlay"; o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
+  o.innerHTML = `<div class="vc"><div class="vc-top"><div class="vc-title"><span id="vcAv"></span><div><b id="vcTitle"></b><span id="vcSub"></span></div></div><button class="vc-x" id="vcClose" aria-label="Fermer">×</button></div>
+    <div class="vc-stage"><canvas id="vcGL"></canvas><canvas id="vcHUD"></canvas><div class="vc-state" id="vcState"></div></div>
+    <div class="vc-cap"><div class="vc-who" id="vcWho"></div><div class="vc-line" id="vcLine"></div></div>
+    <div class="vc-prog"><i id="vcProg"></i></div>
+    <div class="vc-ctrl"><button class="vc-btn" id="vcPrev" aria-label="prev">⏮</button><button class="vc-btn main" id="vcPlay" aria-label="play">❚❚</button><button class="vc-btn" id="vcNext" aria-label="next">⏭</button></div>
+    <div class="vc-meta"><button class="vc-chip on" id="vcMute"></button><button class="vc-chip" id="vcRate"></button></div></div>`;
+  document.body.appendChild(o);
+  o.addEventListener("click", e=>{ if(e.target===o) vcClose(); });
+  document.getElementById("vcClose").onclick = vcClose;
+  document.getElementById("vcPlay").onclick = ()=> VC.playing ? vcPause() : vcResume();
+  document.getElementById("vcPrev").onclick = ()=>{ vcStop(); VC.i = Math.max(0, VC.i-1); vcPlayLine(); };
+  document.getElementById("vcNext").onclick = ()=>{ vcStop(); VC.i = Math.min(VC.lines.length-1, VC.i+1); vcPlayLine(); };
+  document.getElementById("vcMute").onclick = ()=>{ VC.muted = !VC.muted; vcChips(); vcStop(); vcPlayLine(); };
+  document.getElementById("vcRate").onclick = ()=>{ VC.rate = VC.rate===1 ? 1.25 : VC.rate===1.25 ? 1.5 : 1; vcChips(); vcStop(); vcPlayLine(); };
+  document.addEventListener("keydown", e=>{ if(VC.open && e.key==="Escape") vcClose(); if(VC.open && e.key===" " && e.target===document.body){ e.preventDefault(); VC.playing ? vcPause() : vcResume(); } });
+  vcInitGL(); vcInitHUD();
+}
+function vcChips(){
+  document.getElementById("vcMute").textContent = VC.muted ? vt("muted") : vt("voice");
+  document.getElementById("vcMute").classList.toggle("on", !VC.muted);
+  document.getElementById("vcRate").textContent = vt("speed")+" ×"+VC.rate;
+}
+/* lines: [["A"|"U"|name, text]] ; speaker "A" = assistant */
+function vcOpen(title, sub, lines){
+  vcBuild();
+  VC.lines = lines.map(l=>({who:l[0], text:fill(l[1])})); VC.i = 0; VC.title = title; VC.sub = sub;
+  document.getElementById("vcTitle").textContent = title;
+  document.getElementById("vcSub").textContent = sub;
+  document.getElementById("vcAv").innerHTML = avatarSVG(persona);
+  document.getElementById("vcClose").setAttribute("aria-label", uiLang==="en"?"Close":uiLang==="es"?"Cerrar":"Fermer");
+  vcChips();
+  document.getElementById("vcOverlay").classList.add("show"); VC.open = true;
+  requestAnimationFrame(()=>VC.resize && VC.resize());
+  setTimeout(vcPlayLine, 450);
+}
+function vcClose(){ vcStop(); VC.open = false; const o = document.getElementById("vcOverlay"); if(o) o.classList.remove("show"); }
+function vcStop(){
+  VC.timers.forEach(clearTimeout); VC.timers = [];
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  VC.playing = false;
+}
+function vcPause(){ vcStop(); VC.paused = true; document.getElementById("vcPlay").textContent = "▶"; document.getElementById("vcState").textContent = vt("paused"); }
+function vcResume(){ if(VC.i >= VC.lines.length) VC.i = 0; VC.paused = false; vcPlayLine(); }
+function vcVoice(){
+  if(!window.speechSynthesis) return null;
+  const want = {fr:"fr",en:"en",es:"es"}[uiLang], vs = speechSynthesis.getVoices().filter(v=>v.lang && v.lang.toLowerCase().startsWith(want));
+  if(!vs.length) return null;
+  const pref = uiLang==="fr" ? vs.find(v=>/CA/i.test(v.lang)) : null;
+  return pref || vs[0];
+}
+function vcPlayLine(){
+  if(!VC.open) return;
+  const L = VC.lines[VC.i]; if(!L){ vcEnd(); return; }
+  VC.playing = true; VC.user = L.who!=="A";
+  document.getElementById("vcPlay").textContent = "❚❚";
+  const who = document.getElementById("vcWho");
+  who.textContent = L.who==="A" ? P().name : (L.who==="U" ? vt("you") : fill(L.who));
+  who.classList.toggle("user", VC.user);
+  document.getElementById("vcState").textContent = VC.user ? "" : vt("speaking");
+  const words = L.text.split(/\s+/);
+  document.getElementById("vcLine").innerHTML = words.map(w=>`<span class="w">${esc(w)}</span> `).join("");
+  document.getElementById("vcProg").style.width = ((VC.i)/VC.lines.length*100)+"%";
+  const spans = document.querySelectorAll("#vcLine .w");
+  let wi = 0;
+  const lightWord = ()=>{ if(spans[wi]){ spans[wi].classList.add("on"); VC.pulse = Math.min(1.2, VC.pulse + .55); } wi++; };
+  const next = ()=>{ VC.timers.push(setTimeout(()=>{ spans.forEach(s=>s.classList.add("on")); VC.i++; vcPlayLine(); }, 420)); };
+  const voice = VC.muted ? null : vcVoice();
+  if(voice){
+    const ut = new SpeechSynthesisUtterance(L.text);
+    ut.voice = voice; ut.lang = voice.lang; ut.rate = VC.rate;
+    ut.pitch = VC.user ? .85 : (persona==="tomas" ? .82 : persona==="alex" ? .98 : 1.08);
+    let gotBoundary = false;
+    ut.onboundary = e=>{ if(e.name && e.name!=="word") return; gotBoundary = true; lightWord(); };
+    ut.onstart = ()=>{ /* fallback word timing if the engine sends no boundaries */
+      VC.timers.push(setTimeout(function tick(){ if(!gotBoundary && VC.playing && wi < spans.length){ lightWord(); VC.timers.push(setTimeout(tick, 300/VC.rate)); } }, 350));
+    };
+    ut.onend = ()=>{ if(VC.playing) next(); };
+    ut.onerror = ()=>{ if(VC.playing) next(); };
+    speechSynthesis.speak(ut);
+  } else {
+    const step = 290/VC.rate;
+    spans.forEach((_,k)=>VC.timers.push(setTimeout(lightWord, 120 + k*step)));
+    VC.timers.push(setTimeout(next, 200 + spans.length*step));
+  }
+}
+function vcEnd(){
+  VC.playing = false;
+  document.getElementById("vcPlay").textContent = "↻";
+  document.getElementById("vcState").textContent = vt("done");
+  document.getElementById("vcProg").style.width = "100%";
+  VC.i = VC.lines.length;
+}
+/* ---- WebGL nebula ---- */
+function vcInitGL(){
+  const cv = document.getElementById("vcGL");
+  let gl = null; try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true}); }catch(e){}
+  if(!gl) return;
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const fs = `precision highp float;uniform vec2 uR;uniform float uT,uA,uU;
+float h(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+float n(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
+float fb(vec3 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.02+vec3(3.1,1.7,4.3);a*=.5;}return v;}
+void main(){vec2 uv=(gl_FragCoord.xy-.5*uR)/(.5*min(uR.x,uR.y));float d=length(uv);float ang=atan(uv.y,uv.x);
+float R=.46+uA*.07;
+vec2 q=uv*mat2(cos(uT*.12),-sin(uT*.12),sin(uT*.12),cos(uT*.12));
+float w=fb(vec3(q*1.6,uT*.18));
+float f=fb(vec3(q*2.4+w*1.8,uT*.22+uA*.6));
+vec3 a1=mix(vec3(.08,.25,.95),vec3(1.,.45,.15),uU),a2=mix(vec3(.3,.85,1.),vec3(1.,.8,.4),uU),a3=mix(vec3(.55,.3,1.),vec3(1.,.35,.45),uU);
+float core=smoothstep(R+.12,0.,d);
+float swirl=smoothstep(.35,.85,f);
+vec3 col=mix(a1,a2,swirl)*core*(.35+1.1*f)*(.75+uA*.9);
+col+=a3*core*pow(max(w-.35,0.),2.)*2.2;
+float shell=exp(-pow((d-R)*9.,2.))*(.55+uA*1.1);
+vec3 sc=mix(a2,a3,.5+.5*sin(ang*2.+uT*.8));
+col+=sc*shell;
+float halo=exp(-max(d-R,0.)*5.)*.35*(1.+uA);
+col+=a1*halo*(1.-core);
+float al=clamp(max(max(core*(.25+f),shell),halo),0.,1.);
+gl_FragColor=vec4(col,al);}`;
+  const sh = (t,s)=>{ const o = gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); return o; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER,fs)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+  gl.useProgram(pr);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uR = gl.getUniformLocation(pr,"uR"), uT = gl.getUniformLocation(pr,"uT"), uA = gl.getUniformLocation(pr,"uA"), uU = gl.getUniformLocation(pr,"uU");
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  VC.gl = {gl, cv, uR, uT, uA, uU, user:0};
+}
+/* ---- 2D HUD: radial voice bars, rotating arcs, particles ---- */
+function vcInitHUD(){
+  const cv = document.getElementById("vcHUD"), ctx = cv.getContext("2d");
+  const N = 96, bars = new Float32Array(N), seeds = Array.from({length:N},()=>Math.random()*6.28);
+  const parts = Array.from({length:46},()=>({r:.62+Math.random()*.34, a:Math.random()*6.28, s:(Math.random()*.25+.05)*(Math.random()<.5?-1:1), z:Math.random()}));
+  const t0 = performance.now();
+  function size(c){ const dpr = Math.min(window.devicePixelRatio||1, 2), r = c.getBoundingClientRect(); c.width = Math.round(r.width*dpr); c.height = Math.round(r.height*dpr); }
+  function frame(now){
+    if(!VC.open){ requestAnimationFrame(frame); return; }
+    const t = (now - t0)/1000;
+    /* voice amplitude: speaking = lively, idle = breathing */
+    const target = VC.playing ? .45 + .35*Math.abs(Math.sin(t*7.1)*Math.sin(t*2.3+.7)) + VC.pulse*.35 : .06 + .04*Math.sin(t*1.4);
+    VC.amp += (target - VC.amp)*.14; VC.pulse *= .9;
+    const userMix = VC.user ? 1 : 0; if(VC.gl) VC.gl.user += (userMix - VC.gl.user)*.08;
+    /* GL */
+    if(VC.gl){ const g = VC.gl, gl = g.gl; gl.viewport(0,0,g.cv.width,g.cv.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(g.uR,g.cv.width,g.cv.height); gl.uniform1f(g.uT,t); gl.uniform1f(g.uA,VC.amp); gl.uniform1f(g.uU,g.user); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }
+    /* HUD */
+    const W = cv.width, H = cv.height, cx = W/2, cy = H/2, S = Math.min(W,H)/2;
+    ctx.clearRect(0,0,W,H);
+    const u = VC.gl ? VC.gl.user : userMix;
+    const c1 = u>.5 ? [255,170,110] : [110,180,255], c2 = u>.5 ? [255,120,140] : [150,120,255];
+    const r0 = S*.60;
+    /* radial bars (mirrored spectrum) */
+    for(let i=0;i<N;i++){
+      const k = i < N/2 ? i : N-1-i;
+      const nz = .5+.5*Math.sin(t*(3+k*.13)+seeds[k]) * Math.sin(t*1.7+k*.4);
+      const val = VC.amp*(.25+.75*nz)*(1 - Math.abs(k-N/4)/(N/2)*.45);
+      bars[i] += (val - bars[i])*.35;
+      const a = i/N*Math.PI*2 - Math.PI/2 + t*.05, len = S*(.03 + bars[i]*.30);
+      const mix = i/N, col = c1.map((v,j)=>Math.round(v*(1-mix)+c2[j]*mix));
+      ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${.35+bars[i]*.9})`;
+      ctx.lineWidth = Math.max(1.5, S*.011); ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*r0); ctx.lineTo(cx+Math.cos(a)*(r0+len), cy+Math.sin(a)*(r0+len)); ctx.stroke();
+    }
+    /* inner thin ring */
+    ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.22)`; ctx.lineWidth = 1*(S/200);
+    ctx.beginPath(); ctx.arc(cx,cy,r0-S*.035,0,Math.PI*2); ctx.stroke();
+    /* tick ring rotating */
+    const rt = S*.955, rot = t*.12;
+    ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.35)`; ctx.lineWidth = Math.max(1,S*.005);
+    for(let k=0;k<120;k++){ const a = k/120*Math.PI*2 + rot, l = k%10===0 ? S*.04 : S*.018;
+      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*rt, cy+Math.sin(a)*rt); ctx.lineTo(cx+Math.cos(a)*(rt-l), cy+Math.sin(a)*(rt-l)); ctx.stroke(); }
+    /* sweeping arcs */
+    ctx.lineWidth = Math.max(1.5,S*.012); ctx.lineCap = "round";
+    [[.88,-t*.35,.9,.55],[.88,-t*.35+Math.PI,.5,.4],[.82,t*.5,.35,.3]].forEach(([rr,st,len,al])=>{
+      ctx.strokeStyle = `rgba(${c2[0]},${c2[1]},${c2[2]},${al+VC.amp*.3})`;
+      ctx.beginPath(); ctx.arc(cx,cy,S*rr,st,st+len); ctx.stroke(); });
+    /* particles */
+    parts.forEach(p=>{ p.a += p.s*.01*(1+VC.amp*2); const r = S*(p.r + Math.sin(t*.8+p.z*6)*.01);
+      ctx.fillStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},${.25+p.z*.55})`;
+      ctx.beginPath(); ctx.arc(cx+Math.cos(p.a)*r, cy+Math.sin(p.a)*r, Math.max(1,S*.006*(.6+p.z)), 0, Math.PI*2); ctx.fill(); });
+    requestAnimationFrame(frame);
+  }
+  VC.resize = ()=>{ size(cv); if(VC.gl) size(VC.gl.cv); };
+  window.addEventListener("resize", VC.resize);
+  requestAnimationFrame(frame);
+}
+function listenBtn(label, attr){ return `<button type="button" class="listen-btn" ${attr}><span class="dotw"><i></i><i></i><i></i></span>${esc(label)}</button>`; }
+
 /* ================= v2: activity chart (stacked columns, 3 channels) ================= */
 let showTable = false;
 function renderActivity(){
@@ -1584,10 +1827,12 @@ function renderCallDetail(){
   const c = calls[activeCall], dirL = {in:u("dirIn"),out:u("dirOut"),missed:u("dirMissed")};
   const tr = c.tr.length ? c.tr.map(l=>`<div class="utterance ${l[0]==="A"?"alex":""}"><div class="speaker">${esc(speaker(l[0]))}</div><div class="bubble">${F(l[1])}</div></div>`).join("") : `<div class="detail-empty">${u("noTranscript")}</div>`;
   document.getElementById("callDetail").innerHTML =
-    `<div class="detail-head"><div class="detail-person">${pic(c.ini,44)}<div><div class="detail-name">${esc(c.name)}</div><div class="detail-number">${esc(c.num)} · ${esc(c.time)}</div></div></div>${badge(c.tag)}</div>`+
+    `<div class="detail-head"><div class="detail-person">${pic(c.ini,44)}<div><div class="detail-name">${esc(c.name)}</div><div class="detail-number">${esc(c.num)} · ${esc(c.time)}</div></div></div><div style="display:flex;gap:8px;align-items:center">${c.tr.length?listenBtn(vt("listen"),'id="callListen"'):""}${badge(c.tag)}</div></div>`+
     `<div class="detail-stats"><div class="detail-stat"><span>${u("labDir")}</span><strong>${dirL[c.dir]}</strong></div><div class="detail-stat"><span>${u("labDur")}</span><strong>${esc(c.dur)}</strong></div><div class="detail-stat"><span>${u("labScore")}</span><strong>${esc(c.score)}</strong></div></div>`+
     `<div class="insight-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${u("labSummary")}</strong><span>${F(c.sum)}</span><strong style="margin-top:8px">${u("labNext")}</strong><span>${F(c.next)}</span></div></div>`+
     `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3><span class="recording">${u("recording")}</span></div>${tr}</div>`;
+  const cl = document.getElementById("callListen");
+  if(cl) cl.addEventListener("click",()=>vcOpen(vt("call")+" · "+c.name, c.time+" · "+c.dur, c.tr));
 }
 document.querySelectorAll("#segAppels button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll("#segAppels button").forEach(x=>x.classList.toggle("on",x===b));
@@ -1725,10 +1970,11 @@ function renderBriefings(){
   document.querySelectorAll("[data-brief]").forEach(b=>b.addEventListener("click",()=>{ activeBrief=+b.dataset.brief; renderBriefings(); }));
   const b = x.briefs[activeBrief];
   document.getElementById("briefDetail").innerHTML =
-    `<div class="detail-head"><div class="detail-person"><span style="width:44px;height:44px;display:block;flex:0 0 auto;">${avatarSVG(persona)}</span><div><div class="detail-name">${esc(b.type)} · ${esc(b.when)}</div><div class="detail-number">${P().name} → ${esc(client)}</div></div></div><span class="badge b-ok">✓</span></div>`+
+    `<div class="detail-head"><div class="detail-person"><span style="width:44px;height:44px;display:block;flex:0 0 auto;">${avatarSVG(persona)}</span><div><div class="detail-name">${esc(b.type)} · ${esc(b.when)}</div><div class="detail-number">${P().name} → ${esc(client)}</div></div></div>${listenBtn(vt("listen"),'id="briefListen"')}</div>`+
     `<div class="detail-stats"><div class="detail-stat"><span>${u("when")}</span><strong>${esc(b.when)}</strong></div><div class="detail-stat"><span>${u("duration")}</span><strong>${esc(b.dur)}</strong></div><div class="detail-stat"><span>${u("type")}</span><strong>${esc(b.type)}</strong></div></div>`+
     `<div class="insight-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div style="flex:1"><strong>${fill(u("briefSummary"))}</strong><ul class="action-list">${b.said.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><strong style="margin-top:10px">${u("briefActions")}</strong><ul class="action-list">${b.asked.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div></div>`+
     `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3><span class="recording">${u("recording")}</span></div>${b.tr.map(l=>`<div class="utterance ${l[0]==="A"?"alex":""}"><div class="speaker">${esc(speaker(l[0]))}</div><div class="bubble">${F(l[1])}</div></div>`).join("")}</div>`;
+  document.getElementById("briefListen").addEventListener("click",()=>vcOpen(vt("briefing")+" · "+b.type, b.when+" · "+b.dur, b.tr));
 }
 
 /* ================= SOCIAL ================= */
@@ -1850,9 +2096,12 @@ function renderAll(){
   renderMsgList(); renderMsgDetail(); renderEmailList(); renderEmailDetail();
   renderCalendar(); renderBriefings(); renderSocial(); renderContacts(); renderAssistant();
   renderLangs(); renderIntegrations(); paintLivePill();
+  document.getElementById("chatVoiceWrap").innerHTML = listenBtn(vt("listen"),'id="chatListen"');
+  document.getElementById("chatListen").onclick = ()=>{ const last = [...chatLog].reverse().find(m=>m[0]==="ai"); vcOpen(P().name+" · AI Staff", vt("chatVoice"), [["A", last ? last[1] : d().chatHello]]); };
 }
 buildWave();
 renderAll();
+document.getElementById("heroListen").addEventListener("click",()=>{ const b = d().briefs[0]; vcOpen(vt("briefing")+" · "+b.type, b.when+" · "+b.dur, b.tr); });
 const startPane = (location.hash||"").slice(1);
 if(document.getElementById("pane-"+startPane)) go(startPane);
 })();
