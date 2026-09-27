@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agente IA en 7 Días · Andrés.IA</title>
+<meta name="description" content="Monta tu propio agente de voz con IA que contesta llamadas, responde dudas y agenda citas 24/7. En 7 días, sin programar. Curso en español con Andrés Carreño.">
+<meta property="og:title" content="Monta tu Agente de IA en 7 Días">
+<meta property="og:description" content="Tu negocio contesta solo, 24/7. Aprende a montar tu agente de voz con IA, sin programar.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0B0B0C;
+    --surface:#141416;
+    --surface-2:#1B1B1E;
+    --line:rgba(237,234,227,.08);
+    --line-2:rgba(237,234,227,.16);
+    --text:#EDEAE3;
+    --muted:#928D83;
+    --gold:#F5B544;
+    --gold-deep:#E0901F;
+    --gold-soft:rgba(245,181,68,.10);
+    --ink:#1A1205;
+    --ok:#7FD69B;
+    --bad:#F07A62;
+    --display:'Bricolage Grotesque', 'Arial Black', system-ui, sans-serif;
+    --body:'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono:'Martian Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --wrap:1160px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit}
+  img{max-width:100%}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,32px)}
+  h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.025em;text-wrap:balance}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .sec{padding-block:clamp(72px,10vw,120px);position:relative}
+  .sec-head{display:grid;gap:16px;max-width:760px;margin-bottom:clamp(36px,5vw,56px)}
+  .sec-head h2{font-weight:800;font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.02}
+  .sec-head p{color:var(--muted);font-size:1.08rem;max-width:620px}
+  .hl{color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--display);font-weight:700;
+    font-size:1rem;padding:16px 26px;border-radius:12px;text-decoration:none;border:1px solid transparent;cursor:pointer;
+    transition:transform .15s ease, background .2s ease, border-color .2s ease}
+  .btn-gold{background:var(--gold);color:var(--ink);box-shadow:0 10px 30px -10px rgba(245,181,68,.55)}
+  .btn-gold:hover{background:#FFC766;transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--text);border-color:var(--line-2)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:rgba(11,11,12,.78);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px}
+  .brand{font-family:var(--display);font-weight:800;font-size:1.15rem;letter-spacing:-.02em;text-decoration:none}
+  .brand span{color:var(--gold)}
+  .nav ul{list-style:none;display:flex;gap:28px;font-size:.92rem;color:var(--muted)}
+  .nav ul a{text-decoration:none;transition:color .2s}
+  .nav ul a:hover{color:var(--text)}
+  .nav .btn{padding:10px 18px;font-size:.9rem}
+  @media(max-width:860px){.nav ul{display:none}}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;padding-block:clamp(48px,8vw,96px) clamp(64px,9vw,110px)}
+  .hero-glow{position:absolute;top:-340px;right:-200px;width:1000px;height:900px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(245,181,68,.17),rgba(245,181,68,0))}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(36px,5vw,72px);align-items:center}
+  @media(max-width:960px){.hero-grid{grid-template-columns:1fr}}
+  .kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:26px}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(245,181,68,.6);animation:ping 1.8s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(245,181,68,.55)}80%,100%{box-shadow:0 0 0 12px rgba(245,181,68,0)}}
+  .hero h1{font-weight:800;font-size:clamp(2.6rem,6.2vw,5rem);line-height:.98;margin-bottom:26px}
+  .hero h1 .strike{position:relative;color:var(--muted);white-space:nowrap}
+  .hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.09em;background:var(--gold);transform:rotate(-3deg)}
+  .hero .lead{font-size:clamp(1.08rem,1.7vw,1.25rem);color:var(--muted);max-width:560px;margin-bottom:34px}
+  .hero .lead b{color:var(--text);font-weight:600}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+  .trust{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.86rem;color:var(--muted)}
+  .trust span{display:inline-flex;align-items:center;gap:8px}
+  .trust svg{flex:none}
+
+  /* CALL CARD */
+  .call{background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line-2);border-radius:24px;
+    padding:22px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8), 0 0 0 1px rgba(245,181,68,.05) inset;position:relative}
+  .call-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .call-who{display:flex;gap:12px;align-items:center}
+  .call-av{width:42px;height:42px;border-radius:50%;background:var(--gold-soft);border:1px solid rgba(245,181,68,.35);display:grid;place-items:center;color:var(--gold)}
+  .call-who b{display:block;font-family:var(--display);font-weight:600;font-size:1rem}
+  .call-who small{font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.04em}
+  .call-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);
+    display:inline-flex;align-items:center;gap:6px;background:rgba(127,214,155,.08);border:1px solid rgba(127,214,155,.25);padding:6px 10px;border-radius:100px;white-space:nowrap}
+  .call-status i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+  #wave{display:block;width:100%;height:56px;margin:14px 0 6px}
+  .call-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.66rem;color:var(--muted);margin-bottom:14px}
+  .transcript{height:250px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;
+    mask-image:linear-gradient(to bottom,transparent 0,#000 22%);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%)}
+  .msg{max-width:86%;padding:10px 14px;border-radius:14px;font-size:.92rem;line-height:1.45;animation:msgIn .35s ease both}
+  .msg.agent{background:var(--gold-soft);border:1px solid rgba(245,181,68,.22);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.client{background:rgba(237,234,227,.06);border:1px solid var(--line);align-self:flex-end;border-bottom-right-radius:4px}
+  .msg .who{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .msg.agent .who{color:var(--gold)}
+  .msg.event{align-self:stretch;max-width:100%;background:rgba(127,214,155,.08);border:1px solid rgba(127,214,155,.3);font-family:var(--mono);font-size:.74rem;color:var(--ok)}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .call-foot{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;font-size:.78rem;color:var(--muted)}
+  .call-foot b{color:var(--text);font-weight:600}
+  .call-tag{position:absolute;top:-14px;left:22px;background:var(--gold);color:var(--ink);font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;
+    text-transform:uppercase;padding:6px 12px;border-radius:100px;font-weight:500}
+
+  /* STRIP */
+  .strip{border-block:1px solid var(--line);background:var(--surface)}
+  .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stat{padding:28px 20px;border-left:1px solid var(--line)}
+  .stat:first-child{border-left:none}
+  .stat b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.5rem);letter-spacing:-.03em;line-height:1;margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .stat span{font-size:.88rem;color:var(--muted)}
+  @media(max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:none}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+  /* CALCULATOR */
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line-2);border-radius:24px;overflow:hidden}
+  @media(max-width:860px){.calc{grid-template-columns:1fr}}
+  .calc-in{padding:clamp(24px,4vw,40px);display:grid;gap:28px}
+  .slider label{display:flex;justify-content:space-between;gap:12px;font-size:.95rem;margin-bottom:12px}
+  .slider label output{font-family:var(--mono);color:var(--gold);font-size:.9rem;font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:var(--surface-2);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);border:4px solid var(--bg);box-shadow:0 0 0 1px var(--gold)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);border:4px solid var(--bg)}
+  .slider small{display:block;color:var(--muted);font-size:.8rem;margin-top:8px}
+  .calc-out{background:linear-gradient(160deg,rgba(245,181,68,.12),rgba(245,181,68,.02));border-left:1px solid var(--line-2);padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+  @media(max-width:860px){.calc-out{border-left:none;border-top:1px solid var(--line-2)}}
+  .loss-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .loss{font-family:var(--display);font-weight:800;font-size:clamp(3rem,7vw,5rem);line-height:1;letter-spacing:-.04em;color:var(--gold);font-variant-numeric:tabular-nums;margin:10px 0 6px}
+  .loss-sub{color:var(--muted);font-size:.95rem}
+  .vs{display:grid;gap:12px}
+  .vs-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px dashed var(--line-2);font-size:.95rem}
+  .vs-row:last-child{border-bottom:none;padding-bottom:0}
+  .vs-row b{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .vs-row.good b{color:var(--ok)}
+  .calc-note{font-size:.78rem;color:var(--muted)}
+
+  /* WHAT IT DOES */
+  .does{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.does{grid-template-columns:1fr}}
+  .does-item{padding:30px;border:1px solid var(--line);border-radius:20px;background:var(--surface);display:grid;gap:12px;align-content:start}
+  .does-item .ico{width:46px;height:46px;border-radius:12px;background:var(--gold-soft);display:grid;place-items:center;color:var(--gold)}
+  .does-item h3{font-weight:600;font-size:1.3rem}
+  .does-item p{color:var(--muted);font-size:.96rem}
+  .does-item code{font-family:var(--mono);font-size:.74rem;color:var(--text);background:var(--surface-2);border:1px solid var(--line);padding:6px 10px;border-radius:8px;display:block;margin-top:6px;line-height:1.6}
+
+  /* TIMELINE */
+  .days{display:grid;gap:0;border-top:1px solid var(--line-2)}
+  .day{display:grid;grid-template-columns:120px 1fr 280px;gap:28px;padding:28px 0;border-bottom:1px solid var(--line-2);align-items:start}
+  @media(max-width:900px){.day{grid-template-columns:80px 1fr}.day .deliver{grid-column:2}}
+  .day-n{font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,5vw,3.6rem);line-height:.9;color:transparent;-webkit-text-stroke:1px var(--line-2);letter-spacing:-.04em}
+  .day:hover .day-n{-webkit-text-stroke-color:var(--gold)}
+  .day-n small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--gold);-webkit-text-stroke:0;margin-bottom:6px;text-transform:uppercase}
+  .day h3{font-weight:600;font-size:1.35rem;margin-bottom:8px}
+  .day p{color:var(--muted);font-size:.96rem;max-width:560px}
+  .day ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .day li{font-family:var(--mono);font-size:.66rem;padding:5px 9px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+  .deliver{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:.9rem}
+  .deliver span{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+
+  /* BONUS */
+  .bonus{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+  .b-card{position:relative;padding:28px;border-radius:20px;border:1px solid var(--line);background:var(--surface);display:grid;gap:10px;align-content:start}
+  .b-card .tier{justify-self:start;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:6px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(245,181,68,.25)}
+  .b-card h3{font-weight:600;font-size:1.2rem}
+  .b-card p{color:var(--muted);font-size:.94rem}
+  .b-card .val{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+  .b-card .val s{opacity:.8}
+
+  /* KIT */
+  .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+  .file{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+  .file .ext{flex:none;width:44px;height:52px;border-radius:6px 14px 6px 6px;background:var(--surface-2);border:1px solid var(--line-2);display:grid;place-items:end center;padding-bottom:7px;font-family:var(--mono);font-size:.56rem;color:var(--gold);letter-spacing:.06em}
+  .file b{display:block;font-weight:600;font-size:.95rem;line-height:1.3}
+  .file small{color:var(--muted);font-size:.8rem}
+
+  /* STACK TABLE */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line-2);border-radius:20px;background:var(--surface)}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  th,td{text-align:left;padding:16px 20px;border-bottom:1px solid var(--line);font-size:.94rem;vertical-align:top}
+  th{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  td b{font-weight:600}
+  td.num{font-family:var(--mono);font-size:.84rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  tfoot td{background:var(--gold-soft);color:var(--text);font-weight:600}
+  tfoot td.num{color:var(--gold)}
+  .tbl-note{margin-top:14px;font-size:.84rem;color:var(--muted)}
+
+  /* INSTRUCTOR */
+  .teacher{display:grid;grid-template-columns:340px 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+  @media(max-width:860px){.teacher{grid-template-columns:1fr}}
+  .portrait{aspect-ratio:4/5;max-width:100%;border-radius:24px;border:1px solid var(--line-2);position:relative;overflow:hidden;
+    background:radial-gradient(120% 80% at 30% 20%,rgba(245,181,68,.25),transparent 60%),var(--surface-2);display:grid;place-items:center}
+  .portrait .mono-a{font-family:var(--display);font-weight:800;font-size:9rem;color:var(--gold);opacity:.9;letter-spacing:-.06em}
+  .portrait .cap{position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .teacher h2{font-weight:800;font-size:clamp(2rem,4.4vw,3rem);line-height:1.02;margin:14px 0 20px}
+  .teacher p{color:var(--muted);margin-bottom:14px;max-width:620px}
+  .teacher p b{color:var(--text);font-weight:600}
+  .creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .creds span{font-size:.84rem;padding:8px 14px;border-radius:100px;border:1px solid var(--line-2)}
+
+  /* FIT */
+  .fit{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.fit{grid-template-columns:1fr}}
+  .fit-col{padding:30px;border-radius:20px;border:1px solid var(--line);background:var(--surface)}
+  .fit-col h3{font-weight:600;font-size:1.25rem;margin-bottom:18px;display:flex;gap:10px;align-items:center}
+  .fit-col ul{list-style:none;display:grid;gap:12px}
+  .fit-col li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:.96rem;color:var(--muted)}
+  .fit-col li::before{content:"";width:18px;height:18px;margin-top:3px;border-radius:50%}
+  .fit-yes li::before{background:rgba(127,214,155,.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237FD69B' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+  .fit-no li::before{background:rgba(240,122,98,.13) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F07A62' stroke-width='3'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/10px no-repeat}
+
+  /* PRICING */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  @media(max-width:960px){.prices{grid-template-columns:1fr;max-width:560px;margin-inline:auto}}
+  .plan{border:1px solid var(--line-2);border-radius:24px;padding:30px;background:var(--surface);display:flex;flex-direction:column;gap:20px;position:relative}
+  .plan.feat{background:linear-gradient(180deg,rgba(245,181,68,.10),var(--surface) 55%);border-color:rgba(245,181,68,.55);box-shadow:0 30px 80px -40px rgba(245,181,68,.45)}
+  .plan .flag{position:absolute;top:-13px;left:30px;background:var(--gold);color:var(--ink);font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:100px}
+  .plan h3{font-weight:800;font-size:1.45rem}
+  .plan .for{color:var(--muted);font-size:.92rem;margin-top:4px}
+  .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .price{font-family:var(--display);font-weight:800;font-size:3.2rem;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+  .price sup{font-size:.4em;vertical-align:top;margin-right:2px;position:relative;top:.35em}
+  .was{font-family:var(--mono);font-size:.85rem;color:var(--muted);text-decoration:line-through}
+  .price-note{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.04em}
+  .plan ul{list-style:none;display:grid;gap:10px;flex:1;align-content:start}
+  .plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;font-size:.93rem;color:var(--muted);line-height:1.45}
+  .plan li b{color:var(--text);font-weight:600}
+  .plan li::before{content:"";width:14px;height:14px;margin-top:4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F5B544' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
+  .plan li.plus::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F5B544' stroke-width='3'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E")}
+  .plan .btn{width:100%}
+  .pay-row{margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;font-size:.86rem;color:var(--muted)}
+
+  /* GUARANTEE */
+  .guar{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,48px);align-items:center;border:1px dashed rgba(245,181,68,.45);border-radius:24px;padding:clamp(26px,4vw,44px);background:var(--gold-soft)}
+  @media(max-width:700px){.guar{grid-template-columns:1fr}}
+  .seal{width:150px;height:150px;border-radius:50%;border:1px solid rgba(245,181,68,.6);display:grid;place-items:center;text-align:center;position:relative}
+  .seal::before{content:"";position:absolute;inset:8px;border-radius:50%;border:1px dashed rgba(245,181,68,.4)}
+  .seal b{display:block;font-family:var(--display);font-weight:800;font-size:3rem;line-height:.9;color:var(--gold)}
+  .seal span{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .guar h3{font-weight:800;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.08;margin-bottom:12px}
+  .guar p{color:var(--muted);max-width:640px}
+
+  /* FAQ */
+  .faq{display:grid;gap:10px;max-width:860px}
+  details{border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:border-color .2s}
+  details[open]{border-color:var(--line-2)}
+  summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;justify-content:space-between;gap:16px;font-family:var(--display);font-weight:600;font-size:1.06rem}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);color:var(--gold);font-size:1.1rem;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 22px 20px;color:var(--muted);font-size:.96rem;max-width:720px}
+
+  /* FINAL */
+  .final{text-align:center;overflow:hidden}
+  .final .glow2{position:absolute;left:50%;bottom:-420px;transform:translateX(-50%);width:1100px;height:800px;border-radius:50%;background:radial-gradient(closest-side,rgba(245,181,68,.16),transparent);pointer-events:none}
+  .final h2{position:relative;font-weight:800;font-size:clamp(2.3rem,6vw,4.4rem);line-height:1;max-width:900px;margin:18px auto 20px}
+  .final p.lead{position:relative;color:var(--muted);max-width:560px;margin:0 auto 34px;font-size:1.08rem}
+  .capture{position:relative;max-width:560px;margin:0 auto;background:var(--surface);border:1px solid var(--line-2);border-radius:20px;padding:24px;text-align:left}
+  .capture h3{font-weight:600;font-size:1.15rem;margin-bottom:4px}
+  .capture > div > p{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .field{display:flex;gap:10px;flex-wrap:wrap}
+  .field input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line-2);color:var(--text);padding:15px 16px;border-radius:12px;font:inherit;font-size:.96rem;outline:none;transition:border-color .2s}
+  .field input:focus{border-color:var(--gold)}
+  .field input.err{border-color:var(--bad)}
+  @media(max-width:520px){.field input{flex-basis:100%}.field .btn{width:100%}}
+  .micro{font-size:.78rem;color:var(--muted);margin-top:12px}
+  .ok-view{text-align:center;padding:10px 0}
+  .ok-view b{display:block;font-family:var(--display);font-size:1.4rem;color:var(--gold);margin-bottom:6px}
+  .ok-view p{color:var(--muted);font-size:.94rem}
+
+  footer{border-top:1px solid var(--line);padding-block:36px;color:var(--muted);font-size:.86rem}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+  footer a{color:var(--gold);text-decoration:none}
+
+  /* sticky mobile CTA */
+  .mcta{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(11,11,12,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:none;gap:12px;align-items:center;justify-content:space-between}
+  .mcta span{font-size:.82rem;color:var(--muted)}
+  .mcta span b{color:var(--text);font-family:var(--display)}
+  .mcta .btn{padding:12px 18px;font-size:.92rem}
+  @media(max-width:760px){.mcta{display:flex}body{padding-bottom:72px}}
+
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap">
+    <a class="brand" href="#top">ANDRÉS<span>.IA</span></a>
+    <ul>
+      <li><a href="#calculadora">¿Cuánto pierdes?</a></li>
+      <li><a href="#metodo">El método</a></li>
+      <li><a href="#precio">Precio</a></li>
+      <li><a href="#faq">Preguntas</a></li>
+    </ul>
+    <a class="btn btn-gold" href="#precio">Reservar mi cupo</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"><span class="live-dot"></span><span class="eyebrow">Curso en español · Cohorte fundadora</span></div>
+      <h1>Tu negocio contesta solo. <span class="hl">24/7.</span> Sin <span class="strike">recepcionista</span>.</h1>
+      <p class="lead">Monta en <b>7 días</b> un agente de voz con IA que <b>contesta llamadas, resuelve dudas y agenda citas</b> en tu calendario. Sin programar, con las mismas herramientas que uso para clientes reales en AI Staff.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="#precio">Quiero mi agente
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="#metodo">Ver los 7 días</a>
+      </div>
+      <div class="trust">
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Garantía de 30 días</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>Paga en cuotas</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Acceso de por vida</span>
+      </div>
+    </div>
+
+    <div class="call" aria-label="Demostración de una llamada atendida por un agente de IA">
+      <div class="call-tag">Simulación de una llamada real</div>
+      <div class="call-top">
+        <div class="call-who">
+          <div class="call-av"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg></div>
+          <div><b>Clínica Dental Sonrisa</b><small>ENTRANTE · +57 300 ··· 4821</small></div>
+        </div>
+        <div class="call-status"><i></i><span id="callState">En llamada</span></div>
+      </div>
+      <canvas id="wave" aria-hidden="true"></canvas>
+      <div class="call-meta"><span>AGENTE: SOFÍA · VOZ ES-CO</span><span id="clock">23:47 · 00:00</span></div>
+      <div class="transcript" id="transcript" aria-live="polite"></div>
+      <div class="call-foot"><span>Hora de la llamada: <b>11:47 p.m.</b></span><span>Tu equipo: <b>dormido</b></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="strip" aria-label="Datos clave">
+  <div class="wrap">
+    <div class="stat"><b>7</b><span>días, un módulo por día, con algo terminado</span></div>
+    <div class="stat"><b>0</b><span>líneas de código. Todo es arrastrar, pegar y probar</span></div>
+    <div class="stat"><b>~$0.13</b><span>dólares por minuto de llamada atendida</span></div>
+    <div class="stat"><b>24/7</b><span>contestando, también domingos y festivos</span></div>
+  </div>
+</section>
+
+<section class="sec" id="calculadora">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">La cuenta que nadie hace</span>
+      <h2>Cada llamada sin contestar es un cliente que llamó <span class="hl">a tu competencia</span>.</h2>
+      <p>Mueve los números con los de tu negocio. La mayoría de gente que no recibe respuesta no vuelve a llamar: busca el siguiente resultado en Google.</p>
+    </div>
+    <div class="calc">
+      <div class="calc-in">
+        <div class="slider">
+          <label for="r-calls">Llamadas que no contestas por semana <output id="o-calls">15</output></label>
+          <input type="range" id="r-calls" min="1" max="80" value="15">
+          <small>Fuera de horario, en almuerzo, con las manos ocupadas o con otro cliente.</small>
+        </div>
+        <div class="slider">
+          <label for="r-ticket">Valor promedio de un cliente nuevo (USD) <output id="o-ticket">$80</output></label>
+          <input type="range" id="r-ticket" min="10" max="1000" step="10" value="80">
+          <small>Lo que te deja una cita, un servicio o una primera compra.</small>
+        </div>
+        <div class="slider">
+          <label for="r-conv">De esas llamadas, cuántas se volverían clientes <output id="o-conv">30%</output></label>
+          <input type="range" id="r-conv" min="5" max="80" step="5" value="30">
+          <small>Sé conservador. Con un 20–30% la cuenta ya sorprende.</small>
+        </div>
+      </div>
+      <div class="calc-out">
+        <div>
+          <div class="loss-label">Lo que se te va cada mes</div>
+          <div class="loss" id="loss">$1,560</div>
+          <div class="loss-sub" id="loss-year">Eso es $18,720 al año en clientes que ya querían comprarte.</div>
+        </div>
+        <div class="vs">
+          <div class="vs-row"><span>Recepcionista medio tiempo (LATAM)</span><b>$400–700/mes</b></div>
+          <div class="vs-row"><span>Servicio de call center</span><b>$300–900/mes</b></div>
+          <div class="vs-row good"><span>Tu agente de IA (uso típico)</span><b id="agent-cost">~$35/mes</b></div>
+        </div>
+        <p class="calc-note">Costo del agente estimado con ~$0.13/min, 3 min por llamada y $20/mes de herramientas. Tus números pueden variar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Lo que vas a construir</span>
+      <h2>Un empleado que nunca se enferma, nunca se cansa y <span class="hl">siempre contesta con tu tono</span>.</h2>
+    </div>
+    <div class="does">
+      <article class="does-item">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg></div>
+        <h3>Contesta como tu mejor empleado</h3>
+        <p>Saluda con el nombre de tu negocio, entiende acentos, responde precios, horarios y ubicación. Si algo se sale de su rol, pasa la llamada a una persona.</p>
+        <code>"¿Tienen parqueadero?" → "Sí, justo en la entrada, gratis para pacientes."</code>
+      </article>
+      <article class="does-item">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <h3>Agenda en tu calendario real</h3>
+        <p>Revisa tu disponibilidad en vivo, ofrece dos horarios, confirma datos y crea la cita. Tú solo la ves aparecer en tu celular.</p>
+        <code>check_availability → book_appointment → ✓ confirmado</code>
+      </article>
+      <article class="does-item">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <h3>Te deja todo por escrito</h3>
+        <p>Cada llamada queda grabada, transcrita y resumida. Te llega un aviso con nombre, teléfono y motivo. Ningún cliente se pierde entre papelitos.</p>
+        <code>📩 Nuevo lead: Laura G. · Urgencia muela · Cita mié 9:00</code>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="metodo" style="background:linear-gradient(180deg,transparent,var(--surface) 30%,var(--surface) 70%,transparent)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">El método · 7 días</span>
+      <h2>Un paso por día. Al final de cada uno, <span class="hl">algo funciona</span>.</h2>
+      <p>Cada módulo se desbloquea al día siguiente para que avances sin atragantarte. Videos de 15–25 minutos, pantalla compartida, sin relleno.</p>
+    </div>
+    <div class="days">
+      <div class="day">
+        <div class="day-n"><small>Día 1</small>01</div>
+        <div><h3>Define el trabajo del agente</h3>
+          <p>El error del 90%: querer un agente que haga todo. Eliges una tarea, un canal y un resultado medible. Con eso, lo demás es montaje.</p>
+          <ul><li>Mapa de llamadas repetidas</li><li>Elegir 1 caso</li><li>Métrica de éxito</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>La "descripción de puesto" de tu agente en una hoja.</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 2</small>02</div>
+        <div><h3>El cerebro, con Claude</h3>
+          <p>Pegas el Prompt Maestro en Claude, respondes 12 preguntas sobre tu negocio y sale el guion completo de tu agente: personalidad, flujo, límites y respuestas difíciles.</p>
+          <ul><li>Claude Pro</li><li>Prompt Maestro v2</li><li>Guardarraíles</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>El prompt de tu agente listo para pegar.</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 3</small>03</div>
+        <div><h3>Lo construyes y habla por primera vez</h3>
+          <p>Creas el agente en Retell AI, eliges el modelo, pegas el cerebro y lo pruebas desde el navegador. La primera vez que te contesta con tu nombre de negocio, cambia todo.</p>
+          <ul><li>Retell AI</li><li>Prueba web</li><li>Voz en español</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>Un agente que conversa contigo en el navegador.</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 4</small>04</div>
+        <div><h3>Lo conectas al mundo real</h3>
+          <p>Le das un número de teléfono y acceso a tu calendario. Ahora consulta disponibilidad y agenda de verdad. Llamas desde tu celular y ves la cita aparecer.</p>
+          <ul><li>Cal.com</li><li>Número telefónico</li><li>Make.com</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>Un número real que contesta y agenda.</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 5</small>05</div>
+        <div><h3>Lo haces inteligente</h3>
+          <p>Cargas tu base de conocimiento: servicios, precios, políticas, preguntas frecuentes. Entrenas objeciones ("está muy caro", "déjame pensarlo") y el plan B cuando no sabe algo.</p>
+          <ul><li>Base de conocimiento</li><li>Objeciones</li><li>Transferencia a humano</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>Un agente que responde lo que tus clientes preguntan de verdad.</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 6</small>06</div>
+        <div><h3>Lo pules hasta que suene humano</h3>
+          <p>Voz, velocidad, pausas, interrupciones, silencios y ruido de fondo. Corres la batería de 20 llamadas de prueba "difíciles" y corriges cada falla.</p>
+          <ul><li>Batería de 20 pruebas</li><li>Ajuste de voz</li><li>Aviso legal de IA</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>Un agente que pasa la prueba de "¿eres un robot?".</div>
+      </div>
+      <div class="day">
+        <div class="day-n"><small>Día 7</small>07</div>
+        <div><h3>Lanzas y mides</h3>
+          <p>Desvías tus llamadas al agente, activas avisos por email o WhatsApp y montas tu tablero: llamadas atendidas, citas agendadas y dinero recuperado. Y qué hacer cuando algo falla.</p>
+          <ul><li>Desvío de llamadas</li><li>Alertas</li><li>Tablero en Sheets</li></ul></div>
+        <div class="deliver"><span>Terminas con</span>Tu agente en vivo, atendiendo clientes reales.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="bonos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Módulos extra</span>
+      <h2>Lo que va más allá del agente básico.</h2>
+      <p>Incluidos según tu plan. Son los módulos que más me piden los clientes de la agencia.</p>
+    </div>
+    <div class="bonus">
+      <article class="b-card"><span class="tier">Todos los planes</span><h3>Día 0 · Arranque sin sustos</h3><p>Cuentas, planes, tarjetas y costos exactos antes de empezar. Qué contratar y qué no. Cuánto vas a pagar al mes, sin sorpresas.</p></article>
+      <article class="b-card"><span class="tier">Todos los planes</span><h3>Kit legal y de confianza</h3><p>Cómo avisar que es una IA, grabación de llamadas, datos personales en Colombia, México y España, y por qué nunca debes hacer llamadas en frío con IA en EE. UU.</p></article>
+      <article class="b-card"><span class="tier">Pro</span><h3>Pack de 12 industrias</h3><p>Prompts y bases de conocimiento listos para clínicas, odontología, restaurantes, talleres, salones, gimnasios, inmobiliarias, abogados, veterinarias, hoteles, academias y tiendas.</p><span class="val">Ahorra ~6 horas por agente</span></article>
+      <article class="b-card"><span class="tier">Pro</span><h3>Tu agente también en WhatsApp</h3><p>El mismo cerebro atendiendo por chat: responde, manda la ubicación, confirma citas y recuerda el día anterior para bajar las inasistencias.</p></article>
+      <article class="b-card"><span class="tier">Pro</span><h3>Vende este servicio</h3><p>Cómo cobrar $300–$1,500 por montar agentes a otros negocios, más una mensualidad. Guion de demo, propuesta, contrato y precios que uso en AI Staff.</p><span class="val">El módulo que paga el curso con 1 cliente</span></article>
+      <article class="b-card"><span class="tier">Pro</span><h3>Claude como tu copiloto</h3><p>Usa Claude y sus conectores para analizar las transcripciones de la semana, detectar preguntas nuevas y mejorar el prompt solo con pedírselo.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">El kit que te llevas</span>
+      <h2>Plantillas para copiar, pegar y tener tu agente <span class="hl">hoy</span>, no en tres meses.</h2>
+    </div>
+    <div class="kit">
+      <div class="file"><div class="ext">DOC</div><div><b>Descripción de puesto del agente</b><small>Plantilla + 3 ejemplos llenos</small></div></div>
+      <div class="file"><div class="ext">TXT</div><div><b>Prompt Maestro v2</b><small>Lo pegas en Claude y sale tu agente</small></div></div>
+      <div class="file"><div class="ext">JSON</div><div><b>Agente base para Retell</b><small>Importas y cambias tus datos</small></div></div>
+      <div class="file"><div class="ext">MAKE</div><div><b>Escenario de alertas</b><small>Llamada → Sheets → email/WhatsApp</small></div></div>
+      <div class="file"><div class="ext">DOC</div><div><b>Base de conocimiento</b><small>Las 40 preguntas que todo cliente hace</small></div></div>
+      <div class="file"><div class="ext">PDF</div><div><b>Batería de 20 pruebas</b><small>Las llamadas que rompen agentes</small></div></div>
+      <div class="file"><div class="ext">XLS</div><div><b>Tablero de resultados</b><small>Llamadas, citas y dinero recuperado</small></div></div>
+      <div class="file"><div class="ext">PDF</div><div><b>Checklist de los 7 días</b><small>Imprímelo y ve tachando</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="costos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Transparencia total</span>
+      <h2>Lo que cuesta mantener tu agente cada mes.</h2>
+      <p>Nada de "software secreto" ni licencias raras. Son herramientas públicas, con planes gratuitos para empezar. Te muestro exactamente qué pagar.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Herramienta</th><th>Para qué</th><th>Plan recomendado</th><th>Costo aprox.</th></tr></thead>
+        <tbody>
+          <tr><td><b>Claude</b></td><td>Diseñar el cerebro y mejorar el agente cada semana</td><td>Pro</td><td class="num">$20/mes</td></tr>
+          <tr><td><b>Retell AI</b></td><td>La voz y la conversación en tiempo real</td><td>Pago por uso · $10 de crédito gratis</td><td class="num">~$0.07–0.15/min</td></tr>
+          <tr><td><b>Número telefónico</b></td><td>Donde te llaman los clientes</td><td>Retell o Twilio</td><td class="num">$1–3/mes</td></tr>
+          <tr><td><b>Cal.com</b></td><td>Tu agenda y disponibilidad</td><td>Gratis</td><td class="num">$0</td></tr>
+          <tr><td><b>Make.com</b></td><td>Avisos, hojas de cálculo y conexiones</td><td>Gratis (1,000 operaciones)</td><td class="num">$0</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="3">Negocio con ~100 llamadas al mes de 3 minutos</td><td class="num">≈ $35–65/mes</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="tbl-note">Precios públicos de cada proveedor a septiembre de 2026. Pueden cambiar; dentro del curso mantengo la tabla actualizada.</p>
+  </div>
+</section>
+
+<section class="sec" id="instructor" style="padding-top:0">
+  <div class="wrap teacher">
+    <div class="portrait" role="img" aria-label="Retrato de Andrés Carreño">
+      <span class="mono-a">A.</span>
+      <div class="cap"><span>Andrés Carreño</span><span>Montreal · Colombia</span></div>
+    </div>
+    <div>
+      <span class="eyebrow">Quién te enseña</span>
+      <h2>No te enseño teoría. Te enseño <span class="hl">lo que monto para clientes</span>.</h2>
+      <p>Soy Andrés Carreño, colombiano radicado en Montreal. Dirijo <b>AI Staff</b>, una agencia que construye agentes de voz con IA para negocios que no pueden darse el lujo de perder una llamada.</p>
+      <p>Este curso es el mismo proceso que sigo con cada cliente, explicado para que lo hagas tú. Sin jerga, sin código y con las mismas plantillas. Si en algún momento prefieres que lo hagamos por ti, mi equipo está a una llamada.</p>
+      <div class="creds"><span>Fundador de AI Staff</span><span>Trilingüe ES · EN · FR</span><span>+38,000 seguidores</span><span>Agentes en producción</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">¿Es para ti?</span><h2>Sé honesto contigo antes de comprar.</h2></div>
+    <div class="fit">
+      <div class="fit-col fit-yes"><h3>Es para ti si…</h3><ul>
+        <li>Tienes un negocio que recibe llamadas o mensajes y se te escapan clientes.</li>
+        <li>Respondes las mismas 10 preguntas todos los días.</li>
+        <li>Quieres entender la IA montándola, no viendo videos de "tendencias".</li>
+        <li>Te ofrecen montar agentes por $1,000 y quieres saber si vale la pena, o hacerlo tú.</li>
+        <li>Quieres ofrecer este servicio a otros negocios.</li>
+      </ul></div>
+      <div class="fit-col fit-no"><h3>No es para ti si…</h3><ul>
+        <li>Buscas hacer llamadas masivas en frío a desconocidos.</li>
+        <li>No puedes dedicar 30–45 minutos al día durante una semana.</li>
+        <li>Esperas que la IA dirija tu negocio sin que tú la supervises.</li>
+        <li>No tienes $35–65 al mes para mantener las herramientas.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="precio">
+  <div class="wrap">
+    <div class="sec-head" style="margin-inline:auto;text-align:center;justify-items:center">
+      <span class="eyebrow">Precio de fundador · primeros 100 alumnos</span>
+      <h2>Elige cómo quieres avanzar.</h2>
+      <p>Pago único, acceso de por vida y actualizaciones incluidas. Menos de lo que cuesta una semana de recepcionista.</p>
+    </div>
+    <div class="prices">
+      <article class="plan">
+        <div><h3>Esencial</h3><p class="for">Para montar tu propio agente.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>117</span><span class="was">$147</span></div><div class="price-note">USD · pago único o en cuotas</div></div>
+        <ul>
+          <li><span><b>Los 7 días completos</b> + Día 0</span></li>
+          <li><span>Kit de 8 plantillas descargables</span></li>
+          <li><span>Prompt Maestro v2 para Claude</span></li>
+          <li><span>Kit legal y de confianza</span></li>
+          <li><span>Actualizaciones de por vida</span></li>
+        </ul>
+        <a class="btn btn-ghost checkout" data-plan="esencial" href="#reservar">Elegir Esencial</a>
+      </article>
+      <article class="plan feat">
+        <span class="flag">El más elegido</span>
+        <div><h3>Pro</h3><p class="for">Para tu negocio y para venderlo a otros.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>197</span><span class="was">$297</span></div><div class="price-note">USD · o en cuotas desde tu país</div></div>
+        <ul>
+          <li><span><b>Todo lo de Esencial</b></span></li>
+          <li class="plus"><span>Pack de 12 industrias listo para usar</span></li>
+          <li class="plus"><span>Agente en WhatsApp</span></li>
+          <li class="plus"><span><b>Vende este servicio</b>: guion, propuesta y contrato</span></li>
+          <li class="plus"><span>Claude como copiloto semanal</span></li>
+          <li class="plus"><span><b>Comunidad privada 90 días</b> + 4 sesiones en vivo</span></li>
+        </ul>
+        <a class="btn btn-gold checkout" data-plan="pro" href="#reservar">Elegir Pro</a>
+      </article>
+      <article class="plan">
+        <div><h3>VIP · Lo hacemos contigo</h3><p class="for">Para quien quiere resultados esta semana.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>997</span></div><div class="price-note">USD · solo 5 cupos al mes</div></div>
+        <ul>
+          <li><span><b>Todo lo de Pro</b></span></li>
+          <li class="plus"><span>Sesión 1 a 1 de 90 min con Andrés</span></li>
+          <li class="plus"><span>El equipo de AI Staff configura tu agente contigo</span></li>
+          <li class="plus"><span>Revisión de tus primeras 50 llamadas</span></li>
+          <li class="plus"><span>30 días de soporte directo</span></li>
+        </ul>
+        <a class="btn btn-ghost checkout" data-plan="vip" href="#reservar">Aplicar al VIP</a>
+      </article>
+    </div>
+    <div class="pay-row"><span>Pago seguro con Hotmart</span><span>Tarjeta, PSE, OXXO, PIX y más</span><span>Hasta 12 cuotas según tu país</span><span>Factura automática</span></div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="guar">
+      <div class="seal"><div><b>30</b><span>días de garantía</span></div></div>
+      <div>
+        <h3>Si sigues los 7 días y tu agente no contesta, te devuelvo el 100%.</h3>
+        <p>Tienes 30 días. Si haces los ejercicios y tu agente no está funcionando, me escribes y te devuelvo cada peso. Sin formularios eternos ni preguntas incómodas. El riesgo lo asumo yo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Preguntas frecuentes</span><h2>Lo que todos preguntan antes de entrar.</h2></div>
+    <div class="faq">
+      <details><summary>¿De verdad no necesito saber programar?</summary><p>De verdad. Todo se hace en paneles visuales: escribes en español, pegas plantillas y haces clic. Si sabes usar WhatsApp y Google Docs, puedes hacerlo.</p></details>
+      <details><summary>¿Funciona para mi país?</summary><p>Sí. El agente habla español con acento neutro o regional, y el número puede ser de EE. UU., Colombia, México, España y muchos más países. Si tu país no tiene números disponibles, te muestro cómo desviar tus llamadas a uno que sí.</p></details>
+      <details><summary>¿Mis clientes van a notar que es una IA?</summary><p>Suena muy natural, pero te recomiendo decirlo al inicio ("soy la asistente virtual de…"). Genera confianza y en varios países es obligatorio. Lo vemos en el kit legal.</p></details>
+      <details><summary>¿Cuánto tiempo necesito al día?</summary><p>Entre 30 y 45 minutos: un video de 15–25 minutos y el ejercicio. Si vas más lento, no pasa nada: el acceso es de por vida.</p></details>
+      <details><summary>¿Qué pasa si la IA dice algo incorrecto?</summary><p>El Día 5 y el Día 6 están dedicados a eso: límites claros, transferencia a humano y una batería de 20 pruebas diseñadas para romper agentes antes de que lo haga un cliente.</p></details>
+      <details><summary>¿Puedo usar lo que aprendo para vender agentes a otros negocios?</summary><p>Sí, y el plan Pro incluye el módulo "Vende este servicio" con el guion de demo, la propuesta, el contrato y los precios que uso en mi agencia.</p></details>
+      <details><summary>¿Es pago único o suscripción?</summary><p>El curso es pago único con acceso de por vida. Las herramientas (Claude, Retell) las pagas directo a cada proveedor, sin intermediarios. La comunidad del plan Pro es gratis 90 días; después puedes seguir por una mensualidad opcional.</p></details>
+      <details><summary>¿Y si prefiero que me lo monten?</summary><p>Elige el plan VIP o escríbenos a AI Staff. Hay clientes que prefieren ganar tiempo, y está perfecto.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec final" id="reservar">
+  <div class="glow2"></div>
+  <div class="wrap">
+    <span class="eyebrow" style="position:relative">Abrimos inscripciones muy pronto</span>
+    <h2>La próxima llamada que entre a las 11 p.m. <span class="hl">la contesta tu agente</span>.</h2>
+    <p class="lead">Déjame tu correo y te aviso primero, con tu precio de fundador reservado.</p>
+    <div class="capture">
+      <div id="formView">
+        <h3>Reserva tu precio de fundador</h3>
+        <p>Plan elegido: <b id="planName" style="color:var(--gold)">Pro</b> · puedes cambiarlo después.</p>
+        <form id="leadForm" class="field" novalidate>
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
+          <button class="btn btn-gold" type="submit" id="submitBtn">Reservar mi cupo</button>
+        </form>
+        <p class="micro">Cero spam. Solo te escribo cuando abramos y con contenido útil sobre agentes.</p>
+      </div>
+      <div class="ok-view" id="okView" hidden>
+        <b>¡Listo, estás dentro!</b>
+        <p>Revisa tu correo. Te aviso apenas abramos, con tu precio de fundador guardado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Andrés.IA · Curso de agentes de IA en español</span>
+    <span>¿Prefieres que lo hagamos por ti? <a href="/">AI Staff →</a></span>
+  </div>
+</footer>
+
+<div class="mcta"><span>Precio fundador desde <b>$117</b></span><a class="btn btn-gold" href="#precio">Ver planes</a></div>
+
+<script>
+/* ===== CONFIGURACIÓN =====
+   1) FORMSPREE_URL: crea un form gratis en https://formspree.io/forms/new y pega aquí tu ID.
+   2) CHECKOUT: cuando el producto exista en Hotmart, pega los links de pago.
+      Si un link está vacío, el botón baja al formulario de lista de espera. */
+const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+const CHECKOUT = { esencial: '', pro: '', vip: '' };
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ---- Botones de plan ---- */
+const planNames = { esencial: 'Esencial', pro: 'Pro', vip: 'VIP' };
+let chosenPlan = 'pro';
+document.querySelectorAll('.checkout').forEach(a => {
+  const url = CHECKOUT[a.dataset.plan];
+  if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; return; }
+  a.addEventListener('click', () => {
+    chosenPlan = a.dataset.plan;
+    document.getElementById('planName').textContent = planNames[chosenPlan];
+  });
+});
+
+/* ---- Formulario ---- */
+const form = document.getElementById('leadForm');
+const emailEl = document.getElementById('email');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const v = emailEl.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { emailEl.classList.add('err'); emailEl.focus(); return; }
+  const btn = document.getElementById('submitBtn');
+  const label = btn.textContent;
+  btn.textContent = 'Enviando…'; btn.disabled = true;
+  try {
+    const res = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: v, plan: chosenPlan, source: 'curso-landing', fecha: new Date().toISOString() })
+    });
+    if (!res.ok) throw new Error(res.status);
+    document.getElementById('formView').hidden = true;
+    document.getElementById('okView').hidden = false;
+  } catch (err) {
+    btn.textContent = 'No se pudo enviar. Intenta otra vez';
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = label; }, 3000);
+  }
+});
+emailEl.addEventListener('input', () => emailEl.classList.remove('err'));
+
+/* ---- Calculadora ---- */
+const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+function calc() {
+  const calls = +document.getElementById('r-calls').value;
+  const ticket = +document.getElementById('r-ticket').value;
+  const conv = +document.getElementById('r-conv').value;
+  document.getElementById('o-calls').textContent = calls;
+  document.getElementById('o-ticket').textContent = fmt(ticket);
+  document.getElementById('o-conv').textContent = conv + '%';
+  const monthly = calls * 4.33 * (conv / 100) * ticket;
+  document.getElementById('loss').textContent = fmt(monthly);
+  document.getElementById('loss-year').textContent = 'Eso es ' + fmt(monthly * 12) + ' al año en clientes que ya querían comprarte.';
+  const agent = 20 + calls * 4.33 * 3 * 0.13;
+  document.getElementById('agent-cost').textContent = '~' + fmt(agent) + '/mes';
+}
+['r-calls', 'r-ticket', 'r-conv'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+calc();
+
+/* ---- Demo de llamada ---- */
+const script = [
+  ['agent', 'Clínica Dental Sonrisa, habla Sofía, la asistente virtual. ¿En qué te ayudo?'],
+  ['client', 'Hola, se me partió una muela. ¿Tienen cita para mañana?'],
+  ['agent', 'Uy, lo siento mucho. Mañana tengo espacio a las 9:00 o a las 11:30. ¿Cuál te queda mejor?'],
+  ['client', 'A las 9, porfa.'],
+  ['agent', 'Perfecto. ¿Me regalas tu nombre completo?'],
+  ['client', 'Laura Gómez.'],
+  ['agent', 'Listo, Laura. Quedaste mañana a las 9:00 y te llega la confirmación por WhatsApp.'],
+  ['event', '✓ Cita creada en el calendario · Mié 9:00 · Laura Gómez · Urgencia']
+];
+const tr = document.getElementById('transcript');
+const stateEl = document.getElementById('callState');
+const clockEl = document.getElementById('clock');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let speaking = 'agent', secs = 0;
+
+function addMsg([who, text]) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + who;
+  if (who !== 'event') {
+    const s = document.createElement('span'); s.className = 'who';
+    s.textContent = who === 'agent' ? 'Sofía · IA' : 'Cliente';
+    d.appendChild(s);
+  }
+  d.appendChild(document.createTextNode(text));
+  tr.appendChild(d);
+  while (tr.children.length > 6) tr.removeChild(tr.firstChild);
+}
+
+if (reduce) {
+  script.slice(-5).forEach(addMsg);
+  stateEl.textContent = 'Cita agendada';
+} else {
+  script.slice(0, 3).forEach(addMsg);
+  let i = 3;
+  setInterval(() => {
+    if (i >= script.length + 2) { tr.innerHTML = ''; i = 0; secs = 0; stateEl.textContent = 'En llamada'; }
+    if (i < script.length) {
+      addMsg(script[i]);
+      speaking = script[i][0];
+      if (script[i][0] === 'event') { stateEl.textContent = 'Cita agendada'; speaking = 'idle'; }
+    }
+    i++;
+  }, 2300);
+  setInterval(() => {
+    secs++;
+    clockEl.textContent = '23:47 · ' + String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0');
+  }, 1000);
+}
+
+/* ---- Onda de voz ---- */
+const cv = document.getElementById('wave');
+const ctx = cv.getContext('2d');
+function size() {
+  const r = window.devicePixelRatio || 1;
+  cv.width = cv.clientWidth * r; cv.height = cv.clientHeight * r;
+  ctx.setTransform(r, 0, 0, r, 0, 0);
+}
+size(); window.addEventListener('resize', size);
+let t = 0;
+function draw() {
+  const w = cv.clientWidth, h = cv.clientHeight, bars = Math.floor(w / 6);
+  ctx.clearRect(0, 0, w, h);
+  const amp = speaking === 'idle' ? 0.12 : 1;
+  for (let b = 0; b < bars; b++) {
+    const x = b * 6 + 2;
+    const n = Math.sin(b * 0.35 + t * 0.09) * Math.sin(b * 0.11 - t * 0.05) * Math.sin(t * 0.13 + b);
+    const bh = Math.max(3, Math.abs(n) * h * 0.9 * amp);
+    ctx.fillStyle = speaking === 'client' ? 'rgba(237,234,227,0.55)' : 'rgba(245,181,68,0.9)';
+    ctx.fillRect(x, (h - bh) / 2, 3, bh);
+  }
+  t++;
+  if (!reduce) requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
