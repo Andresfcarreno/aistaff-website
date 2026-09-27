@@ -203,18 +203,18 @@ const S = {
 };
 
 const ZONES = [
-  { n: 'Plateau-Mont-Royal', x: 345, y: 275 },
-  { n: 'Mile End', x: 322, y: 240 },
-  { n: 'Outremont', x: 282, y: 250 },
-  { n: 'Rosemont', x: 400, y: 228 },
-  { n: 'Villeray', x: 372, y: 190 },
-  { n: 'Hochelaga', x: 428, y: 262 },
-  { n: 'Ville-Marie', x: 318, y: 322 },
-  { n: 'Vieux-Montréal', x: 352, y: 336 },
-  { n: 'Griffintown', x: 292, y: 352 },
-  { n: 'Westmount', x: 258, y: 312 },
-  { n: 'NDG', x: 210, y: 330 },
-  { n: 'Verdun', x: 250, y: 404 },
+  { n: 'Plateau-Mont-Royal', x: 363, y: 225 },
+  { n: 'Mile End', x: 313, y: 216 },
+  { n: 'Outremont', x: 290, y: 239 },
+  { n: 'Rosemont', x: 350, y: 144 },
+  { n: 'Villeray', x: 258, y: 146 },
+  { n: 'Hochelaga', x: 451, y: 135 },
+  { n: 'Ville-Marie', x: 388, y: 302 },
+  { n: 'Vieux-Montréal', x: 429, y: 279 },
+  { n: 'Griffintown', x: 407, y: 331 },
+  { n: 'Westmount', x: 318, y: 364 },
+  { n: 'NDG', x: 262, y: 407 },
+  { n: 'Verdun', x: 388, y: 457 },
 ];
 
 const $ = (s, r = document) => r.querySelector(s);
