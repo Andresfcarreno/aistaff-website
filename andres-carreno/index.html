@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andrés Carreño — Biblioteca e IO</title>
+<meta name="description" content="Diez libros gratuitos sobre leyes universales, numerología y sanar lo que duele — y IO, un lector de patrones que te dice por cuál empezar.">
+<meta name="theme-color" content="#07091A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andrés Carreño — Todo lo que buscas ya está escrito">
+<meta property="og:description" content="Diez libros gratis y IO: once preguntas que leen la raíz de lo que se te repite.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2307091A'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23E8C36A' stroke-width='5'/%3E%3Crect x='46' y='30' width='8' height='40' rx='4' fill='%23E8C36A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@200;300;400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/estilo.css">
+<link rel="modulepreload" href="assets/js/sitio.js">
+</head>
+<body class="cargando">
+
+<!-- ============ INTRO ============ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-sigilo">
+    <svg viewBox="0 0 100 100">
+      <circle class="i-anillo i-a" cx="50" cy="50" r="46"/>
+      <circle class="i-anillo i-b" cx="50" cy="50" r="34"/>
+      <circle class="i-anillo i-c" cx="50" cy="50" r="22"/>
+      <rect class="i-barra" x="47.6" y="33" width="4.8" height="34" rx="2.4"/>
+    </svg>
+  </div>
+  <div class="intro-nombre"><span>A</span><span>N</span><span>D</span><span>R</span><span>É</span><span>S</span><span class="esp"></span><span>C</span><span>A</span><span>R</span><span>R</span><span>E</span><span>Ñ</span><span>O</span></div>
+  <div class="intro-binario" id="introBinario">01001001 01001111</div>
+</div>
+
+<!-- ============ FONDO ============ -->
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="velo" aria-hidden="true"></div>
+<div class="grano" aria-hidden="true"></div>
+<div class="hilo" id="hilo" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><i></i></div>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<header class="nav" id="nav">
+  <a class="marca" href="#inicio" aria-label="Andrés Carreño, inicio">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="5"/><rect x="45.5" y="26" width="9" height="48" rx="4.5" fill="currentColor"/></svg>
+    <span>Andrés Carreño</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Secciones">
+    <a href="#biblioteca" data-sec="biblioteca">Biblioteca</a>
+    <a href="#io" data-sec="io">IO</a>
+    <a href="#autor" data-sec="autor">Sobre mí</a>
+    <a href="#lista" data-sec="lista">Novedades</a>
+  </nav>
+  <button class="nav-io magnetico" data-abrir-io>Tu lectura <span aria-hidden="true">→</span></button>
+  <button class="nav-menu" id="navMenu" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<main id="inicio">
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-forma="0" id="hero">
+  <div class="hero-orbitas" aria-hidden="true">
+    <span style="--r:0">I</span><span style="--r:1">II</span><span style="--r:2">III</span><span style="--r:3">IV</span><span style="--r:4">V</span>
+    <span style="--r:5">VI</span><span style="--r:6">VII</span><span style="--r:7">VIII</span><span style="--r:8">IX</span><span style="--r:9">X</span>
+  </div>
+  <div class="hero-contenido" id="heroContenido">
+    <p class="ceja revela"><span class="punto"></span> Andrés Carreño · Edición original</p>
+    <h1 class="hero-titulo" id="heroTitulo">
+      <span class="linea">Todo lo que buscas</span>
+      <span class="linea">ya está <em>escrito</em></span>
+    </h1>
+    <p class="hero-lede revela">Diez libros gratuitos sobre leyes universales, numerología y sanar lo que duele — y <strong>IO</strong>, un lector de patrones que te dice por cuál empezar.</p>
+    <div class="hero-acciones revela">
+      <button class="boton boton-oro magnetico" data-abrir-io><span>Descubre tu lectura</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <a class="boton boton-fantasma magnetico" href="#biblioteca"><span>Explorar la biblioteca</span></a>
+    </div>
+    <div class="hero-datos revela" aria-label="La colección en números">
+      <div><b data-contar="10">0</b><span>libros</span></div>
+      <div><b data-contar="0">0</b><span>costo</span></div>
+      <div><b data-contar="11">0</b><span>preguntas</span></div>
+      <div><b data-contar="1">0</b><span>raíz</span></div>
+    </div>
+  </div>
+  <a class="hero-bajar" href="#manifiesto" aria-label="Bajar">
+    <span>Desliza</span><i></i>
+  </a>
+</section>
+
+<!-- ============ MANIFIESTO ============ -->
+<section class="manifiesto" id="manifiesto" data-forma="0">
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta-pista">
+      <span>Leyes universales</span><b>✦</b><span>Numerología</span><b>✦</b><span>Astrología</span><b>✦</b><span>Linaje</span><b>✦</b><span>Mentalismo</span><b>✦</b><span>Abundancia</span><b>✦</b><span>Cerrar ciclos</span><b>✦</b><span>Volver a empezar</span><b>✦</b>
+      <span>Leyes universales</span><b>✦</b><span>Numerología</span><b>✦</b><span>Astrología</span><b>✦</b><span>Linaje</span><b>✦</b><span>Mentalismo</span><b>✦</b><span>Abundancia</span><b>✦</b><span>Cerrar ciclos</span><b>✦</b><span>Volver a empezar</span><b>✦</b>
+    </div>
+  </div>
+  <div class="envoltura">
+    <p class="manifiesto-texto" id="manifiestoTexto">No escribo para adivinarte el futuro. Escribo para que veas <em>la raíz</em> de lo que ya está pasando — y tengas con qué trabajarla. Todo aquí es gratis, porque a mí nadie me lo explicó.</p>
+  </div>
+</section>
+
+<!-- ============ BIBLIOTECA ============ -->
+<section class="biblioteca" id="biblioteca" data-forma="1">
+  <div class="envoltura">
+    <header class="cabeza">
+      <p class="ceja revela">La colección · Primera vuelta</p>
+      <h2 class="titulo-sec revela">Diez libros, <em>cero costo</em></h2>
+      <p class="sub revela">Cada uno es un libro completo en PDF. Sin registro, sin letra pequeña. Toca una portada para abrirlo.</p>
+    </header>
+    <div class="filtros revela" id="filtros" role="tablist" aria-label="Filtrar por tema"></div>
+    <div class="estante" id="estante"></div>
+    <aside class="puente revela">
+      <div class="puente-sigilo" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="30" stroke-dasharray="2 6"/><rect x="47.5" y="32" width="5" height="36" rx="2.5"/></svg>
+      </div>
+      <div>
+        <h3>¿No sabes por dónde empezar?</h3>
+        <p>Responde once preguntas. IO lee tus números, tu nombre y tu linaje, y te dice cuáles son <em>tus</em> tres libros — y por qué.</p>
+      </div>
+      <button class="boton boton-oro magnetico" data-abrir-io><span>Descúbrelo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ IO ============ -->
+<section class="io-sec" id="io" data-forma="2">
+  <div class="envoltura io-rejilla">
+    <div class="io-izq">
+      <p class="ceja revela">IO · Uno y cero</p>
+      <h2 class="titulo-sec revela">Entra quien eres.<br><em>Sale lo que no habías visto.</em></h2>
+      <p class="sub revela">IO cruza <strong>numerología pitagórica</strong>, <strong>carta natal</strong>, la <strong>raíz de tu nombre</strong> y tu <strong>linaje</strong> con lo que tú escribes sobre tu propio patrón. No adivina. No predice. Muestra la raíz.</p>
+      <ol class="pasos">
+        <li class="revela"><span>01</span><div><b>Respondes once preguntas</b><p>Nueve recogen datos. Dos llegan a la raíz.</p></div></li>
+        <li class="revela"><span>10</span><div><b>IO lee tu patrón</b><p>Cada respuesta enciende una estrella. Al final, armaste tu constelación.</p></div></li>
+        <li class="revela"><span>11</span><div><b>Recibes tu análisis y tus tres libros</b><p>Siete capítulos escritos para ti, y los libros que trabajan tu raíz.</p></div></li>
+      </ol>
+      <div class="io-cta revela">
+        <button class="boton boton-oro boton-grande magnetico" data-abrir-io id="ioCta"><span>Empezar mi lectura</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="letra-fina">Once preguntas · Cinco minutos · Gratis</p>
+        <p class="letra-fina io-previa" id="ioPrevia" hidden></p>
+      </div>
+    </div>
+
+    <!-- Calculadora viva -->
+    <div class="calc revela" id="calc">
+      <div class="calc-marco">
+        <p class="calc-ceja">Pruébalo ahora · Pitágoras en vivo</p>
+        <label class="calc-label" for="calcNombre">Tu nombre completo</label>
+        <input class="calc-campo" id="calcNombre" type="text" placeholder="Escribe tu nombre" autocomplete="off" spellcheck="false">
+        <div class="calc-letras" id="calcLetras" aria-hidden="true"></div>
+        <label class="calc-label" for="calcFecha">Tu fecha de nacimiento</label>
+        <input class="calc-campo calc-fecha" id="calcFecha" type="date">
+        <div class="calc-resultados">
+          <div class="calc-num" id="calcDestino"><b>·</b><span>Destino</span></div>
+          <div class="calc-num" id="calcCamino"><b>·</b><span>Camino de vida</span></div>
+          <div class="calc-num" id="calcAlma"><b>·</b><span>Alma</span></div>
+        </div>
+        <p class="calc-arquetipo" id="calcArquetipo">Tus números aparecerán aquí mientras escribes.</p>
+        <button class="calc-seguir" id="calcSeguir" data-abrir-io>Esto es la superficie. <em>IO lee la raíz →</em></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUTOR ============ -->
+<section class="autor" id="autor" data-forma="3">
+  <div class="envoltura autor-rejilla">
+    <figure class="retrato revela">
+      <div class="retrato-anillos" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="circuloTexto" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/></defs>
+          <circle cx="100" cy="100" r="96" class="ra-1"/>
+          <circle cx="100" cy="100" r="78" class="ra-2"/>
+          <text class="ra-texto"><textPath href="#circuloTexto" textLength="536" lengthAdjust="spacing">ARQUITECTO · FOTÓGRAFO · AUTOR · COLOMBIA · MONTREAL ·</textPath></text>
+        </svg>
+      </div>
+      <div class="retrato-foto"><img src="assets/img/andres.jpg" alt="Andrés Carreño" width="400" height="400" loading="lazy"></div>
+    </figure>
+    <div class="autor-texto">
+      <p class="ceja revela">Sobre el autor</p>
+      <h2 class="titulo-sec revela">Andrés <em>Carreño</em></h2>
+      <p class="revela">Arquitecto de formación, fotógrafo certificado y autor colombiano radicado en Montreal, Canadá. Su historia no empezó fácil: creció sin vivir con sus padres, fue criado por su abuela y perdió a su papá cuando apenas tenía diecisiete años. Esa ausencia, y las preguntas que dejó, lo llevaron desde muy joven a atravesar una profunda crisis interior — un punto de quiebre que, con el tiempo, se convirtió en el inicio de todo lo que vino después.</p>
+      <p class="revela">Las circunstancias lo llevaron a salir de Colombia y rehacer su vida en Canadá. Ahí construyó una familia, y hoy, mientras atraviesa una nueva etapa personal como padre de dos hijos, sigue haciéndose la misma pregunta que lo ha acompañado siempre: por qué. Esa búsqueda lo llevó a la numerología, el autoconocimiento y la sabiduría ancestral como herramientas para entender su propia historia.</p>
+      <p class="revela">Hoy escribe para las personas que, como él, han cargado con la ausencia de un padre o una madre, con pérdidas difíciles de nombrar, o con la incertidumbre de reconstruirse después de una separación.</p>
+      <blockquote class="cita revela">No importa cuán oscuro se vea el camino: siempre hay una razón para seguir buscando <em>el porqué</em>.</blockquote>
+      <ol class="linea-vida revela" aria-label="Trayectoria">
+        <li><b>Colombia</b><span>Criado por su abuela</span></li>
+        <li><b>17</b><span>La pérdida de su padre</span></li>
+        <li><b>Canadá</b><span>Rehacer la vida desde cero</span></li>
+        <li><b>Hoy</b><span>Padre de dos · Diez libros</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LISTA ============ -->
+<section class="lista" id="lista" data-forma="4">
+  <div class="envoltura">
+    <div class="lista-placa revela">
+      <p class="ceja">Nuevos libros, sin buscarlos</p>
+      <h2 class="titulo-sec">Cada vez que publique uno nuevo, <em>te llega directo</em></h2>
+      <p class="sub">Escribe tu correo y te aviso personalmente cuando salga el próximo libro de la colección. Nada de spam — solo libros.</p>
+      <form class="form-correo" id="formLista" novalidate>
+        <label for="correoLista" class="solo-lector">Correo electrónico</label>
+        <input type="email" id="correoLista" name="email" placeholder="tu@correo.com" required autocomplete="email">
+        <button type="submit" class="boton boton-oro magnetico"><span>Avísame</span></button>
+      </form>
+      <p class="form-estado" id="estadoLista" role="status"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie" data-forma="4">
+  <div class="pie-gigante" aria-hidden="true">ANDRÉS CARREÑO</div>
+  <div class="envoltura pie-fila">
+    <p>Una colección en crecimiento de Andrés Carreño</p>
+    <a href="https://www.youtube.com/@soyandrescarreno" target="_blank" rel="noopener">YouTube · @soyandrescarreno</a>
+    <p class="pie-aviso">IO es una lectura, no un diagnóstico. No predice el futuro ni sustituye a un profesional de la salud.</p>
+  </div>
+</footer>
+
+<!-- ============ MODAL DE LIBRO ============ -->
+<div class="modal" id="modalLibro" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+  <div class="modal-fondo" data-cerrar></div>
+  <div class="modal-caja">
+    <button class="modal-x" data-cerrar aria-label="Cerrar">×</button>
+    <div class="modal-escena">
+      <div class="libro-abierto" id="libroAbierto">
+        <div class="la-interior"><p class="la-romano"></p><p class="la-frase"></p><p class="la-firma">— Andrés Carreño</p></div>
+        <div class="la-tapa"><img alt=""><div class="la-tapa-dorso"></div></div>
+      </div>
+    </div>
+    <div class="modal-info">
+      <p class="ceja" id="modalNum"></p>
+      <h3 id="modalTitulo"></h3>
+      <p class="modal-corto" id="modalCorto"></p>
+      <p class="modal-largo" id="modalLargo"></p>
+      <div class="modal-acciones">
+        <a class="boton boton-oro" id="modalDescargar" download><span>Descargar gratis · PDF</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"/></svg></a>
+        <button class="boton boton-fantasma" data-abrir-io><span>¿Es para mí? Pregúntale a IO</span></button>
+      </div>
+      <div class="modal-nav">
+        <button id="modalPrev" aria-label="Libro anterior">← Anterior</button>
+        <span id="modalPos"></span>
+        <button id="modalNext" aria-label="Libro siguiente">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ IO (experiencia inmersiva) ============ -->
+<div class="io" id="ioApp" role="dialog" aria-modal="true" aria-label="IO, lector de patrones" hidden>
+  <canvas id="campo" aria-hidden="true"></canvas>
+  <div class="io-hilo" id="ioHilo" aria-hidden="true"></div>
+  <div class="io-barra">
+    <button class="io-atras" id="ioAtras" aria-label="Pregunta anterior" hidden>← Atrás</button>
+    <div class="io-logo" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="5"/><rect x="45.5" y="26" width="9" height="48" rx="4.5" fill="currentColor"/></svg> IO</div>
+    <button class="io-cerrar" id="ioCerrar" aria-label="Cerrar IO">×</button>
+  </div>
+  <div class="io-escenario" id="ioEscenario">
+    <section class="io-portada" id="ioPortada">
+      <div class="sigilo">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="anillo anillo-a" cx="50" cy="50" r="46"/>
+          <circle class="anillo anillo-b" cx="50" cy="50" r="34" stroke-dasharray="2 8"/>
+          <circle class="anillo anillo-c" cx="50" cy="50" r="22" stroke-width="1.4"/>
+          <rect class="barra" x="47.6" y="33" width="4.8" height="34" rx="2.4"/>
+        </svg>
+      </div>
+      <p class="io-ceja">Uno y cero</p>
+      <h2 class="io-h1">Todo lo que eres<br>ya está <em>escrito</em></h2>
+      <p class="io-lede">Tu nombre, tu fecha, tu hora y tu lugar guardan un patrón. IO lo lee y te lo devuelve en palabras claras — no para adivinarte el futuro, sino para que veas la raíz de lo que se te repite.</p>
+      <button class="boton boton-oro boton-grande" id="ioEmpezar"><span>Empezar</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <p class="io-fina">Once preguntas · Cinco minutos · Gratis</p>
+    </section>
+    <section class="io-charla" id="ioCharla" hidden></section>
+    <section class="io-cargando" id="ioCargando" hidden>
+      <div class="sigilo sigilo-grande">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="anillo anillo-a" cx="50" cy="50" r="46"/>
+          <circle class="anillo anillo-b" cx="50" cy="50" r="34" stroke-dasharray="2 8"/>
+          <circle class="anillo anillo-c" cx="50" cy="50" r="22" stroke-width="1.4"/>
+          <rect class="barra" x="47.6" y="33" width="4.8" height="34" rx="2.4"/>
+        </svg>
+      </div>
+      <div class="carga-linea" id="cargaLinea">Leyendo tu nombre</div>
+      <div class="carga-numeros" id="cargaNumeros"></div>
+      <p class="carga-nota">IO está escribiendo tu lectura. Puede tardar uno o dos minutos — lo bueno no se apura.</p>
+    </section>
+    <section class="io-resultado" id="ioResultado" hidden></section>
+  </div>
+</div>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script type="module" src="assets/js/sitio.js"></script>
+</body>
+</html>
