@@ -817,6 +817,30 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
   @keyframes eqb{0%,100%{transform:scaleY(.5);}50%{transform:scaleY(1);}}
   .chat-voice{margin-left:auto;}
   @media (prefers-reduced-motion:reduce){.vc,.vc-overlay.show{animation:none;}}
+  /* mini nebula in the overview card */
+  .card.hero{display:grid;grid-template-columns:minmax(0,1fr) 250px;column-gap:24px;align-content:center;position:relative;overflow:hidden;}
+  .card.hero>*:not(.mini-neb){grid-column:1;}
+  .card.hero::before{content:"";position:absolute;right:-60px;top:50%;width:420px;height:420px;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.28),transparent 62%);pointer-events:none;}
+  .mini-neb{grid-column:2;grid-row:1 / span 5;align-self:center;justify-self:center;border:0;background:none;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font:inherit;padding:0;position:relative;z-index:1;}
+  .mn-stage{position:relative;width:220px;height:220px;display:block;transition:transform .35s cubic-bezier(.2,.8,.2,1);}
+  .mini-neb:hover .mn-stage,.mini-neb:focus-visible .mn-stage{transform:scale(1.06);}
+  .mn-stage canvas{position:absolute;inset:0;width:100%;height:100%;}
+  .mn-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:15px;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:.85;transition:opacity .2s,transform .2s;padding-left:3px;}
+  .mini-neb:hover .mn-play{opacity:1;transform:translate(-50%,-50%) scale(1.1);}
+  .mn-cap{text-align:center;line-height:1.3;}
+  .mn-cap b{display:block;font-size:12.5px;}
+  .mn-cap span{display:block;font-size:11px;color:#9FB3D9;}
+  .mini-neb:focus-visible{outline:3px solid rgba(110,180,255,.6);outline-offset:4px;border-radius:16px;}
+  @media (max-width:620px){
+    .card.hero{grid-template-columns:minmax(0,1fr);}
+    .card.hero::before{right:auto;left:-120px;top:0;transform:none;}
+    .mini-neb{grid-column:1;grid-row:auto;flex-direction:row;justify-self:stretch;justify-content:flex-start;gap:14px;margin:-6px 0 10px;text-align:left;}
+    .mn-stage{width:116px;height:116px;flex-shrink:0;}
+    .mn-cap{text-align:left;}
+    .mn-cap b{font-size:14px;}
+    .mn-play{width:34px;height:34px;font-size:12px;}
+  }
 </style>
 </head>
 <body>
@@ -843,9 +867,9 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
   <!-- ===== APERÇU ===== -->
   <div class="pane on" id="pane-apercu">
     <div class="card hero">
+      <button type="button" class="mini-neb" id="heroNeb" aria-label="Briefing"><span class="mn-stage"><canvas id="mnGL"></canvas><canvas id="mnHUD"></canvas><span class="mn-play">▶</span></span><span class="mn-cap"><b data-t="mnCap"></b><span data-t="mnSub"></span></span></button>
       <div class="hero-num" id="heroNum">104</div>
       <div class="hero-label" data-t="heroLabel"></div>
-      <div class="wave" id="wave"></div>
       <div class="hero-foot"><span data-t="heroFoot1"></span><span data-t="heroFoot2"></span></div>
       <div class="hero-next"><span>☀️</span><span data-t="nextBrief"></span><button type="button" id="heroListen" data-t="lastBrief"></button></div>
     </div>
@@ -1075,7 +1099,7 @@ sub:"Voici ce que {a}, {your} IA, a géré pour vous.",demo:"Données de démons
 live:"{a} est en ligne",simIdle:"Simuler un appel",simShort:"Simuler",simRun:"{a} répond à Jordan P.",simProg:"En cours…",simAdded:"Ajouté ✓",
 simStart:"Appel simulé en cours…",simRepeat:"Cet appel de démonstration est déjà ajouté",simDone:"Appel qualifié et rendez-vous ajouté à l'agenda",
 heroLabel:"conversations gérées cette semaine · appels, messages, courriels",heroFoot1:"Dernier appel sans réponse : <b>aucun cette semaine</b>",heroFoot2:"Réponse en <b>7 s</b>",
-nextBrief:"Prochain briefing : <b>aujourd'hui, 18 h 00</b>",lastBrief:"Écouter le dernier",
+nextBrief:"Prochain briefing : <b>aujourd'hui, 18 h 00</b>",lastBrief:"Écouter le dernier",mnCap:"Dernier briefing",mnSub:"07:30 · 1 min 48 · touchez pour écouter",
 activity:"Activité",activityHint:"Conversations gérées · 7 derniers jours",recent:"Dernières interactions",seeAll:"Tout voir",
 upcoming:"Prochains rendez-vous",agendaLink:"Agenda",
 callsTitle:"Centre d'appels",callsSub:"Entrants, sortants et conversations prises en charge par {a}.",
@@ -1115,7 +1139,7 @@ sub:"Here's what {a}, {your}, handled for you.",demo:"Demo data",
 live:"{a} is online",simIdle:"Simulate a call",simShort:"Simulate",simRun:"{a} is answering Jordan P.",simProg:"In progress…",simAdded:"Added ✓",
 simStart:"Simulated call in progress…",simRepeat:"This demo call has already been added",simDone:"Call qualified and appointment added to the calendar",
 heroLabel:"conversations handled this week · calls, messages, email",heroFoot1:"Unanswered calls: <b>none this week</b>",heroFoot2:"Answered in <b>7 sec</b>",
-nextBrief:"Next briefing: <b>today, 6:00 PM</b>",lastBrief:"Play the last one",
+nextBrief:"Next briefing: <b>today, 6:00 PM</b>",lastBrief:"Play the last one",mnCap:"Latest briefing",mnSub:"7:30 AM · 1 min 48 · tap to listen",
 activity:"Activity",activityHint:"Conversations handled · last 7 days",recent:"Latest interactions",seeAll:"View all",
 upcoming:"Upcoming appointments",agendaLink:"Calendar",
 callsTitle:"Call center",callsSub:"Incoming, outgoing and conversations handled by {a}.",
@@ -1155,7 +1179,7 @@ sub:"Esto es lo que {a}, {your} con IA, gestionó por ti.",demo:"Datos de demost
 live:"{a} está en línea",simIdle:"Simular una llamada",simShort:"Simular",simRun:"{a} atiende a Jordan P.",simProg:"En curso…",simAdded:"Añadida ✓",
 simStart:"Llamada simulada en curso…",simRepeat:"Esta llamada de demostración ya fue añadida",simDone:"Llamada calificada y cita añadida a la agenda",
 heroLabel:"conversaciones gestionadas esta semana · llamadas, mensajes, correos",heroFoot1:"Llamadas sin respuesta: <b>ninguna esta semana</b>",heroFoot2:"Respuesta en <b>7 s</b>",
-nextBrief:"Próximo briefing: <b>hoy, 18:00</b>",lastBrief:"Escuchar el último",
+nextBrief:"Próximo briefing: <b>hoy, 18:00</b>",lastBrief:"Escuchar el último",mnCap:"Último briefing",mnSub:"07:30 · 1 min 48 · toca para escuchar",
 activity:"Actividad",activityHint:"Conversaciones gestionadas · últimos 7 días",recent:"Últimas interacciones",seeAll:"Ver todo",
 upcoming:"Próximas citas",agendaLink:"Agenda",
 callsTitle:"Centro de llamadas",callsSub:"Entrantes, salientes y conversaciones gestionadas por {a}.",
@@ -1523,12 +1547,7 @@ function vcEnd(){
   VC.i = VC.lines.length;
 }
 /* ---- WebGL nebula ---- */
-function vcInitGL(){
-  const cv = document.getElementById("vcGL");
-  let gl = null; try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true}); }catch(e){}
-  if(!gl) return;
-  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
-  const fs = `precision highp float;uniform vec2 uR;uniform float uT,uA,uU;
+const VC_FS = `precision highp float;uniform vec2 uR;uniform float uT,uA,uU;
 float h(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
 float n(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
 float fb(vec3 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.02+vec3(3.1,1.7,4.3);a*=.5;}return v;}
@@ -1549,73 +1568,102 @@ float halo=exp(-max(d-R,0.)*5.)*.35*(1.+uA);
 col+=a1*halo*(1.-core);
 float al=clamp(max(max(core*(.25+f),shell),halo),0.,1.);
 gl_FragColor=vec4(col,al);}`;
-  const sh = (t,s)=>{ const o = gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); return o; };
-  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER,fs)); gl.linkProgram(pr);
-  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+function glNebula(cv){
+  let gl = null; try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true}); }catch(e){}
+  if(!gl) return null;
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const sh = (t,src)=>{ const o = gl.createShader(t); gl.shaderSource(o,src); gl.compileShader(o); return o; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER,VC_FS)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
   gl.useProgram(pr);
   const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
   const uR = gl.getUniformLocation(pr,"uR"), uT = gl.getUniformLocation(pr,"uT"), uA = gl.getUniformLocation(pr,"uA"), uU = gl.getUniformLocation(pr,"uU");
   gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-  VC.gl = {gl, cv, uR, uT, uA, uU, user:0};
+  return {gl, cv, uR, uT, uA, uU, user:0,
+    draw(t, amp, user){ gl.viewport(0,0,cv.width,cv.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(uR,cv.width,cv.height); gl.uniform1f(uT,t); gl.uniform1f(uA,amp); gl.uniform1f(uU,user); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }};
 }
-/* ---- 2D HUD: radial voice bars, rotating arcs, particles ---- */
+function vcInitGL(){ const g = glNebula(document.getElementById("vcGL")); if(g) VC.gl = g; }
+/* ---- 2D HUD: radial voice bars, rotating arcs, particles (shared by console + mini card) ---- */
+function hudState(nParts){
+  const N = 96;
+  return {N, bars:new Float32Array(N), seeds:Array.from({length:N},()=>Math.random()*6.28),
+    parts:Array.from({length:nParts},()=>({r:.62+Math.random()*.34, a:Math.random()*6.28, s:(Math.random()*.25+.05)*(Math.random()<.5?-1:1), z:Math.random()}))};
+}
+function hudDraw(ctx, W, H, t, amp, u, st){
+  const cx = W/2, cy = H/2, S = Math.min(W,H)/2, N = st.N, bars = st.bars;
+  ctx.clearRect(0,0,W,H);
+  const c1 = u>.5 ? [255,170,110] : [110,180,255], c2 = u>.5 ? [255,120,140] : [150,120,255];
+  const r0 = S*.60;
+  for(let i=0;i<N;i++){
+    const k = i < N/2 ? i : N-1-i;
+    const nz = .5+.5*Math.sin(t*(3+k*.13)+st.seeds[k]) * Math.sin(t*1.7+k*.4);
+    const val = amp*(.25+.75*nz)*(1 - Math.abs(k-N/4)/(N/2)*.45);
+    bars[i] += (val - bars[i])*.35;
+    const a = i/N*Math.PI*2 - Math.PI/2 + t*.05, len = S*(.03 + bars[i]*.30);
+    const mix = i/N, col = c1.map((v,j)=>Math.round(v*(1-mix)+c2[j]*mix));
+    ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${.35+bars[i]*.9})`;
+    ctx.lineWidth = Math.max(1.2, S*.011); ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*r0); ctx.lineTo(cx+Math.cos(a)*(r0+len), cy+Math.sin(a)*(r0+len)); ctx.stroke();
+  }
+  ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.22)`; ctx.lineWidth = Math.max(1, S/200);
+  ctx.beginPath(); ctx.arc(cx,cy,r0-S*.035,0,Math.PI*2); ctx.stroke();
+  const rt = S*.955, rot = t*.12;
+  ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.35)`; ctx.lineWidth = Math.max(1,S*.005);
+  for(let k=0;k<120;k++){ const a = k/120*Math.PI*2 + rot, l = k%10===0 ? S*.04 : S*.018;
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*rt, cy+Math.sin(a)*rt); ctx.lineTo(cx+Math.cos(a)*(rt-l), cy+Math.sin(a)*(rt-l)); ctx.stroke(); }
+  ctx.lineWidth = Math.max(1.2,S*.012); ctx.lineCap = "round";
+  [[.88,-t*.35,.9,.55],[.88,-t*.35+Math.PI,.5,.4],[.82,t*.5,.35,.3]].forEach(([rr,stt,len,al])=>{
+    ctx.strokeStyle = `rgba(${c2[0]},${c2[1]},${c2[2]},${al+amp*.3})`;
+    ctx.beginPath(); ctx.arc(cx,cy,S*rr,stt,stt+len); ctx.stroke(); });
+  st.parts.forEach(p=>{ p.a += p.s*.01*(1+amp*2); const r = S*(p.r + Math.sin(t*.8+p.z*6)*.01);
+    ctx.fillStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},${.25+p.z*.55})`;
+    ctx.beginPath(); ctx.arc(cx+Math.cos(p.a)*r, cy+Math.sin(p.a)*r, Math.max(.8,S*.006*(.6+p.z)), 0, Math.PI*2); ctx.fill(); });
+}
+function sizeCanvas(c){ const dpr = Math.min(window.devicePixelRatio||1, 2), r = c.getBoundingClientRect(); c.width = Math.max(1,Math.round(r.width*dpr)); c.height = Math.max(1,Math.round(r.height*dpr)); }
 function vcInitHUD(){
-  const cv = document.getElementById("vcHUD"), ctx = cv.getContext("2d");
-  const N = 96, bars = new Float32Array(N), seeds = Array.from({length:N},()=>Math.random()*6.28);
-  const parts = Array.from({length:46},()=>({r:.62+Math.random()*.34, a:Math.random()*6.28, s:(Math.random()*.25+.05)*(Math.random()<.5?-1:1), z:Math.random()}));
-  const t0 = performance.now();
-  function size(c){ const dpr = Math.min(window.devicePixelRatio||1, 2), r = c.getBoundingClientRect(); c.width = Math.round(r.width*dpr); c.height = Math.round(r.height*dpr); }
+  const cv = document.getElementById("vcHUD"), ctx = cv.getContext("2d"), st = hudState(46), t0 = performance.now();
   function frame(now){
     if(!VC.open){ requestAnimationFrame(frame); return; }
     const t = (now - t0)/1000;
-    /* voice amplitude: speaking = lively, idle = breathing */
     const target = VC.playing ? .45 + .35*Math.abs(Math.sin(t*7.1)*Math.sin(t*2.3+.7)) + VC.pulse*.35 : .06 + .04*Math.sin(t*1.4);
     VC.amp += (target - VC.amp)*.14; VC.pulse *= .9;
     const userMix = VC.user ? 1 : 0; if(VC.gl) VC.gl.user += (userMix - VC.gl.user)*.08;
-    /* GL */
-    if(VC.gl){ const g = VC.gl, gl = g.gl; gl.viewport(0,0,g.cv.width,g.cv.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(g.uR,g.cv.width,g.cv.height); gl.uniform1f(g.uT,t); gl.uniform1f(g.uA,VC.amp); gl.uniform1f(g.uU,g.user); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }
-    /* HUD */
-    const W = cv.width, H = cv.height, cx = W/2, cy = H/2, S = Math.min(W,H)/2;
-    ctx.clearRect(0,0,W,H);
-    const u = VC.gl ? VC.gl.user : userMix;
-    const c1 = u>.5 ? [255,170,110] : [110,180,255], c2 = u>.5 ? [255,120,140] : [150,120,255];
-    const r0 = S*.60;
-    /* radial bars (mirrored spectrum) */
-    for(let i=0;i<N;i++){
-      const k = i < N/2 ? i : N-1-i;
-      const nz = .5+.5*Math.sin(t*(3+k*.13)+seeds[k]) * Math.sin(t*1.7+k*.4);
-      const val = VC.amp*(.25+.75*nz)*(1 - Math.abs(k-N/4)/(N/2)*.45);
-      bars[i] += (val - bars[i])*.35;
-      const a = i/N*Math.PI*2 - Math.PI/2 + t*.05, len = S*(.03 + bars[i]*.30);
-      const mix = i/N, col = c1.map((v,j)=>Math.round(v*(1-mix)+c2[j]*mix));
-      ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${.35+bars[i]*.9})`;
-      ctx.lineWidth = Math.max(1.5, S*.011); ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*r0); ctx.lineTo(cx+Math.cos(a)*(r0+len), cy+Math.sin(a)*(r0+len)); ctx.stroke();
-    }
-    /* inner thin ring */
-    ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.22)`; ctx.lineWidth = 1*(S/200);
-    ctx.beginPath(); ctx.arc(cx,cy,r0-S*.035,0,Math.PI*2); ctx.stroke();
-    /* tick ring rotating */
-    const rt = S*.955, rot = t*.12;
-    ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.35)`; ctx.lineWidth = Math.max(1,S*.005);
-    for(let k=0;k<120;k++){ const a = k/120*Math.PI*2 + rot, l = k%10===0 ? S*.04 : S*.018;
-      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*rt, cy+Math.sin(a)*rt); ctx.lineTo(cx+Math.cos(a)*(rt-l), cy+Math.sin(a)*(rt-l)); ctx.stroke(); }
-    /* sweeping arcs */
-    ctx.lineWidth = Math.max(1.5,S*.012); ctx.lineCap = "round";
-    [[.88,-t*.35,.9,.55],[.88,-t*.35+Math.PI,.5,.4],[.82,t*.5,.35,.3]].forEach(([rr,st,len,al])=>{
-      ctx.strokeStyle = `rgba(${c2[0]},${c2[1]},${c2[2]},${al+VC.amp*.3})`;
-      ctx.beginPath(); ctx.arc(cx,cy,S*rr,st,st+len); ctx.stroke(); });
-    /* particles */
-    parts.forEach(p=>{ p.a += p.s*.01*(1+VC.amp*2); const r = S*(p.r + Math.sin(t*.8+p.z*6)*.01);
-      ctx.fillStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},${.25+p.z*.55})`;
-      ctx.beginPath(); ctx.arc(cx+Math.cos(p.a)*r, cy+Math.sin(p.a)*r, Math.max(1,S*.006*(.6+p.z)), 0, Math.PI*2); ctx.fill(); });
+    if(VC.gl) VC.gl.draw(t, VC.amp, VC.gl.user);
+    hudDraw(ctx, cv.width, cv.height, t, VC.amp, VC.gl ? VC.gl.user : userMix, st);
     requestAnimationFrame(frame);
   }
-  VC.resize = ()=>{ size(cv); if(VC.gl) size(VC.gl.cv); };
+  VC.resize = ()=>{ sizeCanvas(cv); if(VC.gl) sizeCanvas(VC.gl.cv); };
   window.addEventListener("resize", VC.resize);
   requestAnimationFrame(frame);
+}
+/* ---- mini nebula living inside the overview card; click expands to the full console ---- */
+function initMiniNebula(){
+  const btn = document.getElementById("heroNeb"); if(!btn) return;
+  const glc = document.getElementById("mnGL"), hud = document.getElementById("mnHUD"), ctx = hud.getContext("2d");
+  const g = glNebula(glc), st = hudState(24), t0 = performance.now();
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let amp = .1, hover = false, visible = true, running = false;
+  const resize = ()=>{ sizeCanvas(hud); sizeCanvas(glc); };
+  resize(); window.addEventListener("resize", resize);
+  btn.addEventListener("mouseenter", ()=>hover = true); btn.addEventListener("mouseleave", ()=>hover = false);
+  btn.addEventListener("focus", ()=>hover = true); btn.addEventListener("blur", ()=>hover = false);
+  btn.addEventListener("click", ()=>{ const b = d().briefs[0]; vcOpen(vt("briefing")+" · "+b.type, b.when+" · "+b.dur, b.tr); });
+  function frame(now){
+    const t = (now - t0)/1000;
+    /* idle: a soft "speaking" shimmer so it reads as a voice note; hover: livelier */
+    const target = (hover ? .5 : .2) + (hover ? .3 : .14)*Math.abs(Math.sin(t*(hover?6.2:2.4))*Math.sin(t*1.7+.5));
+    amp += (target - amp)*.08;
+    if(hud.width < 4) resize();
+    if(g) g.draw(t, amp, 0);
+    hudDraw(ctx, hud.width, hud.height, t, amp, 0, st);
+    if(!reduce && visible && !document.hidden) requestAnimationFrame(frame); else running = false;
+  }
+  const start = ()=>{ if(!running){ running = true; requestAnimationFrame(frame); } };
+  if("IntersectionObserver" in window) new IntersectionObserver(es=>{ visible = es[0].isIntersecting; if(visible) start(); }).observe(btn);
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) start(); });
+  start();
 }
 function listenBtn(label, attr){ return `<button type="button" class="listen-btn" ${attr}><span class="dotw"><i></i><i></i><i></i></span>${esc(label)}</button>`; }
 
@@ -1806,7 +1854,7 @@ function renderOverview(){
   renderActivity();
 }
 function buildWave(){
-  const wave = document.getElementById("wave");
+  const wave = document.getElementById("wave"); if(!wave) return;
   for(let i=0;i<34;i++){ const s=document.createElement("span"); s.style.height=(10+Math.random()*24)+"px"; s.style.animationDelay=(Math.random()*1.1)+"s"; s.style.animationDuration=(0.8+Math.random()*0.7)+"s"; wave.appendChild(s); }
 }
 
@@ -2101,6 +2149,7 @@ function renderAll(){
 }
 buildWave();
 renderAll();
+initMiniNebula();
 document.getElementById("heroListen").addEventListener("click",()=>{ const b = d().briefs[0]; vcOpen(vt("briefing")+" · "+b.type, b.when+" · "+b.dur, b.tr); });
 const startPane = (location.hash||"").slice(1);
 if(document.getElementById("pane-"+startPane)) go(startPane);
