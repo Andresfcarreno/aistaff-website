@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prime Ménage — Maison de ménage haut de gamme · Montréal</title>
+<meta name="description" content="Prime Ménage : entretien ménager haut de gamme à Montréal. Personnel formé, vérifié et en uniforme. Entretien régulier, grand ménage, fin de bail, emménagement, après-rénovation, commercial. Coffret Prime offert.">
+<meta name="theme-color" content="#060e1f">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prime Ménage — Le ménage à la hauteur de son nom">
+<meta property="og:description" content="Entretien ménager haut de gamme à Montréal. Personnel formé, en uniforme, et un Coffret Prime offert à la première visite.">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:locale" content="fr_CA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HouseCleaningService",
+  "name": "Prime Ménage",
+  "url": "https://primemenage.ca",
+  "image": "https://primemenage.ca/assets/og.jpg",
+  "logo": "https://primemenage.ca/assets/apple-touch-icon.png",
+  "email": "reservation@primemenage.ca",
+  "priceRange": "$$$",
+  "areaServed": ["Plateau-Mont-Royal","Rosemont","Verdun","Ville-Marie","Notre-Dame-de-Grâce","Villeray","Outremont","Westmount","Mile End","Griffintown","Vieux-Montréal","Hochelaga"],
+  "address": { "@type": "PostalAddress", "addressLocality": "Montréal", "addressRegion": "QC", "addressCountry": "CA" },
+  "availableLanguage": ["fr","en","es"]
+}
+</script>
+</head>
+<body>
+
+<!-- ============ Icon sprite ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7e7b4"/><stop offset=".35" stop-color="#c9a227"/><stop offset=".65" stop-color="#f2dc9b"/><stop offset="1" stop-color="#9c7a1e"/>
+    </linearGradient>
+    <linearGradient id="goldH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9c7a1e"/><stop offset=".3" stop-color="#f2dc9b"/><stop offset=".55" stop-color="#c9a227"/><stop offset="1" stop-color="#e9cf85"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0f2143"/><stop offset=".25" stop-color="#1f3d78"/><stop offset=".5" stop-color="#132a57"/><stop offset="1" stop-color="#0a1730"/>
+    </linearGradient>
+    <linearGradient id="ivoryG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8e0cc"/><stop offset=".3" stop-color="#fffdf8"/><stop offset="1" stop-color="#ded4bc"/>
+    </linearGradient>
+  </defs>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7Zm7 11c.3 2.2 1.1 3 3 3.2-1.9.3-2.7 1.1-3 3.3-.3-2.2-1.1-3-3.1-3.3 2-.2 2.8-1 3.1-3.2Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/><path d="M17.5 3.5v2M16.5 4.5h2"/></symbol>
+  <symbol id="i-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v3l-3 3v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9l-3-3V3"/><path d="M7 13h10"/><path d="M12 15.5c.8 1 1.5 1.6 1.5 2.4a1.5 1.5 0 0 1-3 0c0-.8.7-1.4 1.5-2.4Z"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l2 2M15 8l2 2"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/><path d="m7.5 5.2 9 4.6"/></symbol>
+  <symbol id="i-reno" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="6" rx="1.5"/><path d="M17 6h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-7v3"/><rect x="10.5" y="14" width="3" height="7" rx="1"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><path d="M3 21h18M8 8h3M8 12h3M8 16h3"/></symbol>
+  <symbol id="i-storm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 7v5c0 5 3.8 8.4 9 9 5.2-.6 9-4 9-9V7z"/><path d="m13 7-3 5h4l-3 5"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19V6M21 19v-6a3 3 0 0 0-3-3h-8v6"/><path d="M3 16h18"/><circle cx="6.5" cy="11.5" r="1.8"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8c-1.5-3-5-4-5.5-2S9 8 12 8Zm0 0c1.5-3 5-4 5.5-2S15 8 12 8Z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h10"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 1 9.2A7 7 0 0 1 11 20Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></symbol>
+  <symbol id="i-cert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m9 14.2-1.5 7.3L12 19l4.5 2.5-1.5-7.3"/><path d="m9.5 9 1.8 1.8L14.8 7.5"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 4 5.5 2.5 10l3.5 1.2V21h12v-9.8l3.5-1.2L20 5.5 15 3a3 3 0 0 1-6 0Z"/><circle cx="14.5" cy="11" r="1.3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="m15.5 17.5 1.5 1.5 3-3"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m8.5 10 1.2 1.2L12 9M8.5 15.5l1.2 1.2L12 14.5M14 10h2M14 15.5h2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11.5v-2a1.5 1.5 0 0 1 3 0V12M14 10.5a1.5 1.5 0 0 1 3 0V12M17 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L4.3 14.5a1.5 1.5 0 0 1 2.5-1.7L8 14.5"/></symbol>
+</svg>
+
+<!-- ============ Preloader ============ -->
+<div id="preloader" aria-hidden="true">
+  <div class="pl-inner">
+    <div class="pl-ring">
+      <svg viewBox="0 0 128 128"><defs><linearGradient id="plgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e7b4"/><stop offset=".5" stop-color="#c9a227"/><stop offset="1" stop-color="#f2dc9b"/></linearGradient></defs><circle cx="64" cy="64" r="60"/></svg>
+      <img src="assets/logo.webp" alt="">
+    </div>
+    <div class="pl-word">PRIME MÉNAGE</div>
+  </div>
+</div>
+
+<div id="progress"></div>
+<div id="cursor-glow" aria-hidden="true"></div>
+
+<!-- ============ Header ============ -->
+<header class="site-header" id="header">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Prime Ménage — accueil">
+      <img src="assets/logo.webp" alt="" width="44" height="44">
+      <span class="brand-word">PRIME <b>MÉNAGE</b><small>MONTRÉAL</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#tarifs" data-i18n="nav.pricing">Tarifs</a></li>
+      <li><a href="#coffret" data-i18n="nav.gift">Le Coffret</a></li>
+      <li><a href="#signatures" data-i18n="nav.details">Signatures</a></li>
+      <li><a href="#standards" data-i18n="nav.standards">Standards</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Changer de langue / Switch language"><span class="on">FR</span><span>EN</span></button>
+      <a class="btn btn-gold btn-sm" href="#tarifs" data-i18n="nav.book">Réserver</a>
+      <button class="menu-btn" id="menu-open" type="button" aria-label="Menu"><svg><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile">
+  <button class="menu-btn mm-close" id="menu-close" type="button" aria-label="Fermer"><svg><use href="#i-x"/></svg></button>
+  <a class="mm-link" href="#services" data-i18n="nav.services">Services</a>
+  <a class="mm-link" href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
+  <a class="mm-link" href="#coffret" data-i18n="nav.gift">Le Coffret</a>
+  <a class="mm-link" href="#signatures" data-i18n="nav.details">Signatures</a>
+  <a class="mm-link" href="#standards" data-i18n="nav.standards">Standards</a>
+  <a class="mm-link" href="#faq">FAQ</a>
+  <div class="mm-foot">
+    <a class="btn btn-gold" href="#tarifs" data-i18n="hero.cta1">Calculer mon prix</a>
+    <a class="btn btn-ghost js-wa" href="#"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
+  </div>
+  <canvas id="bubbles" aria-hidden="true"></canvas>
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow light fade-in" data-i18n="hero.eyebrow">Maison de ménage · Montréal</span>
+      <h1>
+        <span class="line"><span data-i18n="hero.l1">Le luxe d'un</span></span>
+        <span class="line"><span data-i18n="hero.l2">intérieur</span></span>
+        <span class="line"><span class="gold-text"><em data-i18n="hero.l3">impeccable.</em></span></span>
+      </h1>
+      <p class="hero-sub fade-in d1" data-i18n="hero.sub">Une équipe formée, vérifiée et en uniforme prend soin de votre maison comme d'une suite d'hôtel cinq étoiles. Détails signature, Coffret Prime offert — et rien à fournir de votre côté.</p>
+      <div class="hero-cta fade-in d2">
+        <a class="btn btn-gold magnetic" href="#tarifs"><span data-i18n="hero.cta1">Calculer mon prix</span><svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#coffret" data-i18n="hero.cta2">Découvrir l'expérience</a>
+      </div>
+      <div class="hero-trust fade-in d3">
+        <span><svg><use href="#i-cert"/></svg><span data-i18n="hero.t1">Personnel formé à l'Académie Prime</span></span>
+        <span><svg><use href="#i-shirt"/></svg><span data-i18n="hero.t2">Toujours en uniforme</span></span>
+        <span><svg><use href="#i-leaf"/></svg><span data-i18n="hero.t3">Produits éco-biodégradables</span></span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="orbit" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="98" fill="none" stroke="url(#gold)" stroke-width=".4" stroke-dasharray="1 3"/>
+          <circle cx="100" cy="2" r="2.2" fill="#e5c46a"/>
+          <circle cx="198" cy="100" r="1.4" fill="#f4e2ad"/>
+        </svg>
+      </div>
+      <div class="arch"><img src="assets/equipe.webp" alt="Membre de l'équipe Prime Ménage en uniforme, gants et vaporisateur" data-i18n-alt="hero.alt" width="760" height="1055"></div>
+      <div class="float-card fc1 fade-in d3"><div class="ic"><svg><use href="#i-gift"/></svg></div><div><b data-i18n="fc.1b">Coffret Prime</b><span data-i18n="fc.1s">offert à la 1<sup>re</sup> visite</span></div></div>
+      <div class="float-card fc2 fade-in d4"><div class="ic"><svg><use href="#i-list"/></svg></div><div><b data-i18n="fc.2b">72 points</b><span data-i18n="fc.2s">de contrôle qualité</span></div></div>
+      <div class="float-card fc3 fade-in d4"><div class="ic"><svg><use href="#i-shield"/></svg></div><div><b data-i18n="fc.3b">Garantie 24 h</b><span data-i18n="fc.3s">on revient, sans frais</span></div></div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span data-i18n="hero.scroll">Défiler</span><i></i></div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" data-marquee>
+    <span data-i18n="mq.1">Entretien signature</span><span data-i18n="mq.2">Grand ménage</span><span data-i18n="mq.3">Fin de bail</span><span data-i18n="mq.4">Emménagement</span><span data-i18n="mq.5">Après-rénovation</span><span data-i18n="mq.6">Bureaux &amp; commerces</span><span data-i18n="mq.7">Remise en état</span><span data-i18n="mq.8">Airbnb &amp; locations</span>
+  </div>
+</div>
+
+<!-- ============ Manifesto ============ -->
+<section class="section manifesto">
+  <div class="container">
+    <span class="eyebrow" data-i18n="man.eyebrow">Notre philosophie</span>
+    <p class="manifesto-text" id="manifesto" data-i18n="man.text">Nous ne sommes pas le ménage le moins cher de Montréal. Nous sommes celui <em>auquel vous n'aurez plus jamais à penser.</em> Chaque visite est préparée, exécutée et vérifiée comme dans un grand hôtel — parce que votre maison le mérite.</p>
+
+    <div class="not-for reveal">
+      <div class="nf-col nf-no">
+        <h3 data-i18n="man.noh">Si vous cherchez…</h3>
+        <ul>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="man.no1">Le prix le plus bas possible</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="man.no2">Un passage éclair de 45 minutes</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="man.no3">Une personne différente à chaque fois</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="man.no4">Fournir vous-même produits et aspirateur</span></li>
+        </ul>
+        <p style="margin:26px 0 0; font-family:var(--serif); font-size:22px; font-style:italic;" data-i18n="man.noend">… ce n'est pas ici. Et c'est très bien ainsi.</p>
+      </div>
+      <div class="nf-col nf-yes">
+        <h3 data-i18n="man.yesh">Ce que vous obtenez</h3>
+        <ul>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="man.yes1">Une équipe formée, vérifiée et en uniforme</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="man.yes2">Le temps qu'il faut, jamais chronométré au rabais</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="man.yes3">La même personne, qui connaît votre maison</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="man.yes4">Produits éco-luxe, équipement professionnel et détails d'hôtel</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="man.yes5">Un Coffret Prime offert et une garantie 24 h</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Services ============ -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal" data-i18n="svc.eyebrow">Nos services</span>
+      <h2 class="reveal d1" data-i18n="svc.h2">Un service pour chaque <em>moment</em> de votre vie.</h2>
+      <p class="reveal d2" data-i18n="svc.p">De l'entretien hebdomadaire au grand ménage du 1<sup>er</sup> juillet, jusqu'aux chantiers et aux bureaux. Cliquez sur un service pour obtenir votre prix instantanément.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal" role="button" tabindex="0" data-svc="signature">
+        <span class="svc-num">01</span><span class="svc-tag" data-i18n="svc.pop">Le favori</span>
+        <span class="svc-icon"><svg><use href="#i-home"/></svg></span>
+        <h3 data-i18n="s.signature">Entretien Signature</h3>
+        <p data-i18n="s.signature.p">L'entretien régulier, version hôtel : cuisine, salles de bain, chambres, planchers, poussière et nos détails signature à chaque visite.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="signature"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d1" role="button" tabindex="0" data-svc="deep">
+        <span class="svc-num">02</span>
+        <span class="svc-icon"><svg><use href="#i-deep"/></svg></span>
+        <h3 data-i18n="s.deep">Grand Ménage</h3>
+        <p data-i18n="s.deep.p">Le nettoyage en profondeur : intérieur du four et du frigo, vitres intérieures, lessive, plinthes et recoins oubliés — tout inclus.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="deep"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d2" role="button" tabindex="0" data-svc="premove">
+        <span class="svc-num">03</span>
+        <span class="svc-icon"><svg><use href="#i-key"/></svg></span>
+        <h3 data-i18n="s.premove">Pré-emménagement</h3>
+        <p data-i18n="s.premove.p">Votre nouveau logement désinfecté de fond en comble avant l'arrivée des boîtes : armoires, électroménagers, salle de bain. Vous entrez dans du neuf.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="premove"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d3" role="button" tabindex="0" data-svc="postmove">
+        <span class="svc-num">04</span>
+        <span class="svc-icon"><svg><use href="#i-box"/></svg></span>
+        <h3 data-i18n="s.postmove">Fin de bail · Post-déménagement</h3>
+        <p data-i18n="s.postmove.p">Pensé pour le 1<sup>er</sup> juillet : on remet le logement impeccable pour l'inspection, le propriétaire ou le prochain locataire.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="postmove"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal" role="button" tabindex="0" data-svc="reno">
+        <span class="svc-num">05</span>
+        <span class="svc-icon"><svg><use href="#i-reno"/></svg></span>
+        <h3 data-i18n="s.reno">Après-rénovation</h3>
+        <p data-i18n="s.reno.p">Poussière de gypse, résidus de peinture, joints de céramique : on transforme le chantier en maison habitable, prête pour la photo.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="reno"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d1" role="button" tabindex="0" data-svc="commercial">
+        <span class="svc-num">06</span>
+        <span class="svc-icon"><svg><use href="#i-building"/></svg></span>
+        <h3 data-i18n="s.commercial">Bureaux &amp; Commerces</h3>
+        <p data-i18n="s.commercial.p">Bureaux, cliniques, boutiques et salles d'exposition. Entretien discret en dehors des heures d'ouverture, équipe dédiée et rapport après chaque passage.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="commercial"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d2" role="button" tabindex="0" data-svc="extreme">
+        <span class="svc-num">07</span>
+        <span class="svc-icon"><svg><use href="#i-storm"/></svg></span>
+        <h3 data-i18n="s.extreme">Remise en état · Cas extrêmes</h3>
+        <p data-i18n="s.extreme.p">Dégât d'eau, après-party, logement laissé à l'abandon, accumulation : une équipe renforcée, discrète et sans jugement.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.eval">Sur évaluation</span><b data-from="extreme"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+      <div class="svc-card reveal d3" role="button" tabindex="0" data-svc="airbnb">
+        <span class="svc-num">08</span>
+        <span class="svc-icon"><svg><use href="#i-bed"/></svg></span>
+        <h3 data-i18n="s.airbnb">Airbnb &amp; Locations</h3>
+        <p data-i18n="s.airbnb.p">Rotation entre deux séjours : literie hôtelière, serviettes pliées, consommables regarnis et photos de contrôle envoyées à l'hôte.</p>
+        <span class="svc-foot"><span class="svc-price"><span data-i18n="svc.from">À partir de</span><b data-from="airbnb"></b></span><span class="svc-arrow"><svg><use href="#i-arrow"/></svg></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Calculator ============ -->
+<section class="section calc-section on-night" id="tarifs">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow reveal" data-i18n="calc.eyebrow">Tarifs transparents</span>
+      <h2 class="reveal d1" data-i18n="calc.h2">Votre prix, <em class="gold-text">en 30 secondes.</em></h2>
+      <p class="reveal d2" data-i18n="calc.p">Un prix clair, sans surprise sur la facture. Ajustez selon votre logement — la confirmation finale se fait avant la visite.</p>
+    </div>
+
+    <div class="calc reveal">
+      <div class="calc-opts">
+        <div>
+          <div class="calc-label"><span data-i18n="calc.service">Service</span></div>
+          <div class="svc-tabs" id="svc-tabs">
+            <button type="button" class="svc-tab" data-svc="signature"><svg><use href="#i-home"/></svg><span data-i18n="t.signature">Signature</span></button>
+            <button type="button" class="svc-tab" data-svc="deep"><svg><use href="#i-deep"/></svg><span data-i18n="t.deep">Grand ménage</span></button>
+            <button type="button" class="svc-tab" data-svc="premove"><svg><use href="#i-key"/></svg><span data-i18n="t.premove">Emménagement</span></button>
+            <button type="button" class="svc-tab" data-svc="postmove"><svg><use href="#i-box"/></svg><span data-i18n="t.postmove">Fin de bail</span></button>
+            <button type="button" class="svc-tab" data-svc="reno"><svg><use href="#i-reno"/></svg><span data-i18n="t.reno">Après-réno</span></button>
+            <button type="button" class="svc-tab" data-svc="commercial"><svg><use href="#i-building"/></svg><span data-i18n="t.commercial">Commercial</span></button>
+            <button type="button" class="svc-tab" data-svc="extreme"><svg><use href="#i-storm"/></svg><span data-i18n="t.extreme">Remise en état</span></button>
+            <button type="button" class="svc-tab" data-svc="airbnb"><svg><use href="#i-bed"/></svg><span data-i18n="t.airbnb">Airbnb</span></button>
+          </div>
+        </div>
+
+        <!-- Residential options -->
+        <div id="opt-res" style="display:grid; gap:30px;">
+          <div>
+            <div class="calc-label"><span data-i18n="calc.type">Type de logement</span></div>
+            <div class="seg" id="seg-type">
+              <button type="button" class="on" data-val="apt" data-i18n="calc.apt">Appartement / Condo</button>
+              <button type="button" data-val="house" data-i18n="calc.house">Maison</button>
+            </div>
+          </div>
+          <div class="steppers">
+            <div>
+              <div class="calc-label"><span data-i18n="calc.beds">Chambres</span><small id="apt-size"></small></div>
+              <div class="stepper">
+                <button type="button" data-step="beds" data-dir="-1" aria-label="-">−</button>
+                <div class="val"><b id="beds-val">2</b><span id="beds-lbl" data-i18n="calc.bedsUnit">chambres</span></div>
+                <button type="button" data-step="beds" data-dir="1" aria-label="+">+</button>
+              </div>
+            </div>
+            <div>
+              <div class="calc-label"><span data-i18n="calc.baths">Salles de bain</span></div>
+              <div class="stepper">
+                <button type="button" data-step="baths" data-dir="-1" aria-label="-">−</button>
+                <div class="val"><b id="baths-val">1</b><span data-i18n="calc.bathsUnit">salle(s) de bain</span></div>
+                <button type="button" data-step="baths" data-dir="1" aria-label="+">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Commercial options -->
+        <div id="opt-com" hidden>
+          <div class="calc-label"><span data-i18n="calc.sqft">Superficie</span></div>
+          <div class="range-wrap">
+            <div class="range-val"><span id="sqft-val">2 000</span><small data-i18n="calc.sqftUnit">pi²</small></div>
+            <input type="range" id="sqft" min="500" max="15000" step="250" value="2000" aria-label="Superficie en pieds carrés">
+          </div>
+        </div>
+
+        <!-- Quote-only -->
+        <div id="opt-quote" hidden>
+          <div class="quote-only" data-i18n="calc.quote">Chaque situation est différente. Nous évaluons gratuitement (sur place ou par photos/vidéo) et vous remettons un <b>prix ferme dans l'heure</b>. Intervention possible en 24–48 h.</div>
+        </div>
+
+        <div id="opt-freq">
+          <div class="calc-label"><span data-i18n="calc.freq">Fréquence</span><small data-i18n="calc.freqHint">plus c'est régulier, plus c'est avantageux</small></div>
+          <div class="seg" id="seg-freq">
+            <button type="button" data-val="once"><span data-i18n="f.once">Une fois</span></button>
+            <button type="button" data-val="monthly"><span data-i18n="f.monthly">Mensuel</span><small data-disc="monthly"></small></button>
+            <button type="button" class="on" data-val="biweekly"><span data-i18n="f.biweekly">Aux 2 semaines</span><small data-disc="biweekly"></small></button>
+            <button type="button" data-val="weekly"><span data-i18n="f.weekly">Hebdo</span><small data-disc="weekly"></small></button>
+          </div>
+        </div>
+
+        <div id="opt-extras">
+          <div class="calc-label"><span data-i18n="calc.extras">Services à la carte</span></div>
+          <div class="chips" id="chips"></div>
+        </div>
+      </div>
+
+      <aside class="calc-result" aria-live="polite">
+        <span class="res-label" data-i18n="calc.estimate">Votre estimation</span>
+        <div class="res-service" id="res-service">Entretien Signature</div>
+        <div class="res-home" id="res-home"></div>
+        <div class="price-big" id="price-big"><span class="from" id="res-from" hidden></span><span class="amt" id="res-amt">172</span><span class="cur">$</span></div>
+        <div class="res-per" id="res-per"></div>
+        <span class="res-save" id="res-save" hidden></span>
+        <ul class="res-list" id="res-list"></ul>
+        <div class="res-gift" id="res-gift">
+          <svg viewBox="0 0 40 40"><rect x="5" y="16" width="30" height="20" rx="2" fill="#0a1730" stroke="url(#gold)"/><rect x="3" y="11" width="34" height="7" rx="1.5" fill="url(#gold)"/><rect x="18" y="11" width="4" height="25" fill="url(#gold)"/><path d="M20 11c-3-6-10-6-8-2s8 2 8 2Zm0 0c3-6 10-6 8-2s-8 2-8 2Z" fill="none" stroke="url(#gold)" stroke-width="1.5"/></svg>
+          <span data-i18n="calc.gift"><b>Coffret Prime offert</b> à votre première visite — gel antibactérien, brume signature, et plus.</span>
+        </div>
+        <button type="button" class="btn btn-gold btn-block" id="book-btn"><span data-i18n="calc.book">Réserver ce prix</span><svg><use href="#i-arrow"/></svg></button>
+        <p class="res-fine" data-i18n="calc.fine">Estimation indicative · prix final confirmé avant la visite · paiement après le service</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="marquee dark reverse" aria-hidden="true">
+  <div class="marquee-track" data-marquee>
+    <span data-i18n="mq2.1">Formé à l'Académie Prime</span><span data-i18n="mq2.2">Toujours en uniforme</span><span data-i18n="mq2.3">Même équipe, chaque visite</span><span data-i18n="mq2.4">Garantie 24 h</span><span data-i18n="mq2.5">Produits éco-luxe</span><span data-i18n="mq2.6">Bilingue FR · EN · ES</span>
+  </div>
+</div>
+
+<!-- ============ Le Coffret Prime ============ -->
+<section class="section coffret" id="coffret">
+  <div class="container coffret-grid">
+    <div class="kit-stage" id="kit-stage">
+      <div class="halo" aria-hidden="true"></div>
+      <svg class="kit" viewBox="0 0 600 600" role="img" aria-label="Le Coffret Prime : gel antibactérien, brume signature, bougie, carte manuscrite et sceaux dorés">
+        <!-- lid -->
+        <g class="lid">
+          <rect x="56" y="332" width="488" height="40" rx="8" fill="#0f2143" stroke="url(#gold)" stroke-width="1.2"/>
+          <rect x="280" y="332" width="40" height="40" fill="url(#gold)"/>
+          <path d="M300 332c-26-44-78-40-62-10s62 10 62 10Zm0 0c26-44 78-40 62-10s-62 10-62 10Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="round"/>
+          <circle cx="300" cy="330" r="10" fill="url(#gold)"/>
+        </g>
+        <!-- floating seal stickers -->
+        <g class="rise r5"><g class="floaty f4">
+          <circle cx="470" cy="120" r="30" fill="url(#gold)"/><circle cx="470" cy="120" r="24" fill="none" stroke="#0a1730" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="470" y="127" text-anchor="middle" font-family="Cinzel, serif" font-size="18" fill="#0a1730" font-weight="600">PM</text>
+        </g></g>
+        <g class="rise r4"><g class="floaty f3">
+          <circle cx="120" cy="150" r="22" fill="url(#gold)"/><circle cx="120" cy="150" r="17" fill="none" stroke="#0a1730" stroke-width=".8" stroke-dasharray="2 2"/>
+          <text x="120" y="155" text-anchor="middle" font-family="Cinzel, serif" font-size="13" fill="#0a1730" font-weight="600">PM</text>
+        </g></g>
+        <path class="spark" d="M540 230c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12Z" fill="#e5c46a"/>
+        <path class="spark s2" d="M70 280c1 7 3 9 10 10-7 1-9 3-10 10-1-7-3-9-10-10 7-1 9-3 10-10Z" fill="#c9a227"/>
+        <path class="spark s3" d="M330 60c1 9 4 12 13 13-9 1-12 4-13 13-1-9-4-12-13-13 9-1 12-4 13-13Z" fill="#f2dc9b"/>
+
+        <!-- items rising from the box -->
+        <!-- 1. Gel antibactérien (pump) -->
+        <g class="rise r1"><g class="floaty">
+          <rect x="190" y="162" width="14" height="30" fill="url(#goldH)"/>
+          <path d="M178 150h44v14h-44z" fill="#0a1730"/><path d="M216 154h26v6h-26z" fill="#0a1730"/>
+          <rect x="182" y="192" width="36" height="12" rx="3" fill="url(#goldH)"/>
+          <rect x="160" y="202" width="80" height="176" rx="20" fill="url(#ivoryG)" stroke="#d8cdb2"/>
+          <rect x="168" y="244" width="64" height="92" rx="6" fill="#0a1730"/>
+          <circle cx="200" cy="270" r="13" fill="none" stroke="url(#gold)" stroke-width="1.5"/>
+          <text x="200" y="275" text-anchor="middle" font-family="Cinzel, serif" font-size="11" fill="#e5c46a">PM</text>
+          <text x="200" y="302" text-anchor="middle" font-family="Manrope, sans-serif" font-size="7.5" letter-spacing="1.2" fill="#f4e2ad" font-weight="700">GEL</text>
+          <text x="200" y="314" text-anchor="middle" font-family="Manrope, sans-serif" font-size="6" letter-spacing=".8" fill="#a9b4c9">ANTIBACTÉRIEN</text>
+          <text x="200" y="326" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="8" font-style="italic" fill="#a9b4c9">70% · eucalyptus</text>
+          <rect x="166" y="210" width="8" height="150" rx="4" fill="#fff" opacity=".6"/>
+        </g></g>
+        <!-- 2. Brume signature (trigger spray) -->
+        <g class="rise r2"><g class="floaty f2">
+          <path d="M282 92h36l14 10v20h-22l-4 16h-22z" fill="url(#gold)"/>
+          <path d="M332 104h18v8h-18z" fill="url(#goldH)"/>
+          <path d="M290 122l-8 26" stroke="#9c7a1e" stroke-width="3" stroke-linecap="round"/>
+          <rect x="288" y="138" width="28" height="20" fill="#0a1730"/>
+          <rect x="262" y="156" width="80" height="224" rx="22" fill="url(#glass)"/>
+          <rect x="272" y="206" width="60" height="118" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2"/>
+          <text x="302" y="236" text-anchor="middle" font-family="Cinzel, serif" font-size="10" letter-spacing="2" fill="#e5c46a">PRIME</text>
+          <text x="302" y="268" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="26" font-style="italic" fill="#f4e2ad">N°1</text>
+          <text x="302" y="292" text-anchor="middle" font-family="Manrope, sans-serif" font-size="6.5" letter-spacing="1.2" fill="#a9b4c9" font-weight="700">BRUME</text>
+          <text x="302" y="303" text-anchor="middle" font-family="Manrope, sans-serif" font-size="6.5" letter-spacing="1.2" fill="#a9b4c9" font-weight="700">D'AMBIANCE</text>
+          <text x="302" y="316" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="8" font-style="italic" fill="#a9b4c9">lin blanc &amp; bergamote</text>
+          <rect x="270" y="166" width="8" height="200" rx="4" fill="#fff" opacity=".18"/>
+        </g></g>
+        <!-- 3. Bougie -->
+        <g class="rise r3"><g class="floaty f3">
+          <rect x="360" y="232" width="96" height="16" rx="4" fill="url(#goldH)"/>
+          <rect x="364" y="246" width="88" height="130" rx="12" fill="url(#ivoryG)" stroke="#d8cdb2"/>
+          <rect x="364" y="290" width="88" height="44" fill="#0a1730"/>
+          <text x="408" y="310" text-anchor="middle" font-family="Cinzel, serif" font-size="9" letter-spacing="2" fill="#e5c46a">PRIME</text>
+          <text x="408" y="325" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="10" font-style="italic" fill="#f4e2ad">bougie · coton</text>
+        </g></g>
+        <!-- 4. Carte manuscrite -->
+        <g class="rise r4"><g class="floaty f4">
+          <g transform="rotate(10 490 300)">
+            <rect x="450" y="240" width="84" height="116" rx="4" fill="#fffdf8" stroke="#e5c46a"/>
+            <rect x="456" y="246" width="72" height="104" rx="2" fill="none" stroke="#e5c46a" stroke-width=".6"/>
+            <text x="492" y="286" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="20" font-style="italic" fill="#0a1730">Merci</text>
+            <path d="M468 302c8-4 14 4 22 0s14-4 24 0" stroke="#8a6a1c" fill="none" stroke-width="1"/>
+            <path d="M470 314c10-3 18 3 28 0" stroke="#8a6a1c" fill="none" stroke-width="1"/>
+            <circle cx="492" cy="334" r="8" fill="url(#gold)"/>
+          </g>
+        </g></g>
+        <!-- 5. Microfibre roll -->
+        <g class="rise r2"><g class="floaty f2">
+          <rect x="84" y="288" width="70" height="82" rx="10" fill="#e9dcc0"/>
+          <ellipse cx="119" cy="288" rx="35" ry="10" fill="#f4ead3"/>
+          <path d="M96 288c10 6 36 6 46 0" stroke="#d6c49b" fill="none"/>
+          <rect x="84" y="318" width="70" height="10" fill="url(#goldH)"/>
+        </g></g>
+
+        <!-- box body -->
+        <g>
+          <rect x="70" y="360" width="460" height="190" rx="10" fill="#0a1730"/>
+          <rect x="70" y="360" width="460" height="190" rx="10" fill="none" stroke="url(#gold)" stroke-width="1.2"/>
+          <rect x="280" y="360" width="40" height="190" fill="url(#gold)"/>
+          <rect x="86" y="376" width="428" height="158" rx="6" fill="none" stroke="#e5c46a" stroke-opacity=".25"/>
+          <circle cx="300" cy="455" r="44" fill="#0a1730" stroke="url(#gold)" stroke-width="2"/>
+          <circle cx="300" cy="455" r="37" fill="none" stroke="#e5c46a" stroke-opacity=".5" stroke-dasharray="2 3"/>
+          <text x="300" y="466" text-anchor="middle" font-family="Cinzel, serif" font-size="30" fill="url(#gold)" font-weight="600">PM</text>
+          <text x="160" y="470" text-anchor="middle" font-family="Cinzel, serif" font-size="15" letter-spacing="5" fill="#e5c46a">LE COFFRET</text>
+          <text x="440" y="470" text-anchor="middle" font-family="Cinzel, serif" font-size="15" letter-spacing="5" fill="#e5c46a">PRIME</text>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <span class="eyebrow reveal" data-i18n="kit.eyebrow">Le Coffret Prime</span>
+      <h2 class="reveal d1" data-i18n="kit.h2">Un cadeau, <em>parce que la première impression compte.</em></h2>
+      <p class="reveal d2" style="font-size:18px; color:var(--text-soft); margin:22px 0 0;" data-i18n="kit.p">À votre première visite, nous laissons chez vous un coffret signé Prime Ménage, présenté comme dans un grand hôtel.</p>
+      <ul class="kit-list">
+        <li class="reveal"><span class="kn">I</span><div><b data-i18n="kit.1">Gel antibactérien Prime</b><span data-i18n="kit.1p">Format voyage, 70 % alcool, parfum eucalyptus — pour le sac ou l'entrée.</span></div></li>
+        <li class="reveal d1"><span class="kn">II</span><div><b data-i18n="kit.2">Brume d'ambiance N°1</b><span data-i18n="kit.2p">Notre signature olfactive : lin blanc et bergamote, la même que nous laissons après chaque visite.</span></div></li>
+        <li class="reveal d2"><span class="kn">III</span><div><b data-i18n="kit.3">Bougie de coton &amp; chiffon microfibre</b><span data-i18n="kit.3p">Pour prolonger la sensation de propre entre deux visites.</span></div></li>
+        <li class="reveal d3"><span class="kn">IV</span><div><b data-i18n="kit.4">Sceaux dorés &amp; carte manuscrite</b><span data-i18n="kit.4p">Les sceaux Prime qui ferment le papier hygiénique et une note écrite à la main par votre équipe.</span></div></li>
+      </ul>
+      <p class="coffret-note reveal"><svg><use href="#i-gift"/></svg><span data-i18n="kit.note">Offert avec toute première réservation résidentielle. Les clients récurrents reçoivent un coffret saisonnier renouvelé.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Signatures ============ -->
+<section class="section signatures on-night" id="signatures">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal" data-i18n="sig.eyebrow">Les Signatures Prime</span>
+      <h2 class="reveal d1" data-i18n="sig.h2">Les détails d'un hôtel cinq étoiles, <em class="gold-text">chez vous.</em></h2>
+      <p class="reveal d2" data-i18n="sig.p">C'est à ces petites choses que vous saurez que Prime Ménage est passé. Elles sont incluses dans chaque visite, sans exception.</p>
+    </div>
+    <div class="sig-grid">
+      <!-- Toilet paper fold + seal -->
+      <article class="sig-card reveal">
+        <div class="sig-art">
+          <svg viewBox="0 0 200 180" aria-hidden="true">
+            <rect x="30" y="30" width="140" height="8" rx="4" fill="url(#goldH)"/>
+            <rect x="46" y="38" width="6" height="16" fill="url(#goldH)"/><rect x="148" y="38" width="6" height="16" fill="url(#goldH)"/>
+            <rect x="50" y="46" width="100" height="56" rx="28" fill="#fffdf8"/>
+            <ellipse cx="150" cy="74" rx="10" ry="28" fill="#efe8d8"/><ellipse cx="150" cy="74" rx="4" ry="10" fill="#c9bfa6"/>
+            <g class="tp-fold">
+              <path d="M58 100h84v34l-42 26-42-26z" fill="#fffdf8"/>
+              <path d="M58 134l42 26 42-26" fill="none" stroke="#e1d8c3"/>
+              <path d="M58 116h84" stroke="#efe8d8" stroke-dasharray="3 3"/>
+            </g>
+            <g class="seal-spin"><circle cx="100" cy="142" r="13" fill="url(#gold)"/><circle cx="100" cy="142" r="10" fill="none" stroke="#0a1730" stroke-width=".7" stroke-dasharray="1.5 1.5"/></g>
+            <text x="100" y="146" text-anchor="middle" font-family="Cinzel, serif" font-size="9" fill="#0a1730" font-weight="600">PM</text>
+          </svg>
+        </div>
+        <h3 data-i18n="sig.1">Le pli signature</h3>
+        <p data-i18n="sig.1p">Le papier hygiénique plié en pointe et scellé d'un autocollant doré Prime — le geste qui dit « cette salle de bain vient d'être désinfectée ».</p>
+      </article>
+      <!-- Seal sticker -->
+      <article class="sig-card reveal d1">
+        <div class="sig-art">
+          <svg viewBox="0 0 200 180" aria-hidden="true">
+            <defs><path id="sealpath" d="M100 90m-58 0a58 58 0 1 1 116 0a58 58 0 1 1 -116 0"/></defs>
+            <circle cx="100" cy="90" r="72" fill="none" stroke="url(#gold)" stroke-width=".8" stroke-dasharray="2 4"/>
+            <circle cx="100" cy="90" r="68" fill="url(#gold)"/>
+            <circle cx="100" cy="90" r="46" fill="#0a1730"/>
+            <g class="seal-spin"><text font-family="Manrope, sans-serif" font-size="9.5" font-weight="800" letter-spacing="3.2" fill="#0a1730"><textPath href="#sealpath">DÉSINFECTÉ · SANITIZED · PRIME MÉNAGE ·</textPath></text></g>
+            <text x="100" y="98" text-anchor="middle" font-family="Cinzel, serif" font-size="26" fill="url(#gold)" font-weight="600">PM</text>
+            <path d="M88 112l8 8 16-16" stroke="#e5c46a" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".0"/>
+          </svg>
+        </div>
+        <h3 data-i18n="sig.2">Le Sceau Prime</h3>
+        <p data-i18n="sig.2p">Un sceau doré posé sur la cuvette et les verres de la salle de bain : la preuve visible que chaque surface a été désinfectée et vérifiée.</p>
+      </article>
+      <!-- Towels -->
+      <article class="sig-card reveal d2">
+        <div class="sig-art">
+          <svg viewBox="0 0 200 180" aria-hidden="true">
+            <rect x="40" y="130" width="120" height="26" rx="10" fill="#efe8d8"/><rect x="40" y="140" width="120" height="3" fill="#d8cdb2"/>
+            <rect x="48" y="104" width="104" height="28" rx="10" fill="#fffdf8"/><rect x="48" y="115" width="104" height="3" fill="#e5dcc6"/>
+            <rect x="56" y="80" width="88" height="26" rx="10" fill="#1f3d78"/><rect x="56" y="90" width="88" height="3" fill="#152a52"/>
+            <rect x="96" y="80" width="8" height="76" fill="url(#gold)" opacity=".95"/>
+            <path d="M100 80c-10-18-30-16-24-6s24 6 24 6Zm0 0c10-18 30-16 24-6s-24 6-24 6Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
+            <path class="spark" d="M150 50c1 6 3 8 9 9-6 1-8 3-9 9-1-6-3-8-9-9 6-1 8-3 9-9Z" fill="#e5c46a"/>
+            <path class="spark s2" d="M50 60c.8 4 2 5.5 6 6-4 .6-5.2 2-6 6-.6-4-2-5.4-6-6 4-.5 5.4-2 6-6Z" fill="#f2dc9b"/>
+          </svg>
+        </div>
+        <h3 data-i18n="sig.3">Serviettes façon hôtel</h3>
+        <p data-i18n="sig.3p">Serviettes pliées en trois, lits faits aux coins d'hôtel, coussins alignés. Votre chambre retrouve l'allure d'une suite.</p>
+      </article>
+      <!-- Handwritten card (wide) -->
+      <article class="sig-card wide reveal">
+        <div class="sig-art">
+          <svg viewBox="0 0 260 180" aria-hidden="true">
+            <g transform="rotate(-6 130 90)">
+              <rect x="40" y="30" width="180" height="120" rx="6" fill="#fffdf8"/>
+              <rect x="48" y="38" width="164" height="104" rx="3" fill="none" stroke="#e5c46a" stroke-width=".8"/>
+              <text x="64" y="70" font-family="Cormorant Garamond, serif" font-style="italic" font-size="20" fill="#0a1730">Chère Mme Tremblay,</text>
+              <path class="ink-line" d="M64 92c14-6 22 4 36-1s22-4 34 0 20-3 30 0" stroke="#1f3d78" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+              <path class="ink-line" style="animation-delay:.4s" d="M64 108c10-4 20 3 30 0s20-4 30 0" stroke="#1f3d78" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+              <circle cx="190" cy="124" r="11" fill="url(#gold)"/>
+              <text x="190" y="128" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#0a1730" font-weight="600">PM</text>
+            </g>
+            <g class="pen"><path d="M128 102l40-46 8 7-40 46-10 3z" fill="url(#goldH)"/><path d="M126 112l2-10 8 7z" fill="#0a1730"/></g>
+          </svg>
+        </div>
+        <div>
+          <h3 data-i18n="sig.4">La carte manuscrite &amp; le rapport photo</h3>
+          <p data-i18n="sig.4p">À la fin de chaque visite, votre équipe laisse une note écrite à la main — ce qui a été fait, ce qui a été remarqué (un joint qui noircit, une ampoule grillée). Vous recevez aussi quelques photos de contrôle par texto ou WhatsApp.</p>
+        </div>
+      </article>
+      <!-- Mist -->
+      <article class="sig-card reveal d1">
+        <div class="sig-art">
+          <svg viewBox="0 0 200 180" aria-hidden="true">
+            <path class="steam" d="M92 58c-6-8 6-12 0-22" stroke="#f4e2ad" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path class="steam s2" d="M104 58c-6-8 6-12 0-22" stroke="#e5c46a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path class="steam s3" d="M116 58c-6-8 6-12 0-22" stroke="#f4e2ad" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M96 62l-8-30M104 62l0-34M112 62l8-30" stroke="#8a6a1c" stroke-width="1.5"/>
+            <rect x="90" y="60" width="28" height="12" rx="2" fill="url(#goldH)"/>
+            <path d="M74 150c-6-40 6-72 30-80 24 8 36 40 30 80z" fill="url(#glass)"/>
+            <path d="M84 140c-3-30 4-52 20-58" stroke="#fff" stroke-opacity=".25" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <rect x="84" y="104" width="40" height="26" rx="2" fill="none" stroke="url(#gold)"/>
+            <text x="104" y="121" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="13" fill="#f4e2ad">N°1</text>
+          </svg>
+        </div>
+        <h3 data-i18n="sig.5">La signature olfactive</h3>
+        <p data-i18n="sig.5p">Une brume discrète de lin blanc et bergamote à la sortie. Sans parfum sur demande pour les personnes sensibles.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Wipe experience ============ -->
+<section class="section wipe">
+  <div class="container wipe-grid">
+    <div>
+      <span class="eyebrow reveal" data-i18n="wipe.eyebrow">Essayez par vous-même</span>
+      <h2 class="reveal d1" data-i18n="wipe.h2">Passez le chiffon. <em>Voyez la différence.</em></h2>
+      <p class="reveal d2" style="font-size:18px; color:var(--text-soft); margin:22px 0 0;" data-i18n="wipe.p">Glissez votre doigt ou votre souris sur la surface. C'est exactement ce que ressent notre équipe à chaque visite — et ce que vous ressentirez en rentrant chez vous.</p>
+      <div class="wipe-meter reveal d3"><div class="bar"><i id="wipe-bar"></i></div><b id="wipe-pct">0 %</b></div>
+      <button class="wipe-reset" id="wipe-reset" type="button" data-i18n="wipe.reset">↺ Salir de nouveau</button>
+    </div>
+    <div class="wipe-box reveal" id="wipe-box">
+      <div class="clean">
+        <div>
+          <img src="assets/logo.webp" alt="">
+          <div class="big" data-i18n="wipe.clean">Impeccable.</div>
+          <small data-i18n="wipe.small">Le standard Prime</small>
+        </div>
+      </div>
+      <canvas id="wipe-canvas" aria-label="Surface à nettoyer — glissez pour essuyer"></canvas>
+      <div class="wipe-hint"><svg><use href="#i-hand"/></svg><span data-i18n="wipe.hint">Glissez pour nettoyer</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Standards ============ -->
+<section class="section standards" id="standards">
+  <div class="container std-grid">
+    <div class="std-photo reveal">
+      <img src="assets/equipe.webp" alt="Professionnelle Prime Ménage en uniforme" data-i18n-alt="std.alt" data-parallax="0.12" loading="lazy">
+      <div class="badge"><img src="assets/logo.webp" alt=""><div><b data-i18n="std.badge">Certifiée Académie Prime</b><span data-i18n="std.badges">Formée · vérifiée · en uniforme</span></div></div>
+    </div>
+    <div>
+      <span class="eyebrow reveal" data-i18n="std.eyebrow">Le standard Prime</span>
+      <h2 class="reveal d1" data-i18n="std.h2">Une équipe que vous serez <em>fier</em> d'accueillir.</h2>
+      <p class="reveal d2" style="font-size:18px; color:var(--text-soft); margin:22px 0 0;" data-i18n="std.p">Nous gérons Prime Ménage comme une maison de luxe : recrutement sélectif, formation, uniforme, protocoles écrits et contrôle qualité. Personne n'entre chez vous sans avoir passé toutes les étapes.</p>
+      <div class="stats reveal">
+        <div class="stat"><b><span data-count="72">0</span></b><span data-i18n="std.s1">points de contrôle à chaque visite</span></div>
+        <div class="stat"><b><span data-count="40">0</span><sup>h</sup></b><span data-i18n="std.s2">de formation avant la première maison</span></div>
+        <div class="stat"><b><span data-count="100">0</span><sup>%</sup></b><span data-i18n="std.s3">du personnel vérifié (antécédents &amp; références)</span></div>
+        <div class="stat"><b><span data-count="24">0</span><sup>h</sup></b><span data-i18n="std.s4">pour revenir retoucher, sans frais</span></div>
+      </div>
+      <div class="std-list">
+        <div class="std-item reveal"><div class="ic"><svg><use href="#i-cert"/></svg></div><div><h3 data-i18n="std.1">L'Académie Prime</h3><p data-i18n="std.1p">Techniques par surface (marbre, bois franc, inox, quartz), ordre de travail du haut vers le bas, codes couleur des chiffons pour éviter toute contamination croisée.</p></div></div>
+        <div class="std-item reveal"><div class="ic"><svg><use href="#i-shirt"/></svg></div><div><h3 data-i18n="std.2">Uniforme &amp; présentation</h3><p data-i18n="std.2p">Polo et tablier brodés, couvre-chaussures à l'entrée, gants. Ponctualité, discrétion et courtoisie — en français, en anglais ou en espagnol.</p></div></div>
+        <div class="std-item reveal"><div class="ic"><svg><use href="#i-user"/></svg></div><div><h3 data-i18n="std.3">Toujours la même personne</h3><p data-i18n="std.3p">Votre professionnelle attitrée apprend vos préférences, vos pièces sensibles et vos habitudes. Vos clés et codes sont gardés sous protocole confidentiel.</p></div></div>
+        <div class="std-item reveal"><div class="ic"><svg><use href="#i-leaf"/></svg></div><div><h3 data-i18n="std.4">Éco-luxe, tout fourni</h3><p data-i18n="std.4p">Produits biodégradables, sûrs pour les enfants et les animaux, aspirateur HEPA et microfibres professionnelles. Vous n'avez rien à fournir.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Process ============ -->
+<section class="section process on-night">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow reveal" data-i18n="proc.eyebrow">Comment ça marche</span>
+      <h2 class="reveal d1" data-i18n="proc.h2">Simple, du premier message <em>à la dernière touche.</em></h2>
+    </div>
+    <div class="steps" id="steps">
+      <div class="steps-line"><i></i></div>
+      <div class="step reveal"><div class="step-n">I</div><div><h3 data-i18n="proc.1">Votre prix</h3><p data-i18n="proc.1p">Calculez en 30 secondes ou écrivez-nous sur WhatsApp. Réponse personnelle en moins de 2 heures.</p></div></div>
+      <div class="step reveal d1"><div class="step-n">II</div><div><h3 data-i18n="proc.2">La confirmation</h3><p data-i18n="proc.2p">Date, heure et accès confirmés. Vous recevez une facture Wave qui tient lieu d'entente — rien à payer d'avance.</p></div></div>
+      <div class="step reveal d2"><div class="step-n">III</div><div><h3 data-i18n="proc.3">La visite</h3><p data-i18n="proc.3p">Votre équipe arrive en uniforme, avec tout l'équipement. Protocole en 72 points, détails signature, Coffret Prime.</p></div></div>
+      <div class="step reveal d3"><div class="step-n">IV</div><div><h3 data-i18n="proc.4">Le suivi</h3><p data-i18n="proc.4p">Photos de contrôle, carte manuscrite, paiement par Interac ou carte. Un détail vous déplaît ? On revient sous 24 h.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Reviews ============ -->
+<section class="section reviews">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow reveal" data-i18n="rev.eyebrow">Ils nous confient leur maison</span>
+      <h2 class="reveal d1" data-i18n="rev.h2">Les mots de nos <em>clients.</em></h2>
+      <div class="rev-rating reveal d2"><span class="stars">★★★★★</span><span data-i18n="rev.rating">Satisfaction garantie, visite après visite</span></div>
+    </div>
+  </div>
+  <!-- NOTE: exemples de témoignages — remplacez par les avis réels de vos clients (Google Business Profile). -->
+  <div class="rev-track-wrap">
+    <div class="rev-track" id="rev-track">
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.1">« Le petit sceau doré sur le papier de toilette m'a fait sourire. On se croirait à l'hôtel — chaque fois. »</blockquote><div class="who"><span class="av">CL</span><div><b>Catherine L.</b><span>Plateau-Mont-Royal</span></div></div></article>
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.2">« Fin de bail le 1er juillet, en pleine folie. Le propriétaire m'a remis le dépôt complet sans une seule remarque. »</blockquote><div class="who"><span class="av">MR</span><div><b>Marc-André R.</b><span>Rosemont</span></div></div></article>
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.3">« Same person every two weeks, always in uniform, always on time. I stopped thinking about cleaning altogether. »</blockquote><div class="who"><span class="av">SK</span><div><b>Sarah K.</b><span>Westmount</span></div></div></article>
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.4">« Après nos rénovations, il y avait de la poussière de gypse partout. Deux jours plus tard, la maison était prête pour la photo. »</blockquote><div class="who"><span class="av">JP</span><div><b>Julie &amp; Pierre</b><span>Villeray</span></div></div></article>
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.5">« Plus cher que mon ancienne compagnie, oui. Mais je n'ai plus jamais eu à repasser derrière. Ça vaut chaque dollar. »</blockquote><div class="who"><span class="av">NB</span><div><b>Nadia B.</b><span>Verdun</span></div></div></article>
+      <article class="rev"><div class="stars">★★★★★</div><blockquote data-i18n="rev.6">« Our Airbnb reviews went from "clean" to "spotless" in a month. The photo report after each turnover is gold. »</blockquote><div class="who"><span class="av">DT</span><div><b>David T.</b><span>Vieux-Montréal</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Zones ============ -->
+<section class="section zones" id="zones">
+  <div class="container zones-grid">
+    <div>
+      <span class="eyebrow reveal" data-i18n="zone.eyebrow">Territoire desservi</span>
+      <h2 class="reveal d1" data-i18n="zone.h2">Au cœur de <em>Montréal.</em></h2>
+      <p class="reveal d2" style="font-size:18px; color:var(--text-soft); margin:22px 0 0;" data-i18n="zone.p">Nous restons volontairement dans un territoire compact : nos équipes arrivent à l'heure, sans frais de déplacement. Votre quartier n'est pas listé ? Écrivez-nous.</p>
+      <div class="zone-list reveal d3" id="zone-list"></div>
+    </div>
+    <div class="map reveal">
+      <svg viewBox="0 0 600 540" id="map-svg" role="img" aria-label="Carte stylisée de l'île de Montréal et des quartiers desservis">
+        <defs>
+          <radialGradient id="mapglow" cx="50%" cy="55%" r="60%"><stop offset="0" stop-color="#1a3264"/><stop offset="1" stop-color="#0a1730"/></radialGradient>
+          <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e5c46a" opacity=".12"/></pattern>
+        </defs>
+        <rect width="600" height="540" fill="url(#mapglow)"/>
+        <rect width="600" height="540" fill="url(#dots)"/>
+        <path d="M30 420C50 350 130 290 210 255C290 215 370 150 440 95C490 58 540 40 575 55C595 80 575 125 535 165C480 225 430 290 370 345C310 395 240 445 165 470C100 490 35 470 30 420Z" fill="#12264d" stroke="url(#gold)" stroke-width="1.5"/>
+        <path id="river" d="M20 505C140 500 260 460 360 395C460 330 530 245 590 170" fill="none" stroke="#e5c46a" stroke-opacity=".35" stroke-width="1" stroke-dasharray="4 6"/>
+        <text font-family="Cormorant Garamond, serif" font-style="italic" font-size="15" fill="#e5c46a" opacity=".6"><textPath href="#river" startOffset="18%">Fleuve Saint-Laurent</textPath></text>
+        <circle cx="298" cy="288" r="24" fill="#e5c46a" opacity=".12"/>
+        <text x="298" y="292" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="11" fill="#e5c46a" opacity=".75">Mont Royal</text>
+        <g id="pins"></g>
+        <text x="30" y="40" font-family="Cinzel, serif" font-size="14" letter-spacing="4" fill="#e5c46a">MONTRÉAL</text>
+        <text x="30" y="60" font-family="Manrope, sans-serif" font-size="10" letter-spacing="2" fill="#a9b4c9">PRIME MÉNAGE · ZONE DE SERVICE</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section faq" id="faq">
+  <div class="container faq-grid">
+    <div>
+      <span class="eyebrow reveal" data-i18n="faq.eyebrow">Questions fréquentes</span>
+      <h2 class="reveal d1" data-i18n="faq.h2">Tout ce qu'il faut <em>savoir.</em></h2>
+      <p class="reveal d2" style="font-size:17px; color:var(--text-soft); margin:22px 0 30px;" data-i18n="faq.p">Une autre question ? Nous répondons personnellement, en français, en anglais ou en espagnol.</p>
+      <a class="btn btn-dark js-wa reveal d3" href="#"><svg><use href="#i-wa"/></svg><span data-i18n="faq.cta">Écrire sur WhatsApp</span></a>
+    </div>
+    <div class="faq-list" id="faq-list">
+      <div class="faq-item open"><button class="faq-q" type="button"><span data-i18n="q1">Pourquoi êtes-vous plus chers que d'autres services ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a1">Parce que nous ne chronométrons pas le travail au rabais. Nos professionnelles sont formées, vérifiées, bien payées et en uniforme ; nous fournissons des produits éco-luxe et un équipement professionnel ; et chaque visite suit un protocole de 72 points avec nos détails signature. Le résultat : vous n'avez jamais à repasser derrière nous.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q2">Dois-je être présent pendant la visite ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a2">Non. La plupart de nos clients nous confient une clé ou un code. Ils sont conservés sous protocole confidentiel et vous recevez un message à l'arrivée et au départ de votre équipe, avec les photos de contrôle.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q3">Dois-je fournir des produits ou un aspirateur ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a3">Rien du tout. Nous apportons tout : produits biodégradables sûrs pour les enfants et les animaux, aspirateur HEPA, microfibres professionnelles. Si vous préférez vos propres produits, nous les utiliserons volontiers.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q4">Et si je ne suis pas satisfait ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a4">Signalez-le dans les 24 heures et nous revenons retoucher la zone concernée, sans frais. C'est notre Garantie Prime.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q5">Comment se passe le paiement ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a5">Vous recevez une facture Wave à la confirmation. Le paiement se fait après le service, par virement Interac ou par carte. Le reçu est envoyé automatiquement.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q6">Quand réserver pour le 1er juillet ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a6">Le plus tôt possible — idéalement dès avril ou mai. Les dates autour du 1<sup>er</sup> juillet sont limitées et nos clients récurrents ont la priorité.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="q7">Quelle est votre politique d'annulation ?</span><i></i></button><div class="faq-a"><div><p data-i18n="a7">Annulation ou report gratuit jusqu'à 48 heures avant la visite. En deçà, des frais de 50 % peuvent s'appliquer, car la plage horaire a été réservée pour vous.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Final CTA ============ -->
+<section class="section final">
+  <div class="rings" aria-hidden="true">
+    <svg viewBox="0 0 1200 1200"><g fill="none" stroke="url(#gold)"><circle cx="600" cy="600" r="590" stroke-width=".6" stroke-dasharray="2 8"/><circle cx="600" cy="600" r="470" stroke-width=".5"/><circle cx="600" cy="600" r="350" stroke-width=".6" stroke-dasharray="1 5"/></g><circle cx="600" cy="10" r="4" fill="#e5c46a"/><circle cx="1070" cy="600" r="3" fill="#f4e2ad"/></svg>
+  </div>
+  <div class="container">
+    <img class="final-logo reveal" src="assets/logo.webp" alt="Prime Ménage">
+    <h2 class="reveal d1" data-i18n="final.h2">Rentrez chez vous.<br><em class="gold-text">Tout est prêt.</em></h2>
+    <p class="reveal d2" data-i18n="final.p">Places limitées chaque semaine pour garantir notre standard. Réservez votre première visite — le Coffret Prime vous attend.</p>
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-gold magnetic" href="#tarifs"><span data-i18n="hero.cta1">Calculer mon prix</span><svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost js-wa" href="#"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top"><img src="assets/logo.webp" alt="" width="44" height="44"><span class="brand-word" style="color:#fff">PRIME <b>MÉNAGE</b><small>MONTRÉAL</small></span></a>
+        <p style="margin:20px 0 0; max-width:320px;" data-i18n="foot.tag">Le ménage à la hauteur de son nom. Entretien ménager haut de gamme, résidentiel et commercial, à Montréal.</p>
+      </div>
+      <div>
+        <h4 data-i18n="foot.svc">Services</h4>
+        <ul>
+          <li><a href="#tarifs" data-svc-link="signature" data-i18n="s.signature">Entretien Signature</a></li>
+          <li><a href="#tarifs" data-svc-link="deep" data-i18n="s.deep">Grand Ménage</a></li>
+          <li><a href="#tarifs" data-svc-link="postmove" data-i18n="t.postmove">Fin de bail</a></li>
+          <li><a href="#tarifs" data-svc-link="reno" data-i18n="s.reno">Après-rénovation</a></li>
+          <li><a href="#tarifs" data-svc-link="commercial" data-i18n="s.commercial">Bureaux &amp; Commerces</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.house">La maison</h4>
+        <ul>
+          <li><a href="#coffret" data-i18n="nav.gift">Le Coffret</a></li>
+          <li><a href="#signatures" data-i18n="nav.details">Signatures</a></li>
+          <li><a href="#standards" data-i18n="nav.standards">Standards</a></li>
+          <li><a href="#zones" data-i18n="foot.zones">Territoire</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.contact">Contact</h4>
+        <ul>
+          <li><a class="js-tel" href="#"><span class="js-tel-label">(514) 555-0100</span></a></li>
+          <li><a class="js-wa" href="#">WhatsApp</a></li>
+          <li><a href="mailto:reservation@primemenage.ca">reservation@primemenage.ca</a></li>
+          <li data-i18n="foot.hours">Lun – Sam · 8 h – 19 h</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-word" aria-hidden="true">PRIME MÉNAGE</div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Prime Ménage · Montréal, Québec</span>
+      <span data-i18n="foot.made">Service bilingue · FR · EN · ES</span>
+    </div>
+  </div>
+</footer>
+
+<a class="fab left js-wa" id="fab" href="#" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+
+<!-- ============ Booking modal ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-close aria-label="Fermer"><svg><use href="#i-x"/></svg></button>
+    <h3 id="modal-title" data-i18n="bk.h">Réserver votre visite</h3>
+    <p class="sub" data-i18n="bk.sub">Nous confirmons personnellement en moins de 2 heures.</p>
+    <div class="summary"><div><b id="bk-svc">Entretien Signature</b><small id="bk-det"></small></div><b class="p" id="bk-price">172 $</b></div>
+    <form id="bk-form" novalidate>
+      <div class="form-grid">
+        <div class="field"><label for="f-name" data-i18n="bk.name">Nom</label><input id="f-name" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="f-phone" data-i18n="bk.phone">Téléphone</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel"></div>
+        <div class="field full"><label for="f-addr" data-i18n="bk.addr">Adresse / quartier</label><input id="f-addr" name="addr" autocomplete="street-address"></div>
+        <div class="field"><label for="f-date" data-i18n="bk.date">Date souhaitée</label><input id="f-date" name="date" type="date"></div>
+        <div class="field"><label for="f-time" data-i18n="bk.time">Moment</label>
+          <select id="f-time" name="time">
+            <option value="matin" data-i18n="bk.am">Matin</option>
+            <option value="après-midi" data-i18n="bk.pm">Après-midi</option>
+            <option value="flexible" data-i18n="bk.flex">Flexible</option>
+          </select></div>
+        <div class="field full"><label for="f-notes" data-i18n="bk.notes">Précisions (animaux, accès, priorités…)</label><textarea id="f-notes" name="notes"></textarea></div>
+      </div>
+      <div class="send-row">
+        <button class="btn btn-gold" type="submit" data-via="wa"><svg><use href="#i-wa"/></svg>WhatsApp</button>
+        <button class="btn btn-dark" type="submit" data-via="mail"><svg><use href="#i-mail"/></svg><span data-i18n="bk.email">Courriel</span></button>
+      </div>
+      <p class="form-fine" data-i18n="bk.fine">Aucun paiement maintenant. Vous payez après le service, par Interac ou carte.</p>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<!-- Assistant de chat Forja -->
+<script src="https://forja-starter-28abf9.andycarrenofx.workers.dev/widget.js"
+        data-tema="oscuro"
+        data-color="#C9A227"
+        data-saludo="Bonjour! Puis-je vous aider à réserver une visite?"></script>
+</body>
+</html>
