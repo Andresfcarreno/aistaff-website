@@ -168,6 +168,7 @@ const S = {
     bkTitle: 'Nouvelle réservation — Prime Ménage',
     bkLines: { svc: 'Service', det: 'Détails', price: 'Estimation', name: 'Nom', phone: 'Téléphone', addr: 'Adresse', date: 'Date', time: 'Moment', notes: 'Notes' },
     need: 'Merci d’indiquer votre nom et votre téléphone.',
+    ready: 'Votre demande est prête. Si rien ne s’est ouvert, utilisez ce bouton :', openWa: 'Ouvrir WhatsApp', openMail: 'Ouvrir le courriel',
     wipeDone: 'Impeccable ✦',
     zoneHint: '+ quartiers voisins',
   },
@@ -195,6 +196,7 @@ const S = {
     bkTitle: 'New booking — Prime Ménage',
     bkLines: { svc: 'Service', det: 'Details', price: 'Estimate', name: 'Name', phone: 'Phone', addr: 'Address', date: 'Date', time: 'Time', notes: 'Notes' },
     need: 'Please enter your name and phone number.',
+    ready: 'Your request is ready. If nothing opened, use this button:', openWa: 'Open WhatsApp', openMail: 'Open email',
     wipeDone: 'Spotless ✦',
     zoneHint: '+ nearby areas',
   },
@@ -467,7 +469,8 @@ $('#bk-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const f = e.target;
   const name = f.name.value.trim(); const phone = f.phone.value.trim();
-  if (!name || !phone) { alert(t().need); (name ? f.phone : f.name).focus(); return; }
+  const msg = $('#bk-msg');
+  if (!name || !phone) { msg.hidden = false; msg.className = 'bk-msg err'; msg.textContent = t().need; (name ? f.phone : f.name).focus(); return; }
   const s = summaryText(); const L = t().bkLines;
   const timeSel = f.time.options[f.time.selectedIndex].textContent;
   const lines = [
@@ -479,11 +482,15 @@ $('#bk-form').addEventListener('submit', (e) => {
     `${L.time}: ${timeSel}`,
     f.notes.value.trim() ? `${L.notes}: ${f.notes.value.trim()}` : null,
   ].filter((x) => x !== null).join('\n');
-  if (via === 'mail') {
-    window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(t().bkTitle + ' · ' + s.svc)}&body=${encodeURIComponent(lines)}`;
-  } else {
-    window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener');
-  }
+  const url = via === 'mail'
+    ? `mailto:${CONFIG.email}?subject=${encodeURIComponent(t().bkTitle + ' · ' + s.svc)}&body=${encodeURIComponent(lines)}`
+    : `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(lines)}`;
+  let opened = null;
+  if (via === 'mail') { window.location.href = url; } else { try { opened = window.open(url, '_blank', 'noopener'); } catch (err) { opened = null; } }
+  // Fallback when pop-ups are blocked: a real link plus the message to copy.
+  msg.hidden = false; msg.className = 'bk-msg';
+  msg.innerHTML = `<span>${t().ready}</span><a class="btn btn-gold btn-sm" href="${url}" target="_blank" rel="noopener">${via === 'mail' ? t().openMail : t().openWa}</a><pre></pre>`;
+  $('pre', msg).textContent = lines;
 });
 
 /* ---------------- Mobile menu ---------------- */
