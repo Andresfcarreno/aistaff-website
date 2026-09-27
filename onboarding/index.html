@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<script>
+(function(){try{var t=localStorage.getItem("aistaff-theme");if(!t){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();
+</script>
+<title>AI Staff — Construisons votre adjointe</title>
+<meta name="description" content="Quelques questions pour préparer votre démo personnalisée AI Staff. Aucun mot de passe demandé.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230A1A33'/%3E%3Cstop offset='1' stop-color='%231F6FEB'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --navy:#0A1A33;--blue:#1F6FEB;--blue-d:#1858C4;--blue-soft:rgba(31,111,235,.1);
+  --bg:#EDF0F6;--bg-2:#E4E9F2;--card:#FFFFFF;--ink:#0B1B33;--muted:#5B6B82;--line:rgba(11,27,51,.1);
+  --green:#1FA855;--red:#D9534F;--accent-ink:#1858C4;
+  --shadow:0 10px 30px rgba(10,26,51,.08);--shadow-lg:0 24px 60px rgba(10,26,51,.14);
+}
+html[data-theme="dark"]{
+  --bg:#071120;--bg-2:#0A1830;--card:#0D1C36;--ink:#EAF0FA;--muted:#93A3BD;--line:rgba(148,178,226,.14);
+  --blue-soft:rgba(64,130,246,.16);--accent-ink:#7FA8F5;--shadow:0 10px 30px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+body::before{content:"";position:fixed;right:-200px;top:-200px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(31,111,235,.18),transparent 65%);pointer-events:none;z-index:0;}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.top-in{max-width:880px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:18px;}
+.brand .mk{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:800;}
+.seg{margin-left:auto;display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.seg button{border:0;background:none;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:6px 11px;border-radius:999px;cursor:pointer;}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(10,26,51,.16);}
+.tbtn{border:1px solid var(--line);background:var(--card);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:16px;color:var(--ink);}
+.prog{height:4px;background:var(--line);}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3B82F6,#22B8E6);transition:width .4s cubic-bezier(.2,.8,.2,1);}
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:30px 20px 120px;}
+.steps-nav{display:flex;gap:6px;overflow-x:auto;margin-bottom:22px;scrollbar-width:none;}
+.steps-nav::-webkit-scrollbar{display:none;}
+.sn{flex-shrink:0;display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--muted);padding:7px 12px 7px 7px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;}
+.sn b{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:var(--bg-2);color:var(--muted);}
+.sn.cur{border-color:var(--blue);color:var(--accent-ink);background:var(--blue-soft);}
+.sn.cur b{background:var(--blue);color:#fff;}
+.sn.done b{background:var(--green);color:#fff;}
+.sn[disabled]{opacity:.55;cursor:default;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:30px 30px 26px;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px;}
+h1{font-size:clamp(28px,4.4vw,42px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:10px;}
+h2{font-size:clamp(22px,3vw,28px);font-weight:800;letter-spacing:-.6px;line-height:1.15;margin-bottom:6px;}
+.lead{font-size:16.5px;color:var(--muted);line-height:1.6;max-width:640px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:22px;}
+.full{grid-column:1/-1;}
+@media(max-width:640px){.grid{grid-template-columns:1fr;}.card{padding:22px 18px;}}
+.f label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px;}
+.f label .req{color:var(--red);margin-left:3px;}
+.f label .opt{color:var(--muted);font-weight:600;font-size:12px;margin-left:6px;}
+.f small{display:block;font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45;}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=date],select,textarea{width:100%;font:inherit;font-size:15.5px;padding:13px 15px;border-radius:14px;
+  border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;}
+textarea{min-height:96px;resize:vertical;line-height:1.5;}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft);}
+.f.err input,.f.err select,.f.err textarea{border-color:var(--red);}
+.f .emsg{display:none;color:var(--red);font-size:12px;font-weight:700;margin-top:6px;}
+.f.err .emsg{display:block;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:13.5px;font-weight:700;padding:9px 13px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
+.chip:hover{border-color:var(--blue);}
+.chip.on{border-color:var(--blue);background:var(--blue-soft);color:var(--accent-ink);}
+.chip.on::before{content:"✓";font-weight:800;}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:640px){.cards3{grid-template-columns:1fr;}}
+.pcard{border:1.5px solid var(--line);border-radius:18px;background:var(--card);padding:16px;cursor:pointer;text-align:center;font:inherit;color:var(--ink);transition:all .15s;}
+.pcard .av{width:64px;height:64px;display:block;margin:0 auto 10px;}
+.pcard b{display:block;font-size:15px;}
+.pcard span{font-size:12px;color:var(--muted);}
+.pcard.on{border-color:var(--blue);background:var(--blue-soft);box-shadow:0 0 0 4px var(--blue-soft);}
+.check,.f .check{font-weight:500;margin:0;display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg-2);cursor:pointer;font-size:14px;line-height:1.5;}
+.check input{width:20px;height:20px;margin-top:1px;accent-color:var(--blue);flex-shrink:0;}
+.check a{color:var(--accent-ink);font-weight:700;}
+.f.err .check{border-color:var(--red);}
+.nav{display:flex;align-items:center;gap:12px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font:inherit;font-weight:700;border-radius:14px;padding:14px 26px;font-size:15.5px;text-decoration:none;transition:transform .15s;}
+.btn:active{transform:scale(.97);}
+.btn-blue{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;box-shadow:0 10px 26px rgba(31,111,235,.35);}
+.btn-ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);}
+.btn[disabled]{opacity:.6;cursor:wait;}
+.nav .btn{white-space:nowrap;}
+@media(max-width:420px){.nav .btn{padding:14px 18px;font-size:15px;}}
+.nav .save{margin-left:auto;font-size:12px;color:var(--muted);}
+.intro-list{list-style:none;display:grid;gap:10px;margin:22px 0 4px;}
+.intro-list li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;}
+.intro-list li span{width:32px;height:32px;border-radius:10px;background:var(--blue-soft);display:grid;place-items:center;flex-shrink:0;font-size:16px;}
+.pill{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:700;color:var(--green);background:rgba(31,168,85,.12);padding:7px 12px;border-radius:999px;margin-top:14px;}
+.review{margin-top:18px;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.review dl{display:grid;grid-template-columns:200px 1fr;}
+.review dt,.review dd{padding:9px 14px;border-bottom:1px solid var(--line);font-size:13.5px;}
+.review dt{color:var(--muted);font-weight:700;background:var(--bg-2);}
+.review dd{word-break:break-word;white-space:pre-line;}
+.review h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);padding:10px 14px;background:var(--blue-soft);}
+@media(max-width:640px){.review dl{grid-template-columns:1fr;}.review dt{border-bottom:0;padding-bottom:2px;}}
+.finish{text-align:center;padding:40px 26px;}
+.finish .ok{width:72px;height:72px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));display:grid;place-items:center;color:#fff;font-size:32px;box-shadow:0 14px 30px rgba(31,111,235,.4);}
+.finish ol{text-align:left;max-width:520px;margin:22px auto 0;display:grid;gap:10px;padding-left:22px;font-size:15px;color:var(--muted);}
+.finish ol b{color:var(--ink);}
+.finish .alt{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--navy);color:#fff;font-size:14px;font-weight:600;padding:12px 20px;border-radius:999px;z-index:50;transition:all .3s;pointer-events:none;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.foot{text-align:center;font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.7;}
+.foot a{color:inherit;}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="/"><span class="mk">AI</span>AI Staff</a>
+    <div class="seg" id="langSeg"><button data-lang="fr" class="on">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+    <button class="tbtn" id="themeToggle" aria-label="Theme">🌙</button>
+  </div>
+  <div class="prog"><i id="progBar"></i></div>
+</header>
+
+<main class="wrap">
+  <div class="steps-nav" id="stepsNav"></div>
+  <div id="stepHost"></div>
+  <div class="foot"><span id="footTxt"></span><br><a href="/confidentialite/" id="footPriv"></a> · <a href="mailto:hello@meetaistaff.com">hello@meetaistaff.com</a> · <a href="tel:+14388058804">+1 (438) 805-8804</a></div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+/* ================== CONFIG ==================
+   Paste your Make.com "Custom webhook" URL here to receive submissions automatically.
+   Leave empty: submissions fall back to an email draft + JSON download. */
+const ONBOARDING_WEBHOOK = "";
+const CONTACT_EMAIL = "hello@meetaistaff.com";
+
+const T = {
+fr:{
+ title:"AI Staff — Construisons votre adjointe", foot:"AI Staff · Montréal · Vos réponses servent uniquement à préparer votre démo.", privacy:"Politique de confidentialité",
+ steps:["Bienvenue","Vous","Votre entreprise","Appels et messages","Votre adjointe","Objectifs","Envoi"],
+ next:"Continuer →", back:"← Retour", start:"Commencer →", submit:"Envoyer mes réponses", sending:"Envoi…", saved:"Brouillon enregistré sur cet appareil", req:"Champ requis", emailBad:"Courriel invalide", optional:"facultatif",
+ introEyebrow:"Onboarding · environ 8 minutes", introTitle:"Construisons votre adjointe IA.", introLead:"Répondez à quelques questions sur vous et votre entreprise. Avec vos réponses, on prépare une démo personnalisée : votre adjointe, avec le nom de votre entreprise, vos services et votre façon de répondre.",
+ introList:[["📝","Vos réponses nous servent à configurer la démo : aucun engagement."],["🔒","Aucun mot de passe ni accès à vos comptes n'est demandé à cette étape."],["📞","Ensuite, on planifie un appel découverte pour vous la présenter."],["✅","Satisfait? On transfère votre numéro actuel, ou on vous en fournit un nouveau."]],
+ introPill:"Aucun mot de passe demandé",
+ s1t:"Parlons de vous.", s1l:"Pour savoir qui contacter et comment.",
+ firstName:"Prénom", lastName:"Nom", email:"Courriel", phone:"Cellulaire", role:"Votre rôle", roles:["Propriétaire","Gestionnaire","Adjoint·e / réception","Autre"],
+ prefLang:"Langue préférée pour vous parler", bestTime:"Meilleur moment pour vous joindre", times:["Matin","Midi","Après-midi","Soir"],
+ s2t:"Votre entreprise.", s2l:"Votre adjointe doit la connaître aussi bien que vous.",
+ bizName:"Nom de l'entreprise", sector:"Secteur", sectorOther:"Précisez votre secteur", website:"Site web", city:"Ville / secteur desservi", team:"Taille de l'équipe", teams:["Juste moi","2 à 5","6 à 20","Plus de 20"],
+ hours:"Heures d'ouverture", hoursPh:"ex. lun–ven 8 h–18 h, sam 9 h–13 h", services:"Vos principaux services", servicesPh:"ex. entretien de fournaises, installation de thermopompes, urgences 24/7…",
+ avgValue:"Valeur moyenne d'un client ou d'un contrat", avgPh:"ex. 450 $",
+ s3t:"Vos appels et vos messages.", s3l:"Pour comprendre ce que votre adjointe devra gérer.",
+ mainPhone:"Numéro principal de l'entreprise", callsWeek:"Appels reçus par semaine (environ)", callBuckets:["Moins de 20","20 à 50","50 à 150","Plus de 150"],
+ whoAnswers:"Qui répond aujourd'hui?", answers:["Moi","Une réception","La boîte vocale","Un service externe"],
+ channels:"Où vos clients vous contactent", chanList:["Téléphone","Textos","WhatsApp","Instagram","Facebook","Courriel","Formulaire du site"],
+ instagram:"Instagram", facebook:"Page Facebook", gbp:"Fiche Google (lien)", calendar:"Votre agenda", calList:["Google Agenda","Outlook","Apple iCloud","Calendly","Logiciel de réservation","Papier / aucun"], software:"Autres outils (CRM, logiciel de gestion, paiement)", softwarePh:"ex. Jobber, QuickBooks, Square…",
+ s4t:"Votre adjointe.", s4l:"Sa voix, ses langues et sa façon de répondre.",
+ persona:"Choisissez votre adjointe", pvoice:{sofia:"voix féminine",alex:"voix neutre",tomas:"voix masculine"},
+ langs:"Langues à parler", langsNote:"Choisissez jusqu'à 5 langues pour la démo.", tone:"Ton", tones:["Chaleureux","Professionnel","Décontracté"],
+ greeting:"Comment répondre au téléphone", greetingPh:"ex. {biz}, bonjour, c'est {a}. Comment puis-je vous aider?",
+ urgent:"Que faire en cas d'urgence?", urgentList:["Me transférer l'appel","M'envoyer un texto","Prendre un message","Pas d'urgences dans mon secteur"], urgentPhone:"Numéro pour les urgences",
+ questions:"Questions à poser à chaque nouveau client", questionsPh:"ex. adresse, type d'appareil, budget, disponibilités…",
+ faqs:"Questions que vos clients posent souvent (et vos réponses)", faqsPh:"ex. Êtes-vous ouverts le samedi? Oui, de 9 h à 13 h.",
+ never:"Ce que votre adjointe ne doit jamais dire ou faire", neverPh:"ex. ne jamais donner de prix pour une réparation, ne jamais promettre une heure d'arrivée…",
+ s5t:"Vos objectifs.", s5l:"Pour que la démo montre ce qui compte pour vous.",
+ goals:"Qu'est-ce qui compte le plus?", goalList:["Ne plus manquer d'appels","Plus de rendez-vous","Gagner du temps","Mieux faire le suivi","Servir mes clients dans leur langue","Répondre aux DM et textos"],
+ briefings:"Briefings par téléphone (optionnel)", briefList:["07:30 · matin","13:00 · midi","18:00 · soir"],
+ plan:"Plan envisagé", planList:["Assistante · 997 $","Exécutive · 1 497 $","Dédiée · 2 497 $","Je ne sais pas encore"],
+ startD:"Date de démarrage souhaitée", source:"Comment nous avez-vous connus?", sources:["Recommandation","Instagram / Facebook","Google","Appel ou courriel de notre équipe","Autre"], notes:"Autre chose à nous dire?",
+ s6t:"Vérifiez et envoyez.", s6l:"Relisez vos réponses. Vous pourrez toujours les modifier lors de l'appel découverte.",
+ c1:"J'accepte qu'AI Staff utilise ces informations pour préparer une démo personnalisée et me contacter à ce sujet, conformément à la <a href=\"/confidentialite/\" target=\"_blank\">politique de confidentialité</a>.",
+ c2:"Je comprends qu'aucun mot de passe ni accès à mes comptes n'est demandé à cette étape, et que la démo est sans engagement.",
+ c3:"J'accepte de recevoir des nouvelles et des offres d'AI Staff par courriel ou texto (désabonnement en tout temps).",
+ doneT:"Merci! On s'occupe du reste.", doneL:"Vos réponses sont bien reçues. Voici la suite :",
+ doneSteps:["<b>On prépare votre démo</b> avec votre entreprise, vos services et votre adjointe.","<b>On vous contacte</b> pour planifier l'appel découverte et vous la présenter.","<b>Si elle vous plaît</b>, on signe l'entente, on branche votre numéro (ou un nouveau) et on active les canaux par phases."],
+ fallbackT:"Presque terminé : envoyez vos réponses", fallbackL:"Cliquez sur « Envoyer par courriel » : un message déjà rempli s'ouvre dans votre application courriel. Vous pouvez aussi télécharger vos réponses.",
+ mailBtn:"Envoyer par courriel", dlBtn:"Télécharger mes réponses", home:"Retour au site", callUs:"📞 Parler à Sofía",
+ sectors:[["immobilier","Courtier immobilier"],["cvc","Chauffage & climatisation (CVC)"],["paysagement","Paysagement"],["deneigement","Déneigement"],["garages","Garage / mécanique"],["nettoyage","Nettoyage"],["barbiers","Barbier / salon"],["dental","Clinique dentaire"],["sante","Autre clinique / santé"],["pro","Avocat·e / professionnel·le"],["coach","Coach / créateur·rice"],["metiers","Construction / métiers"],["autre","Autre"]],
+ reviewH:["Vous","Entreprise","Appels et messages","Adjointe","Objectifs"], yes:"Oui", no:"Non"
+},
+en:{
+ title:"AI Staff — Let's build your assistant", foot:"AI Staff · Montréal · Your answers are only used to prepare your demo.", privacy:"Privacy policy",
+ steps:["Welcome","You","Your business","Calls & messages","Your assistant","Goals","Submit"],
+ next:"Continue →", back:"← Back", start:"Get started →", submit:"Send my answers", sending:"Sending…", saved:"Draft saved on this device", req:"Required", emailBad:"Invalid email", optional:"optional",
+ introEyebrow:"Onboarding · about 8 minutes", introTitle:"Let's build your AI assistant.", introLead:"Answer a few questions about you and your business. With your answers, we prepare a personalized demo: your assistant, with your business name, your services and the way you want calls answered.",
+ introList:[["📝","Your answers are used to set up the demo: no commitment."],["🔒","No passwords or account access are requested at this stage."],["📞","Then we schedule a discovery call to show it to you."],["✅","Happy with it? We port your current number, or give you a new one."]],
+ introPill:"No passwords requested",
+ s1t:"Let's talk about you.", s1l:"So we know who to contact and how.",
+ firstName:"First name", lastName:"Last name", email:"Email", phone:"Cell phone", role:"Your role", roles:["Owner","Manager","Assistant / front desk","Other"],
+ prefLang:"Preferred language to talk to you", bestTime:"Best time to reach you", times:["Morning","Noon","Afternoon","Evening"],
+ s2t:"Your business.", s2l:"Your assistant needs to know it as well as you do.",
+ bizName:"Business name", sector:"Industry", sectorOther:"Specify your industry", website:"Website", city:"City / service area", team:"Team size", teams:["Just me","2 to 5","6 to 20","More than 20"],
+ hours:"Business hours", hoursPh:"e.g. Mon–Fri 8 AM–6 PM, Sat 9 AM–1 PM", services:"Your main services", servicesPh:"e.g. furnace maintenance, heat pump installation, 24/7 emergencies…",
+ avgValue:"Average value of a client or job", avgPh:"e.g. $450",
+ s3t:"Your calls and messages.", s3l:"To understand what your assistant will handle.",
+ mainPhone:"Main business number", callsWeek:"Calls per week (roughly)", callBuckets:["Fewer than 20","20 to 50","50 to 150","More than 150"],
+ whoAnswers:"Who answers today?", answers:["Me","A front desk","Voicemail","An outside service"],
+ channels:"Where clients contact you", chanList:["Phone","Text","WhatsApp","Instagram","Facebook","Email","Website form"],
+ instagram:"Instagram", facebook:"Facebook page", gbp:"Google Business profile (link)", calendar:"Your calendar", calList:["Google Calendar","Outlook","Apple iCloud","Calendly","Booking software","Paper / none"], software:"Other tools (CRM, practice software, payments)", softwarePh:"e.g. Jobber, QuickBooks, Square…",
+ s4t:"Your assistant.", s4l:"Their voice, languages and way of answering.",
+ persona:"Pick your assistant", pvoice:{sofia:"female voice",alex:"neutral voice",tomas:"male voice"},
+ langs:"Languages to speak", langsNote:"Pick up to 5 languages for the demo.", tone:"Tone", tones:["Warm","Professional","Casual"],
+ greeting:"How to answer the phone", greetingPh:"e.g. {biz}, hello, this is {a}. How can I help?",
+ urgent:"What to do in an emergency?", urgentList:["Transfer the call to me","Text me","Take a message","No emergencies in my field"], urgentPhone:"Emergency number",
+ questions:"Questions to ask every new client", questionsPh:"e.g. address, equipment type, budget, availability…",
+ faqs:"Questions your clients often ask (and your answers)", faqsPh:"e.g. Are you open Saturdays? Yes, 9 AM to 1 PM.",
+ never:"What your assistant must never say or do", neverPh:"e.g. never quote a repair price, never promise an arrival time…",
+ s5t:"Your goals.", s5l:"So the demo shows what matters to you.",
+ goals:"What matters most?", goalList:["Never miss a call","More appointments","Save time","Better follow-up","Serve clients in their language","Answer DMs and texts"],
+ briefings:"Phone briefings (optional)", briefList:["7:30 AM · morning","1:00 PM · midday","6:00 PM · evening"],
+ plan:"Plan you're considering", planList:["Assistant · $997","Executive · $1,497","Dedicated · $2,497","Not sure yet"],
+ startD:"Preferred start date", source:"How did you hear about us?", sources:["Referral","Instagram / Facebook","Google","A call or email from our team","Other"], notes:"Anything else?",
+ s6t:"Review and send.", s6l:"Check your answers. You can always change them on the discovery call.",
+ c1:"I agree that AI Staff may use this information to prepare a personalized demo and contact me about it, in accordance with the <a href=\"/confidentialite/?lang=en\" target=\"_blank\">privacy policy</a>.",
+ c2:"I understand that no passwords or account access are requested at this stage, and that the demo is free of commitment.",
+ c3:"I agree to receive news and offers from AI Staff by email or text (unsubscribe anytime).",
+ doneT:"Thank you! We'll take it from here.", doneL:"Your answers were received. Here's what happens next:",
+ doneSteps:["<b>We prepare your demo</b> with your business, your services and your assistant.","<b>We contact you</b> to schedule the discovery call and show it to you.","<b>If you like it</b>, we sign the agreement, connect your number (or a new one) and enable channels in phases."],
+ fallbackT:"Almost done: send your answers", fallbackL:"Click “Send by email”: a pre-filled message opens in your email app. You can also download your answers.",
+ mailBtn:"Send by email", dlBtn:"Download my answers", home:"Back to the site", callUs:"📞 Talk to Sofía",
+ sectors:[["immobilier","Real estate broker"],["cvc","Heating & cooling (HVAC)"],["paysagement","Landscaping"],["deneigement","Snow removal"],["garages","Garage / auto repair"],["nettoyage","Cleaning"],["barbiers","Barber / salon"],["dental","Dental clinic"],["sante","Other clinic / health"],["pro","Lawyer / professional"],["coach","Coach / creator"],["metiers","Construction / trades"],["autre","Other"]],
+ reviewH:["You","Business","Calls & messages","Assistant","Goals"], yes:"Yes", no:"No"
+},
+es:{
+ title:"AI Staff — Construyamos tu asistente", foot:"AI Staff · Montreal · Tus respuestas se usan solo para preparar tu demo.", privacy:"Política de privacidad",
+ steps:["Bienvenida","Tú","Tu negocio","Llamadas y mensajes","Tu asistente","Objetivos","Envío"],
+ next:"Continuar →", back:"← Atrás", start:"Empezar →", submit:"Enviar mis respuestas", sending:"Enviando…", saved:"Borrador guardado en este dispositivo", req:"Campo requerido", emailBad:"Correo inválido", optional:"opcional",
+ introEyebrow:"Onboarding · unos 8 minutos", introTitle:"Construyamos tu asistente con IA.", introLead:"Responde unas preguntas sobre ti y tu negocio. Con tus respuestas preparamos una demo personalizada: tu asistente, con el nombre de tu negocio, tus servicios y tu forma de atender.",
+ introList:[["📝","Tus respuestas sirven para configurar la demo: sin compromiso."],["🔒","En esta etapa no se piden contraseñas ni acceso a tus cuentas."],["📞","Luego agendamos una llamada de descubrimiento para mostrártela."],["✅","¿Te gusta? Transferimos tu número actual o te damos uno nuevo."]],
+ introPill:"No se piden contraseñas",
+ s1t:"Hablemos de ti.", s1l:"Para saber a quién contactar y cómo.",
+ firstName:"Nombre", lastName:"Apellido", email:"Correo", phone:"Celular", role:"Tu rol", roles:["Dueño/a","Gerente","Asistente / recepción","Otro"],
+ prefLang:"Idioma preferido para hablar contigo", bestTime:"Mejor momento para contactarte", times:["Mañana","Mediodía","Tarde","Noche"],
+ s2t:"Tu negocio.", s2l:"Tu asistente debe conocerlo tan bien como tú.",
+ bizName:"Nombre del negocio", sector:"Sector", sectorOther:"Especifica tu sector", website:"Sitio web", city:"Ciudad / zona de servicio", team:"Tamaño del equipo", teams:["Solo yo","2 a 5","6 a 20","Más de 20"],
+ hours:"Horario", hoursPh:"ej. lun–vie 8:00–18:00, sáb 9:00–13:00", services:"Tus servicios principales", servicesPh:"ej. mantenimiento de calefactores, instalación de bombas de calor, urgencias 24/7…",
+ avgValue:"Valor promedio de un cliente o trabajo", avgPh:"ej. 450 $",
+ s3t:"Tus llamadas y mensajes.", s3l:"Para entender lo que tu asistente va a gestionar.",
+ mainPhone:"Número principal del negocio", callsWeek:"Llamadas por semana (aprox.)", callBuckets:["Menos de 20","20 a 50","50 a 150","Más de 150"],
+ whoAnswers:"¿Quién contesta hoy?", answers:["Yo","Una recepción","El buzón de voz","Un servicio externo"],
+ channels:"Dónde te contactan tus clientes", chanList:["Teléfono","SMS","WhatsApp","Instagram","Facebook","Correo","Formulario del sitio"],
+ instagram:"Instagram", facebook:"Página de Facebook", gbp:"Ficha de Google (enlace)", calendar:"Tu agenda", calList:["Google Calendar","Outlook","Apple iCloud","Calendly","Software de reservas","Papel / ninguna"], software:"Otras herramientas (CRM, software de gestión, pagos)", softwarePh:"ej. Jobber, QuickBooks, Square…",
+ s4t:"Tu asistente.", s4l:"Su voz, sus idiomas y su forma de atender.",
+ persona:"Elige tu asistente", pvoice:{sofia:"voz femenina",alex:"voz neutra",tomas:"voz masculina"},
+ langs:"Idiomas que debe hablar", langsNote:"Elige hasta 5 idiomas para la demo.", tone:"Tono", tones:["Cálido","Profesional","Relajado"],
+ greeting:"Cómo contestar el teléfono", greetingPh:"ej. {biz}, buenos días, habla {a}. ¿En qué le puedo ayudar?",
+ urgent:"¿Qué hacer en caso de urgencia?", urgentList:["Pasarme la llamada","Enviarme un mensaje","Tomar un recado","No hay urgencias en mi sector"], urgentPhone:"Número para urgencias",
+ questions:"Preguntas para cada cliente nuevo", questionsPh:"ej. dirección, tipo de equipo, presupuesto, disponibilidad…",
+ faqs:"Preguntas frecuentes de tus clientes (y tus respuestas)", faqsPh:"ej. ¿Abren el sábado? Sí, de 9:00 a 13:00.",
+ never:"Lo que tu asistente nunca debe decir o hacer", neverPh:"ej. nunca dar precios de reparación, nunca prometer una hora de llegada…",
+ s5t:"Tus objetivos.", s5l:"Para que la demo muestre lo que te importa.",
+ goals:"¿Qué es lo más importante?", goalList:["No perder más llamadas","Más citas","Ahorrar tiempo","Mejor seguimiento","Atender a clientes en su idioma","Responder DMs y mensajes"],
+ briefings:"Briefings por llamada (opcional)", briefList:["07:30 · mañana","13:00 · mediodía","18:00 · tarde"],
+ plan:"Plan que te interesa", planList:["Asistente · 997 $","Ejecutiva · 1 497 $","Dedicada · 2 497 $","Todavía no sé"],
+ startD:"Fecha de inicio deseada", source:"¿Cómo nos conociste?", sources:["Recomendación","Instagram / Facebook","Google","Llamada o correo de nuestro equipo","Otro"], notes:"¿Algo más?",
+ s6t:"Revisa y envía.", s6l:"Relee tus respuestas. Siempre podrás cambiarlas en la llamada de descubrimiento.",
+ c1:"Acepto que AI Staff use esta información para preparar una demo personalizada y contactarme al respecto, según la <a href=\"/confidentialite/?lang=es\" target=\"_blank\">política de privacidad</a>.",
+ c2:"Entiendo que en esta etapa no se piden contraseñas ni acceso a mis cuentas, y que la demo es sin compromiso.",
+ c3:"Acepto recibir novedades y ofertas de AI Staff por correo o SMS (puedo darme de baja cuando quiera).",
+ doneT:"¡Gracias! Nosotros nos encargamos.", doneL:"Recibimos tus respuestas. Esto es lo que sigue:",
+ doneSteps:["<b>Preparamos tu demo</b> con tu negocio, tus servicios y tu asistente.","<b>Te contactamos</b> para agendar la llamada de descubrimiento y mostrártela.","<b>Si te gusta</b>, firmamos el acuerdo, conectamos tu número (o uno nuevo) y activamos los canales por fases."],
+ fallbackT:"Casi listo: envía tus respuestas", fallbackL:"Haz clic en «Enviar por correo»: se abre un mensaje ya lleno en tu app de correo. También puedes descargar tus respuestas.",
+ mailBtn:"Enviar por correo", dlBtn:"Descargar mis respuestas", home:"Volver al sitio", callUs:"📞 Hablar con Sofía",
+ sectors:[["immobilier","Courtier inmobiliario"],["cvc","Calefacción y climatización (HVAC)"],["paysagement","Paisajismo"],["deneigement","Remoción de nieve"],["garages","Taller mecánico"],["nettoyage","Limpieza"],["barbiers","Barbería / salón"],["dental","Clínica dental"],["sante","Otra clínica / salud"],["pro","Abogado/a / profesional"],["coach","Coach / creador/a"],["metiers","Construcción / oficios"],["autre","Otro"]],
+ reviewH:["Tú","Negocio","Llamadas y mensajes","Asistente","Objetivos"], yes:"Sí", no:"No"
+}};
+const LANGS = [["fr","Français"],["en","English"],["es","Español"],["it","Italiano"],["pt","Português"],["ar","العربية"],["he","עברית"],["hi","हिन्दी"],["zh","中文"],["vi","Tiếng Việt"],["ht","Kreyòl"],["tl","Tagalog"],["pa","ਪੰਜਾਬੀ"],["fa","فارسی"],["el","Ελληνικά"],["ru","Русский"],["pl","Polski"],["de","Deutsch"]];
+const PERS = {sofia:"Sofía", alex:"Alex", tomas:"Tomás"};
+
+/* ---------- state ---------- */
+const qs = new URLSearchParams(location.search);
+let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
+const KEY = "aistaff-onboarding";
+let A = {};
+try{ A = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }catch(e){ A = {}; }
+if(qs.get("secteur") || qs.get("sector")) A.sector = qs.get("secteur") || qs.get("sector");
+if(qs.get("ref")) A.ref = qs.get("ref");
+if(!A.persona) A.persona = "sofia";
+if(!A.langs) A.langs = ["fr","en"];
+let step = 0, maxStep = 0;
+const t = k=>T[lang][k];
+const esc = s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(A)); }catch(e){} }
+
+/* ---------- field builders ---------- */
+function inp(id, label, type, o={}){
+  const v = A[id] || "";
+  return `<div class="f${o.full?" full":""}" data-f="${id}"><label for="i_${id}">${esc(label)}${o.req?'<span class="req">*</span>':`<span class="opt">${esc(t("optional"))}</span>`}</label>`+
+    (type==="textarea" ? `<textarea id="i_${id}" data-id="${id}" placeholder="${esc(o.ph||"")}">${esc(v)}</textarea>`
+     : `<input id="i_${id}" data-id="${id}" type="${type}" value="${esc(v)}" placeholder="${esc(o.ph||"")}" ${o.ac?`autocomplete="${o.ac}"`:""}>`)+
+    `${o.help?`<small>${esc(o.help)}</small>`:""}<div class="emsg">${esc(o.emsg||t("req"))}</div></div>`;
+}
+function sel(id, label, opts, o={}){
+  const v = A[id] || "";
+  return `<div class="f${o.full?" full":""}" data-f="${id}"><label for="i_${id}">${esc(label)}${o.req?'<span class="req">*</span>':`<span class="opt">${esc(t("optional"))}</span>`}</label><select id="i_${id}" data-id="${id}"><option value="">—</option>${opts.map(x=>{ const val = Array.isArray(x)?x[0]:x, lab = Array.isArray(x)?x[1]:x; return `<option value="${esc(val)}"${val===v?" selected":""}>${esc(lab)}</option>`; }).join("")}</select><div class="emsg">${esc(t("req"))}</div></div>`;
+}
+function chips(id, label, opts, o={}){
+  const cur = A[id] || (o.multi?[]:"");
+  return `<div class="f${o.full!==false?" full":""}" data-f="${id}"><label>${esc(label)}${o.req?'<span class="req">*</span>':`<span class="opt">${esc(t("optional"))}</span>`}</label><div class="chips">${opts.map((x,i)=>{
+    const val = Array.isArray(x)?x[0]:x, lab = Array.isArray(x)?x[1]:x, on = o.multi ? cur.includes(val) : cur===val;
+    return `<button type="button" class="chip${on?" on":""}" data-chip="${id}" data-val="${esc(val)}" data-multi="${o.multi?1:0}" data-max="${o.max||0}" dir="auto">${esc(lab)}</button>`; }).join("")}</div>${o.help?`<small>${esc(o.help)}</small>`:""}<div class="emsg">${esc(t("req"))}</div></div>`;
+}
+function avatar(id){
+  const hair = {sofia:'<path d="M18.5 33c-.6-11 5-19.5 13.5-19.5S46.2 22 45.5 33c-.3 5.5.6 10.5 2.2 14.5-4.6 2.4-10 3.4-15.7 3.4s-11.1-1-15.7-3.4c1.6-4 2.5-9 2.2-14.5z" fill="#BFD3FA"/>',tomas:'',alex:'<path d="M19.5 31.5c-.4-9.5 4.6-17 12.8-17 7.4 0 12.6 5.6 12.3 14.2l-.3 6.3c-1.4-2.2-2.4-5.4-2.6-8.6-4.7 2.6-11.2 3.9-17.9 3.2-.9 1.9-1.7 4.3-2 6.9-1.3-1.3-2.2-2.9-2.3-5z" fill="#BFD3FA"/>'}[id];
+  const top = {sofia:'<path d="M20.6 27.2c1.4-7.2 6-11.7 11.4-11.7 5.9 0 10.3 4.6 11.3 11.5-3.1-2.9-7.4-5.1-12.2-5.6-3.9 1.8-7.4 3.9-10.5 5.8z" fill="#BFD3FA"/>',tomas:'<path d="M20.9 27.6c.3-7.4 5-12.3 11.2-12.3s11 4.7 11.2 12.1c-2.4-2.5-5.4-3.9-8.4-4.2-1.9 1.4-4.6 2.1-7.6 2-2.7 0-4.9.8-6.4 2.4z" fill="#BFD3FA"/>',alex:'<path d="M20.4 28.6c.2-8.1 5.1-13.3 11.9-13.3 6.9 0 11.5 5 11.4 12.3-1.7-2.9-4.2-4.9-7.3-5.8-3.3 3.5-9.6 5.8-16 6.8z" fill="#BFD3FA"/>'}[id];
+  const r = id==="alex"?28.6:30, u = "o"+id;
+  const ring = id==="alex" ? `<defs><linearGradient id="${u}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E88A8A"/><stop offset=".2" stop-color="#F2B774"/><stop offset=".4" stop-color="#EFDB7C"/><stop offset=".6" stop-color="#8FCB93"/><stop offset=".8" stop-color="#7FB3EE"/><stop offset="1" stop-color="#B28FD6"/></linearGradient></defs><circle cx="32" cy="32" r="30.6" fill="none" stroke="url(#${u}r)" stroke-width="2.6" opacity=".9"/>` : "";
+  return `<svg viewBox="0 0 64 64" class="av" aria-hidden="true"><defs><linearGradient id="${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1A33"/><stop offset="1" stop-color="#2F6FE0"/></linearGradient><clipPath id="${u}c"><circle cx="32" cy="32" r="${r}"/></clipPath></defs><circle cx="32" cy="32" r="${r}" fill="url(#${u})"/><g clip-path="url(#${u}c)">${hair}<path d="M9 66c1.5-12.5 10.5-19.5 23-19.5S53.5 53.5 55 66z" fill="#EAF1FF"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#DCE7FB"/><ellipse cx="32" cy="30" rx="10.2" ry="11.4" fill="#EAF1FF"/>${top}</g>${ring}</svg>`;
+}
+
+/* ---------- steps ---------- */
+const STEPS = [
+ {id:"intro", render:()=>`<div class="card"><div class="eyebrow">${esc(t("introEyebrow"))}</div><h1>${esc(t("introTitle"))}</h1><p class="lead">${esc(t("introLead"))}</p>
+   <ul class="intro-list">${t("introList").map(x=>`<li><span>${x[0]}</span><div>${esc(x[1])}</div></li>`).join("")}</ul><span class="pill">🔒 ${esc(t("introPill"))}</span>
+   <div class="nav"><button class="btn btn-blue" data-go="next">${esc(t("start"))}</button></div></div>`, req:[]},
+ {id:"you", render:()=>`<div class="card"><div class="eyebrow">1 / 5</div><h2>${esc(t("s1t"))}</h2><p class="lead">${esc(t("s1l"))}</p><div class="grid">
+   ${inp("firstName",t("firstName"),"text",{req:1,ac:"given-name"})}${inp("lastName",t("lastName"),"text",{req:1,ac:"family-name"})}
+   ${inp("email",t("email"),"email",{req:1,ac:"email",emsg:t("emailBad")})}${inp("phone",t("phone"),"tel",{req:1,ac:"tel",ph:"514 555-0123"})}
+   ${chips("role",t("role"),t("roles"),{})}${chips("prefLang",t("prefLang"),[["fr","Français"],["en","English"],["es","Español"]],{})}
+   ${chips("bestTime",t("bestTime"),t("times"),{multi:1})}</div>${navHTML()}</div>`, req:["firstName","lastName","email","phone"]},
+ {id:"biz", render:()=>`<div class="card"><div class="eyebrow">2 / 5</div><h2>${esc(t("s2t"))}</h2><p class="lead">${esc(t("s2l"))}</p><div class="grid">
+   ${inp("bizName",t("bizName"),"text",{req:1,ac:"organization"})}${sel("sector",t("sector"),t("sectors"),{req:1})}
+   <div class="full" id="otherWrap" style="${A.sector==="autre"?"":"display:none"}">${inp("sectorOther",t("sectorOther"),"text",{})}</div>
+   ${inp("website",t("website"),"url",{ph:"https://"})}${inp("city",t("city"),"text",{ph:"Montréal, Laval, Rive-Sud…"})}
+   ${chips("team",t("team"),t("teams"),{})}
+   ${inp("hours",t("hours"),"text",{full:1,ph:t("hoursPh")})}${inp("services",t("services"),"textarea",{full:1,req:1,ph:t("servicesPh")})}
+   ${inp("avgValue",t("avgValue"),"text",{ph:t("avgPh")})}</div>${navHTML()}</div>`, req:["bizName","sector","services"]},
+ {id:"calls", render:()=>`<div class="card"><div class="eyebrow">3 / 5</div><h2>${esc(t("s3t"))}</h2><p class="lead">${esc(t("s3l"))}</p><div class="grid">
+   ${inp("mainPhone",t("mainPhone"),"tel",{ph:"514 555-0100"})}<div></div>
+   ${chips("callsWeek",t("callsWeek"),t("callBuckets"),{})}${chips("whoAnswers",t("whoAnswers"),t("answers"),{multi:1})}
+   ${chips("channels",t("channels"),t("chanList"),{multi:1})}
+   ${inp("instagram",t("instagram"),"text",{ph:"@votrecommerce"})}${inp("facebook",t("facebook"),"text",{ph:"facebook.com/…"})}
+   ${inp("gbp",t("gbp"),"url",{full:1,ph:"https://g.page/…"})}
+   ${chips("calendar",t("calendar"),t("calList"),{multi:1})}${inp("software",t("software"),"text",{full:1,ph:t("softwarePh")})}</div>${navHTML()}</div>`, req:[]},
+ {id:"asst", render:()=>{ const biz = A.bizName || "…", a = PERS[A.persona];
+   return `<div class="card"><div class="eyebrow">4 / 5</div><h2>${esc(t("s4t"))}</h2><p class="lead">${esc(t("s4l"))}</p><div class="grid">
+   <div class="f full"><label>${esc(t("persona"))}</label><div class="cards3">${Object.keys(PERS).map(k=>`<button type="button" class="pcard${A.persona===k?" on":""}" data-persona="${k}">${avatar(k)}<b>${PERS[k]}</b><span>${esc(t("pvoice")[k])}</span></button>`).join("")}</div></div>
+   ${chips("langs",t("langs"),LANGS,{multi:1,max:5,help:t("langsNote")})}
+   ${chips("tone",t("tone"),t("tones"),{})}
+   ${inp("greeting",t("greeting"),"text",{full:1,ph:t("greetingPh").replace("{biz}",biz).replace("{a}",a)})}
+   ${chips("urgent",t("urgent"),t("urgentList"),{multi:1})}${inp("urgentPhone",t("urgentPhone"),"tel",{})}
+   ${inp("questions",t("questions"),"textarea",{full:1,ph:t("questionsPh")})}
+   ${inp("faqs",t("faqs"),"textarea",{full:1,ph:t("faqsPh")})}
+   ${inp("never",t("never"),"textarea",{full:1,ph:t("neverPh")})}</div>${navHTML()}</div>`; }, req:[]},
+ {id:"goals", render:()=>`<div class="card"><div class="eyebrow">5 / 5</div><h2>${esc(t("s5t"))}</h2><p class="lead">${esc(t("s5l"))}</p><div class="grid">
+   ${chips("goals",t("goals"),t("goalList"),{multi:1})}${chips("briefings",t("briefings"),t("briefList"),{multi:1})}
+   ${chips("plan",t("plan"),t("planList"),{})}
+   ${inp("startDate",t("startD"),"date",{})}${sel("source",t("source"),t("sources"),{})}
+   ${inp("notes",t("notes"),"textarea",{full:1})}</div>${navHTML()}</div>`, req:[]},
+ {id:"send", render:()=>`<div class="card"><div class="eyebrow">✓</div><h2>${esc(t("s6t"))}</h2><p class="lead">${esc(t("s6l"))}</p>${reviewHTML()}
+   <div class="grid"><div class="f full" data-f="c1"><label class="check"><input type="checkbox" data-cb="c1" ${A.c1?"checked":""}><span>${t("c1")}<span class="req" style="color:var(--red)"> *</span></span></label><div class="emsg">${esc(t("req"))}</div></div>
+   <div class="f full" data-f="c2"><label class="check"><input type="checkbox" data-cb="c2" ${A.c2?"checked":""}><span>${esc(t("c2"))}<span class="req" style="color:var(--red)"> *</span></span></label><div class="emsg">${esc(t("req"))}</div></div>
+   <div class="f full"><label class="check"><input type="checkbox" data-cb="c3" ${A.c3?"checked":""}><span>${esc(t("c3"))}</span></label></div></div>
+   <div class="nav"><button class="btn btn-ghost" data-go="back">${esc(t("back"))}</button><button class="btn btn-blue" id="submitBtn">${esc(t("submit"))}</button></div></div>`, req:["c1","c2"]}
+];
+function navHTML(){ return `<div class="nav"><button class="btn btn-ghost" data-go="back">${esc(t("back"))}</button><button class="btn btn-blue" data-go="next">${esc(t("next"))}</button><span class="save" id="saveNote"></span></div>`; }
+function label(list, v){ const hit = (list||[]).find(x=>Array.isArray(x) && x[0]===v); return hit ? hit[1] : v; }
+function reviewHTML(){
+  const L = (k)=>{ const v = A[k]; if(v==null || v==="" || (Array.isArray(v)&&!v.length)) return null; return Array.isArray(v) ? v.map(x=>label(LANGS,x)).join(", ") : String(v); };
+  const rows = [
+    [t("reviewH")[0], [[t("firstName")+" / "+t("lastName"), [A.firstName,A.lastName].filter(Boolean).join(" ")],[t("email"),L("email")],[t("phone"),L("phone")],[t("role"),L("role")],[t("prefLang"),L("prefLang")],[t("bestTime"),L("bestTime")]]],
+    [t("reviewH")[1], [[t("bizName"),L("bizName")],[t("sector"),A.sector==="autre"?(A.sectorOther||label(t("sectors"),"autre")):label(t("sectors"),A.sector)],[t("website"),L("website")],[t("city"),L("city")],[t("team"),L("team")],[t("hours"),L("hours")],[t("services"),L("services")],[t("avgValue"),L("avgValue")]]],
+    [t("reviewH")[2], [[t("mainPhone"),L("mainPhone")],[t("callsWeek"),L("callsWeek")],[t("whoAnswers"),L("whoAnswers")],[t("channels"),L("channels")],[t("instagram"),L("instagram")],[t("facebook"),L("facebook")],[t("gbp"),L("gbp")],[t("calendar"),L("calendar")],[t("software"),L("software")]]],
+    [t("reviewH")[3], [[t("persona"),PERS[A.persona]],[t("langs"),L("langs")],[t("tone"),L("tone")],[t("greeting"),L("greeting")],[t("urgent"),L("urgent")],[t("urgentPhone"),L("urgentPhone")],[t("questions"),L("questions")],[t("faqs"),L("faqs")],[t("never"),L("never")]]],
+    [t("reviewH")[4], [[t("goals"),L("goals")],[t("briefings"),L("briefings")],[t("plan"),L("plan")],[t("startD"),L("startDate")],[t("source"),L("source")],[t("notes"),L("notes")]]]
+  ];
+  return `<div class="review">${rows.filter(([h,items])=>items.some(x=>x[1])).map(([h,items])=>`<h4>${esc(h)}</h4><dl>${items.filter(x=>x[1]).map(x=>`<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>`).join("")}</div>`;
+}
+
+/* ---------- render / nav ---------- */
+function renderNav(){
+  document.getElementById("stepsNav").innerHTML = t("steps").map((s,i)=>`<button type="button" class="sn${i===step?" cur":""}${i<step?" done":""}" data-step="${i}" ${i>maxStep?"disabled":""}><b>${i<step?"✓":i}</b>${esc(s)}</button>`).join("");
+  document.querySelectorAll("[data-step]").forEach(b=>b.addEventListener("click",()=>{ const i = +b.dataset.step; if(i<=maxStep){ step = i; render(); } }));
+  const cur = document.querySelector(".sn.cur"), nav = document.getElementById("stepsNav"); if(cur) nav.scrollLeft = cur.offsetLeft - nav.offsetLeft - 20;
+  document.getElementById("progBar").style.width = (step/(STEPS.length-1)*100)+"%";
+}
+function render(){
+  document.documentElement.lang = lang; document.title = t("title");
+  document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("on", b.dataset.lang===lang));
+  document.getElementById("footTxt").textContent = t("foot"); document.getElementById("footPriv").textContent = t("privacy");
+  document.getElementById("footPriv").href = "/confidentialite/"+(lang==="fr"?"":"?lang="+lang);
+  renderNav();
+  document.getElementById("stepHost").innerHTML = STEPS[step].render();
+  wire();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function wire(){
+  const host = document.getElementById("stepHost");
+  host.querySelectorAll("[data-id]").forEach(el=>{
+    el.addEventListener("input", ()=>{ A[el.dataset.id] = el.value; el.closest(".f").classList.remove("err"); saved();
+      if(el.dataset.id==="sector"){ const w = document.getElementById("otherWrap"); if(w) w.style.display = el.value==="autre" ? "" : "none"; } });
+    el.addEventListener("change", ()=>{ A[el.dataset.id] = el.value; saved(); if(el.dataset.id==="sector"){ const w = document.getElementById("otherWrap"); if(w) w.style.display = el.value==="autre" ? "" : "none"; } });
+  });
+  host.querySelectorAll("[data-chip]").forEach(b=>b.addEventListener("click",()=>{
+    const id = b.dataset.chip, v = b.dataset.val, multi = b.dataset.multi==="1", max = +b.dataset.max;
+    if(multi){ const cur = new Set(A[id]||[]); if(cur.has(v)) cur.delete(v); else { if(max && cur.size>=max){ toast(t("langsNote")); return; } cur.add(v); } A[id] = [...cur]; }
+    else A[id] = A[id]===v ? "" : v;
+    const wrap = b.closest(".chips"); wrap.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", multi ? (A[id]||[]).includes(c.dataset.val) : A[id]===c.dataset.val));
+    b.closest(".f").classList.remove("err"); saved();
+  }));
+  host.querySelectorAll("[data-persona]").forEach(b=>b.addEventListener("click",()=>{ A.persona = b.dataset.persona; host.querySelectorAll("[data-persona]").forEach(x=>x.classList.toggle("on", x===b));
+    const g = document.getElementById("i_greeting"); if(g) g.placeholder = t("greetingPh").replace("{biz}", A.bizName||"…").replace("{a}", PERS[A.persona]); saved(); }));
+  host.querySelectorAll("[data-cb]").forEach(c=>c.addEventListener("change",()=>{ A[c.dataset.cb] = c.checked; c.closest(".f").classList.remove("err"); saved(); }));
+  host.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>b.dataset.go==="next" ? next() : back()));
+  const sb = document.getElementById("submitBtn"); if(sb) sb.addEventListener("click", submit);
+}
+let saveT;
+function saved(){ save(); const n = document.getElementById("saveNote"); if(n){ n.textContent = t("saved"); clearTimeout(saveT); saveT = setTimeout(()=>{ n.textContent = ""; }, 1800); } }
+function validate(){
+  let ok = true, first = null;
+  STEPS[step].req.forEach(id=>{
+    const f = document.querySelector(`[data-f="${id}"]`); if(!f) return;
+    let bad = !A[id] || (typeof A[id]==="string" && !A[id].trim());
+    if(id==="email" && !bad) bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(A.email.trim());
+    f.classList.toggle("err", bad); if(bad){ ok = false; if(!first) first = f; }
+  });
+  if(first) first.scrollIntoView({behavior:"smooth", block:"center"});
+  return ok;
+}
+function next(){ if(!validate()) return; step = Math.min(STEPS.length-1, step+1); maxStep = Math.max(maxStep, step); render(); }
+function back(){ step = Math.max(0, step-1); render(); }
+
+/* ---------- submit ---------- */
+function payload(){
+  return Object.assign({submittedAt:new Date().toISOString(), formLang:lang, page:location.href}, A, {personaName:PERS[A.persona]});
+}
+function summaryText(p){
+  const lines = [], add = (k,v)=>{ if(v!=null && v!=="" && !(Array.isArray(v)&&!v.length)) lines.push(k+": "+(Array.isArray(v)?v.join(", "):v)); };
+  add("Nom", [p.firstName,p.lastName].join(" ")); add("Courriel", p.email); add("Téléphone", p.phone); add("Rôle", p.role); add("Langue", p.prefLang);
+  add("Entreprise", p.bizName); add("Secteur", p.sector==="autre" ? p.sectorOther : p.sector); add("Site", p.website); add("Ville", p.city); add("Équipe", p.team); add("Heures", p.hours); add("Services", p.services); add("Valeur moyenne", p.avgValue);
+  add("Numéro principal", p.mainPhone); add("Appels/sem.", p.callsWeek); add("Qui répond", p.whoAnswers); add("Canaux", p.channels); add("Instagram", p.instagram); add("Facebook", p.facebook); add("Google", p.gbp); add("Agenda", p.calendar); add("Outils", p.software);
+  add("Adjointe", p.personaName); add("Langues", p.langs); add("Ton", p.tone); add("Accueil", p.greeting); add("Urgences", p.urgent); add("No urgences", p.urgentPhone); add("Questions", p.questions); add("FAQ", p.faqs); add("Jamais", p.never);
+  add("Objectifs", p.goals); add("Briefings", p.briefings); add("Plan", p.plan); add("Démarrage", p.startDate); add("Source", p.source); add("Notes", p.notes);
+  add("Consentement démo", p.c1 ? "oui" : "non"); add("Consentement marketing", p.c3 ? "oui" : "non"); add("Réf", p.ref);
+  return lines.join("\n");
+}
+async function submit(){
+  if(!validate()) return;
+  const btn = document.getElementById("submitBtn"); btn.disabled = true; btn.textContent = t("sending");
+  const p = payload();
+  let sent = false;
+  if(ONBOARDING_WEBHOOK){
+    try{ await fetch(ONBOARDING_WEBHOOK, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=UTF-8"}, body:JSON.stringify(p)}); sent = true; }catch(e){ sent = false; }
+  }
+  showDone(sent, p);
+}
+function showDone(sent, p){
+  step = STEPS.length-1; maxStep = step; renderNav();
+  const cur = document.querySelector(".sn.cur"), nav = document.getElementById("stepsNav"); if(cur) nav.scrollLeft = cur.offsetLeft - nav.offsetLeft - 20;
+  document.getElementById("progBar").style.width = "100%";
+  const subj = encodeURIComponent("Onboarding AI Staff — "+(p.bizName||"")), body = encodeURIComponent(summaryText(p));
+  const mail = `mailto:${CONTACT_EMAIL}?subject=${subj}&body=${body}`;
+  document.getElementById("stepHost").innerHTML = `<div class="card finish"><div class="ok">✓</div><h1>${esc(sent ? t("doneT") : t("fallbackT"))}</h1><p class="lead" style="margin:0 auto">${esc(sent ? t("doneL") : t("fallbackL"))}</p>`+
+    (sent ? `<ol>${t("doneSteps").map(s=>`<li>${s}</li>`).join("")}</ol>` : "")+
+    `<div class="alt">${sent ? "" : `<a class="btn btn-blue" href="${mail}">✉️ ${esc(t("mailBtn"))}</a>`}<button class="btn btn-ghost" id="dlBtn">⬇ ${esc(t("dlBtn"))}</button><a class="btn btn-ghost" href="tel:+14388058804">${esc(t("callUs"))}</a><a class="btn btn-ghost" href="/${lang==="fr"?"":"?lang="+lang}">${esc(t("home"))}</a></div>`+
+    (sent ? "" : `<ol>${t("doneSteps").map(s=>`<li>${s}</li>`).join("")}</ol>`)+`</div>`;
+  document.getElementById("dlBtn").addEventListener("click", ()=>{
+    const blob = new Blob([JSON.stringify(p, null, 2)], {type:"application/json"}), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "onboarding-"+(p.bizName||"aistaff").toLowerCase().replace(/[^a-z0-9]+/g,"-")+".json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  });
+  if(sent){ try{ localStorage.removeItem(KEY); }catch(e){} }
+}
+
+/* ---------- chrome ---------- */
+let toastT;
+function toast(m){ const el = document.getElementById("toast"); el.textContent = m; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"), 2200); }
+const themeBtn = document.getElementById("themeToggle");
+function paintTheme(){ themeBtn.textContent = document.documentElement.getAttribute("data-theme")==="dark" ? "☀️" : "🌙"; }
+themeBtn.addEventListener("click", ()=>{ const n = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", n); try{ localStorage.setItem("aistaff-theme", n); }catch(e){} paintTheme(); });
+paintTheme();
+document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; if(!A.prefLang) A.prefLang = lang; try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); history.replaceState(null,"",location.pathname+(p.toString()?"?"+p:"")); }catch(e){} render(); }));
+render();
+})();
+</script>
+</body>
+</html>
