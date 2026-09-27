@@ -65,18 +65,17 @@ Los 4 AAAA son para IPv6. Son recomendados pero no obligatorios. Si Ionos no te 
 - https://meetaistaff.com/demo/: el dashboard generalizado
 - https://meetaistaff.com/immobilier/: la landing para courtiers
 - https://meetaistaff.com/immobilier/demo/: el dashboard inmobiliario
+- https://meetaistaff.com/cvc/, /paysagement/, /deneigement/, /garages/, /nettoyage/, /barbiers/, /dental/: páginas por sector
 
 Cuando todo funcione, puedes borrar el sitio en Netlify.
 
 ---
 
-## ⚠️ Antes de cambiar el DNS: páginas que faltan
+## Páginas por sector
 
-La home enlaza a `/dental/`, `/barbiers/` y `/garages/`, pero **esos HTML no están en el repo**: solo existen en Netlify. En cuanto cambie el DNS, esas URLs mostrarán la página `404.html`, que tiene un enlace a la home.
-
-Para no perderlas:
-1. Descarga los 3 HTML desde Netlify (Deploys → el último deploy → *Download*), o búscalos en tu carpeta local `humanAISTAFF/website`.
-2. Pásaselos a Claude. Él los pone en `/dental/index.html`, `/barbiers/index.html` y `/garages/index.html` y unifica la marca y los precios.
+`/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/` y `/dental/` ya están en el repo.
+- Se generan desde una plantilla común con `python3 tools/build_sectors.py`. El contenido está en `tools/sectors_fr.py`, `sectors_en.py` y `sectors_es.py`.
+- Reemplazan las versiones viejas de Netlify de `/dental/`, `/barbiers/` y `/garages/`.
 
 ## Opcional: verificar el dominio en GitHub (recomendado)
 
@@ -92,7 +91,7 @@ Evita que otra cuenta de GitHub pueda "tomar" tu dominio.
 |---|---|---|
 | `lang` | `?lang=es` | Idioma (fr por defecto, en, es) |
 | `a` | `?a=alex` | Persona: `sofia` (por defecto), `alex`, `tomas` |
-| `niche` | `?niche=dentiste` | Pestaña "Pour qui" preseleccionada: `dentiste`, `immobilier`, `pro`, `createur`, `metiers`, `maison` |
+| `niche` | `?niche=cvc` | Pestaña "Pour qui" preseleccionada: `immobilier`, `cvc`, `paysagement`, `deneigement`, `garages`, `nettoyage`, `barbiers`, `dental` (o `dentiste`), `metiers`, `pro`, `createur`, `maison` |
 | `n` | `?n=Julie` | Nombre del visitante en el briefing y el dashboard |
 
 Ejemplo para un anuncio de dentistas en español: `https://meetaistaff.com/?lang=es&niche=dentiste&n=Andrea#pour-qui`

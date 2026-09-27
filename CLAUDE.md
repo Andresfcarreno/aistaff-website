@@ -15,9 +15,8 @@
 |---|---|---|
 | `/` | `index.html` | Home horizontal. FR por defecto, EN/ES, claro/oscuro. Parámetros `?lang= &a=sofia\|alex\|tomas &niche= &n=` |
 | `/demo/` | `demo/index.html` | Dashboard generalizado: Aperçu, Appels, Messages, Courriel, Agenda, Briefings, Réseaux, Contacts y chat con la asistente. `?v=immobilier` redirige a `/immobilier/demo/` |
-| `/immobilier/` | `immobilier/index.html` | Landing para courtiers (Alex, adjunto personal). Tiene el bloque OACIQ. |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard inmobiliario original, con la marca unificada |
-| `/dental/`, `/barbiers/`, `/garages/` | **faltan en el repo** | Solo existen en Netlify. Hay que traerlos antes de cambiar el DNS. |
+| `/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/`, `/dental/` | **generadas**, no se editan a mano | Plantilla común en `tools/build_sectors.py`, que toma el CSS, el orbe y los avatares de `index.html`. El contenido FR/EN/ES está en `tools/sectors_*.py` y `generic_text.py`. Después de cambiar la home o el contenido: `python3 tools/build_sectors.py` (también inyecta `HOME_SECTORS` en la home: menú, pestañas y banda). |
 | `404.html`, `CNAME`, `.nojekyll`, `robots.txt`, `sitemap.xml` | | Configuración de GitHub Pages |
 | `docs/` | | `DEPLOY.md`, `briefing-backend.md`, `guiones-video.md` |
 | `backend/supabase/` | | SQL de briefings |
@@ -67,8 +66,14 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - vista de semana en la agenda;
   - tarjetas de Langues e Intégrations en la pestaña de la asistente.
 
+## Dashboard: consola de voz
+- Al pulsar "Écouter" (briefings, llamadas, chat) se abre una consola a pantalla completa:
+  - nebulosa WebGL;
+  - anillo de barras radiales que se mueve con la voz;
+  - subtítulos palabra por palabra.
+- Usa la voz del navegador (speechSynthesis) si hay una disponible; si no, sigue con tiempos simulados.
+
 ## Pendientes conocidos
-- Traer `/dental`, `/barbiers` y `/garages` al repo y alinear marca y precios.
 - Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía".
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
 - `presentation.html` es una página vieja en inglés, con precios y teléfonos antiguos. No está enlazada; hay que borrarla o actualizarla.

@@ -218,6 +218,24 @@ html[data-theme="dark"] .trust .n{color:#fff;}
   .phone{width:270px;}.screen{height:540px;}
 }
 
+/* ---------- Sectors dropdown ---------- */
+.dd{position:relative;}
+.dd summary{list-style:none;cursor:pointer;font-size:14px;font-weight:700;color:var(--muted);padding:9px 12px;border-radius:12px;display:flex;align-items:center;gap:6px;user-select:none;}
+.dd summary::-webkit-details-marker{display:none;}
+.dd summary::after{content:"▾";font-size:11px;transition:transform .2s;}
+.dd[open] summary{color:var(--ink);background:var(--blue-soft);}
+.dd[open] summary::after{transform:rotate(180deg);}
+.dd-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:250px;padding:8px;border-radius:18px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:80;display:grid;gap:2px;animation:fadeUp .2s ease;}
+.dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;}
+.dd-menu a span{width:28px;height:28px;border-radius:9px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.dd-menu a:hover,.dd-menu a.cur{background:var(--blue-soft);color:var(--accent-ink);}
+@media(max-width:900px){.dd summary{padding:8px 8px;font-size:13px;}.dd-menu{left:auto;right:-80px;transform:none;}}
+@media(max-width:400px){.dd summary{font-size:12px;padding:8px 4px;}}
+a.ind{color:inherit;text-decoration:none;transition:transform .2s,border-color .2s;}
+a.ind:hover{transform:translateY(-3px);border-color:var(--blue);}
+a.ind .go{font-size:12px;color:var(--accent-ink);font-weight:800;margin-left:4px;}
+
 /* ---------- Marquees ---------- */
 .marquee{position:relative;overflow:hidden;padding:6px 0;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
@@ -539,6 +557,7 @@ footer .demo{display:inline-block;margin-top:10px;font-size:11.5px;border:1px so
   <div class="nav-in">
     <a class="brand" href="#"><span class="mk">AI</span>AI Staff</a>
     <div class="nav-links">
+      <details class="dd" id="ddSectors"><summary data-i18n="nav.sectors">Secteurs</summary><div class="dd-menu" id="ddMenu"></div></details>
       <a class="nl" href="#demo" data-i18n="nav.demo">Démo</a>
       <a class="nl" href="#pour-qui" data-i18n="nav.who">Pour qui</a>
       <a class="nl" href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
@@ -762,10 +781,7 @@ footer .demo{display:inline-block;margin-top:10px;font-size:11.5px;border:1px so
   <footer>
     <div><b>AI Staff</b> · <span data-i18n="footer.tag">l'adjointe personnelle IA, à Montréal</span></div>
     <div class="links">
-      <a href="/immobilier/" data-i18n="footer.l1">Courtiers immobiliers</a>
-      <a href="/dental/" data-i18n="footer.l2">Cliniques dentaires</a>
-      <a href="/barbiers/" data-i18n="footer.l3">Barbiers</a>
-      <a href="/garages/" data-i18n="footer.l4">Garages</a>
+      <span id="footSectors" style="display:contents"></span>
       <a href="/demo/" data-i18n="footer.l5">Tableau de bord démo</a>
     </div>
     <div><a href="mailto:hello@meetaistaff.com" style="color:inherit;">hello@meetaistaff.com</a> · <a href="tel:+14388058804" style="color:inherit;">+1 (438) 805-8804</a></div>
@@ -798,7 +814,7 @@ const PERSONAS = {sofia:{name:"Sofía",ini:"S"}, alex:{name:"Alex",ini:"A"}, tom
 
 const STR = {
 fr:{
-"nav.demo":"Démo","nav.who":"Pour qui","nav.pricing":"Tarifs","nav.faq":"FAQ","nav.cta":"📞 Parler à {a}",
+"nav.demo":"Démo","nav.who":"Pour qui","nav.sectors":"Secteurs","nav.home":"Accueil","nav.pricing":"Tarifs","nav.faq":"FAQ","nav.cta":"📞 Parler à {a}",
 "hero.eyebrow":"Adjointe personnelle IA · Montréal",
 "hero.title":"Votre prochaine employée est <em>une&nbsp;IA.</em>",
 "hero.lead":"{a} répond à vos appels, vos textos, vos DM et vos courriels — et vous appelle chaque matin pour vous résumer votre journée. En français, en anglais et en espagnol, 24 h sur 24.",
@@ -820,7 +836,7 @@ fr:{
 "day.anytime":"<b>Et à tout moment, appelez {a}.</b> <q>Qu'est-ce que j'ai demain?</q> <q>Réponds à Julie que je confirme jeudi.</q> {a} reconnaît votre numéro et s'en occupe.",
 "who.eyebrow":"Pour qui","who.title":"Pour les gens qui n'ont pas le temps de répondre.",
 "who.lead":"Si vous avez déjà pensé à embaucher une adjointe, {a} est faite pour vous. Choisissez votre métier :",
-"who.pain":"Le problème","who.does":"Ce que {a} fait pour vous","who.line":"Exemple","who.more":"Voir la page courtiers →",
+"who.pain":"Le problème","who.does":"Ce que {a} fait pour vous","who.line":"Exemple","who.more":"Voir la page complète pour votre secteur →",
 "dash.eyebrow":"Démo interactive","dash.title":"Votre tableau de bord, avec votre nom dessus.",
 "dash.lead":"Écrivez votre prénom : le tableau de bord et le briefing du haut de la page se personnalisent.",
 "dash.l1":"Votre prénom","dash.ph1":"ex. Marie","dash.badge":"◆ Données de démonstration","dash.full":"Tableau de bord complet →",
@@ -926,7 +942,7 @@ faq:[
 ["Y a-t-il un contrat?","Non. C'est mois par mois, sans engagement. L'installation est gratuite pendant le lancement."]]
 },
 en:{
-"nav.demo":"Demo","nav.who":"Who it's for","nav.pricing":"Pricing","nav.faq":"FAQ","nav.cta":"📞 Talk to {a}",
+"nav.demo":"Demo","nav.who":"Who it's for","nav.sectors":"Industries","nav.home":"Home","nav.pricing":"Pricing","nav.faq":"FAQ","nav.cta":"📞 Talk to {a}",
 "hero.eyebrow":"AI personal assistant · Montréal",
 "hero.title":"Your next employee <em>is&nbsp;AI.</em>",
 "hero.lead":"{a} answers your calls, texts, DMs and emails — and calls you every morning to walk you through your day. In French, English and Spanish, around the clock.",
@@ -948,7 +964,7 @@ en:{
 "day.anytime":"<b>And anytime, just call {a}.</b> <q>What do I have tomorrow?</q> <q>Tell Julie I'm confirmed for Thursday.</q> {a} recognizes your number and takes care of it.",
 "who.eyebrow":"Who it's for","who.title":"For people who don't have time to pick up.",
 "who.lead":"If you've ever thought about hiring an assistant, {a} is for you. Pick your line of work:",
-"who.pain":"The problem","who.does":"What {a} does for you","who.line":"Example","who.more":"See the broker page →",
+"who.pain":"The problem","who.does":"What {a} does for you","who.line":"Example","who.more":"See the full page for your industry →",
 "dash.eyebrow":"Interactive demo","dash.title":"Your dashboard, with your name on it.",
 "dash.lead":"Type your first name: the dashboard and the briefing at the top of the page personalize instantly.",
 "dash.l1":"Your first name","dash.ph1":"e.g. Marie","dash.badge":"◆ Demo data","dash.full":"Full dashboard →",
@@ -1054,7 +1070,7 @@ faq:[
 ["Is there a contract?","No. It's month to month, no commitment. Setup is free during launch."]]
 },
 es:{
-"nav.demo":"Demo","nav.who":"Para quién","nav.pricing":"Precios","nav.faq":"FAQ","nav.cta":"📞 Hablar con {a}",
+"nav.demo":"Demo","nav.who":"Para quién","nav.sectors":"Sectores","nav.home":"Inicio","nav.pricing":"Precios","nav.faq":"FAQ","nav.cta":"📞 Hablar con {a}",
 "hero.eyebrow":"Asistente personal con IA · Montreal",
 "hero.title":"Tu próxima empleada es <em>una&nbsp;IA.</em>",
 "hero.lead":"{a} contesta tus llamadas, mensajes, DMs y correos — y te llama cada mañana para contarte tu día. En francés, inglés y español, las 24 horas.",
@@ -1076,7 +1092,7 @@ es:{
 "day.anytime":"<b>Y cuando quieras, llama a {a}.</b> <q>¿Qué tengo mañana?</q> <q>Respóndele a Julie que confirmo el jueves.</q> {a} reconoce tu número y se encarga.",
 "who.eyebrow":"Para quién","who.title":"Para quienes no tienen tiempo de contestar.",
 "who.lead":"Si alguna vez pensaste en contratar una asistente, {a} es para ti. Elige tu oficio:",
-"who.pain":"El problema","who.does":"Lo que {a} hace por ti","who.line":"Ejemplo","who.more":"Ver la página para courtiers →",
+"who.pain":"El problema","who.does":"Lo que {a} hace por ti","who.line":"Ejemplo","who.more":"Ver la página completa de tu sector →",
 "dash.eyebrow":"Demo interactiva","dash.title":"Tu panel, con tu nombre.",
 "dash.lead":"Escribe tu nombre: el panel y el briefing del inicio de la página se personalizan al instante.",
 "dash.l1":"Tu nombre","dash.ph1":"ej. Marie","dash.badge":"◆ Datos de demostración","dash.full":"Panel completo →",
@@ -1292,6 +1308,12 @@ Object.keys(EXTRA).forEach(l=>{
   s.faq.splice(1,0,...x.faqAdd);
   s.cmpRows[3][2] = x.cmpLang;
 });
+/*SECTORS:start*/const HOME_SECTORS={"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers", "tab": "Courtiers immobiliers", "h": "Vous êtes en visite. Un acheteur appelle… le courtier suivant.", "pain": "Les soirs, les fins de semaine, pendant les signatures : votre téléphone ne dort jamais, et chaque appel manqué est un acheteur qui trouve un autre courtier sur Centris.", "does": ["Répond pendant vos visites et pré-qualifie : budget, préapprobation, secteur, échéancier", "Propose les visites dans votre agenda et envoie les confirmations", "Prépare les courriels de suivi et les fiches de propriété, que vous approuvez"], "line": "« Parfait, ça correspond bien. Marie est libre demain à 14 h ou 16 h pour une visite. »"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation", "tab": "CVC / chauffage", "h": "L'hiver, chaque appel manqué est un client qui appelle le concurrent.", "pain": "Pendant les vagues de froid, le téléphone ne dérougit pas. Vos techniciens sont sur la route, la réception est débordée, et les urgences se mélangent aux demandes de soumission.", "does": ["Répond 24/7 et repère les vraies urgences (sans chauffage, fuite, odeur de gaz)", "Transfère l'urgent au technicien de garde, avec l'adresse et le contexte", "Planifie entretiens annuels, installations et visites de soumission"], "line": "« D'accord, c'est prioritaire. J'avertis le technicien de garde tout de suite avec votre adresse. »"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement", "tab": "Paysagement", "h": "Le printemps arrive, et le téléphone sonne pendant que vous êtes dans la terre.", "pain": "Les demandes de soumission s'accumulent dans la boîte vocale. Ceux qui ne sont pas rappelés dans la journée signent avec quelqu'un d'autre.", "does": ["Répond aux demandes de soumission, même pendant vos journées sur les chantiers", "Demande l'adresse, la superficie et des photos par texto", "Réserve les visites d'estimation dans l'horaire de l'estimateur"], "line": "« Parfait. Notre estimateur peut passer mardi à 17 h ou samedi à 10 h. »"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement", "tab": "Déneigement", "h": "Le lendemain d'une tempête, votre téléphone est saturé.", "pain": "Clients inquiets, entrées oubliées, nouveaux contrats : tout arrive en même temps, souvent avant le lever du soleil. Un client sans réponse ne renouvelle pas l'hiver suivant.", "does": ["Répond à tous les appels, même quand ils arrivent en même temps", "Note les entrées oubliées et les signale à la bonne équipe", "Vend et renouvelle les contrats de saison, avec lien de paiement"], "line": "« Merci. Je signale votre adresse en priorité à l'équipe de Longueuil. »"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique", "tab": "Garages", "h": "La saison des pneus, c'est des centaines d'appels en quelques semaines.", "pain": "Pendant que vos mécaniciens travaillent, personne ne peut répondre. Les clients raccrochent, et ceux qui attendent leur véhicule appellent pour savoir s'il est prêt.", "does": ["Prend les rendez-vous selon la disponibilité de vos baies et de vos mécaniciens", "Gère la saison des pneus : pose, entreposage, rappels", "Répond aux « Est-ce que mon auto est prête? » et texte quand elle l'est"], "line": "« Parfait. J'ai mercredi à 8 h ou jeudi à 15 h 30. »"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage", "tab": "Nettoyage", "h": "Vos équipes sont sur le terrain. Les demandes, elles, arrivent au bureau.", "pain": "Soumissions, changements d'horaire, clients qui veulent ajouter une tâche : sans réceptionniste, tout passe par votre cellulaire, souvent pendant un ménage.", "does": ["Répond aux demandes et donne vos prix de base", "Réserve les ménages ponctuels et récurrents selon vos équipes", "Gère les changements d'horaire et les annulations"], "line": "« Pour un condo de deux chambres aux deux semaines, c'est 120 $ par visite. Je vous propose un premier ménage mardi à 9 h? »"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers", "tab": "Barbiers & salons", "h": "Vous coupez. Le téléphone sonne. Vous ne pouvez pas répondre.", "pain": "Chaque appel manqué pendant une coupe, c'est un client qui réserve ailleurs. Et les absences sans avertissement laissent des trous dans l'horaire.", "does": ["Répond aux appels, textos et DM Instagram pendant que vous coupez", "Réserve selon l'horaire et les services de chaque barbier", "Remplit les annulations avec la liste d'attente"], "line": "« Parfait, c'est réservé : coupe et barbe avec Max à 18 h. Je t'envoie un rappel une heure avant. »"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires", "tab": "Cliniques dentaires", "h": "Votre réception ne peut pas être au téléphone et au comptoir en même temps.", "pain": "Appels pendant les soins, rappels qui prennent des heures, absences qui laissent des trous : la réception court, et des patients raccrochent.", "does": ["Répond aux patients 24/7 et prend les rendez-vous dans vos plages libres", "Inscrit les nouveaux patients avec les informations de base", "Remplit les annulations avec la liste d'attente"], "line": "« Merci, Nathalie. J'ai mardi à 14 h ou jeudi à 9 h 30 avec l'hygiéniste. »"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers", "tab": "Real estate brokers", "h": "You're at a showing. A buyer calls… the next broker.", "pain": "Evenings, weekends, during signings: your phone never sleeps, and every missed call is a buyer finding another broker on Centris.", "does": ["Answers during your showings and pre-qualifies: budget, pre-approval, area, timeline", "Proposes showings in your calendar and sends confirmations", "Drafts follow-up emails and property sheets for you to approve"], "line": "“Perfect, that fits well. Marie is free tomorrow at 2 or 4 PM for a showing.”"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)", "tab": "HVAC", "h": "In winter, every missed call is a client calling your competitor.", "pain": "During cold snaps the phone never stops. Your technicians are on the road, the office is swamped, and emergencies get mixed up with quote requests.", "does": ["Answers 24/7 and spots real emergencies (no heat, leak, gas smell)", "Forwards urgent calls to the on-call technician, with address and context", "Schedules annual maintenance, installations and quote visits"], "line": "“Okay, this is a priority. I'm alerting the on-call technician right now with your address.”"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping", "tab": "Landscaping", "h": "Spring arrives, and the phone rings while your hands are in the dirt.", "pain": "Quote requests pile up in voicemail. The ones who don't get a call back the same day sign with someone else.", "does": ["Answers quote requests, even on your busiest job-site days", "Asks for the address, square footage and photos by text", "Books estimate visits in your estimator's schedule"], "line": "“Perfect. Our estimator can come Tuesday at 5 PM or Saturday at 10 AM.”"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal", "tab": "Snow removal", "h": "The morning after a storm, your phone is jammed.", "pain": "Worried clients, missed driveways, new contracts: it all comes at once, often before sunrise. A client who can't reach you doesn't renew next winter.", "does": ["Answers every call, even when they come in at the same time", "Records missed driveways and flags them to the right crew", "Sells and renews seasonal contracts, with a payment link"], "line": "“Thank you. I'm flagging your address as a priority for the Longueuil crew.”"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair", "tab": "Garages", "h": "Tire season means hundreds of calls in a few weeks.", "pain": "While your mechanics work, nobody can answer. Clients hang up, and those waiting for their vehicle call to ask if it's ready.", "does": ["Books appointments based on your bays and mechanics", "Handles tire season: installs, storage, reminders", "Answers “Is my car ready?” and texts when it is"], "line": "“Perfect. I have Wednesday at 8 AM or Thursday at 3:30 PM.”"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies", "tab": "Cleaning", "h": "Your teams are in the field. The requests land at the office.", "pain": "Quotes, schedule changes, clients who want to add a task: without a receptionist, it all goes through your cell, often in the middle of a cleaning.", "does": ["Answers requests and gives your base prices", "Books one-time and recurring cleanings based on your teams", "Handles schedule changes and cancellations"], "line": "“For a two-bedroom condo every two weeks, it's $120 per visit. How about a first cleaning Tuesday at 9 AM?”"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons", "tab": "Barbers & salons", "h": "You're cutting. The phone rings. You can't answer.", "pain": "Every call missed during a cut is a client booking somewhere else. And no-shows leave holes in the schedule.", "does": ["Answers calls, texts and Instagram DMs while you cut", "Books based on each barber's schedule and services", "Fills cancellations from the waitlist"], "line": "“Perfect, you're booked: cut and beard with Max at 6. I'll send you a reminder an hour before.”"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics", "tab": "Dental clinics", "h": "Your front desk can't be on the phone and at the counter at the same time.", "pain": "Calls during treatment, reminders that take hours, no-shows that leave gaps: the front desk runs, and patients hang up.", "does": ["Answers patients 24/7 and books into your open slots", "Registers new patients with their basic information", "Fills cancellations from the waitlist"], "line": "“Thank you, Nathalie. I have Tuesday at 2 PM or Thursday at 9:30 AM with the hygienist.”"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios", "tab": "Courtiers inmobiliarios", "h": "Estás en una visita. Un comprador llama… al siguiente courtier.", "pain": "Noches, fines de semana, firmas: tu teléfono nunca descansa, y cada llamada perdida es un comprador que encuentra otro courtier en Centris.", "does": ["Contesta durante tus visitas y precalifica: presupuesto, preaprobación, zona, plazos", "Propone visitas en tu agenda y envía las confirmaciones", "Prepara correos de seguimiento y fichas de propiedades para que los apruebes"], "line": "«Perfecto, encaja bien. Marie tiene libre mañana a las 14:00 o a las 16:00 para una visita.»"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)", "tab": "HVAC", "h": "En invierno, cada llamada perdida es un cliente que llama a la competencia.", "pain": "Durante las olas de frío el teléfono no para. Tus técnicos están en la calle, la oficina está saturada y las urgencias se mezclan con las solicitudes de presupuesto.", "does": ["Contesta 24/7 e identifica las urgencias reales (sin calefacción, fuga, olor a gas)", "Pasa lo urgente al técnico de guardia, con la dirección y el contexto", "Agenda mantenimientos anuales, instalaciones y visitas de presupuesto"], "line": "«De acuerdo, es prioritario. Aviso ahora mismo al técnico de guardia con su dirección.»"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería", "tab": "Paisajismo", "h": "Llega la primavera, y el teléfono suena mientras tienes las manos en la tierra.", "pain": "Las solicitudes de presupuesto se acumulan en el buzón de voz. Los que no reciben respuesta el mismo día firman con otra empresa.", "does": ["Contesta las solicitudes de presupuesto, incluso en tus días más ocupados", "Pide la dirección, la superficie y fotos por mensaje", "Agenda las visitas de estimación en el horario del estimador"], "line": "«Perfecto. Nuestro estimador puede pasar el martes a las 17:00 o el sábado a las 10:00.»"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve", "tab": "Remoción de nieve", "h": "El día después de una tormenta, tu teléfono está saturado.", "pain": "Clientes preocupados, entradas olvidadas, contratos nuevos: todo llega a la vez, muchas veces antes del amanecer. Un cliente sin respuesta no renueva el invierno siguiente.", "does": ["Contesta todas las llamadas, incluso cuando llegan al mismo tiempo", "Anota las entradas olvidadas y las reporta al equipo correcto", "Vende y renueva contratos de temporada, con enlace de pago"], "line": "«Gracias. Reporto su dirección como prioridad al equipo de Longueuil.»"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos", "tab": "Talleres", "h": "La temporada de llantas son cientos de llamadas en pocas semanas.", "pain": "Mientras tus mecánicos trabajan, nadie puede contestar. Los clientes cuelgan, y los que esperan su vehículo llaman para saber si ya está listo.", "does": ["Agenda citas según la disponibilidad de tus bahías y mecánicos", "Gestiona la temporada de llantas: cambio, almacenamiento, recordatorios", "Responde «¿Ya está mi carro?» y avisa por mensaje cuando lo está"], "line": "«Perfecto. Tengo el miércoles a las 8:00 o el jueves a las 15:30.»"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza", "tab": "Limpieza", "h": "Tus equipos están en terreno. Las solicitudes llegan a la oficina.", "pain": "Presupuestos, cambios de horario, clientes que quieren agregar una tarea: sin recepcionista, todo pasa por tu celular, muchas veces en medio de una limpieza.", "does": ["Responde las solicitudes y da tus precios base", "Agenda limpiezas puntuales y recurrentes según tus equipos", "Gestiona cambios de horario y cancelaciones"], "line": "«Para un condominio de dos habitaciones cada dos semanas, son 120 $ por visita. ¿Le propongo una primera limpieza el martes a las 9:00?»"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones", "tab": "Barberías y salones", "h": "Estás cortando. Suena el teléfono. No puedes contestar.", "pain": "Cada llamada perdida durante un corte es un cliente que reserva en otro lado. Y las ausencias sin aviso dejan huecos en la agenda.", "does": ["Contesta llamadas, mensajes y DMs de Instagram mientras cortas", "Agenda según el horario y los servicios de cada barbero", "Llena las cancelaciones con la lista de espera"], "line": "«Perfecto, quedó agendado: corte y barba con Max a las 18:00. Te envío un recordatorio una hora antes.»"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales", "tab": "Clínicas dentales", "h": "Tu recepción no puede estar al teléfono y en el mostrador al mismo tiempo.", "pain": "Llamadas durante los tratamientos, recordatorios que toman horas, ausencias que dejan huecos: la recepción corre, y los pacientes cuelgan.", "does": ["Atiende a los pacientes 24/7 y agenda en tus espacios libres", "Registra a los pacientes nuevos con la información básica", "Llena las cancelaciones con la lista de espera"], "line": "«Gracias, Nathalie. Tengo el martes a las 14:00 o el jueves a las 9:30 con la higienista.»"}]};/*SECTORS:end*/
+Object.keys(STR).forEach(l=>{
+  const secs = (typeof HOME_SECTORS !== "undefined" && HOME_SECTORS[l]) || [];
+  const keep = STR[l].niches.filter(n=>!["dentiste","immobilier"].includes(n.id));
+  STR[l].niches = secs.map(x=>({id:x.id, ic:x.ic, tab:x.tab, h:x.h, pain:x.pain, does:x.does, line:x.line, link:"/"+x.slug+"/"})).concat(keep);
+});
 const HELLOS = [["Bonjour","Français"],["Hello","English"],["Hola","Español"],["Ciao","Italiano"],["Olá","Português"],["مرحبا","العربية"],["שלום","עברית"],["नमस्ते","हिन्दी"],["你好","中文"],["Xin chào","Tiếng Việt"],["Bonjou","Kreyòl"],["Kumusta","Tagalog"],["ਸਤ ਸ੍ਰੀ ਅਕਾਲ","ਪੰਜਾਬੀ"],["سلام","فارسی"],["Γειά σας","Ελληνικά"],["Привет","Русский"],["Dzień dobry","Polski"],["Hallo","Deutsch"]];
 const HELLO_POS = [[8,10],[70,8],[38,4],[4,40],[80,32],[14,74],[64,78],[40,86],[84,60],[2,58],[56,20],[22,22],[76,86],[30,62],[88,18],[48,68],[18,90],[92,76]];
 
@@ -1330,10 +1352,14 @@ const ICON = {
 };
 function marqueeHTML(items){ return items.concat(items).join(""); }
 function buildBands(){
-  const ind = S().industries.map(x=>`<div class="ind"><span class="ie">${x[0]}</span><span>${esc(x[1])}<small>${esc(x[2])}</small></span></div>`);
-  const h = Math.ceil(ind.length/2);
-  document.getElementById("indRow1").innerHTML = marqueeHTML(ind.slice(0,h));
-  document.getElementById("indRow2").innerHTML = marqueeHTML(ind.slice(h));
+  const q = lang==="fr" ? "" : "?lang="+lang, secs = (typeof HOME_SECTORS !== "undefined" && HOME_SECTORS[lang]) || [];
+  const covered = ["🦷","🏡","💈","🔧"];
+  const secCards = secs.map(x=>`<a class="ind" href="/${x.slug}/${q}"><span class="ie">${x.ic}</span><span>${esc(x.name)}<small>${esc(t("who.more").replace(/ →$/,""))} <span class="go">→</span></small></span></a>`);
+  const others = S().industries.filter(x=>!covered.includes(x[0])).map(x=>`<div class="ind"><span class="ie">${x[0]}</span><span>${esc(x[1])}<small>${esc(x[2])}</small></span></div>`);
+  document.getElementById("indRow1").innerHTML = marqueeHTML(secCards.length ? secCards : others.slice(0,9));
+  document.getElementById("indRow2").innerHTML = marqueeHTML(others);
+  document.getElementById("footSectors").innerHTML = secs.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("");
+  document.getElementById("ddMenu").innerHTML = secs.map(x=>`<a href="/${x.slug}/${q}"><span>${x.ic}</span>${esc(x.name)}</a>`).join("");
   const keys = Object.keys(LOGOS);
   const tile = k=>`<div class="logo-tile"><span class="lg">${logoSVG(k)}</span><span>${esc(LOGOS[k][0])}</span></div>`;
   const h2 = Math.ceil(keys.length/2);
@@ -1561,7 +1587,7 @@ function initReveal(){
 const qs = new URLSearchParams(location.search);
 let lang = STR[qs.get("lang")] ? qs.get("lang") : "fr";
 let persona = PERSONAS[qs.get("a")] ? qs.get("a") : "sofia";
-let niche = qs.get("niche") || "dentiste";
+let niche = ({dentiste:"dental"})[qs.get("niche")] || qs.get("niche") || "immobilier";
 let dashPane = "today";
 let callTimers = [];
 if(qs.get("n")) document.getElementById("inpName").value = qs.get("n").slice(0,30);
@@ -1638,7 +1664,7 @@ function buildNiches(){
     `<div class="niche-pain"><div class="k">${x.ic} ${esc(t("who.pain"))}</div><h3>${esc(x.h)}</h3><p>${esc(x.pain)}</p></div>`+
     `<div class="niche-do"><div class="k">${fill(esc(t("who.does")))}</div><ul>${x.does.map(d=>`<li>${fill(esc(d))}</li>`).join("")}</ul>`+
     `<div class="niche-line"><b>${esc(t("who.line"))}</b>${fill(esc(x.line))}</div>`+
-    (x.link ? `<a class="niche-link" href="${x.link}">${esc(t("who.more"))}</a>` : "")+`</div>`;
+    (x.link ? `<a class="niche-link" href="${x.link}${lang==="fr"?"":"?lang="+lang}">${x.ic} ${esc(t("who.more"))}</a>` : "")+`</div>`;
   scheduleNiche();
 }
 const CH_ICO = {SMS:"💬",WA:"🟢",IG:"📸",FB:"📘"};
@@ -1807,6 +1833,7 @@ document.querySelectorAll(".persona").forEach(b=>b.addEventListener("click", ()=
   toast(YOUR[lang][GENDER[persona]]+aName()+" ✓");
 }));
 let nameT;
+document.addEventListener("click", e=>{ const dd = document.getElementById("ddSectors"); if(dd.open && !dd.contains(e.target)) dd.open = false; });
 document.getElementById("inpName").addEventListener("input", ()=>{
   refreshPersonalization();
   clearTimeout(nameT); nameT = setTimeout(()=>{ buildDash(); if(!callTimers.length) resetPhone(); }, 250);
