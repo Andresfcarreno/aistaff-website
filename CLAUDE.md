@@ -73,7 +73,20 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - subtítulos palabra por palabra.
 - Usa la voz del navegador (speechSynthesis) si hay una disponible; si no, sigue con tiempos simulados.
 
+## Onboarding, legal y marketing (sept. 2026)
+- `/onboarding/`: formulario para prospectos (FR/EN/ES, 7 pasos, sin contraseñas). Guarda un borrador en localStorage (`aistaff-onboarding`). Acepta `?secteur=`, `?ref=` y `?lang=`.
+  - Envío: si `ONBOARDING_WEBHOOK` (Make) está vacío, usa mailto a hello@ más descarga JSON.
+  - Todos los CTA "Réserver ma démo" (home y sectores) apuntan aquí.
+- `/confidentialite/`: política de privacidad Ley 25 (FR/EN/ES). La persona responsable es Andrés. Tiene la tabla de subcontratistas.
+- `docs/legal/`: contrato de servicio y entente de démo (FR/EN, docx+pdf) más `LEEME.md` (checklist Ley 25, que hay que hacer revisar por un abogado de Quebec).
+  - Se generan con `tools/legal/*.js` (npm `docx`).
+- `docs/onboarding-playbook.md`: proceso completo y plantillas de correo/SMS FR/EN.
+- `marketing/flyers/`: flyers carta (PNG 3x + PDF) y cuadrados 1080 (FR/EN, general e immobilier). Los QR llevan a `/onboarding/?ref=flyer`.
+  - Regenerar: `NODE_PATH=<node_modules con playwright+qrcode> node tools/flyers/build.js`.
+
 ## Pendientes conocidos
+- Pegar la URL del webhook de Make en `onboarding/index.html` (`ONBOARDING_WEBHOOK`).
+- Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
 - Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía".
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
 - `presentation.html` es una página vieja en inglés, con precios y teléfonos antiguos. No está enlazada; hay que borrarla o actualizarla.
