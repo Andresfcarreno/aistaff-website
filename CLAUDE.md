@@ -89,4 +89,3 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
 - Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía".
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
-- `presentation.html` es una página vieja en inglés, con precios y teléfonos antiguos. No está enlazada; hay que borrarla o actualizarla.
