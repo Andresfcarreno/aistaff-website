@@ -35,8 +35,8 @@ Cada documento viene en `.docx` (para editar) y `.pdf` (para mirar). Se generan 
 La política `/confidentialite/` y el Anexo B **prometen** estas cosas. Tienen que ser verdad:
 
 1. **Persona responsable:** tú (ya publicado en `/confidentialite/`).
-2. **Evaluación de factores de privacidad (EFVP)** para la transferencia fuera de Quebec (Retell, Twilio, Anthropic, Make, Supabase, Resend). Es un documento interno de 2 o 3 páginas: qué datos, qué proveedor, dónde, qué protecciones (su DPA, cifrado, SOC 2). La Commission d'accès à l'information publica una guía y una plantilla.
-3. **Aceptar los DPA de cada proveedor.** Retell, Twilio, Anthropic, Make, Supabase y Resend tienen un Data Processing Addendum en su panel o en su web. Descárgalos y guárdalos.
+2. **Evaluación de factores de privacidad (EFVP)** para la transferencia fuera de Quebec (Vapi, ElevenLabs, Soniox, OpenAI, Twilio, Anthropic, Make, Supabase, Resend). Es un documento interno de 2 o 3 páginas: qué datos, qué proveedor, dónde, qué protecciones (su DPA, cifrado, SOC 2). La Commission d'accès à l'information publica una guía y una plantilla.
+3. **Aceptar los DPA de cada proveedor.** Vapi, ElevenLabs, Soniox, OpenAI, Twilio, Anthropic, Make, Supabase y Resend tienen un Data Processing Addendum en su panel o en su web. Descárgalos y guárdalos.
 4. **Supabase:** si puedes, elige la región `ca-central-1` (Canadá) al crear el proyecto de producción y actualiza la tabla de la política.
 5. **Registro de incidentes:** una hoja simple con fecha, qué pasó, datos afectados, riesgo y medidas. Aunque esté vacío, tiene que existir.
 6. **Retención:** borra los prospectos sin seguimiento a los 12 meses (así lo dice la política). Pon un recordatorio trimestral.
@@ -46,4 +46,4 @@ La política `/confidentialite/` y el Anexo B **prometen** estas cosas. Tienen q
 - **TPS/TVQ:** es obligatorio registrarse cuando superas 30 000 $ en 4 trimestres. Con 3 clientes llegas en pocos meses, así que regístrate desde el inicio para cobrar las taxes desde la primera factura.
 - **Seguro de responsabilidad profesional (E&O / cyber):** muy recomendable para un servicio que contesta llamadas de terceros. Pide cotización.
 - **Firma electrónica:** en Quebec es válida. Sirven Docusign, Dropbox Sign o incluso un PDF firmado y devuelto por correo.
-- **Grabación de llamadas:** en Canadá basta el consentimiento de una parte, pero el contrato obliga a anunciarla igual. Configura el mensaje de Retell para que lo diga siempre.
+- **Grabación de llamadas:** en Canadá basta el consentimiento de una parte, pero el contrato obliga a anunciarla igual. Configura el primer mensaje del asistente en Vapi para que lo diga siempre.

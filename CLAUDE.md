@@ -4,10 +4,11 @@
 - **Dueño:** Andrés Carreño, emprendedor solo en Montreal.
   - Habla ES/EN y **no habla francés**: todo el copy FR debe salir listo.
   - Quiere entregables completos, no instrucciones.
-- **Producto:** AI Staff, una asistente personal con IA (voz trilingüe FR/EN/ES sobre Retell AI) más un dashboard por cliente.
+- **Producto:** AI Staff, una asistente personal con IA (voz trilingüe FR/EN/ES sobre Vapi) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
   - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
-- **Stack:** Retell AI, Twilio (+1 438-805-8804, línea demo), Make.com, Claude API, Supabase (multi-tenant, `dashboard_token`) y Resend.
+- **Stack:** Vapi (voz: ElevenLabs + Soniox + GPT-4.1), Twilio (+1 438-805-8804, línea demo), Make.com (plan Free: 2 escenarios, 1 000 ops/mes), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`) y Resend.
+  - Estado real de Make y Supabase, IDs y trampas conocidas: `docs/make-supabase.md`. Prompt del asistente de Vapi: `docs/vapi-asistente-sofia.md`.
 - **Meta de negocio:** cerrar clientes de unos 1 000 $/mes. Cada tarea debe acercar a un cliente que pague.
 
 ## Estructura del sitio (estático, sin build)
@@ -48,7 +49,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - No afirmar "cumplimiento Ley 25": solo describir prácticas (acceso revocable, datos no revendidos, supervisión humana).
 - Quebec: el francés es el idioma por defecto (Ley 96).
 - Inmobiliario: la IA **nunca** da consejo de corretaje (OACIQ).
-- Retell no hace llamadas en frío. Las salientes van solo a clientes con consentimiento (briefings).
+- La asistente no hace llamadas en frío. Las salientes van solo a clientes con consentimiento (briefings).
 - Nunca poner claves API en el HTML. Todo pasa por Make o por una función serverless.
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
@@ -60,7 +61,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - Tomás, masculina.
 - **Logos oficiales:** vienen de Simple Icons (CC0), embebidos como `LOGOS`. Outlook no está en Simple Icons, así que se usa un ícono genérico de sobre.
 - **Idiomas por plan:** Assistante 3, Exécutive hasta 5, Dédiée todas.
-  - "20+ langues" debe coincidir con lo que la configuración de Retell soporte de verdad. Verificarlo.
+  - "20+ langues" debe coincidir con lo que la configuración de Vapi (Soniox + ElevenLabs) soporte de verdad; hoy el transcriptor está solo en FR/EN/ES. Verificarlo.
 - **Dashboard:**
   - gráfica apilada por canal (con tooltip y vista de tabla) y gráfica de línea con crosshair, siguiendo la guía de dataviz;
   - vista de semana en la agenda;
@@ -75,7 +76,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 
 ## Onboarding, legal y marketing (sept. 2026)
 - `/onboarding/`: formulario para prospectos (FR/EN/ES, 7 pasos, sin contraseñas). Guarda un borrador en localStorage (`aistaff-onboarding`). Acepta `?secteur=`, `?ref=` y `?lang=`.
-  - Envío: si `ONBOARDING_WEBHOOK` (Make) está vacío, usa mailto a hello@ más descarga JSON.
+  - Envío: `ONBOARDING_WEBHOOK` apunta al escenario de Make "AI Staff onboarding → Supabase leads", que guarda cada envío en la tabla `leads`. Si el POST falla, la página ofrece mailto a hello@ y descarga JSON.
   - Todos los CTA "Réserver ma démo" (home y sectores) apuntan aquí.
 - `/confidentialite/`: política de privacidad Ley 25 (FR/EN/ES). La persona responsable es Andrés. Tiene la tabla de subcontratistas.
 - `docs/legal/`: contrato de servicio y entente de démo (FR/EN, docx+pdf) más `LEEME.md` (checklist Ley 25, que hay que hacer revisar por un abogado de Quebec).
@@ -85,7 +86,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - Regenerar: `NODE_PATH=<node_modules con playwright+qrcode> node tools/flyers/build.js`.
 
 ## Pendientes conocidos
-- Pegar la URL del webhook de Make en `onboarding/index.html` (`ONBOARDING_WEBHOOK`).
+- Aviso por correo de cada lead nuevo: agregar un módulo Gmail en el escenario de onboarding (ver `docs/make-supabase.md`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía".
-- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
+- Pegar en Vapi el prompt de `docs/vapi-asistente-sofia.md` (Sofía, marca AI Staff, precios correctos, *Server Messages* solo `end-of-call-report`). Hoy el asistente "Alex" dice "MeetAIstaff" y cotiza 797/997/1 497 $.
+- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Vapi y Supabase; requiere un plan de pago de Make (necesita 4 escenarios) y la tabla `clients`.

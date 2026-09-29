@@ -1,6 +1,7 @@
 # Backend del briefing por llamada (Tarea 5)
 
 > **Objetivo del dogfooding:** que Andrés reciba su propio briefing a las 7:30 y pueda llamar a Sofía desde su celular. Ella lo reconoce por su número y le da su día.
+> **Nota (29 sept. 2026):** este diseño se escribió para Retell, pero la voz ahora corre en **Vapi**. Equivalencias: `create-phone-call` → `POST https://api.vapi.ai/call` con `assistantId` y `assistantOverrides.variableValues`; webhook `call_ended` → mensaje `end-of-call-report` en el Server URL; inbound webhook → mensaje `assistant-request`; custom functions → *tools* de Vapi. Verificar los nombres exactos en docs.vapi.ai. Requiere un plan de pago de Make (4 escenarios; el Free permite 2) y crear antes la tabla `clients`. Estado actual de Make y Supabase: `docs/make-supabase.md`.
 > **Regla de oro:** ninguna clave API va en el HTML. Todo pasa por Make (o por una función serverless) y Supabase usa RLS.
 
 ## Arquitectura

@@ -33,7 +33,7 @@ Fuentes: flyers (QR), sitio, Instagram, referidos, llamadas a la línea demo.
   - La URL del webhook no es una clave secreta: solo recibe datos. Aun así, en Make activa "Restrict by IP / data structure" para que ignore basura.
 
 ## 3. Construir la demo (48 h hábiles como meta interna; no la prometas al prospecto)
-1. Duplica el agente de Retell de la línea demo.
+1. Duplica el asistente de Vapi de la línea demo.
 2. Cambia el nombre del negocio, el saludo, la persona, los idiomas, los servicios, el horario, las FAQ y la lista de "nunca".
 3. Revisa sus links públicos (web, Google, Instagram) para afinar el tono.
 4. Prepara el dashboard:
