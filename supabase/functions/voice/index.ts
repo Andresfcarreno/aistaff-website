@@ -23,6 +23,9 @@ const MODEL = Deno.env.get("VOICE_MODEL") ?? "claude-haiku-4-5";
 const ANALYSIS_MODEL = Deno.env.get("ANALYSIS_MODEL") ?? "claude-opus-5-5";
 // Misma voz (mismo timbre) en los tres idiomas: Google Chirp3-HD vía Twilio <Say>.
 const VOICE_NAME = Deno.env.get("VOICE_NAME") ?? "Aoede";
+// Fase 2 (streaming): voz ElevenLabs multilingüe, por defecto "Ana Sofía – Conversational"
+// (acento mexicano neutro). Formato Twilio: voiceId-modelo-velocidad_estabilidad_similitud.
+const RELAY_VOICE = Deno.env.get("RELAY_VOICE") ?? "ewn5JTa3lNPY8QVuZJi6-flash_v2_5-1.0_0.6_0.8";
 const MAX_TURNS = 40;
 const MAX_CALL_MS = 15 * 60 * 1000;
 
@@ -246,9 +249,42 @@ async function reply(s: Session): Promise<{ text: string; lang: Lang; end: boole
 
 const GREETING = `${TXT.greeting.fr} I also speak English. También hablo español.`;
 
+async function hmacHex(key: string, data: string): Promise<string> {
+  const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(key), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const mac = new Uint8Array(await crypto.subtle.sign("HMAC", k, new TextEncoder().encode(data)));
+  return [...mac].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Fase 2: si hay servidor de streaming configurado (secreto RELAY_URL, p. ej. wss://…/ws),
+// la llamada va por ConversationRelay. Si esa sesión falla, Twilio vuelve a ?step=relay-end
+// y ahí se sigue en modo por turnos.
+async function relayTwiml(sid: string): Promise<string | null> {
+  const url = await secret("RELAY_URL");
+  const key = await secret("RELAY_SECRET");
+  if (!url || !key) return null;
+  const token = await hmacHex(key, sid);
+  return `<Connect action="${esc(`${BASE}?step=relay-end`)}"><ConversationRelay url="${esc(url)}" welcomeGreeting="${esc(GREETING)}" welcomeGreetingInterruptible="speech" language="multi" transcriptionProvider="Deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${esc(RELAY_VOICE)}" interruptible="speech"><Parameter name="token" value="${token}"/></ConversationRelay></Connect>`;
+}
+
+function gatherGreeting() {
+  return gather(say(TXT.greeting.fr, "fr") + say("I also speak English.", "en") + say("También hablo español.", "es")) +
+    `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`;
+}
+
+async function onRelayEnd(p: URLSearchParams) {
+  const sid = p.get("CallSid")!;
+  const status = p.get("SessionStatus") ?? "";
+  const handoff = p.get("HandoffData");
+  if (handoff) return twiml("<Hangup/>"); // la asistente terminó la llamada
+  console.warn("relay session ended without handoff", sid, status, p.get("ErrorMessage") ?? "");
+  if (status === "completed" || status === "ended") return twiml("<Hangup/>");
+  return twiml(gatherGreeting()); // respaldo: modo por turnos
+}
+
 async function onIncoming(p: URLSearchParams) {
   const sid = p.get("CallSid")!;
   const greeting = GREETING;
+  const relay = await relayTwiml(sid);
   await saveSession({
     call_sid: sid,
     from_number: p.get("From"),
@@ -257,10 +293,7 @@ async function onIncoming(p: URLSearchParams) {
     turns: [{ role: "assistant", text: greeting, at: new Date().toISOString() }],
     silences: 0,
   });
-  return twiml(
-    gather(say(TXT.greeting.fr, "fr") + say("I also speak English.", "en") + say("También hablo español.", "es")) +
-      `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`,
-  );
+  return twiml(relay ?? gatherGreeting());
 }
 
 async function onTurn(p: URLSearchParams) {
@@ -409,7 +442,9 @@ Deno.serve(async (req) => {
   if (!params.get("CallSid")) return new Response("missing CallSid", { status: 400 });
 
   try {
-    return step === "turn" ? await onTurn(params) : await onIncoming(params);
+    if (step === "turn") return await onTurn(params);
+    if (step === "relay-end") return await onRelayEnd(params);
+    return await onIncoming(params);
   } catch (e) {
     console.error("voice error", e);
     return twiml(say(TXT.oops.fr, "fr") + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);

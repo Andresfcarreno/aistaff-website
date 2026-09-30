@@ -1,0 +1,20 @@
+# Servidor de voz en streaming de AI Staff (Twilio ConversationRelay). Ver docs/voz-propia.md.
+services:
+  - type: web
+    name: aistaff-voice-relay
+    runtime: docker
+    rootDir: voice-relay
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: ohio
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: SUPABASE_URL
+        value: https://vqvdmcxkkmkyxpfnxmzo.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: VOICE_MODEL
+        value: claude-haiku-4-5
