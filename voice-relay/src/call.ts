@@ -176,6 +176,8 @@ export function handleCall(socket: WebSocket, env: Env) {
 
     if (msg.callSid && !sid) sid = String(msg.callSid);
     if (msg.type === "setup") {
+      // Twilio manda quién llama y a qué número; se guarda para el dashboard.
+      saveSession({ from_number: msg.from ?? null, to_number: msg.to ?? null });
       recordGreeting();
       return;
     }
