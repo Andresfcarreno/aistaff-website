@@ -263,7 +263,8 @@ async function relayTwiml(sid: string): Promise<string | null> {
   const key = await secret("RELAY_SECRET");
   if (!url || !key) return null;
   const token = await hmacHex(key, sid);
-  return `<Connect action="${esc(`${BASE}?step=relay-end`)}"><ConversationRelay url="${esc(url)}" welcomeGreeting="${esc(GREETING)}" welcomeGreetingInterruptible="speech" language="multi" transcriptionProvider="Deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${esc(RELAY_VOICE)}" interruptible="speech"><Parameter name="token" value="${token}"/></ConversationRelay></Connect>`;
+  const wsUrl = `${url}${url.includes("?") ? "&" : "?"}sid=${encodeURIComponent(sid)}`; // un Durable Object por llamada
+  return `<Connect action="${esc(`${BASE}?step=relay-end`)}"><ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" welcomeGreetingInterruptible="speech" language="multi" transcriptionProvider="Deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${esc(RELAY_VOICE)}" interruptible="speech"><Parameter name="token" value="${token}"/></ConversationRelay></Connect>`;
 }
 
 function gatherGreeting() {

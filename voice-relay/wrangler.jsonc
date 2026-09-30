@@ -1,0 +1,18 @@
+{
+  // Servidor de voz en streaming de AI Staff. Secretos (panel de Cloudflare o `wrangler secret put`):
+  // ANTHROPIC_API_KEY y SUPABASE_SERVICE_ROLE_KEY.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aistaff-voice-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "vars": {
+    "SUPABASE_URL": "https://vqvdmcxkkmkyxpfnxmzo.supabase.co",
+    "VOICE_MODEL": "claude-haiku-4-5"
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "CALLS", "class_name": "CallSession" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CallSession"] }]
+}
