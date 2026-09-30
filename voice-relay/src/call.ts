@@ -76,8 +76,11 @@ export function handleCall(socket: WebSocket, env: Env) {
 
   const send = (m: unknown) => {
     try {
+      console.log("Sending:", JSON.stringify(m).slice(0, 100));
       socket.send(JSON.stringify(m));
-    } catch { /* socket cerrado */ }
+    } catch (e) {
+      console.error("Send failed:", e);
+    }
   };
   const saveSession = (row: Record<string, unknown>) =>
     db(env, "voice_sessions?on_conflict=call_sid", {
@@ -158,13 +161,22 @@ export function handleCall(socket: WebSocket, env: Env) {
     saveSession({ turns, lang });
   }
 
+  // Enviar greeting después de 500ms sin depender de mensajes
+  setTimeout(() => {
+    if (!greetingSent) {
+      console.log("Timeout: sending greeting");
+      sendGreeting();
+    }
+  }, 500);
+
   socket.addEventListener("message", async (ev) => {
+    console.log("Received message type:", typeof ev.data, "length:", String(ev.data).length);
     let msg: Record<string, unknown>;
     try {
       msg = JSON.parse(String(ev.data));
     } catch (e) {
       // Logging de debugging
-      console.log("First message not JSON (might be stream data):", String(ev.data).slice(0, 100));
+      console.log("Message not JSON:", String(ev.data).slice(0, 200));
       // Enviar saludo incluso si no es JSON válido
       if (!greetingSent) {
         sendGreeting();
