@@ -4,6 +4,10 @@
 
 import { DurableObject } from "cloudflare:workers";
 import { handleCall, type Env } from "./call";
+import { GREETING } from "./prompt";
+
+const esc = (v: string) =>
+  v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export class CallSession extends DurableObject<Env> {
   async fetch(_req: Request): Promise<Response> {
@@ -31,12 +35,14 @@ export default {
         return env.CALLS.get(env.CALLS.idFromName(sid)).fetch(req);
       }
 
-      // Initial HTTP POST from Twilio: respond with TwiML that connects to WebSocket
-      console.log("Twilio webhook POST - responding with TwiML");
+      // Llamada entrante de Twilio: TwiML de ConversationRelay (STT + TTS los maneja Twilio;
+      // este worker solo recibe texto y responde texto por WebSocket).
+      console.log("Twilio webhook - responding with ConversationRelay TwiML");
+      const wsUrl = `wss://${url.host}/ws?sid=call-${crypto.randomUUID()}`;
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
-    <Stream url="wss://aistaff-voice-relay.andycarrenofx.workers.dev/ws?sid=call-${crypto.randomUUID()}" />
+    <ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" language="multi" transcriptionProvider="deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" interruptible="true" />
   </Connect>
 </Response>`;
 

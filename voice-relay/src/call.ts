@@ -93,24 +93,6 @@ export function handleCall(socket: WebSocket, env: Env) {
       body: JSON.stringify({ call_sid: sid || "unknown", ...row, last_activity: new Date().toISOString() }),
     }).catch((e) => console.error("save failed", e));
 
-  // Send greeting with small delay to ensure WebSocket is fully ready
-  console.log("Scheduling greeting send (100ms delay)");
-  console.log("GREETING value:", GREETING.slice(0, 100));
-  setTimeout(() => {
-    console.log("Sending greeting now");
-    try {
-      const msg = { type: "text", token: GREETING, last: true };
-      console.log("Message object:", JSON.stringify(msg).slice(0, 200));
-      send(msg);
-      greetingSent = true;
-      turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
-      saveSession({ turns, lang });
-      console.log("Greeting sent and saved to session");
-    } catch (e) {
-      console.error("Failed to send greeting:", e instanceof Error ? e.message : String(e));
-    }
-  }, 100);
-
   async function respond() {
     if (turns.filter((t) => t.role === "user").length > MAX_TURNS) {
       send({ type: "text", token: "Merci beaucoup! L'équipe d'AI Staff vous recontacte. Bonne journée!", last: true });
@@ -174,12 +156,10 @@ export function handleCall(socket: WebSocket, env: Env) {
     }
   }
 
-  // sendGreeting is only called on fallback if greeting wasn't already sent immediately
-  function sendGreeting() {
+  // El saludo lo dice Twilio (welcomeGreeting en el TwiML); aquí solo se registra en la sesión.
+  function recordGreeting() {
     if (greetingSent) return;
-    console.log("Fallback: sendGreeting() called");
     greetingSent = true;
-    send({ type: "text", token: GREETING, last: true });
     turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
     saveSession({ turns, lang });
   }
@@ -190,22 +170,14 @@ export function handleCall(socket: WebSocket, env: Env) {
     try {
       msg = JSON.parse(String(ev.data));
     } catch (e) {
-      // Logging de debugging
       console.log("Message not JSON:", String(ev.data).slice(0, 200));
-      // Enviar saludo incluso si no es JSON válido
-      if (!greetingSent) {
-        sendGreeting();
-      }
       return;
     }
 
-    // Extraer sid si está disponible en cualquier mensaje
     if (msg.callSid && !sid) sid = String(msg.callSid);
-    if (msg.from && !sid) sid = crypto.randomUUID(); // fallback
-
-    // Enviar saludo en el primer contacto
-    if (!greetingSent) {
-      sendGreeting();
+    if (msg.type === "setup") {
+      recordGreeting();
+      return;
     }
 
     if (msg.type === "prompt") {
