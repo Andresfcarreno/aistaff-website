@@ -59,6 +59,8 @@ function guessLang(text: string, fallback: Lang): Lang {
 }
 
 export function handleCall(socket: WebSocket, env: Env) {
+  console.log("handleCall invoked - WebSocket connection starting");
+
   const client = new Anthropic({
     apiKey: env.ANTHROPIC_API_KEY,
     baseURL: env.ANTHROPIC_BASE_URL || undefined,
@@ -76,10 +78,12 @@ export function handleCall(socket: WebSocket, env: Env) {
 
   const send = (m: unknown) => {
     try {
-      console.log("Sending:", JSON.stringify(m).slice(0, 100));
-      socket.send(JSON.stringify(m));
+      const msg = JSON.stringify(m);
+      console.log("Sending to Twilio:", msg.slice(0, 150));
+      socket.send(msg);
+      console.log("Message sent successfully");
     } catch (e) {
-      console.error("Send failed:", e);
+      console.error("Send failed with error:", e instanceof Error ? e.message : String(e));
     }
   };
   const saveSession = (row: Record<string, unknown>) =>
@@ -88,6 +92,19 @@ export function handleCall(socket: WebSocket, env: Env) {
       headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
       body: JSON.stringify({ call_sid: sid || "unknown", ...row, last_activity: new Date().toISOString() }),
     }).catch((e) => console.error("save failed", e));
+
+  // Send greeting immediately on connection
+  console.log("Sending greeting immediately on connection");
+  console.log("GREETING value:", GREETING.slice(0, 100));
+  try {
+    send({ type: "text", token: GREETING, last: true });
+    greetingSent = true;
+    turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
+    saveSession({ turns, lang });
+    console.log("Greeting sent and saved to session");
+  } catch (e) {
+    console.error("Failed to send immediate greeting:", e);
+  }
 
   async function respond() {
     if (turns.filter((t) => t.role === "user").length > MAX_TURNS) {
@@ -152,22 +169,15 @@ export function handleCall(socket: WebSocket, env: Env) {
     }
   }
 
-  // Enviar saludo al conectarse
+  // sendGreeting is only called on fallback if greeting wasn't already sent immediately
   function sendGreeting() {
     if (greetingSent) return;
+    console.log("Fallback: sendGreeting() called");
     greetingSent = true;
     send({ type: "text", token: GREETING, last: true });
     turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
     saveSession({ turns, lang });
   }
-
-  // Enviar greeting después de 500ms sin depender de mensajes
-  setTimeout(() => {
-    if (!greetingSent) {
-      console.log("Timeout: sending greeting");
-      sendGreeting();
-    }
-  }, 500);
 
   socket.addEventListener("message", async (ev) => {
     console.log("Received message type:", typeof ev.data, "length:", String(ev.data).length);
