@@ -8,7 +8,9 @@ import { GREETING } from "./prompt";
 
 // Voz femenina de ElevenLabs (Sarah) con el modelo multilingüe rápido: velocidad_estabilidad_similitud.
 // Para cambiarla: reemplaza el ID por el de otra voz de ElevenLabs.
-const VOICE = "EXAVITQu4vr4xnSDxMaL-flash_v2_5-1.0_0.6_0.8";
+// Ana Sofía (ElevenLabs, español mexicano neutro, conversacional) + modelo multilingüe rápido.
+// Alternativas mexicanas si se quiere cambiar: Regina 9Godp7dNohUvXk6qp0gS, Ana María m7yTemJqdIqrcNleANfX.
+const VOICE = "ewn5JTa3lNPY8QVuZJi6-flash_v2_5-1.0_0.5_0.8";
 
 const esc = (v: string) =>
   v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
