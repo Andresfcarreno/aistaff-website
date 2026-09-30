@@ -1,6 +1,7 @@
 {
   // Servidor de voz en streaming de AI Staff. Secretos (panel de Cloudflare o `wrangler secret put`):
   // ANTHROPIC_API_KEY y SUPABASE_SERVICE_ROLE_KEY.
+  // Deploy to Cloudflare Workers from GitHub with git-based deployment.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "aistaff-voice-relay",
   "main": "src/index.ts",
