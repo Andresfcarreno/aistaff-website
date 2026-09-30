@@ -8,6 +8,14 @@
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
+  "build": {
+    "command": "npm install"
+  },
+  "env": {
+    "production": {
+      "routes": []
+    }
+  },
   "vars": {
     "SUPABASE_URL": "https://vqvdmcxkkmkyxpfnxmzo.supabase.co",
     "VOICE_MODEL": "claude-haiku-4-5"

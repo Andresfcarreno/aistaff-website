@@ -5,7 +5,7 @@
 // analiza la llamada y la pasa a `calls`.
 
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM } from "./prompt";
+import { SYSTEM, GREETING } from "./prompt";
 
 export interface Env {
   CALLS: DurableObjectNamespace;
@@ -59,6 +59,8 @@ function guessLang(text: string, fallback: Lang): Lang {
 }
 
 export function handleCall(socket: WebSocket, env: Env) {
+  console.log("handleCall invoked - WebSocket connection starting");
+
   const client = new Anthropic({
     apiKey: env.ANTHROPIC_API_KEY,
     baseURL: env.ANTHROPIC_BASE_URL || undefined,
@@ -76,10 +78,12 @@ export function handleCall(socket: WebSocket, env: Env) {
 
   const send = (m: unknown) => {
     try {
-      console.log("Sending:", JSON.stringify(m).slice(0, 100));
-      socket.send(JSON.stringify(m));
+      const msg = JSON.stringify(m);
+      console.log("Sending to Twilio:", msg.slice(0, 150));
+      socket.send(msg);
+      console.log("Message sent successfully");
     } catch (e) {
-      console.error("Send failed:", e);
+      console.error("Send failed with error:", e instanceof Error ? e.message : String(e));
     }
   };
   const saveSession = (row: Record<string, unknown>) =>
@@ -152,22 +156,13 @@ export function handleCall(socket: WebSocket, env: Env) {
     }
   }
 
-  // Enviar saludo al conectarse
-  function sendGreeting() {
+  // El saludo lo dice Twilio (welcomeGreeting en el TwiML); aquí solo se registra en la sesión.
+  function recordGreeting() {
     if (greetingSent) return;
     greetingSent = true;
-    send({ type: "text", token: GREETING, last: true });
     turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
     saveSession({ turns, lang });
   }
-
-  // Enviar greeting después de 500ms sin depender de mensajes
-  setTimeout(() => {
-    if (!greetingSent) {
-      console.log("Timeout: sending greeting");
-      sendGreeting();
-    }
-  }, 500);
 
   socket.addEventListener("message", async (ev) => {
     console.log("Received message type:", typeof ev.data, "length:", String(ev.data).length);
@@ -175,22 +170,16 @@ export function handleCall(socket: WebSocket, env: Env) {
     try {
       msg = JSON.parse(String(ev.data));
     } catch (e) {
-      // Logging de debugging
       console.log("Message not JSON:", String(ev.data).slice(0, 200));
-      // Enviar saludo incluso si no es JSON válido
-      if (!greetingSent) {
-        sendGreeting();
-      }
       return;
     }
 
-    // Extraer sid si está disponible en cualquier mensaje
     if (msg.callSid && !sid) sid = String(msg.callSid);
-    if (msg.from && !sid) sid = crypto.randomUUID(); // fallback
-
-    // Enviar saludo en el primer contacto
-    if (!greetingSent) {
-      sendGreeting();
+    if (msg.type === "setup") {
+      // Twilio manda quién llama y a qué número; se guarda para el dashboard.
+      saveSession({ from_number: msg.from ?? null, to_number: msg.to ?? null });
+      recordGreeting();
+      return;
     }
 
     if (msg.type === "prompt") {

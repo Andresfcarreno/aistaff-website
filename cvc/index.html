@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){try{var t=localStorage.getItem("aistaff-theme");if(!t){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();
+</script>
+<title>AI Staff — Adjointe IA pour entreprises de chauffage et climatisation (CVC)</title>
+<meta name="description" content="Urgences 24/7, entretiens saisonniers, soumissions : l&#x27;adjointe IA qui répond pendant que vos techniciens sont sur la route.">
+<meta property="og:title" content="AI Staff — Adjointe IA pour entreprises de chauffage et climatisation (CVC)">
+<meta property="og:description" content="Urgences 24/7, entretiens saisonniers, soumissions : l&#x27;adjointe IA qui répond pendant que vos techniciens sont sur la route.">
+<meta property="og:url" content="https://meetaistaff.com/cvc/">
+<link rel="canonical" href="https://meetaistaff.com/cvc/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230A1A33'/%3E%3Cstop offset='1' stop-color='%231F6FEB'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+<style>
+
+:root{
+  --navy:#0A1A33; --navy-2:#10254a;
+  --blue:#1F6FEB; --blue-d:#1858C4; --blue-soft:rgba(31,111,235,.1);
+  --bg:#EDF0F6; --bg-2:#E4E9F2;
+  --card:#FFFFFF; --ink:#0B1B33; --muted:#5B6B82;
+  --line:rgba(11,27,51,.1);
+  --green:#1FA855; --green-soft:rgba(31,168,85,.12);
+  --amber:#DD7A0A; --amber-soft:rgba(221,122,10,.13);
+  --red:#DF5454; --red-soft:rgba(223,84,84,.12);
+  --r:22px;
+  --shadow:0 10px 30px rgba(10,26,51,.08);
+  --shadow-lg:0 24px 60px rgba(10,26,51,.14);
+  --accent-ink:#1858C4;
+  color-scheme:light dark;
+}
+html[data-theme="dark"]{
+  --bg:#071120; --bg-2:#0A1830;
+  --card:#0D1C36; --ink:#EAF0FA; --muted:#93A3BD;
+  --line:rgba(148,178,226,.14);
+  --blue-soft:rgba(64,130,246,.16);
+  --green-soft:rgba(46,204,113,.14);
+  --amber-soft:rgba(240,165,60,.15);
+  --red-soft:rgba(240,110,110,.15);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+  --accent-ink:#7FA8F5;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;line-height:1.5;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+section[id],header[id]{scroll-margin-top:80px;}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
+  border-bottom:1px solid var(--line);}
+.nav-in{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:19px;letter-spacing:-.3px;white-space:nowrap;}
+.brand .mk{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13.5px;letter-spacing:.02em;
+  box-shadow:0 6px 16px rgba(31,111,235,.35);}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.nav-links a.nl{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none;padding:9px 12px;border-radius:12px;}
+.nav-links a.nl:hover{color:var(--ink);background:var(--blue-soft);}
+.seg{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.seg button{border:none;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);
+  padding:7px 12px;border-radius:999px;cursor:pointer;min-width:40px;}
+.seg button.active{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(10,26,51,.16);}
+.tbtn{border:1px solid var(--line);background:var(--card);width:38px;height:38px;border-radius:999px;cursor:pointer;
+  font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--ink);box-shadow:var(--shadow);flex-shrink:0;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;cursor:pointer;font:inherit;
+  font-weight:700;border-radius:16px;padding:15px 30px;font-size:16px;text-decoration:none;transition:transform .15s, box-shadow .2s;}
+.btn:active{transform:scale(.97);}
+.btn-blue{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;
+  box-shadow:0 10px 26px rgba(31,111,235,.4), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-blue:hover{box-shadow:0 14px 32px rgba(31,111,235,.5), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:var(--shadow);}
+.btn-sm{padding:10px 18px;font-size:13.5px;border-radius:13px;}
+@media(max-width:900px){.nav-links a.nl{display:none;}}
+@media(max-width:560px){.nav-cta{display:none !important;}}
+
+/* ---------- Hero (v2: 3D orb, motion) ---------- */
+.hero{padding:118px 0 40px;position:relative;isolation:isolate;}
+.hero-bg{position:absolute;inset:-120px calc(50% - 50vw) 0;z-index:-1;pointer-events:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent);}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform;}
+.blob.b1{width:520px;height:520px;left:calc(50% + 60px);top:40px;background:radial-gradient(circle,#3B82F6,transparent 65%);animation:drift1 16s ease-in-out infinite;}
+.blob.b2{width:440px;height:440px;left:calc(50% - 520px);top:260px;background:radial-gradient(circle,#7C9CFF,transparent 65%);opacity:.35;animation:drift2 19s ease-in-out infinite;}
+.blob.b3{width:360px;height:360px;left:calc(50% + 380px);top:420px;background:radial-gradient(circle,#22D3EE,transparent 65%);opacity:.28;animation:drift1 22s ease-in-out infinite reverse;}
+html[data-theme="dark"] .blob{opacity:.42;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-60px,40px) scale(1.12);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(70px,-30px) scale(.92);}}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(11,27,51,.13) 1px,transparent 1.4px);background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 60% 55% at 60% 40%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 60% 55% at 60% 40%,#000 30%,transparent 75%);}
+html[data-theme="dark"] .dots{background-image:radial-gradient(rgba(148,178,226,.16) 1px,transparent 1.4px);}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center;}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:26px;}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-ink);background:var(--blue-soft);border:1px solid var(--line);
+  padding:8px 16px;border-radius:999px;margin-bottom:20px;backdrop-filter:blur(8px);}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(.7);opacity:.6;}}
+h1{font-size:clamp(42px,6.2vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.02;max-width:640px;}
+h1 em{font-style:normal;color:var(--blue);}
+h1 em .w{background:linear-gradient(100deg,#1F6FEB 10%,#5B8DEF 45%,#22B8E6 70%,#1F6FEB 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em;}
+html[data-theme="dark"] h1 em .w{background-image:linear-gradient(100deg,#6EA3F8 10%,#A5C4FF 45%,#5EE0F5 70%,#6EA3F8 100%);}
+.ready h1 em .w{animation:wordIn .9s cubic-bezier(.2,.8,.2,1) forwards,sheen 6s ease-in-out infinite;animation-delay:calc(.12s + var(--i) * .075s),1.2s;}
+@keyframes sheen{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+h1 .w{display:inline-block;opacity:0;transform:translateY(.45em) rotateX(-40deg);filter:blur(8px);transform-origin:50% 100%;}
+.ready h1 .w{animation:wordIn .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(.12s + var(--i) * .075s);}
+@keyframes wordIn{to{opacity:1;transform:none;filter:none;}}
+.rise{opacity:0;transform:translateY(18px);}
+.ready .rise{animation:riseIn .8s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,.4s);}
+@keyframes riseIn{to{opacity:1;transform:none;}}
+.rotator{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:18px 0 6px;font-size:clamp(19px,2.2vw,24px);font-weight:700;letter-spacing:-.4px;line-height:1.45;}
+.rotator .rot{position:relative;display:inline-grid;height:1.45em;line-height:1.45em;overflow:hidden;}
+.rotator .rot span{grid-area:1/1;white-space:nowrap;color:var(--accent-ink);transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .55s;}
+.rotator .rot span.in{transform:none;opacity:1;}
+.rotator .rot span.out{transform:translateY(-110%);opacity:0;}
+.rotator .rot span.wait{transform:translateY(110%);opacity:0;}
+.rotator .caret{display:inline-block;width:3px;height:1.05em;background:var(--blue);border-radius:2px;animation:blink 1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:580px;margin:10px 0 22px;}
+.pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px;}
+.pick .pl{font-size:13px;font-weight:700;color:var(--muted);width:100%;}
+.persona{display:inline-flex;align-items:center;gap:9px;border:1.5px solid var(--line);background:color-mix(in srgb,var(--card) 85%,transparent);border-radius:999px;
+  padding:5px 16px 5px 5px;font:inherit;font-size:14.5px;font-weight:700;color:var(--muted);cursor:pointer;box-shadow:var(--shadow);
+  backdrop-filter:blur(8px);transition:transform .2s,border-color .2s,background .2s;}
+.persona:hover{transform:translateY(-2px);}
+.persona .av{width:34px;height:34px;display:block;}
+.persona.active{border-color:var(--blue);color:var(--accent-ink);background:var(--blue-soft);}
+.persona small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:0;}
+.persona .pn{text-align:left;line-height:1.15;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px;}
+.btn-blue.glow{position:relative;overflow:hidden;}
+.btn-blue.glow::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  transform:translateX(-120%);animation:shine 3.8s ease-in-out infinite 2s;}
+@keyframes shine{0%{transform:translateX(-120%);}40%,100%{transform:translateX(120%);}}
+.trust{display:flex;gap:34px;flex-wrap:wrap;}
+.trust .n{font-size:28px;font-weight:800;letter-spacing:-.6px;color:var(--navy);}
+html[data-theme="dark"] .trust .n{color:#fff;}
+.trust .l{font-size:13px;color:var(--muted);margin-top:2px;max-width:160px;}
+
+/* stage: WebGL orb + phone + floating cards */
+.stage{position:relative;height:680px;perspective:1400px;}
+@media(max-width:980px){.stage{height:640px;}}
+#orbGL{position:absolute;left:50%;top:48%;width:640px;height:640px;transform:translate(-50%,-50%);pointer-events:none;z-index:0;}
+.orb-fallback{position:absolute;left:50%;top:48%;width:420px;height:420px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#9DBCFB,#3B74E8 55%,#173F94 80%,transparent 81%);filter:drop-shadow(0 0 60px rgba(59,130,246,.55));opacity:.9;z-index:0;}
+.phone-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;transform-style:preserve-3d;}
+.phone{width:292px;background:#0A1A33;border-radius:50px;padding:11px;transform-style:preserve-3d;
+  box-shadow:0 40px 90px rgba(10,26,51,.35),0 0 0 1px rgba(255,255,255,.06), inset 0 2px 4px rgba(255,255,255,.18);
+  transition:transform .25s ease-out;}
+.ready .phone-wrap .phone{animation:phoneIn 1.3s cubic-bezier(.2,.8,.2,1) both .35s;}
+@keyframes phoneIn{from{opacity:0;transform:translateY(80px) rotateX(28deg) rotateY(-18deg) scale(.9);}to{opacity:1;transform:none;}}
+.phone::before{content:"";position:absolute;inset:0;border-radius:50px;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.18),transparent 30%,transparent 70%,rgba(255,255,255,.06));z-index:3;}
+.screen{background:var(--card);border-radius:40px;overflow:hidden;height:590px;display:flex;flex-direction:column;position:relative;}
+.notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:104px;height:25px;background:#0A1A33;border-radius:14px;z-index:2;}
+.call-head{padding:50px 20px 12px;text-align:center;border-bottom:1px solid var(--line);}
+.call-av{width:74px;height:74px;margin:0 auto 10px;position:relative;}
+.call-av .av{width:74px;height:74px;display:block;position:relative;z-index:1;}
+.call-av::before,.call-av::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,99,235,.35);opacity:0;}
+.call-av.talking::before,.call-av.talking::after{animation:ring 2s ease-out infinite;}
+.call-av.talking::after{animation-delay:1s;}
+@keyframes ring{from{transform:scale(.9);opacity:1;}to{transform:scale(1.45);opacity:0;}}
+.eq{display:flex;gap:3px;justify-content:center;align-items:flex-end;height:14px;margin-top:6px;opacity:0;transition:opacity .3s;}
+.eq.on{opacity:1;}
+.eq i{width:3px;border-radius:2px;background:var(--blue);height:4px;animation:eq 0.9s ease-in-out infinite;}
+.eq i:nth-child(2){animation-delay:.12s}.eq i:nth-child(3){animation-delay:.24s}.eq i:nth-child(4){animation-delay:.36s}.eq i:nth-child(5){animation-delay:.48s}
+@keyframes eq{0%,100%{height:3px;}50%{height:14px;}}
+.call-head .nm{font-weight:700;font-size:16px;}
+.call-head .st{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600;}
+.call-head .st.live{color:var(--green);}
+.transcript{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;scrollbar-width:none;}
+.bubble{max-width:86%;padding:10px 14px;border-radius:17px;font-size:13.5px;line-height:1.45;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.bubble.agent{background:var(--bg-2);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start;}
+.bubble.user{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;border-bottom-right-radius:5px;align-self:flex-end;}
+.typing{align-self:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:17px;border-bottom-left-radius:5px;
+  padding:12px 15px;display:flex;gap:5px;}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:tp 1s infinite;}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{opacity:.3;transform:none;}50%{opacity:1;transform:translateY(-3px);}}
+.call-foot{padding:12px 16px 22px;border-top:1px solid var(--line);}
+.call-btn{width:100%;border:none;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;border-radius:16px;
+  padding:14px;background:linear-gradient(135deg,#3B82F6,#1858C4);
+  box-shadow:0 8px 20px rgba(31,111,235,.42), inset 0 1px 2px rgba(255,255,255,.35);}
+.call-btn.hang{background:linear-gradient(135deg,#E0655A,#B03227);box-shadow:0 8px 20px rgba(180,60,40,.35);}
+.call-btn:disabled{opacity:.55;cursor:default;}
+.phone-hint{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:12.5px;color:var(--muted);font-weight:500;z-index:3;}
+.phone-hint a{color:var(--accent-ink);font-weight:800;text-decoration:none;}
+/* floating notification cards */
+.fcard{position:absolute;z-index:4;display:flex;gap:10px;align-items:center;min-width:210px;max-width:250px;padding:11px 14px 11px 11px;border-radius:16px;
+  background:color-mix(in srgb,var(--card) 78%,transparent);border:1px solid var(--line);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 18px 40px rgba(10,26,51,.16);opacity:0;transform:translateY(14px) scale(.94);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none;}
+.fcard.show{opacity:1;transform:none;}
+.fcard .fi{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--blue-soft);}
+.fcard .fi svg{width:20px;height:20px;}
+.fcard b{display:block;font-size:13px;line-height:1.25;}
+.fcard span{display:block;font-size:11.5px;color:var(--muted);line-height:1.3;margin-top:2px;}
+.fcard .ok{margin-left:auto;font-size:11px;font-weight:800;color:var(--green);}
+.fcard{max-width:205px;min-width:0;}
+.fcard.s0{left:-34px;top:40px;}.fcard.s1{right:-92px;top:150px;}.fcard.s2{left:-44px;top:178px;}.fcard.s3{right:-80px;top:420px;}
+.fcard.show.bob{animation:bob 5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@media(max-width:1280px){.fcard.s0,.fcard.s2{left:-20px}.fcard.s1,.fcard.s3{right:-30px}}
+@media(max-width:980px){.hero{overflow-x:clip;}.fcard.s0,.fcard.s2{left:0}.fcard.s1,.fcard.s3{right:0}}
+@media(max-width:640px){
+  .stage{height:600px;margin:0 -8px;}
+  #orbGL{width:470px;height:470px;}
+  .fcard{min-width:0;max-width:190px;padding:8px 10px 8px 8px;}
+  .fcard .fi{width:30px;height:30px;}
+  .fcard .ok{display:none;}
+  .fcards{display:none;}
+  .phone{width:270px;}.screen{height:540px;}
+}
+
+/* ---------- Sectors dropdown ---------- */
+.dd{position:relative;}
+.dd summary{list-style:none;cursor:pointer;font-size:14px;font-weight:700;color:var(--muted);padding:9px 12px;border-radius:12px;display:flex;align-items:center;gap:6px;user-select:none;}
+.dd summary::-webkit-details-marker{display:none;}
+.dd summary::after{content:"▾";font-size:11px;transition:transform .2s;}
+.dd[open] summary{color:var(--ink);background:var(--blue-soft);}
+.dd[open] summary::after{transform:rotate(180deg);}
+.dd-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:250px;padding:8px;border-radius:18px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:80;display:grid;gap:2px;animation:fadeUp .2s ease;}
+.dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;}
+.dd-menu a span{width:28px;height:28px;border-radius:9px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.dd-menu a:hover,.dd-menu a.cur{background:var(--blue-soft);color:var(--accent-ink);}
+@media(max-width:900px){.dd summary{padding:8px 8px;font-size:13px;}.dd-menu{left:auto;right:-80px;transform:none;}}
+@media(max-width:400px){.dd summary{font-size:12px;padding:8px 4px;}}
+a.ind{color:inherit;text-decoration:none;transition:transform .2s,border-color .2s;}
+a.ind:hover{transform:translateY(-3px);border-color:var(--blue);}
+a.ind .go{font-size:12px;color:var(--accent-ink);font-weight:800;margin-left:4px;}
+
+/* ---------- Marquees ---------- */
+.marquee{position:relative;overflow:hidden;padding:6px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.mtrack{display:flex;gap:12px;width:max-content;animation:scrollX var(--dur,48s) linear infinite;}
+.marquee.rev .mtrack{animation-direction:reverse;}
+.marquee:hover .mtrack{animation-play-state:paused;}
+@keyframes scrollX{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ind{display:flex;align-items:center;gap:10px;padding:12px 18px 12px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);white-space:nowrap;font-weight:700;font-size:14.5px;}
+.ind .ie{width:36px;height:36px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.ind small{display:block;font-size:11.5px;color:var(--muted);font-weight:600;}
+.band{padding:18px 0 8px;}
+.band .cap{text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+
+/* ---------- Integrations ---------- */
+.logo-tile{display:flex;align-items:center;gap:12px;padding:14px 20px 14px 14px;border-radius:18px;background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);white-space:nowrap;font-weight:700;font-size:14.5px;}
+.logo-tile .lg{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--bg-2);}
+.logo-tile .lg svg{width:22px;height:22px;}
+.logo-tile small{display:block;font-size:11.5px;color:var(--muted);font-weight:600;}
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;}
+@media(max-width:900px){.int-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.int-grid{grid-template-columns:1fr;}}
+.int-cat{padding:20px;}
+.int-cat h3{font-size:15px;font-weight:800;margin-bottom:4px;}
+.int-cat p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px;}
+.int-logos{display:flex;flex-wrap:wrap;gap:8px;}
+.int-logos span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;padding:7px 10px 7px 8px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line);}
+.int-logos svg{width:16px;height:16px;flex-shrink:0;}
+
+/* ---------- Languages ---------- */
+.lang-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;}
+@media(max-width:900px){.lang-wrap{grid-template-columns:1fr;}}
+.card.lang-cloud{position:relative;min-height:380px;overflow:hidden;background:linear-gradient(140deg,#12294f,#0A1A33 75%);border:none;}
+.lang-cloud::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(64,130,246,.45),transparent 65%);}
+.hello{position:absolute;translate:-50% -50%;padding:7px 13px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;
+  font-weight:700;font-size:16px;white-space:nowrap;backdrop-filter:blur(6px);animation:floaty var(--fd,7s) ease-in-out infinite;animation-delay:var(--fdl,0s);}
+.hello small{display:block;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.02em;}
+.hello.hl{background:rgba(59,130,246,.35);border-color:rgba(147,197,253,.6);}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.lang-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#fff;z-index:2;}
+.lang-center .big{transition:opacity .25s;font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.lang-center .sm{font-size:13px;color:rgba(255,255,255,.75);margin-top:6px;}
+.lang-tiers{padding:24px;display:flex;flex-direction:column;gap:12px;}
+.tier{display:flex;gap:14px;align-items:center;padding:14px;border-radius:16px;background:var(--bg-2);border:2px solid var(--line);}
+.tier .tn{font-size:26px;font-weight:800;letter-spacing:-.6px;min-width:58px;text-align:center;color:var(--navy);}
+html[data-theme="dark"] .tier .tn{color:#fff;}
+.tier b{display:block;font-size:14.5px;}
+.tier span{font-size:13px;color:var(--muted);}
+.tier.feat{border:2px solid var(--blue);background:var(--blue-soft);}
+
+/* channels detailed */
+.feat ul{list-style:none;margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+.feat li{font-size:13.5px;color:var(--ink);padding:5px 0 5px 22px;position:relative;line-height:1.45;}
+.feat li::before{content:"✓";position:absolute;left:2px;color:var(--blue);font-weight:800;}
+/* niche autoplay progress */
+.ntab{position:relative;overflow:hidden;}
+.ntab .prog{position:absolute;left:0;bottom:0;height:2px;background:var(--blue);width:0;}
+.ntab.active.auto .prog{animation:prog 7s linear forwards;}
+@keyframes prog{to{width:100%;}}
+.niche{transition:opacity .35s;}
+.niche.swap{opacity:.25;}
+/* scroll reveal for sections */
+.sr{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);}
+.sr.vis{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.sr{opacity:1;transform:none;}h1 .w,.rise{opacity:1;transform:none;filter:none;}.mtrack{animation:none;}}
+
+/* ---------- Sections ---------- */
+section.block{padding:66px 0;}
+.sec-eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px;}
+h2.sec-title{font-size:clamp(29px,4vw,43px);font-weight:800;letter-spacing:-1px;line-height:1.12;margin-bottom:14px;max-width:720px;}
+.sec-lead{font-size:17px;color:var(--muted);line-height:1.62;max-width:660px;margin-bottom:32px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:14px;}
+.center-note{max-width:680px;margin:20px auto 0;text-align:center;font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ---------- Compare ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:760px){.cmp{grid-template-columns:1fr;}}
+.cmp-col{padding:26px 24px;}
+.cmp-col.ai{border:2px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box, linear-gradient(135deg,#3B82F6,#0A1A33) border-box;box-shadow:var(--shadow-lg);}
+.cmp-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.cmp-ico{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--bg-2);border:1px solid var(--line);flex-shrink:0;}
+.cmp-col.ai .cmp-ico{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-weight:800;font-size:17px;border:none;}
+.cmp-head h3{font-size:18px;font-weight:800;letter-spacing:-.3px;}
+.cmp-head .price{font-size:13px;color:var(--muted);font-weight:600;}
+.cmp-row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14.5px;align-items:flex-start;}
+.cmp-row .k{width:110px;flex-shrink:0;color:var(--muted);font-size:13px;font-weight:600;padding-top:1px;}
+.cmp-row .v{flex:1;line-height:1.45;}
+.cmp-col.human .cmp-row .v::before{content:"○ ";color:var(--muted);}
+.cmp-col.ai .cmp-row .v::before{content:"✓ ";color:var(--blue);font-weight:800;}
+
+/* ---------- Channels ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:900px){.feat-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.feat-grid{grid-template-columns:1fr;}}
+.feat{padding:24px 22px;}
+.feat .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.feat .ic{width:46px;height:46px;border-radius:15px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.feat h3{font-size:17px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px;}
+.feat p{font-size:14.5px;color:var(--muted);line-height:1.6;}
+.tag{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+.tag.hot{background:var(--red-soft);color:var(--red);}
+.tag.warm{background:var(--amber-soft);color:var(--amber);}
+.tag.cold{background:var(--bg-2);color:var(--muted);border:1px solid var(--line);}
+.tag.new,.tag.live{background:var(--green-soft);color:var(--green);}
+.tag.info,.tag.phase{background:var(--blue-soft);color:var(--accent-ink);}
+
+/* ---------- Timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.tl{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.tl{grid-template-columns:1fr;}}
+.tl-step{padding:22px 20px;position:relative;}
+.tl-time{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--navy),var(--blue));padding:6px 12px;border-radius:999px;margin-bottom:14px;
+  box-shadow:0 6px 14px rgba(31,111,235,.3);}
+.tl-step h3{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.2px;}
+.tl-step p{font-size:13.8px;color:var(--muted);line-height:1.55;}
+.anytime{margin-top:16px;padding:20px 22px;display:flex;gap:14px;align-items:center;background:var(--blue-soft);}
+.anytime .ic{font-size:26px;flex-shrink:0;}
+.anytime p{font-size:14.5px;line-height:1.6;}
+.anytime q{font-style:italic;color:var(--accent-ink);quotes:"« " " »";}
+html[lang="en"] .anytime q{quotes:"“" "”";}
+html[lang="es"] .anytime q{quotes:"«" "»";}
+
+/* ---------- Niches ---------- */
+.ntabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:thin;}
+.ntab{flex-shrink:0;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:10px 16px;
+  font:inherit;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;gap:7px;align-items:center;white-space:nowrap;}
+.ntab.active{border-color:var(--blue);color:var(--accent-ink);background:var(--blue-soft);}
+.niche{display:grid;grid-template-columns:1fr 1.15fr;gap:0;overflow:hidden;}
+@media(max-width:820px){.niche{grid-template-columns:1fr;}}
+.niche-pain{padding:30px 28px;background:linear-gradient(140deg,#12294f,#0A1A33 75%);color:#fff;}
+.niche-pain .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px;}
+.niche-pain h3{font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1.2;margin-bottom:12px;}
+.niche-pain p{font-size:15px;line-height:1.65;color:rgba(255,255,255,.85);}
+.niche-do{padding:30px 28px;}
+.niche-do .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px;}
+.niche-do ul{list-style:none;}
+.niche-do li{font-size:15px;padding:9px 0 9px 30px;position:relative;line-height:1.5;border-bottom:1px solid var(--line);}
+.niche-do li:last-child{border:none;}
+.niche-do li::before{content:"✓";position:absolute;left:4px;top:9px;color:var(--blue);font-weight:800;}
+.niche-line{margin-top:16px;background:var(--bg-2);border:1px dashed var(--line);border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.55;}
+.niche-line b{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.niche-link{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:700;color:var(--accent-ink);text-decoration:none;}
+
+/* ---------- Dashboard ---------- */
+.pers{padding:22px 24px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;}
+.pers label{display:block;font-size:13px;font-weight:700;margin-bottom:8px;}
+.pers input{width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);outline:none;}
+.pers input:focus{border-color:var(--blue);}
+.pers .f{flex:1 1 240px;}
+.demo-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--accent-ink);
+  background:var(--blue-soft);border:1px solid var(--line);padding:7px 14px;border-radius:999px;margin-bottom:18px;}
+.dash{overflow:hidden;}
+.dash-top{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line);}
+.dash-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:18px;flex-shrink:0;}
+.dash-top .nm{font-weight:700;font-size:16px;}
+.dash-top .sb{font-size:12.5px;color:var(--muted);}
+.dash-top .full{margin-left:auto;font-size:13px;font-weight:700;color:var(--accent-ink);text-decoration:none;white-space:nowrap;}
+.dash-tabs{display:flex;gap:4px;padding:12px 24px 0;border-bottom:1px solid var(--line);overflow-x:auto;}
+.dtab{border:none;background:none;font:inherit;font-size:14px;font-weight:700;color:var(--muted);padding:12px 14px;
+  cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;}
+.dtab.active{color:var(--ink);border-color:var(--blue);}
+.dpane{display:none;padding:24px;animation:fadeUp .3s ease;}
+.dpane.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr;}}
+.stat-tile{padding:18px;border-radius:18px;background:var(--bg-2);border:1px solid var(--line);}
+.stat-tile .lbl{font-size:12px;color:var(--muted);font-weight:600;}
+.stat-tile .val{font-size:27px;font-weight:800;letter-spacing:-.6px;margin-top:6px;color:var(--navy);}
+html[data-theme="dark"] .stat-tile .val{color:#fff;}
+.stat-tile .delta{font-size:12px;margin-top:4px;color:var(--green);font-weight:700;}
+.sub-h{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 0 8px;}
+.feed-row{display:flex;gap:13px;align-items:center;padding:13px 4px;border-bottom:1px solid var(--line);}
+.feed-row:last-child{border:none;}
+.feed-ico{width:40px;height:40px;border-radius:12px;background:var(--blue-soft);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-weight:800;color:var(--accent-ink);}
+.feed-row .tx{flex:1;font-size:14px;line-height:1.45;min-width:0;}
+.feed-row .tx small{display:block;color:var(--muted);font-size:12.5px;}
+.feed-row .tm{font-size:12px;color:var(--muted);white-space:nowrap;}
+.call-card{border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px;background:var(--bg-2);}
+.call-card .who{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.call-card .ini{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#fff;font-size:14px;flex-shrink:0;}
+.call-card .nm{font-weight:700;font-size:15px;}
+.call-card .mt{font-size:12.5px;color:var(--muted);}
+.call-card .sm{font-size:14px;color:var(--muted);line-height:1.55;margin-top:8px;}
+.call-card .nx{margin-top:10px;font-size:13px;font-weight:700;color:var(--accent-ink);}
+.tr-box{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;}
+.tr-line{font-size:13px;color:var(--muted);margin:5px 0;line-height:1.5;}
+.tr-line b{color:var(--ink);}
+.draft{margin-top:6px;font-size:12.5px;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);line-height:1.5;}
+.draft b{color:var(--ink);}
+.soc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+@media(max-width:640px){.soc{grid-template-columns:1fr;}}
+.soc-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--bg-2);}
+.soc-card .h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.soc-card .h b{font-size:15px;}
+.soc-card .h span{font-size:12px;color:var(--muted);}
+.soc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.soc-kpis div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;}
+.soc-kpis b{display:block;font-size:19px;letter-spacing:-.4px;}
+.soc-kpis span{font-size:11.5px;color:var(--muted);}
+
+/* ---------- Trust / privacy ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.trust-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.trust-grid{grid-template-columns:1fr;}}
+.trust-card{padding:22px 20px;}
+.trust-card .ic{font-size:24px;margin-bottom:12px;}
+.trust-card h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.trust-card p{font-size:13.8px;color:var(--muted);line-height:1.58;}
+
+/* ---------- Pricing ---------- */
+.price-top{display:flex;gap:8px;flex-wrap:wrap;margin:-14px 0 26px;}
+.price-top span{font-size:12.5px;font-weight:700;color:var(--accent-ink);background:var(--blue-soft);border:1px solid var(--line);padding:6px 12px;border-radius:999px;}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr;}}
+.plan{padding:30px 28px;display:flex;flex-direction:column;position:relative;}
+.plan.featured{border:2px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box, linear-gradient(135deg,#3B82F6,#0A1A33) border-box;
+  box-shadow:var(--shadow-lg);}
+.plan .ribbon{position:absolute;top:-13px;left:28px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:linear-gradient(135deg,#3B82F6,#1858C4);padding:6px 12px;border-radius:999px;box-shadow:0 6px 14px rgba(31,111,235,.35);}
+.plan .pname{font-size:20px;font-weight:800;letter-spacing:-.3px;}
+.plan .ptag{font-size:14px;color:var(--muted);margin:8px 0 18px;line-height:1.5;min-height:42px;}
+.plan .pnum{font-size:44px;font-weight:800;letter-spacing:-1.2px;color:var(--navy);}
+html[data-theme="dark"] .plan .pnum{color:#fff;}
+.plan .pper{font-size:14px;color:var(--muted);font-weight:600;}
+.plan ul{list-style:none;margin:20px 0 24px;flex:1;}
+.plan li{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:7px 0;line-height:1.45;}
+.plan li .ck{color:var(--blue);font-weight:800;flex-shrink:0;}
+.plan li.inc{font-weight:700;}
+.plan .btn{width:100%;}
+
+/* ---------- FAQ ---------- */
+.faq-item{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
+.faq-q{width:100%;border:none;background:none;font:inherit;text-align:left;padding:20px 22px;font-size:15.5px;font-weight:700;
+  color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.faq-q .pl{font-size:20px;color:var(--blue);flex-shrink:0;font-weight:400;transition:transform .2s;}
+.faq-item.open .faq-q .pl{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a p{padding:0 22px 20px;font-size:14.5px;color:var(--muted);line-height:1.65;}
+
+/* ---------- Final CTA ---------- */
+.final{border-radius:30px;padding:58px 40px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#12294f,#0A1A33 70%);box-shadow:var(--shadow-lg);}
+.final::before{content:"";position:absolute;top:-90px;right:8%;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(64,130,246,.35),transparent 65%);}
+.final h2{font-size:clamp(30px,4.5vw,46px);font-weight:800;letter-spacing:-1px;color:#fff;line-height:1.12;position:relative;max-width:760px;margin:0 auto;}
+.final p{color:rgba(255,255,255,.85);font-size:17px;margin:14px auto 28px;max-width:560px;line-height:1.6;position:relative;}
+.final-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-white{background:#fff;color:var(--navy);box-shadow:0 10px 26px rgba(0,0,0,.3);}
+.final .tel{display:block;margin-top:22px;color:#fff;font-weight:800;font-size:21px;letter-spacing:.02em;text-decoration:none;position:relative;}
+
+footer{padding:42px 0 90px;text-align:center;font-size:13px;color:var(--muted);line-height:1.7;}
+footer .links{display:flex;gap:6px 16px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
+footer .links a{color:var(--muted);font-weight:600;text-decoration:none;}
+footer .links a:hover{color:var(--ink);}
+footer .demo{display:inline-block;margin-top:10px;font-size:11.5px;border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;color:var(--muted);background:var(--blue-soft);}
+
+/* ---------- Sticky mobile CTA ---------- */
+.sticky-cta{position:fixed;left:14px;right:14px;bottom:14px;z-index:55;display:none;gap:10px;}
+.sticky-cta .btn{flex:1;padding:15px 10px;font-size:14.5px;}
+@media(max-width:760px){.sticky-cta{display:flex;} footer{padding-bottom:110px;}}
+
+/* ---------- Modal / toast ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(7,17,32,.55);backdrop-filter:blur(6px);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:22px;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--card);border-radius:26px;padding:32px 28px;max-width:400px;width:100%;text-align:center;
+  box-shadow:var(--shadow-lg);animation:fadeUp .35s ease;border:1px solid var(--line);}
+.modal .ok{width:62px;height:62px;margin:0 auto 16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;
+  font-size:27px;color:#fff;box-shadow:0 10px 24px rgba(31,111,235,.4);}
+.modal h3{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;}
+.modal p{font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:18px;}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--navy);
+  color:#fff;font-size:14px;font-weight:600;padding:13px 22px;border-radius:999px;z-index:120;transition:all .3s;pointer-events:none;
+  box-shadow:var(--shadow-lg);max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:640px){
+  .wrap{padding:0 16px;}
+  .nav-in{padding:10px 14px;gap:8px;}
+  .brand{font-size:17px;}
+  .seg button{padding:6px 10px;font-size:12px;min-width:36px;}
+  .tbtn{width:36px;height:36px;}
+  .hero{padding:108px 0 30px;}
+  .lead{font-size:17px;}
+  .hero-ctas .btn{flex:1 1 100%;}
+  .trust{gap:22px;}
+  .phone{width:min(300px,100%);}
+  section.block{padding:48px 0;}
+  .dash-top{padding:16px;}
+  .dash-top .full{display:none;}
+  .dash-tabs{padding:10px 16px 0;}
+  .dpane{padding:20px 14px;}
+  .final{padding:44px 22px;border-radius:24px;}
+  .final-ctas .btn{flex:1 1 100%;}
+  .niche-pain,.niche-do{padding:24px 20px;}
+  .cmp-row .k{width:92px;}
+  .feed-row.wrapm{flex-wrap:wrap;}
+  .feed-row.wrapm .tx{flex:1 1 calc(100% - 60px);}
+  .feed-row.wrapm .tag{margin-left:53px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+}
+
+/* ---------- sector page additions ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.steps{grid-template-columns:1fr;}}
+.step{padding:24px 20px;}
+.step .num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:14px;box-shadow:0 6px 14px rgba(31,111,235,.35);}
+.step h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.step p{font-size:13.8px;color:var(--muted);line-height:1.55;}
+.calc{padding:30px 28px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+@media(max-width:760px){.calc-grid{grid-template-columns:1fr;}}
+.calc label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;}
+.calc label .v{color:var(--accent-ink);font-weight:800;}
+.calc input[type=range]{width:100%;margin:6px 0 20px;accent-color:var(--blue);height:28px;}
+.calc-out{background:linear-gradient(135deg,var(--navy),#14315e);border-radius:18px;padding:28px 26px;color:#fff;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-lg);}
+.calc-out .big{font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.calc-out .cap{font-size:14.5px;color:rgba(255,255,255,.85);margin-top:8px;line-height:1.55;}
+.calc-out .note{font-size:12px;color:rgba(255,255,255,.6);margin-top:14px;line-height:1.5;}
+.calc-disc{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6;}
+.note-card{padding:22px 24px;display:flex;gap:14px;align-items:flex-start;background:var(--blue-soft);margin-top:18px;}
+.note-card .ic{font-size:24px;flex-shrink:0;}
+.note-card p{font-size:14px;color:var(--muted);line-height:1.65;}
+.note-card b{color:var(--ink);}
+.logo-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.fcard.s0{left:-34px;top:60px;}.fcard.s1{right:-92px;top:250px;}.fcard.s2{left:-44px;top:470px;}
+.hero-ic{font-size:15px;}
+@media(max-width:640px){.calc-out .big{font-size:42px;}.calc{padding:24px 18px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="/"><span class="mk">AI</span>AI Staff</a>
+    <div class="nav-links">
+      <details class="dd" id="ddSectors"><summary data-i18n="nav.sectors">Secteurs</summary><div class="dd-menu" id="ddMenu"></div></details>
+      <a class="nl" href="#demo" data-i18n="nav.demo">Démo</a>
+      <a class="nl" href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
+      <a class="nl" href="#faq" data-i18n="nav.faq">FAQ</a>
+      <div class="seg" id="langSeg"><button data-lang="fr" class="active">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+      <button class="tbtn" id="themeToggle" aria-label="Mode clair / sombre">🌙</button>
+      <a href="tel:+14388058804" class="btn btn-blue btn-sm nav-cta" data-i18n="nav.cta"></a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true"><div class="dots"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow rise" style="--d:.05s"><span class="hero-ic" id="heroIc"></span><span data-s="eyebrow"></span></span>
+        <h1 id="heroTitle" data-s="h1"></h1>
+        <p class="lead rise" style="--d:.7s;margin-top:18px" data-s="lead"></p>
+        <div class="pick rise" style="--d:.85s">
+          <span class="pl" data-i18n="hero.pick"></span>
+          <button class="persona" data-persona="sofia"><span class="av" data-av="sofia"></span><span class="pn">Sofía<small data-i18n="p.sofia"></small></span></button>
+          <button class="persona" data-persona="alex"><span class="av" data-av="alex"></span><span class="pn">Alex<small data-i18n="p.alex"></small></span></button>
+          <button class="persona" data-persona="tomas"><span class="av" data-av="tomas"></span><span class="pn">Tomás<small data-i18n="p.tomas"></small></span></button>
+        </div>
+        <div class="hero-ctas rise" style="--d:1s">
+          <a href="mailto:hello@meetaistaff.com" class="btn btn-blue glow mailcta" data-i18n="hero.cta1"></a>
+          <a href="tel:+14388058804" class="btn btn-ghost" data-i18n="hero.cta2"></a>
+        </div>
+        <div class="trust rise" style="--d:1.12s" id="trust"></div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="orbGL" aria-hidden="true"></canvas>
+        <div class="fcards" id="fcards" aria-hidden="true"></div>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen">
+              <div class="notch"></div>
+              <div class="call-head">
+                <div class="call-av" id="callAv"></div>
+                <div class="nm" id="phoneName"></div>
+                <div class="st" id="callStatus"></div>
+                <div class="eq" id="eq"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="transcript" id="transcript"></div>
+              <div class="call-foot"><button class="call-btn" id="callBtn"></button></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-hint"><a href="tel:+14388058804">+1 (438) 805-8804</a> · <span data-i18n="phone.hint"></span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="block" id="probleme" style="padding-top:26px;">
+    <div class="card niche">
+      <div class="niche-pain"><div class="k" data-i18n="pain.k"></div><h3 data-s="painH"></h3><p data-s="painP"></p></div>
+      <div class="niche-do"><div class="k" data-i18n="does.k"></div><ul id="doesList"></ul></div>
+    </div>
+  </section>
+
+  <section class="block" id="fonctions" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="feat.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="feat.title"></h2>
+    <div class="feat-grid" id="featGrid" style="grid-template-columns:repeat(2,1fr)"></div>
+  </section>
+
+  <section class="block" id="calcul" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="calc.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="calc.title"></h2>
+    <p class="sec-lead" data-i18n="calc.lead"></p>
+    <div class="card calc">
+      <div class="calc-grid">
+        <div>
+          <label><span id="cl1"></span> : <span class="v" id="cv1"></span></label><input type="range" id="cr1">
+          <label><span id="cl2"></span> : <span class="v" id="cv2"></span></label><input type="range" id="cr2">
+          <label><span id="cl3"></span> : <span class="v" id="cv3"></span></label><input type="range" id="cr3">
+        </div>
+        <div class="calc-out"><div class="big" id="calcBig"></div><div class="cap" data-i18n="calc.cap"></div><div class="note" data-i18n="calc.note"></div></div>
+      </div>
+      <p class="calc-disc" id="calcDisc"></p>
+    </div>
+  </section>
+
+  <section class="block" id="comment" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="how.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="how.title"></h2>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <section class="block" id="demo" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="dash.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="dash.title"></h2>
+    <p class="sec-lead" data-i18n="dash.lead"></p>
+    <span class="demo-badge" data-i18n="dash.badge"></span>
+    <div class="card dash">
+      <div class="dash-top">
+        <div class="dash-av" id="dashAv"></div>
+        <div><div class="nm" data-i18n="dash.name"></div><div class="sb" data-i18n="dash.sub"></div></div>
+        <a class="full" href="/demo/" id="dashMore" data-i18n="dash.more"></a>
+      </div>
+      <div class="dpane active" style="display:block">
+        <div class="stats" id="stats"></div>
+        <div id="calls"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="integrations" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="int.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="int.title"></h2>
+    <div class="logo-grid" id="logoGrid"></div>
+    <p class="fine" data-i18n="int.note"></p>
+  </section>
+
+  <section class="block" id="tarifs" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="price.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="price.title"></h2>
+    <p class="sec-lead" data-i18n="price.lead"></p>
+    <div class="price-top" id="priceTop"></div>
+    <div class="price-grid" id="priceGrid"></div>
+    <p class="center-note" data-i18n="rollout"></p>
+  </section>
+
+  <section class="block" id="faq" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="faq.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="faq.title"></h2>
+    <div id="faqList" style="margin-top:26px;"></div>
+    <div class="card note-card" id="noteCard" style="display:none"><div class="ic">⚖️</div><p id="noteText"></p></div>
+  </section>
+
+  <section class="block" style="padding-top:10px;">
+    <div class="final">
+      <h2 data-i18n="final.title"></h2>
+      <p data-i18n="final.lead"></p>
+      <div class="final-ctas">
+        <a href="mailto:hello@meetaistaff.com" class="btn btn-white mailcta" data-i18n="final.cta1"></a>
+        <a href="tel:+14388058804" class="btn btn-blue" data-i18n="final.cta2"></a>
+      </div>
+      <a class="tel" href="tel:+14388058804">+1 (438) 805-8804</a>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>AI Staff</b> · <span data-i18n="footer.tag"></span></div>
+    <div class="links" id="footLinks"></div>
+    <div><a href="mailto:hello@meetaistaff.com" style="color:inherit;">hello@meetaistaff.com</a> · <a href="tel:+14388058804" style="color:inherit;">+1 (438) 805-8804</a></div>
+    <div>meetaistaff.com · © 2026 AI Staff</div>
+    <div><span class="demo" data-i18n="footer.line"></span></div>
+  </footer>
+</div>
+
+<div class="sticky-cta">
+  <a href="mailto:hello@meetaistaff.com" class="btn btn-ghost mailcta" data-i18n="sticky.demo"></a>
+  <a href="tel:+14388058804" class="btn btn-blue" data-i18n="sticky.call"></a>
+</div>
+
+<div class="modal-bg" id="priceModal">
+  <div class="modal">
+    <div class="ok">✦</div>
+    <h3 data-i18n="prM.title"></h3>
+    <p data-i18n="prM.lead"></p>
+    <a class="btn btn-blue" style="width:100%;text-decoration:none;" id="priceMailto" href="mailto:hello@meetaistaff.com" data-i18n="prM.cta"></a>
+    <div style="margin-top:12px;"><a href="#" id="priceLater" style="font-size:13px;color:var(--muted);" data-i18n="prM.later"></a></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const SECTOR_ID = "cvc";
+const SEC = {"fr": {"name": "Chauffage & climatisation", "tab": "CVC / chauffage", "ic": "🔥", "aud": "les entreprises de chauffage et de climatisation", "title": "AI Staff — Adjointe IA pour entreprises de chauffage et climatisation (CVC)", "desc": "Urgences 24/7, entretiens saisonniers, soumissions : l'adjointe IA qui répond pendant que vos techniciens sont sur la route.", "eyebrow": "Pour les entreprises de CVC du Québec", "h1": "Plus de chauffage à 2 h du matin? <em>{a} répond.</em>", "lead": "{a} répond aux urgences 24/7, trie ce qui ne peut pas attendre, planifie vos entretiens et vos soumissions — et vous appelle le matin avec votre journée. En français, en anglais et dans la langue de vos clients.", "trust": [["24/7", "même en pleine vague de froid"], ["< 10 s", "pour décrocher"], ["Urgent", "transféré au technicien de garde"]], "script": [["agent", "Chauffage Lavoie, bonsoir, c'est {a}. Comment puis-je vous aider?"], ["lead", "Ma fournaise ne part plus et il fait 14 degrés dans la maison."], ["agent", "Je comprends. Sentez-vous une odeur de gaz? Y a-t-il des enfants ou des personnes âgées à la maison?"], ["lead", "Pas d'odeur. Oui, deux enfants."], ["agent", "D'accord, c'est prioritaire. J'avertis le technicien de garde tout de suite avec votre adresse."], ["lead", "Merci, vraiment."], ["agent", "Il vous rappelle dans les prochaines minutes. Je vous texte la confirmation."]], "ended": "Urgence transmise au technicien ✓", "fcards": [["phone", "Urgence · Pierrefonds", "Fournaise en panne · technicien avisé"], ["googlecalendar", "Entretien réservé", "Thermopompe · jeudi 10 h"], ["sms", "Rappels envoyés", "Changement de filtre · 42 clients"]], "painH": "L'hiver, chaque appel manqué est un client qui appelle le concurrent.", "painP": "Pendant les vagues de froid, le téléphone ne dérougit pas. Vos techniciens sont sur la route, la réception est débordée, et les urgences se mélangent aux demandes de soumission.", "does": ["Répond 24/7 et repère les vraies urgences (sans chauffage, fuite, odeur de gaz)", "Transfère l'urgent au technicien de garde, avec l'adresse et le contexte", "Planifie entretiens annuels, installations et visites de soumission", "Envoie les rappels d'entretien et de changement de filtre"], "features": [["🚨", "Tri des urgences", "Questions de sécurité, niveau de priorité et transfert immédiat au bon technicien."], ["🗓️", "Entretiens saisonniers", "Rappels avant la saison : fournaises à l'automne, climatiseurs et thermopompes au printemps."], ["🧾", "Soumissions", "Type d'appareil, superficie, photos par texto : la visite est réservée et le dossier est prêt."], ["🌎", "Dans la langue du client", "Français, anglais, espagnol et plus : chaque client est servi dans sa langue."]], "steps": [["Le client appelle", "Jour, nuit ou tempête : {a} décroche en moins de 10 secondes."], ["{a} qualifie", "Urgence ou non, type d'appareil, adresse, disponibilités."], ["Le rendez-vous se réserve", "Dans l'horaire de vos techniciens, avec confirmation par texto."], ["Vous recevez le résumé", "Chaque matin : urgences de la nuit, visites du jour, soumissions à faire."]], "calc": {"l1": "Appels manqués par semaine", "l2": "Taux de conversion en contrat", "l3": "Valeur moyenne d'un contrat", "v": [8, 35, 450], "r": [[0, 40, 1], [5, 80, 1], [100, 8000, 50]], "disc": "Une urgence sans réponse ne rappelle pas : elle appelle l'entreprise suivante sur Google."}, "stats": [["Appels répondus", "37", "cette semaine"], ["Urgences transmises", "6", "délai moyen 4 min"], ["Visites réservées", "14", "↑ 5 cette semaine"], ["Soumissions à faire", "5", "dossiers complets"]], "calls": [["Julie Tremblay", "Cette nuit · 2 h 14", "Fournaise en panne, deux enfants. Transmis au technicien de garde.", "hot", "Visite d'urgence · 7 h 30"], ["Marc Gagnon", "Hier · 16 h 40", "Soumission pour une thermopompe murale, maison de 1 400 pi².", "warm", "Visite de soumission · jeudi 13 h"], ["Nadia Roy", "Hier · 11 h 05", "Entretien annuel du climatiseur central.", "new", "Entretien réservé · 3 oct. 9 h"]], "ints": ["googlecalendar", "gmail", "google", "googlemaps", "quickbooks", "stripe", "square", "whatsapp"], "faq": [["Est-ce que {a} peut faire un diagnostic technique?", "Non. {a} pose les bonnes questions (type d'appareil, symptômes, sécurité) et transmet au technicien, sans jamais donner de diagnostic ni d'instruction de réparation. En cas d'odeur de gaz, {a} demande de quitter les lieux et d'appeler le 911."], ["Comment les urgences me sont-elles transmises?", "Selon vos règles : appel direct au technicien de garde, texto avec l'adresse et le résumé, ou les deux. Le reste attend votre briefing du matin."], ["Est-ce que les entretiens saisonniers sont gérés?", "Oui : {a} rappelle vos clients avant la saison, propose des plages et remplit l'horaire de vos techniciens."]], "note": "<b>Sécurité :</b> {a} ne pose jamais de diagnostic technique. En cas d'odeur de gaz ou de danger, {a} demande de quitter les lieux et d'appeler le 911, puis avise votre équipe."}, "en": {"name": "Heating & cooling (HVAC)", "tab": "HVAC", "ic": "🔥", "aud": "HVAC companies", "title": "AI Staff — AI assistant for heating and cooling (HVAC) companies", "desc": "24/7 emergencies, seasonal maintenance, quotes: the AI assistant that answers while your technicians are on the road.", "eyebrow": "For Québec HVAC companies", "h1": "No heat at 2 AM? <em>{a} answers.</em>", "lead": "{a} answers emergencies 24/7, triages what can't wait, schedules your maintenance and quotes — and calls you in the morning with your day. In French, English and your clients' language.", "trust": [["24/7", "even in a cold snap"], ["< 10 s", "to pick up"], ["Urgent", "forwarded to the on-call technician"]], "script": [["agent", "Lavoie Heating, good evening, this is {a}. How can I help?"], ["lead", "My furnace won't start and it's 14 degrees in the house."], ["agent", "I understand. Do you smell gas? Are there children or elderly people in the home?"], ["lead", "No smell. Yes, two kids."], ["agent", "Okay, this is a priority. I'm alerting the on-call technician right now with your address."], ["lead", "Thank you, really."], ["agent", "He'll call you back in the next few minutes. I'm texting you the confirmation."]], "ended": "Emergency sent to the technician ✓", "fcards": [["phone", "Emergency · Pierrefonds", "Furnace down · technician alerted"], ["googlecalendar", "Maintenance booked", "Heat pump · Thursday 10 AM"], ["sms", "Reminders sent", "Filter change · 42 clients"]], "painH": "In winter, every missed call is a client calling your competitor.", "painP": "During cold snaps the phone never stops. Your technicians are on the road, the office is swamped, and emergencies get mixed up with quote requests.", "does": ["Answers 24/7 and spots real emergencies (no heat, leak, gas smell)", "Forwards urgent calls to the on-call technician, with address and context", "Schedules annual maintenance, installations and quote visits", "Sends maintenance and filter-change reminders"], "features": [["🚨", "Emergency triage", "Safety questions, priority level and immediate hand-off to the right technician."], ["🗓️", "Seasonal maintenance", "Reminders before the season: furnaces in the fall, AC and heat pumps in the spring."], ["🧾", "Quotes", "Equipment type, square footage, photos by text: the visit is booked and the file is ready."], ["🌎", "In the client's language", "French, English, Spanish and more: every client is served in their language."]], "steps": [["The client calls", "Day, night or storm: {a} picks up in under 10 seconds."], ["{a} qualifies", "Emergency or not, equipment, address, availability."], ["The appointment is booked", "In your technicians' schedule, with text confirmation."], ["You get the summary", "Every morning: overnight emergencies, today's visits, quotes to do."]], "calc": {"l1": "Missed calls per week", "l2": "Conversion to a job", "l3": "Average job value", "v": [8, 35, 450], "r": [[0, 40, 1], [5, 80, 1], [100, 8000, 50]], "disc": "An unanswered emergency doesn't call back: it calls the next company on Google."}, "stats": [["Calls answered", "37", "this week"], ["Emergencies forwarded", "6", "avg. 4 min"], ["Visits booked", "14", "↑ 5 this week"], ["Quotes to do", "5", "complete files"]], "calls": [["Julie Tremblay", "Last night · 2:14 AM", "Furnace down, two kids. Forwarded to the on-call technician.", "hot", "Emergency visit · 7:30 AM"], ["Marc Gagnon", "Yesterday · 4:40 PM", "Quote for a wall-mounted heat pump, 1,400 sq ft house.", "warm", "Quote visit · Thursday 1 PM"], ["Nadia Roy", "Yesterday · 11:05 AM", "Annual central AC maintenance.", "new", "Maintenance booked · Oct 3, 9 AM"]], "ints": ["googlecalendar", "gmail", "google", "googlemaps", "quickbooks", "stripe", "square", "whatsapp"], "faq": [["Can {a} do a technical diagnosis?", "No. {a} asks the right questions (equipment, symptoms, safety) and passes them to the technician, never giving a diagnosis or repair instructions. If there's a gas smell, {a} asks people to leave and call 911."], ["How are emergencies sent to me?", "By your rules: direct call to the on-call technician, a text with address and summary, or both. Everything else waits for your morning briefing."], ["Is seasonal maintenance handled?", "Yes: {a} calls your clients before the season, offers slots and fills your technicians' schedule."]], "note": "<b>Safety:</b> {a} never gives a technical diagnosis. If there's a gas smell or danger, {a} asks people to leave and call 911, then alerts your team."}, "es": {"name": "Calefacción y climatización (HVAC)", "tab": "HVAC", "ic": "🔥", "aud": "las empresas de calefacción y climatización", "title": "AI Staff — Asistente con IA para empresas de calefacción y climatización (HVAC)", "desc": "Urgencias 24/7, mantenimientos de temporada, presupuestos: la asistente con IA que contesta mientras tus técnicos están en la calle.", "eyebrow": "Para empresas de HVAC de Quebec", "h1": "¿Sin calefacción a las 2 de la mañana? <em>{a} contesta.</em>", "lead": "{a} atiende urgencias 24/7, clasifica lo que no puede esperar, agenda tus mantenimientos y presupuestos — y te llama en la mañana con tu día. En francés, inglés y el idioma de tus clientes.", "trust": [["24/7", "incluso en plena ola de frío"], ["< 10 s", "para contestar"], ["Urgente", "pasado al técnico de guardia"]], "script": [["agent", "Calefacción Lavoie, buenas noches, habla {a}. ¿En qué le puedo ayudar?"], ["lead", "Mi calefactor no enciende y hace 14 grados en la casa."], ["agent", "Entiendo. ¿Siente olor a gas? ¿Hay niños o personas mayores en la casa?"], ["lead", "No huele a nada. Sí, dos niños."], ["agent", "De acuerdo, es prioritario. Aviso ahora mismo al técnico de guardia con su dirección."], ["lead", "Gracias, de verdad."], ["agent", "Él le devuelve la llamada en los próximos minutos. Le envío la confirmación por mensaje."]], "ended": "Urgencia enviada al técnico ✓", "fcards": [["phone", "Urgencia · Pierrefonds", "Calefactor averiado · técnico avisado"], ["googlecalendar", "Mantenimiento agendado", "Bomba de calor · jueves 10:00"], ["sms", "Recordatorios enviados", "Cambio de filtro · 42 clientes"]], "painH": "En invierno, cada llamada perdida es un cliente que llama a la competencia.", "painP": "Durante las olas de frío el teléfono no para. Tus técnicos están en la calle, la oficina está saturada y las urgencias se mezclan con las solicitudes de presupuesto.", "does": ["Contesta 24/7 e identifica las urgencias reales (sin calefacción, fuga, olor a gas)", "Pasa lo urgente al técnico de guardia, con la dirección y el contexto", "Agenda mantenimientos anuales, instalaciones y visitas de presupuesto", "Envía recordatorios de mantenimiento y cambio de filtro"], "features": [["🚨", "Clasificación de urgencias", "Preguntas de seguridad, nivel de prioridad y traspaso inmediato al técnico correcto."], ["🗓️", "Mantenimientos de temporada", "Recordatorios antes de la temporada: calefactores en otoño, aires y bombas de calor en primavera."], ["🧾", "Presupuestos", "Tipo de equipo, superficie, fotos por mensaje: la visita queda agendada y el expediente listo."], ["🌎", "En el idioma del cliente", "Francés, inglés, español y más: cada cliente es atendido en su idioma."]], "steps": [["El cliente llama", "De día, de noche o en tormenta: {a} contesta en menos de 10 segundos."], ["{a} califica", "Urgencia o no, tipo de equipo, dirección, disponibilidad."], ["Se agenda la cita", "En el horario de tus técnicos, con confirmación por mensaje."], ["Recibes el resumen", "Cada mañana: urgencias de la noche, visitas del día, presupuestos pendientes."]], "calc": {"l1": "Llamadas perdidas por semana", "l2": "Tasa de conversión en trabajo", "l3": "Valor promedio de un trabajo", "v": [8, 35, 450], "r": [[0, 40, 1], [5, 80, 1], [100, 8000, 50]], "disc": "Una urgencia sin respuesta no vuelve a llamar: llama a la siguiente empresa en Google."}, "stats": [["Llamadas atendidas", "37", "esta semana"], ["Urgencias enviadas", "6", "promedio 4 min"], ["Visitas agendadas", "14", "↑ 5 esta semana"], ["Presupuestos pendientes", "5", "expedientes completos"]], "calls": [["Julie Tremblay", "Anoche · 2:14", "Calefactor averiado, dos niños. Enviado al técnico de guardia.", "hot", "Visita de urgencia · 7:30"], ["Marc Gagnon", "Ayer · 16:40", "Presupuesto para una bomba de calor mural, casa de 1 400 pi².", "warm", "Visita de presupuesto · jueves 13:00"], ["Nadia Roy", "Ayer · 11:05", "Mantenimiento anual del aire acondicionado central.", "new", "Mantenimiento agendado · 3 oct. 9:00"]], "ints": ["googlecalendar", "gmail", "google", "googlemaps", "quickbooks", "stripe", "square", "whatsapp"], "faq": [["¿{a} puede hacer un diagnóstico técnico?", "No. {a} hace las preguntas correctas (equipo, síntomas, seguridad) y las pasa al técnico, sin dar nunca un diagnóstico ni instrucciones de reparación. Si hay olor a gas, {a} pide salir de la casa y llamar al 911."], ["¿Cómo me llegan las urgencias?", "Según tus reglas: llamada directa al técnico de guardia, mensaje con la dirección y el resumen, o ambos. Lo demás espera tu briefing de la mañana."], ["¿Se gestionan los mantenimientos de temporada?", "Sí: {a} llama a tus clientes antes de la temporada, ofrece horarios y llena la agenda de tus técnicos."]], "note": "<b>Seguridad:</b> {a} nunca da diagnósticos técnicos. Si hay olor a gas o peligro, {a} pide salir del lugar y llamar al 911, y luego avisa a tu equipo."}};
+const G = {"fr": {"nav.demo": "Démo", "nav.pricing": "Tarifs", "nav.faq": "FAQ", "nav.sectors": "Secteurs", "nav.cta": "📞 Parler à {a}", "nav.home": "Accueil", "hero.pick": "Choisissez votre adjointe :", "hero.cta1": "Réserver ma démo", "hero.cta2": "📞 Parler à {a}", "p.sofia": "voix féminine", "p.alex": "voix neutre", "p.tomas": "voix masculine", "phone.idle": "Appel entrant · démo", "phone.call": "▶ Écouter un appel", "phone.connecting": "{a} décroche…", "phone.live": "En ligne · appel en cours", "phone.hangup": "Raccrocher", "phone.hint": "ligne démo — appelez pour vrai", "pain.k": "Le problème", "does.k": "Ce que {a} fait pour vous", "feat.eyebrow": "Conçu pour votre métier", "feat.title": "Pensé pour {aud}.", "calc.eyebrow": "Faites le calcul", "calc.title": "Combien vous coûtent les appels manqués?", "calc.lead": "Déplacez les curseurs avec vos chiffres — l'estimation se met à jour toute seule.", "calc.cap": "de revenus potentiels manqués par mois, selon vos chiffres.", "calc.note": "Estimation indicative calculée à partir de vos propres données. Vos résultats réels dépendent de votre marché et de votre pratique.", "how.eyebrow": "Comment ça marche", "how.title": "De l'appel au rendez-vous, sans toucher votre téléphone.", "dash.eyebrow": "Ce que vous verrez chaque matin", "dash.title": "Votre tableau de bord.", "dash.lead": "Chaque appel est transcrit, résumé et suivi d'une prochaine action.", "dash.badge": "◆ Données de démonstration", "dash.more": "Voir le tableau de bord complet →", "dash.sub": "avec {a} · AI Staff Exécutive", "dash.name": "Votre entreprise", "dash.next": "Prochaine action", "int.eyebrow": "Intégrations", "int.title": "Avec les outils que vous utilisez déjà.", "int.note": "Connexions via nos automatisations sécurisées, activées selon votre plan et confirmées lors de l'appel découverte. Les marques citées appartiennent à leurs propriétaires.", "price.eyebrow": "Tarifs", "price.title": "Une fraction du prix d'une réceptionniste.", "price.lead": "Commencez par l'essentiel. Ajoutez des canaux quand vous êtes prêt.", "price.per": "/ mois", "price.feat": "Recommandé", "priceTop": ["CAD · mois par mois", "Sans contrat", "Installation gratuite au lancement"], "rollout": "Déploiement progressif : les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.", "faq.eyebrow": "Questions fréquentes", "faq.title": "Ce qu'on nous demande.", "faqGen": [["Y a-t-il un humain derrière?", "Oui. Notre équipe à Montréal configure {a} selon vos instructions et supervise son travail. Quand une demande sort du cadre prévu, {a} prend le message et un humain prend le relais."], ["Quelles langues parle {a}?", "Le français, l'anglais et l'espagnol, et bien d'autres langues selon votre plan (3, jusqu'à 5, ou toutes). {a} détecte la langue de l'appelant et répond dans la même."], ["Y a-t-il un contrat?", "Non. C'est mois par mois, sans engagement. L'installation est gratuite pendant le lancement."]], "final.title": "Le prochain appel ne doit pas se perdre.", "final.lead": "15 minutes pour voir ce que {a} ferait pour votre entreprise.", "final.cta1": "Réserver ma démo", "final.cta2": "📞 Appeler {a}", "footer.tag": "l'adjointe personnelle IA, à Montréal", "footer.line": "◆ les tableaux de bord de cette page utilisent des données d'exemple", "sticky.demo": "Réserver ma démo", "sticky.call": "📞 {a}", "prM.title": "Excellent choix", "prM.lead": "Écrivez-nous : on planifie ensemble votre appel découverte et votre activation.", "prM.cta": "Nous écrire", "prM.later": "Peut-être plus tard", "tags": {"hot": "Chaud", "warm": "Tiède", "cold": "Froid", "new": "Nouveau"}, "your": {"f": "Votre adjointe : ", "m": "Votre adjoint : ", "n": "Votre adjoint·e : "}, "plans": [{"name": "Assistante", "tag": "L'essentiel : vos appels et vos rendez-vous, pris en charge.", "price": 997, "cta": "Choisir Assistante", "feat": ["Appels 24/7", "Prise et confirmation de rendez-vous", "Réponses par texto (SMS)", "3 langues au choix (ex. FR · EN · ES)", "Tableau de bord et résumés d'appels", "1 briefing par jour au téléphone"]}, {"name": "Exécutive", "tag": "Tous vos canaux, et une adjointe qui organise votre journée.", "price": 1497, "cta": "Choisir Exécutive", "featured": true, "feat": ["Tout le plan Assistante, plus :", "WhatsApp et DM Instagram / Facebook", "Courriel unifié avec brouillons à approuver", "Jusqu'à 5 langues", "Jusqu'à 3 briefings par jour", "Appelez {a} quand vous voulez", "Appels de suivi sortants à vos clients"]}, {"name": "Dédiée", "tag": "Votre propre instance, sur mesure, avec supervision prioritaire.", "price": 2497, "cta": "Choisir Dédiée", "feat": ["Tout le plan Exécutive, plus :", "Toutes les langues disponibles", "Instance cloud privée et dédiée", "Intégrations sur mesure", "Supervision humaine prioritaire", "Ligne téléphonique locale dédiée"]}]}, "en": {"nav.demo": "Demo", "nav.pricing": "Pricing", "nav.faq": "FAQ", "nav.sectors": "Industries", "nav.cta": "📞 Talk to {a}", "nav.home": "Home", "hero.pick": "Pick your assistant:", "hero.cta1": "Book my demo", "hero.cta2": "📞 Talk to {a}", "p.sofia": "female voice", "p.alex": "neutral voice", "p.tomas": "male voice", "phone.idle": "Incoming call · demo", "phone.call": "▶ Play a call", "phone.connecting": "{a} is picking up…", "phone.live": "Live · call in progress", "phone.hangup": "Hang up", "phone.hint": "demo line — call it for real", "pain.k": "The problem", "does.k": "What {a} does for you", "feat.eyebrow": "Built for your trade", "feat.title": "Designed for {aud}.", "calc.eyebrow": "Do the math", "calc.title": "What do missed calls cost you?", "calc.lead": "Move the sliders with your numbers — the estimate updates live.", "calc.cap": "in potential revenue missed per month, based on your numbers.", "calc.note": "Indicative estimate computed from your own data. Actual results depend on your market and your practice.", "how.eyebrow": "How it works", "how.title": "From call to appointment, without touching your phone.", "dash.eyebrow": "What you'll see every morning", "dash.title": "Your dashboard.", "dash.lead": "Every call is transcribed, summarized and paired with a next action.", "dash.badge": "◆ Demo data", "dash.more": "See the full dashboard →", "dash.sub": "with {a} · AI Staff Executive", "dash.name": "Your business", "dash.next": "Next action", "int.eyebrow": "Integrations", "int.title": "With the tools you already use.", "int.note": "Connections run through our secure automations, enabled according to your plan and confirmed on the discovery call. Brands shown belong to their owners.", "price.eyebrow": "Pricing", "price.title": "A fraction of the cost of a receptionist.", "price.lead": "Start with the essentials. Add channels when you're ready.", "price.per": "/ month", "price.feat": "Recommended", "priceTop": ["CAD · month to month", "No contract", "Free setup during launch"], "rollout": "Progressive rollout: channels are enabled in phases and confirmed with you on the discovery call.", "faq.eyebrow": "FAQ", "faq.title": "What people ask us.", "faqGen": [["Is there a human behind it?", "Yes. Our team in Montréal configures {a} to your instructions and supervises the work. When a request falls outside the plan, {a} takes a message and a human takes over."], ["Which languages does {a} speak?", "French, English and Spanish, plus many more depending on your plan (3, up to 5, or all). {a} detects the caller's language and answers in it."], ["Is there a contract?", "No. It's month to month, no commitment. Setup is free during launch."]], "final.title": "The next call shouldn't be lost.", "final.lead": "15 minutes to see what {a} would do for your business.", "final.cta1": "Book my demo", "final.cta2": "📞 Call {a}", "footer.tag": "the AI personal assistant, from Montréal", "footer.line": "◆ dashboards on this page use sample data", "sticky.demo": "Book my demo", "sticky.call": "📞 {a}", "prM.title": "Great choice", "prM.lead": "Email us and we'll plan your discovery call and activation together.", "prM.cta": "Email us", "prM.later": "Maybe later", "tags": {"hot": "Hot", "warm": "Warm", "cold": "Cold", "new": "New"}, "your": {"f": "Your assistant: ", "m": "Your assistant: ", "n": "Your assistant: "}, "plans": [{"name": "Assistant", "tag": "The essentials: your calls and appointments, handled.", "price": 997, "cta": "Choose Assistant", "feat": ["24/7 calls", "Appointment booking and confirmations", "Text message (SMS) replies", "3 languages of your choice (e.g. FR · EN · ES)", "Dashboard and call summaries", "1 phone briefing per day"]}, {"name": "Executive", "tag": "Every channel, plus an assistant who runs your day.", "price": 1497, "cta": "Choose Executive", "featured": true, "feat": ["Everything in Assistant, plus:", "WhatsApp and Instagram / Facebook DMs", "Unified email with drafts to approve", "Up to 5 languages", "Up to 3 briefings per day", "Call {a} whenever you want", "Outbound follow-up calls to your clients"]}, {"name": "Dedicated", "tag": "Your own instance, custom-built, with priority supervision.", "price": 2497, "cta": "Choose Dedicated", "feat": ["Everything in Executive, plus:", "Every available language", "Private, dedicated cloud instance", "Custom integrations", "Priority human supervision", "Dedicated local phone line"]}]}, "es": {"nav.demo": "Demo", "nav.pricing": "Precios", "nav.faq": "FAQ", "nav.sectors": "Sectores", "nav.cta": "📞 Hablar con {a}", "nav.home": "Inicio", "hero.pick": "Elige tu asistente:", "hero.cta1": "Agendar mi demo", "hero.cta2": "📞 Hablar con {a}", "p.sofia": "voz femenina", "p.alex": "voz neutra", "p.tomas": "voz masculina", "phone.idle": "Llamada entrante · demo", "phone.call": "▶ Escuchar una llamada", "phone.connecting": "{a} está contestando…", "phone.live": "En línea · llamada en curso", "phone.hangup": "Colgar", "phone.hint": "línea demo — llama de verdad", "pain.k": "El problema", "does.k": "Lo que {a} hace por ti", "feat.eyebrow": "Hecho para tu oficio", "feat.title": "Pensado para {aud}.", "calc.eyebrow": "Haz la cuenta", "calc.title": "¿Cuánto te cuestan las llamadas perdidas?", "calc.lead": "Mueve los controles con tus cifras — la estimación se actualiza sola.", "calc.cap": "en ingresos potenciales perdidos al mes, según tus cifras.", "calc.note": "Estimación indicativa calculada con tus propios datos. Los resultados reales dependen de tu mercado y tu práctica.", "how.eyebrow": "Cómo funciona", "how.title": "De la llamada a la cita, sin tocar tu teléfono.", "dash.eyebrow": "Lo que verás cada mañana", "dash.title": "Tu panel.", "dash.lead": "Cada llamada queda transcrita, resumida y con una próxima acción.", "dash.badge": "◆ Datos de demostración", "dash.more": "Ver el panel completo →", "dash.sub": "con {a} · AI Staff Ejecutiva", "dash.name": "Tu negocio", "dash.next": "Próxima acción", "int.eyebrow": "Integraciones", "int.title": "Con las herramientas que ya usas.", "int.note": "Conexiones mediante nuestras automatizaciones seguras, activadas según tu plan y confirmadas en la llamada de descubrimiento. Las marcas mencionadas pertenecen a sus dueños.", "price.eyebrow": "Precios", "price.title": "Una fracción de lo que cuesta una recepcionista.", "price.lead": "Empieza con lo esencial. Agrega canales cuando estés listo.", "price.per": "/ mes", "price.feat": "Recomendado", "priceTop": ["CAD · mes a mes", "Sin contrato", "Instalación gratis en el lanzamiento"], "rollout": "Despliegue progresivo: los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.", "faq.eyebrow": "Preguntas frecuentes", "faq.title": "Lo que nos preguntan.", "faqGen": [["¿Hay un humano detrás?", "Sí. Nuestro equipo en Montreal configura a {a} según tus instrucciones y supervisa su trabajo. Si algo se sale de sus instrucciones, {a} toma el mensaje y un humano retoma."], ["¿Qué idiomas habla {a}?", "Francés, inglés y español, y muchos más según tu plan (3, hasta 5 o todos). {a} detecta el idioma de quien llama y responde en el mismo."], ["¿Hay contrato?", "No. Es mes a mes, sin compromiso. La instalación es gratis durante el lanzamiento."]], "final.title": "La próxima llamada no debería perderse.", "final.lead": "15 minutos para ver lo que {a} haría por tu negocio.", "final.cta1": "Agendar mi demo", "final.cta2": "📞 Llamar a {a}", "footer.tag": "la asistente personal con IA, desde Montreal", "footer.line": "◆ los paneles de esta página usan datos de ejemplo", "sticky.demo": "Agendar mi demo", "sticky.call": "📞 {a}", "prM.title": "Excelente elección", "prM.lead": "Escríbenos y planificamos juntos tu llamada de descubrimiento y tu activación.", "prM.cta": "Escríbenos", "prM.later": "Quizás después", "tags": {"hot": "Caliente", "warm": "Tibio", "cold": "Frío", "new": "Nuevo"}, "your": {"f": "Tu asistente: ", "m": "Tu asistente: ", "n": "Tu asistente: "}, "plans": [{"name": "Asistente", "tag": "Lo esencial: tus llamadas y tus citas, atendidas.", "price": 997, "cta": "Elegir Asistente", "feat": ["Llamadas 24/7", "Agenda y confirmación de citas", "Respuestas por SMS", "3 idiomas a elección (ej. FR · EN · ES)", "Panel y resúmenes de llamadas", "1 briefing por llamada al día"]}, {"name": "Ejecutiva", "tag": "Todos tus canales, y una asistente que organiza tu día.", "price": 1497, "cta": "Elegir Ejecutiva", "featured": true, "feat": ["Todo el plan Asistente, más:", "WhatsApp y DMs de Instagram / Facebook", "Correo unificado con borradores para aprobar", "Hasta 5 idiomas", "Hasta 3 briefings al día", "Llama a {a} cuando quieras", "Llamadas de seguimiento salientes a tus clientes"]}, {"name": "Dedicada", "tag": "Tu propia instancia, a medida, con supervisión prioritaria.", "price": 2497, "cta": "Elegir Dedicada", "feat": ["Todo el plan Ejecutiva, más:", "Todos los idiomas disponibles", "Instancia cloud privada y dedicada", "Integraciones a medida", "Supervisión humana prioritaria", "Línea telefónica local dedicada"]}]}};
+const SECTORS = {"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]};
+const LOGOS = {"gmail": ["Gmail", "EA4335", "M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"], "googlecalendar": ["Google Calendar", "4285F4", "M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557zM22.105 0h-3.289v5.184H24V1.895A1.894 1.894 0 0 0 22.105 0zm-3.289 23.5l4.684-4.684h-4.684V23.5zM0 22.105C0 23.152.848 24 1.895 24h3.289v-5.184H0v3.289z"], "googlemaps": ["Google Maps", "4285F4", "M19.527 4.799c1.212 2.608.937 5.678-.405 8.173-1.101 2.047-2.744 3.74-4.098 5.614-.619.858-1.244 1.75-1.669 2.727-.141.325-.263.658-.383.992-.121.333-.224.673-.34 1.008-.109.314-.236.684-.627.687h-.007c-.466-.001-.579-.53-.695-.887-.284-.874-.581-1.713-1.019-2.525-.51-.944-1.145-1.817-1.79-2.671L19.527 4.799zM8.545 7.705l-3.959 4.707c.724 1.54 1.821 2.863 2.871 4.18.247.31.494.622.737.936l4.984-5.925-.029.01c-1.741.601-3.691-.291-4.392-1.987a3.377 3.377 0 0 1-.209-.716c-.063-.437-.077-.761-.004-1.198l.001-.007zM5.492 3.149l-.003.004c-1.947 2.466-2.281 5.88-1.117 8.77l4.785-5.689-.058-.05-3.607-3.035zM14.661.436l-3.838 4.563a.295.295 0 0 1 .027-.01c1.6-.551 3.403.15 4.22 1.626.176.319.323.683.377 1.045.068.446.085.773.012 1.22l-.003.016 3.836-4.561A8.382 8.382 0 0 0 14.67.439l-.009-.003zM9.466 5.868L14.162.285l-.047-.012A8.31 8.31 0 0 0 11.986 0a8.439 8.439 0 0 0-6.169 2.766l-.016.018 3.665 3.084z"], "whatsapp": ["WhatsApp", "25D366", "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"], "square": ["Square", "3E4348", "M4.01 0A4.01 4.01 0 000 4.01v15.98c0 2.21 1.8 4 4.01 4.01h15.98C22.2 24 24 22.2 24 19.99V4A4.01 4.01 0 0019.99 0H4zm1.62 4.36h12.74c.7 0 1.26.57 1.26 1.27v12.74c0 .7-.56 1.27-1.26 1.27H5.63c-.7 0-1.26-.57-1.26-1.27V5.63a1.27 1.27 0 011.26-1.27zm3.83 4.35a.73.73 0 00-.73.73v5.09c0 .4.32.72.72.72h5.1a.73.73 0 00.73-.72V9.44a.73.73 0 00-.73-.73h-5.1Z"], "quickbooks": ["QuickBooks", "2CA01C", "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm.642 4.1335c.9554 0 1.7296.776 1.7296 1.7332v9.0667h1.6c1.614 0 2.9275-1.3156 2.9275-2.933 0-1.6173-1.3136-2.9333-2.9276-2.9333h-.6654V7.3334h.6654c2.5722 0 4.6577 2.0897 4.6577 4.667 0 2.5774-2.0855 4.6666-4.6577 4.6666H12.642zM7.9837 7.333h3.3291v12.533c-.9555 0-1.73-.7759-1.73-1.7332V9.0662H7.9837c-1.6146 0-2.9277 1.316-2.9277 2.9334 0 1.6175 1.3131 2.9333 2.9277 2.9333h.6654v1.7332h-.6654c-2.5725 0-4.6577-2.0892-4.6577-4.6665 0-2.5771 2.0852-4.6666 4.6577-4.6666Z"], "stripe": ["Stripe", "635BFF", "M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"], "google": ["Google", "4285F4", "M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"]};
+const PERSONAS = {sofia:{name:"Sofía",ini:"S"}, alex:{name:"Alex",ini:"A"}, tomas:{name:"Tomás",ini:"T"}};
+const GENDER = {sofia:"f", alex:"n", tomas:"m"};
+const qs = new URLSearchParams(location.search);
+let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "sofia");
+let callTimers = [];
+
+function S(){ return SEC[lang]; }
+function g(k){ return G[lang][k] !== undefined ? G[lang][k] : G.fr[k]; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function aName(){ return PERSONAS[persona].name; }
+function fill(s){ return String(s).split("{a}").join(aName()).split("{aud}").join(S().aud); }
+function money(n){ return lang==="en" ? "$"+Math.round(n).toLocaleString("en-CA") : Math.round(n).toLocaleString("fr-CA").replace(/ | /g," ")+" $"; }
+
+function avatarSVG(id){
+  const uid = "g"+id+Math.random().toString(36).slice(2,7);
+  const hair = {
+    sofia:'<path d="M18.5 33c-.6-11 5-19.5 13.5-19.5S46.2 22 45.5 33c-.3 5.5.6 10.5 2.2 14.5-4.6 2.4-10 3.4-15.7 3.4s-11.1-1-15.7-3.4c1.6-4 2.5-9 2.2-14.5z" fill="#BFD3FA"/>',
+    tomas:'',
+    alex:'<path d="M19.5 31.5c-.4-9.5 4.6-17 12.8-17 7.4 0 12.6 5.6 12.3 14.2l-.3 6.3c-1.4-2.2-2.4-5.4-2.6-8.6-4.7 2.6-11.2 3.9-17.9 3.2-.9 1.9-1.7 4.3-2 6.9-1.3-1.3-2.2-2.9-2.3-5z" fill="#BFD3FA"/>'
+  }[id];
+  const top = {
+    sofia:'<path d="M20.6 27.2c1.4-7.2 6-11.7 11.4-11.7 5.9 0 10.3 4.6 11.3 11.5-3.1-2.9-7.4-5.1-12.2-5.6-3.9 1.8-7.4 3.9-10.5 5.8z" fill="#BFD3FA"/>',
+    tomas:'<path d="M20.9 27.6c.3-7.4 5-12.3 11.2-12.3s11 4.7 11.2 12.1c-2.4-2.5-5.4-3.9-8.4-4.2-1.9 1.4-4.6 2.1-7.6 2-2.7 0-4.9.8-6.4 2.4z" fill="#BFD3FA"/>',
+    alex:'<path d="M20.4 28.6c.2-8.1 5.1-13.3 11.9-13.3 6.9 0 11.5 5 11.4 12.3-1.7-2.9-4.2-4.9-7.3-5.8-3.3 3.5-9.6 5.8-16 6.8z" fill="#BFD3FA"/>'
+  }[id];
+  const ring = id==="alex"
+    ? `<defs><linearGradient id="${uid}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E88A8A"/><stop offset=".2" stop-color="#F2B774"/><stop offset=".4" stop-color="#EFDB7C"/><stop offset=".6" stop-color="#8FCB93"/><stop offset=".8" stop-color="#7FB3EE"/><stop offset="1" stop-color="#B28FD6"/></linearGradient></defs><circle cx="32" cy="32" r="30.6" fill="none" stroke="url(#${uid}r)" stroke-width="2.6" opacity=".9"/>`
+    : "";
+  return `<svg viewBox="0 0 64 64" class="av" aria-hidden="true"><defs><linearGradient id="${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1A33"/><stop offset="1" stop-color="#2F6FE0"/></linearGradient><clipPath id="${uid}c"><circle cx="32" cy="32" r="${id==="alex"?28.6:30}"/></clipPath></defs>`+
+    `<circle cx="32" cy="32" r="${id==="alex"?28.6:30}" fill="url(#${uid})"/><g clip-path="url(#${uid}c)">${hair}<path d="M9 66c1.5-12.5 10.5-19.5 23-19.5S53.5 53.5 55 66z" fill="#EAF1FF"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#DCE7FB"/><ellipse cx="32" cy="30" rx="10.2" ry="11.4" fill="#EAF1FF"/>${top}</g>${ring}</svg>`;
+}
+
+function logoSVG(k, forceColor){
+  const L = LOGOS[k]; if(!L) return "";
+  const dark = L[1]==="000000" || L[1]==="262627" || L[1]==="3E4348";
+  const fillc = forceColor || (dark ? "currentColor" : "#"+L[1]);
+  return `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${fillc}" d="${L[2]}"/></svg>`;
+}
+const ICON = {
+  phone:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1F6FEB" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
+  globe:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1FA855" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-2.9a15.6 15.6 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4.1c.8 1.2 1.5 2.5 1.9 3.9h-3.8c.4-1.4 1.1-2.7 1.9-3.9zM4.3 14a8 8 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4H4.3zm.8 2H8c.3 1.3.8 2.5 1.4 3.6A8 8 0 0 1 5.1 16zM8 8H5.1a8 8 0 0 1 4.3-3.6C8.8 5.5 8.3 6.7 8 8zm4 11.9c-.8-1.2-1.5-2.5-1.9-3.9h3.8c-.4 1.4-1.1 2.7-1.9 3.9zm2.3-5.9H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h2.9a8 8 0 0 1-4.3 3.6zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8 8 0 0 1 0 4h-3.4z"/></svg>'
+};
+
+ICON.sms = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1F6FEB" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 6.5a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01z"/></svg>';
+const orbState = {talking:false, amp:0, mode:0, visible:true};
+function initOrb(){
+  const cv = document.getElementById("orbGL");
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let gl = null;
+  try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true,antialias:true}); }catch(e){}
+  if(!gl){ const f = document.createElement("div"); f.className = "orb-fallback"; cv.replaceWith(f); return; }
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const fs = `precision highp float;
+uniform vec2 uRes;uniform float uT;uniform float uAmp;uniform float uMode;
+float hash(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+float noise(vec3 x){vec3 i=floor(x);vec3 f=fract(x);f=f*f*(3.-2.*f);
+return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
+float fbm(vec3 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.03+vec3(1.7,9.2,3.1);a*=.5;}return v;}
+mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+vec3 rainbow(float t){return .58+.42*cos(6.2831*(t+vec3(0.,.33,.67)));}
+void main(){
+vec2 uv=(gl_FragCoord.xy-.5*uRes)/(.5*min(uRes.x,uRes.y));
+float R=.6+.012*sin(uT*1.3)+uAmp*.04;
+float d=length(uv);
+vec3 deep=vec3(.03,.09,.26),mid=vec3(.14,.40,.93),hi=vec3(.50,.82,1.);
+vec3 rim=uMode<.5?vec3(.66,.58,1.):vec3(.35,.92,.95);
+vec3 col=vec3(0.);float a=0.;
+if(d<R){
+vec2 q=uv/R;float z=sqrt(max(1.-dot(q,q),0.));vec3 n=vec3(q,z);
+vec3 p=n;p.xz*=rot(uT*.16);p.xy*=rot(uT*.06);
+float w=fbm(p*1.7+vec3(0.,0.,uT*.12));
+float f=fbm(p*2.3+w*1.7+vec3(uT*.05)+uAmp*.7);
+vec3 base=mix(deep,mid,smoothstep(.25,.7,f));
+base=mix(base,hi,smoothstep(.55,.85,f)*.85);
+vec3 L=normalize(vec3(-.45,.55,.75));
+float diff=.32+.78*max(dot(n,L),0.);
+float fres=pow(1.-z,2.2);
+vec3 rc=rim;
+if(uMode>.5&&uMode<1.5){rc=rainbow(atan(q.y,q.x)/6.2831+uT*.04);}
+float spec=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),28.);
+col=base*diff+rc*fres*.8+vec3(spec*.55)+hi*uAmp*.3*f;
+a=smoothstep(R,R-.012,d);col*=a;}
+float g=max(d-R,0.);
+float halo=exp(-g*7.)*(.45+uAmp*.55)*(1.-a);
+vec3 hc=mix(mid,hi,.4);
+if(uMode>.5&&uMode<1.5){hc=mix(hc,rainbow(atan(uv.y,uv.x)/6.2831+uT*.04),.3);}
+col+=hc*halo*.8;a=max(a,halo*.8);
+gl_FragColor=vec4(col,a);}`;
+  const sh = (type,src)=>{ const s = gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; };
+  const pr = gl.createProgram();
+  gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)){ const f = document.createElement("div"); f.className = "orb-fallback"; cv.replaceWith(f); return; }
+  gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uRes = gl.getUniformLocation(pr,"uRes"), uT = gl.getUniformLocation(pr,"uT"), uAmp = gl.getUniformLocation(pr,"uAmp"), uMode = gl.getUniformLocation(pr,"uMode");
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  function size(){
+    const dpr = Math.min(window.devicePixelRatio||1, 1.5), r = cv.getBoundingClientRect();
+    cv.width = Math.max(1, Math.round(r.width*dpr)); cv.height = Math.max(1, Math.round(r.height*dpr));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  size(); window.addEventListener("resize", size);
+  const t0 = performance.now();
+  function frame(now){
+    const t = (now - t0)/1000;
+    const target = orbState.talking ? .45 + .55*Math.abs(Math.sin(t*8.3)*Math.sin(t*3.1+1.2)) : 0;
+    orbState.amp += (target - orbState.amp) * .12;
+    gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uRes, cv.width, cv.height); gl.uniform1f(uT, t); gl.uniform1f(uAmp, orbState.amp); gl.uniform1f(uMode, orbState.mode);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    if(!reduce && orbState.visible && !document.hidden) requestAnimationFrame(frame); else orbState.paused = true;
+  }
+  orbState.resume = ()=>{ if(orbState.paused && !reduce){ orbState.paused = false; requestAnimationFrame(frame); } };
+  requestAnimationFrame(frame);
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(es=>{ orbState.visible = es[0].isIntersecting; if(orbState.visible) orbState.resume(); }).observe(cv);
+  }
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) orbState.resume(); });
+}
+/* 3D tilt of the phone following the pointer */
+function initTilt(){
+  const stage = document.getElementById("stage"), wrap = stage.querySelector(".phone-wrap"), cv = document.getElementById("orbGL");
+  if(!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
+  let raf = 0, tx = 0, ty = 0;
+  window.addEventListener("pointermove", e=>{
+    const r = stage.getBoundingClientRect();
+    tx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width/2)) / (r.width/1.2)));
+    ty = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height/2)) / (r.height/1.2)));
+    if(!raf) raf = requestAnimationFrame(()=>{
+      raf = 0;
+      wrap.style.transform = `translate(-50%,-50%) rotateY(${tx*9}deg) rotateX(${-ty*7}deg)`;
+      if(cv) cv.style.transform = `translate(calc(-50% + ${-tx*18}px), calc(-50% + ${-ty*14}px))`;
+    });
+  }, {passive:true});
+}
+
+/* reveal sections on scroll */
+function initReveal(){
+  const els = document.querySelectorAll("section.block, .band, .sr");
+  els.forEach(e=>e.classList.add("sr"));
+  if(!("IntersectionObserver" in window)){ els.forEach(e=>e.classList.add("vis")); return; }
+  const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("vis"); io.unobserve(en.target); } }), {threshold:.08, rootMargin:"0px 0px -40px 0px"});
+  els.forEach(e=>io.observe(e));
+  /* fallback for fast scrolls / anchor jumps: reveal everything above the fold line */
+  let tk = 0;
+  const sweep = ()=>{ tk = 0; const lim = window.innerHeight*1.05; els.forEach(e=>{ if(!e.classList.contains("vis") && e.getBoundingClientRect().top < lim) e.classList.add("vis"); }); };
+  window.addEventListener("scroll", ()=>{ if(!tk) tk = requestAnimationFrame(sweep); }, {passive:true});
+  window.addEventListener("hashchange", ()=>setTimeout(sweep, 60));
+  setTimeout(sweep, 300);
+}
+
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById("themeToggle");
+function paintTheme(){ themeBtn.textContent = document.documentElement.getAttribute("data-theme")==="dark" ? "☀️" : "🌙"; }
+themeBtn.addEventListener("click", ()=>{
+  const next = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("aistaff-theme", next); }catch(e){}
+  paintTheme();
+});
+paintTheme();
+
+function splitTitle(){
+  const h = document.getElementById("heroTitle"); let i = 0;
+  const walk = node=>{ [...node.childNodes].forEach(ch=>{
+    if(ch.nodeType===3){ const frag = document.createDocumentFragment();
+      ch.textContent.split(/( )/).forEach(part=>{ if(part===" "){ frag.appendChild(document.createTextNode(" ")); return; } if(!part) return;
+        const s = document.createElement("span"); s.className = "w"; s.style.setProperty("--i", i++); s.textContent = part; frag.appendChild(s); });
+      ch.replaceWith(frag);
+    } else if(ch.nodeType===1){ walk(ch); } }); };
+  walk(h);
+}
+
+function render(){
+  const s = S();
+  document.documentElement.lang = lang;
+  document.title = s.title;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v = g(el.dataset.i18n); if(typeof v === "string") el.innerHTML = fill(v); });
+  document.querySelectorAll("[data-s]").forEach(el=>{ el.innerHTML = fill(s[el.dataset.s]); });
+  document.getElementById("heroIc").textContent = SEC.fr.ic;
+  splitTitle();
+  document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
+  document.querySelectorAll(".persona").forEach(b=>b.classList.toggle("active", b.dataset.persona===persona));
+  const subj = encodeURIComponent("AI Staff — "+s.name);
+  document.querySelectorAll(".mailcta").forEach(a=>a.href = "/onboarding/?secteur="+SECTOR_ID+(lang==="fr"?"":"&lang="+lang));
+  document.getElementById("trust").innerHTML = s.trust.map(t=>`<div><div class="n">${esc(t[0])}</div><div class="l">${esc(fill(t[1]))}</div></div>`).join("");
+  document.getElementById("doesList").innerHTML = s.does.map(d=>`<li>${esc(fill(d))}</li>`).join("");
+  document.getElementById("featGrid").innerHTML = s.features.map(f=>`<div class="card feat"><div class="top"><div class="ic">${f[0]}</div></div><h3>${esc(fill(f[1]))}</h3><p>${esc(fill(f[2]))}</p></div>`).join("");
+  document.getElementById("steps").innerHTML = s.steps.map((st,i)=>`<div class="card step"><div class="num">${i+1}</div><h3>${esc(fill(st[0]))}</h3><p>${esc(fill(st[1]))}</p></div>`).join("");
+  document.getElementById("stats").innerHTML = s.stats.map(x=>`<div class="stat-tile"><div class="lbl">${esc(x[0])}</div><div class="val">${esc(x[1])}</div><div class="delta">${esc(x[2])}</div></div>`).join("");
+  const T = g("tags");
+  document.getElementById("calls").innerHTML = s.calls.map(c=>{ const ini = c[0].replace(/[^A-Za-zÀ-ÿ ]/g,"").split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "@";
+    return `<div class="call-card"><div class="who"><div class="ini" style="background:linear-gradient(135deg,#3B82F6,#1858C4)">${esc(ini)}</div><div><div class="nm">${esc(c[0])}</div><div class="mt">${esc(c[1])}</div></div><span class="tag ${c[3]}" style="margin-left:auto;">${esc(T[c[3]])}</span></div><div class="sm">${esc(fill(c[2]))}</div><div class="nx">→ ${esc(g("dash.next"))} : ${esc(fill(c[4]))}</div></div>`; }).join("");
+  document.getElementById("dashAv").innerHTML = SEC.fr.ic;
+  document.getElementById("logoGrid").innerHTML = s.ints.filter(k=>LOGOS[k]).map(k=>`<div class="logo-tile"><span class="lg">${logoSVG(k)}</span><span>${esc(LOGOS[k][0])}</span></div>`).join("");
+  const faqs = s.faq.concat(g("faqGen"));
+  document.getElementById("faqList").innerHTML = faqs.map((f,i)=>`<div class="faq-item"><button class="faq-q" data-faq="${i}" aria-expanded="false"><span>${esc(fill(f[0]))}</span><span class="pl">+</span></button><div class="faq-a" id="faq-${i}"><p>${esc(fill(f[1]))}</p></div></div>`).join("");
+  document.querySelectorAll("[data-faq]").forEach(b=>b.addEventListener("click",()=>{ const it = b.parentElement, a = document.getElementById("faq-"+b.dataset.faq), open = it.classList.toggle("open"); b.setAttribute("aria-expanded", open); a.style.maxHeight = open ? a.scrollHeight+"px" : "0"; }));
+  const note = document.getElementById("noteCard");
+  if(s.note){ note.style.display = "flex"; document.getElementById("noteText").innerHTML = fill(s.note); } else note.style.display = "none";
+  document.getElementById("priceTop").innerHTML = g("priceTop").map(x=>`<span>${esc(x)}</span>`).join("");
+  document.getElementById("priceGrid").innerHTML = g("plans").map((p,i)=>`<div class="card plan${p.featured?" featured":""}">`+(p.featured?`<span class="ribbon">⭐ ${esc(g("price.feat"))}</span>`:"")+
+    `<div class="pname">${esc(p.name)}</div><div class="ptag">${esc(p.tag)}</div><div><span class="pnum">${money(p.price)}</span> <span class="pper">${esc(g("price.per"))}</span></div>`+
+    `<ul>${p.feat.map((f,j)=>`<li class="${j===0&&i>0?"inc":""}"><span class="ck">${j===0&&i>0?"＋":"✓"}</span><span>${esc(fill(f))}</span></li>`).join("")}</ul>`+
+    `<button class="btn ${p.featured?"btn-blue":"btn-ghost"}" data-plan="${esc(p.name)}">${esc(p.cta)}</button></div>`).join("");
+  document.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{ document.getElementById("priceMailto").href = "mailto:hello@meetaistaff.com?subject="+encodeURIComponent("AI Staff — "+s.name+" — "+b.dataset.plan); document.getElementById("priceModal").classList.add("show"); }));
+  /* sectors menu + footer */
+  const list = SECTORS[lang];
+  const q = lang==="fr" ? "" : "?lang="+lang;
+  document.getElementById("ddMenu").innerHTML = `<a href="/${q}"><span>🏠</span>${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}"${x.id===SECTOR_ID?' class="cur"':""}><span>${x.ic}</span>${esc(x.name)}</a>`).join("");
+  document.getElementById("footLinks").innerHTML = `<a href="/${q}">${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("")+`<a href="/demo/${q}">Demo</a><a href="/confidentialite/${q}">${({fr:"Confidentialité",en:"Privacy",es:"Privacidad"})[lang]}</a>`;
+  document.getElementById("dashMore").href = "/demo/"+q;
+  buildCalc(); buildFcards(); resetPhone();
+}
+
+/* ---------- calculator ---------- */
+function buildCalc(){
+  const c = S().calc;
+  [1,2,3].forEach(i=>{ document.getElementById("cl"+i).textContent = c["l"+i]; const r = document.getElementById("cr"+i), rg = c.r[i-1];
+    r.min = rg[0]; r.max = rg[1]; r.step = rg[2]; if(!r.dataset.init){ r.value = c.v[i-1]; r.dataset.init = 1; } });
+  document.getElementById("calcDisc").textContent = c.disc;
+  updateCalc();
+}
+function updateCalc(){
+  const a = +document.getElementById("cr1").value, b = +document.getElementById("cr2").value, v = +document.getElementById("cr3").value;
+  document.getElementById("cv1").textContent = a;
+  document.getElementById("cv2").textContent = b+" %";
+  document.getElementById("cv3").textContent = money(v);
+  document.getElementById("calcBig").textContent = "≈ "+money(a*4.33*(b/100)*v);
+}
+["cr1","cr2","cr3"].forEach(id=>document.getElementById(id).addEventListener("input", updateCalc));
+
+/* ---------- floating cards ---------- */
+function buildFcards(){
+  document.getElementById("fcards").innerHTML = S().fcards.map((c,i)=>`<div class="fcard s${i}"><span class="fi">${ICON[c[0]]||logoSVG(c[0])}</span><span><b>${esc(fill(c[1]))}</b><span>${esc(fill(c[2]))}</span></span><span class="ok">✓</span></div>`).join("");
+  document.querySelectorAll(".fcard").forEach((c,i)=>setTimeout(()=>c.classList.add("show","bob"), 1400+i*350));
+}
+
+/* ---------- phone: a customer call for this trade ---------- */
+const callBtn = document.getElementById("callBtn"), callStatus = document.getElementById("callStatus"), transcriptEl = document.getElementById("transcript");
+const callAv = document.getElementById("callAv"), eqEl = document.getElementById("eq");
+function setTalking(on){ callAv.classList.toggle("talking", on); eqEl.classList.toggle("on", on); orbState.talking = on; }
+function resetPhone(){
+  callTimers.forEach(clearTimeout); callTimers = [];
+  transcriptEl.innerHTML = ""; setTalking(false);
+  callAv.innerHTML = avatarSVG(persona);
+  document.getElementById("phoneName").textContent = aName()+" · AI Staff";
+  orbState.mode = persona==="sofia" ? 0 : persona==="alex" ? 1 : 2;
+  callBtn.textContent = g("phone.call"); callBtn.classList.remove("hang"); callBtn.disabled = false;
+  callStatus.textContent = g("phone.idle"); callStatus.classList.remove("live");
+  callBtn.onclick = startCall;
+}
+function startCall(){
+  callBtn.disabled = true; callStatus.textContent = fill(g("phone.connecting")); transcriptEl.innerHTML = "";
+  callTimers.push(setTimeout(()=>{
+    callStatus.textContent = g("phone.live"); callStatus.classList.add("live"); setTalking(true);
+    callBtn.textContent = g("phone.hangup"); callBtn.classList.add("hang"); callBtn.disabled = false; callBtn.onclick = ()=>endCall(false);
+    const lines = S().script;
+    lines.forEach((ln,i)=>callTimers.push(setTimeout(()=>{
+      const ty = document.createElement("div"); ty.className = "typing"; if(ln[0]==="lead") ty.style.alignSelf = "flex-end";
+      ty.innerHTML = "<i></i><i></i><i></i>"; transcriptEl.appendChild(ty); transcriptEl.scrollTop = transcriptEl.scrollHeight;
+      callTimers.push(setTimeout(()=>{ ty.remove(); const d = document.createElement("div"); d.className = "bubble "+(ln[0]==="agent"?"agent":"user"); d.textContent = fill(ln[1]); transcriptEl.appendChild(d); transcriptEl.scrollTop = transcriptEl.scrollHeight; }, 850));
+    }, i*2400)));
+    callTimers.push(setTimeout(()=>endCall(true), lines.length*2400+900));
+  }, 1200));
+}
+function endCall(done){
+  callTimers.forEach(clearTimeout); callTimers = []; setTalking(false);
+  callStatus.textContent = done ? S().ended : g("phone.idle"); callStatus.classList.remove("live");
+  callBtn.textContent = g("phone.call"); callBtn.classList.remove("hang"); callBtn.disabled = false; callBtn.onclick = startCall;
+}
+
+/* ---------- controls ---------- */
+function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"sofia")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
+document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; render(); syncUrl(); }));
+document.querySelectorAll(".persona").forEach(b=>b.addEventListener("click",()=>{ persona = b.dataset.persona; render(); syncUrl(); toast(g("your")[GENDER[persona]]+aName()+" ✓"); }));
+document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));
+document.getElementById("priceLater").addEventListener("click", e=>{ e.preventDefault(); document.getElementById("priceModal").classList.remove("show"); });
+document.addEventListener("click", e=>{ const dd = document.getElementById("ddSectors"); if(dd.open && !dd.contains(e.target)) dd.open = false; });
+let toastT;
+function toast(msg){ const el = document.getElementById("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"), 2400); }
+
+document.querySelectorAll("[data-av]").forEach(el=>{ el.outerHTML = avatarSVG(el.dataset.av); });
+render();
+initOrb(); initTilt(); initReveal();
+requestAnimationFrame(()=>document.documentElement.classList.add("ready"));
+if("IntersectionObserver" in window){
+  const io = new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); setTimeout(()=>{ if(!callTimers.length && !transcriptEl.children.length) startCall(); }, 900); } }, {threshold:.6});
+  io.observe(document.querySelector(".phone"));
+}
+})();
+</script>
+</body>
+</html>

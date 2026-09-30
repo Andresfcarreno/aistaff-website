@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){try{var t=localStorage.getItem("aistaff-theme");if(!t){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();
+</script>
+<title>AI Staff — Politique de confidentialité</title>
+<meta name="description" content="Comment AI Staff recueille, utilise, conserve et protège les renseignements personnels.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230A1A33'/%3E%3Cstop offset='1' stop-color='%231F6FEB'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --navy:#0A1A33;--blue:#1F6FEB;--blue-d:#1858C4;--blue-soft:rgba(31,111,235,.1);
+  --bg:#EDF0F6;--bg-2:#E4E9F2;--card:#FFFFFF;--ink:#0B1B33;--muted:#5B6B82;--line:rgba(11,27,51,.1);
+  --green:#1FA855;--red:#D9534F;--accent-ink:#1858C4;
+  --shadow:0 10px 30px rgba(10,26,51,.08);--shadow-lg:0 24px 60px rgba(10,26,51,.14);
+}
+html[data-theme="dark"]{
+  --bg:#071120;--bg-2:#0A1830;--card:#0D1C36;--ink:#EAF0FA;--muted:#93A3BD;--line:rgba(148,178,226,.14);
+  --blue-soft:rgba(64,130,246,.16);--accent-ink:#7FA8F5;--shadow:0 10px 30px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+body::before{content:"";position:fixed;right:-200px;top:-200px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(31,111,235,.18),transparent 65%);pointer-events:none;z-index:0;}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
+.top-in{max-width:880px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:18px;}
+.brand .mk{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:800;}
+.seg{margin-left:auto;display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.seg button{border:0;background:none;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:6px 11px;border-radius:999px;cursor:pointer;}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(10,26,51,.16);}
+.tbtn{border:1px solid var(--line);background:var(--card);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:16px;color:var(--ink);}
+
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:34px 20px 100px;}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);}
+h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.03em;line-height:1.08;margin:8px 0 10px;}
+.lead{color:var(--muted);font-size:16.5px;max-width:640px;}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 24px;}
+.pill{font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:14px;}
+.card.hl{background:linear-gradient(135deg,var(--navy),#16336A);color:#EAF1FF;border:0;}
+.card.hl a{color:#9CC2FF;}
+.card h2{font-size:19px;letter-spacing:-.01em;margin-bottom:10px;display:flex;gap:10px;align-items:baseline;}
+.card h2 span{font-size:12px;font-weight:800;color:var(--accent-ink);min-width:22px;}
+.card.hl h2 span{color:#9CC2FF;}
+.card p,.card li{font-size:15px;line-height:1.65;}
+.card p+p,.card p+ul,.card ul+p{margin-top:10px;}
+.card ul{padding-left:20px;display:grid;gap:5px;}
+.card a{color:var(--accent-ink);font-weight:600;}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
+.tw{overflow-x:auto;}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.toc a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--muted);padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);}
+.toc a:hover{color:var(--accent-ink);border-color:var(--blue);}
+.foot{text-align:center;font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.7;}
+.foot a{color:inherit;}
+@media(max-width:560px){.card{padding:20px 18px;border-radius:18px;}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="/"><span class="mk">AI</span>AI Staff</a>
+    <div class="seg" id="langSeg"><button data-lang="fr" class="on">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+    <button class="tbtn" id="themeToggle" aria-label="Theme">🌙</button>
+  </div>
+</header>
+<main class="wrap">
+  <div class="eyebrow" id="eb"></div>
+  <h1 id="h1"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="meta" id="meta"></div>
+  <nav class="toc" id="toc"></nav>
+  <div id="body"></div>
+  <div class="foot">AI Staff · Montréal · <a href="mailto:hello@meetaistaff.com">hello@meetaistaff.com</a> · <a href="tel:+14388058804">+1 (438) 805-8804</a><br><a href="/" id="homeL"></a> · <a href="/onboarding/" id="obL"></a></div>
+</main>
+<script>
+(function(){
+const UPDATED = "2026-09-27";
+const RESP = "Andrés Carreño";
+const MAIL = '<a href="mailto:hello@meetaistaff.com">hello@meetaistaff.com</a>';
+const P = {
+fr:{ eb:"Loi 25 · Québec", h1:"Politique de confidentialité", lead:"Comment AI Staff recueille, utilise, conserve et protège vos renseignements personnels, et ceux des personnes qui communiquent avec nos clients.",
+ meta:["Mise à jour : 27 septembre 2026","Version 1.0","Français : version de référence"], home:"Accueil", ob:"Préparer ma démo",
+ S:[
+ ["resp","Responsable de la protection des renseignements personnels", `<p>AI Staff est une entreprise de Montréal (Québec). La personne responsable de la protection des renseignements personnels est <b>${RESP}</b>, fondateur.</p><p>Pour toute question, demande d'accès ou plainte : ${MAIL} · +1 (438) 805-8804.</p>`,1],
+ ["rec","Renseignements que nous recueillons", `<ul><li><b>Prospects</b> (formulaire de démo, courriel, appel) : nom, coordonnées, nom et type d'entreprise, services, heures, liens publics vers vos réseaux sociaux, préférences pour votre adjointe. <b>Nous ne demandons aucun mot de passe</b> à cette étape.</li><li><b>Clients</b> : renseignements de facturation, accès que vous nous autorisez (agenda, boîte courriel, réseaux) et configuration de votre adjointe.</li><li><b>Personnes qui communiquent avec nos clients</b> : numéro de téléphone, nom, contenu des appels et messages, enregistrements et transcriptions, rendez-vous. Ici, AI Staff agit comme <b>prestataire de services</b> pour le compte de notre client, qui décide des fins.</li><li><b>Site web</b> : aucun témoin (cookie) de suivi ni publicitaire. Le navigateur garde seulement votre choix de thème et, sur la page de démo, un brouillon de vos réponses (stockage local sur votre appareil).</li></ul>`],
+ ["fins","À quoi ils servent", `<ul><li>Préparer une démo personnalisée et vous contacter à ce sujet.</li><li>Fournir le service : répondre aux appels et messages, prendre des rendez-vous, préparer des résumés et des briefings.</li><li>Facturer, offrir du soutien et améliorer la configuration de <b>votre</b> adjointe.</li><li>Respecter nos obligations légales.</li></ul><p>Nous ne vendons ni ne louons aucun renseignement personnel. Nous n'utilisons pas les données de vos clients pour entraîner des modèles d'IA.</p>`],
+ ["cons","Consentement", `<p>Nous recueillons vos renseignements avec votre consentement, pour les fins indiquées au moment de la collecte. Vous pouvez retirer votre consentement en tout temps en écrivant à ${MAIL}. Les messages promotionnels (courriel, SMS) ne sont envoyés qu'avec votre consentement et contiennent toujours un moyen de désabonnement.</p><p>Nos clients s'engagent à informer leurs propres clients qu'une assistante IA répond, et que les appels peuvent être enregistrés. L'adjointe le mentionne aussi en début d'appel.</p>`],
+ ["ia","Intelligence artificielle et supervision humaine", `<p>L'adjointe utilise des modèles d'IA pour comprendre et répondre. Elle ne prend <b>aucune décision</b> ayant un effet juridique ou important sur une personne : elle prend des messages, répond aux questions prévues par le client et propose des plages horaires. Les situations sensibles ou urgentes sont transférées à un humain. L'IA peut se tromper; le client garde la supervision et peut corriger ses réponses en tout temps.</p>`],
+ ["four","Fournisseurs et communication à l'extérieur du Québec", `<p>Pour offrir le service, nous faisons appel à des fournisseurs qui peuvent traiter des renseignements à l'extérieur du Québec, principalement aux États-Unis. Avant une telle communication, nous évaluons les facteurs relatifs à la vie privée, et nous encadrons chaque fournisseur par entente écrite.</p><div class="tw"><table><tr><th>Fournisseur</th><th>Rôle</th><th>Lieu principal</th></tr><tr><td>Twilio</td><td>Téléphonie, SMS, reconnaissance et synthèse vocales</td><td>États-Unis</td></tr><tr><td>Anthropic (Claude)</td><td>Modèle de langage</td><td>États-Unis</td></tr><tr><td>Make.com</td><td>Automatisations</td><td>États-Unis</td></tr><tr><td>Supabase</td><td>Base de données du tableau de bord</td><td>États-Unis</td></tr><tr><td>Resend</td><td>Envoi de courriels</td><td>États-Unis</td></tr><tr><td>Google</td><td>Courriel et agenda (si vous le connectez)</td><td>Canada / États-Unis</td></tr><tr><td>GitHub Pages</td><td>Hébergement du site web</td><td>États-Unis</td></tr></table></div>`],
+ ["cons2","Conservation", `<ul><li><b>Demandes de démo sans suite</b> : supprimées après 12 mois.</li><li><b>Données de service</b> (appels, messages, transcriptions) : conservées pendant le contrat, puis exportables pendant 30 jours et supprimées, sauf instruction contraire écrite du client.</li><li><b>Documents comptables</b> : conservés le temps exigé par les lois fiscales.</li></ul>`],
+ ["sec","Sécurité", `<p>Accès limité aux personnes qui en ont besoin, chiffrement en transit, séparation des données par client, accès révocables en tout temps, et aucune clé ni mot de passe dans le code du site. Aucune mesure n'est parfaite : si un incident de confidentialité présente un risque de préjudice sérieux, nous en aviserons la Commission d'accès à l'information et les personnes concernées, et nous tenons un registre des incidents.</p>`],
+ ["droits","Vos droits", `<p>Vous pouvez demander d'accéder à vos renseignements, de les faire corriger, d'en obtenir une copie dans un format technologique structuré, de retirer votre consentement ou de faire cesser leur diffusion. Écrivez à ${MAIL}; nous répondons dans les 30 jours. Si vous êtes une personne ayant appelé l'un de nos clients, nous transmettrons votre demande à ce client et l'aiderons à y répondre.</p><p>Vous pouvez aussi porter plainte auprès de la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information du Québec</a>.</p>`],
+ ["mod","Modifications", `<p>Nous publierons toute modification sur cette page, avec sa date. Si un changement est important, nous aviserons nos clients par courriel.</p>`]
+ ]},
+en:{ eb:"Quebec Law 25", h1:"Privacy Policy", lead:"How AI Staff collects, uses, keeps and protects your personal information, and that of the people who contact our clients.",
+ meta:["Updated: September 27, 2026","Version 1.0","The French version prevails"], home:"Home", ob:"Prepare my demo",
+ S:[
+ ["resp","Person in charge of personal information", `<p>AI Staff is a business based in Montreal, Quebec. The person in charge of the protection of personal information is <b>${RESP}</b>, founder.</p><p>For any question, access request or complaint: ${MAIL} · +1 (438) 805-8804.</p>`,1],
+ ["rec","What we collect", `<ul><li><b>Prospects</b> (demo form, email, call): name, contact details, business name and type, services, hours, public links to your social profiles, preferences for your assistant. <b>We never ask for passwords</b> at this stage.</li><li><b>Clients</b>: billing information, access you authorize (calendar, inbox, social accounts) and your assistant's configuration.</li><li><b>People who contact our clients</b>: phone number, name, content of calls and messages, recordings and transcripts, appointments. Here, AI Staff acts as a <b>service provider</b> on behalf of our client, who decides the purposes.</li><li><b>Website</b>: no tracking or advertising cookies. Your browser only keeps your theme choice and, on the demo page, a draft of your answers (local storage on your device).</li></ul>`],
+ ["fins","How we use it", `<ul><li>Prepare a personalized demo and contact you about it.</li><li>Provide the service: answer calls and messages, book appointments, prepare summaries and briefings.</li><li>Bill, support you and improve the configuration of <b>your</b> assistant.</li><li>Meet our legal obligations.</li></ul><p>We never sell or rent personal information. We do not use your customers' data to train AI models.</p>`],
+ ["cons","Consent", `<p>We collect your information with your consent, for the purposes stated at the time of collection. You can withdraw consent at any time by writing to ${MAIL}. Promotional messages (email, SMS) are only sent with your consent and always include a way to unsubscribe.</p><p>Our clients agree to inform their own customers that an AI assistant answers and that calls may be recorded. The assistant also says so at the start of each call.</p>`],
+ ["ia","Artificial intelligence and human oversight", `<p>The assistant uses AI models to understand and respond. It makes <b>no decision</b> with a legal or significant effect on anyone: it takes messages, answers the questions the client approved and offers time slots. Sensitive or urgent situations are passed to a human. AI can make mistakes; the client keeps oversight and can correct its answers at any time.</p>`],
+ ["four","Service providers and transfers outside Quebec", `<p>To provide the service, we use providers that may process information outside Quebec, mainly in the United States. Before such a transfer, we assess the privacy factors involved, and each provider is bound by a written agreement.</p><div class="tw"><table><tr><th>Provider</th><th>Role</th><th>Main location</th></tr><tr><td>Twilio</td><td>Phone, SMS, speech recognition and synthesis</td><td>United States</td></tr><tr><td>Anthropic (Claude)</td><td>Language model</td><td>United States</td></tr><tr><td>Make.com</td><td>Automations</td><td>United States</td></tr><tr><td>Supabase</td><td>Dashboard database</td><td>United States</td></tr><tr><td>Resend</td><td>Email delivery</td><td>United States</td></tr><tr><td>Google</td><td>Email and calendar (if you connect them)</td><td>Canada / United States</td></tr><tr><td>GitHub Pages</td><td>Website hosting</td><td>United States</td></tr></table></div>`],
+ ["cons2","Retention", `<ul><li><b>Demo requests that don't proceed</b>: deleted after 12 months.</li><li><b>Service data</b> (calls, messages, transcripts): kept during the contract, then exportable for 30 days and deleted, unless the client instructs otherwise in writing.</li><li><b>Accounting records</b>: kept as long as tax laws require.</li></ul>`],
+ ["sec","Security", `<p>Access limited to people who need it, encryption in transit, data separated per client, access revocable at any time, and no keys or passwords in the website code. No measure is perfect: if a confidentiality incident presents a risk of serious injury, we will notify the Commission d'accès à l'information and the people concerned, and we keep a register of incidents.</p>`],
+ ["droits","Your rights", `<p>You can ask to access your information, have it corrected, receive a copy in a structured technological format, withdraw consent or stop its dissemination. Write to ${MAIL}; we reply within 30 days. If you called one of our clients, we will forward your request to that client and help them respond.</p><p>You can also file a complaint with the <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information du Québec</a>.</p>`],
+ ["mod","Changes", `<p>We will post any change on this page, with its date. If a change is significant, we will notify our clients by email.</p>`]
+ ]},
+es:{ eb:"Ley 25 · Quebec", h1:"Política de privacidad", lead:"Cómo AI Staff recopila, usa, conserva y protege tu información personal, y la de las personas que contactan a nuestros clientes.",
+ meta:["Actualizada: 27 de septiembre de 2026","Versión 1.0","Prevalece la versión en francés"], home:"Inicio", ob:"Preparar mi demo",
+ S:[
+ ["resp","Responsable de la protección de la información personal", `<p>AI Staff es una empresa de Montreal (Quebec). La persona responsable de la protección de la información personal es <b>${RESP}</b>, fundador.</p><p>Para cualquier pregunta, solicitud de acceso o queja: ${MAIL} · +1 (438) 805-8804.</p>`,1],
+ ["rec","Qué recopilamos", `<ul><li><b>Prospectos</b> (formulario de demo, correo, llamada): nombre, datos de contacto, nombre y tipo de negocio, servicios, horarios, enlaces públicos a tus redes, preferencias para tu asistente. <b>Nunca pedimos contraseñas</b> en esta etapa.</li><li><b>Clientes</b>: datos de facturación, accesos que autorices (agenda, correo, redes) y la configuración de tu asistente.</li><li><b>Personas que contactan a nuestros clientes</b>: teléfono, nombre, contenido de llamadas y mensajes, grabaciones y transcripciones, citas. Aquí AI Staff actúa como <b>proveedor de servicios</b> por cuenta de nuestro cliente, que decide los fines.</li><li><b>Sitio web</b>: sin cookies de seguimiento ni publicitarias. El navegador solo guarda tu tema y, en la página de demo, un borrador de tus respuestas (almacenamiento local en tu dispositivo).</li></ul>`],
+ ["fins","Para qué la usamos", `<ul><li>Preparar una demo personalizada y contactarte al respecto.</li><li>Prestar el servicio: contestar llamadas y mensajes, agendar citas, preparar resúmenes y briefings.</li><li>Facturar, dar soporte y mejorar la configuración de <b>tu</b> asistente.</li><li>Cumplir nuestras obligaciones legales.</li></ul><p>Nunca vendemos ni alquilamos información personal. No usamos los datos de tus clientes para entrenar modelos de IA.</p>`],
+ ["cons","Consentimiento", `<p>Recopilamos tu información con tu consentimiento, para los fines indicados al momento de recopilarla. Puedes retirarlo en cualquier momento escribiendo a ${MAIL}. Los mensajes promocionales (correo, SMS) solo se envían con tu consentimiento y siempre incluyen una forma de darte de baja.</p><p>Nuestros clientes se comprometen a informar a sus propios clientes que responde una asistente de IA y que las llamadas pueden grabarse. La asistente también lo dice al inicio de cada llamada.</p>`],
+ ["ia","Inteligencia artificial y supervisión humana", `<p>La asistente usa modelos de IA para entender y responder. <b>No toma decisiones</b> con efecto jurídico o importante sobre nadie: toma mensajes, responde las preguntas que el cliente aprobó y propone horarios. Las situaciones sensibles o urgentes pasan a un humano. La IA puede equivocarse; el cliente mantiene la supervisión y puede corregir sus respuestas en cualquier momento.</p>`],
+ ["four","Proveedores y transferencias fuera de Quebec", `<p>Para prestar el servicio usamos proveedores que pueden tratar información fuera de Quebec, principalmente en Estados Unidos. Antes de una transferencia así, evaluamos los factores de privacidad, y cada proveedor está sujeto a un acuerdo escrito.</p><div class="tw"><table><tr><th>Proveedor</th><th>Función</th><th>Ubicación principal</th></tr><tr><td>Twilio</td><td>Telefonía, SMS, reconocimiento y síntesis de voz</td><td>Estados Unidos</td></tr><tr><td>Anthropic (Claude)</td><td>Modelo de lenguaje</td><td>Estados Unidos</td></tr><tr><td>Make.com</td><td>Automatizaciones</td><td>Estados Unidos</td></tr><tr><td>Supabase</td><td>Base de datos del dashboard</td><td>Estados Unidos</td></tr><tr><td>Resend</td><td>Envío de correos</td><td>Estados Unidos</td></tr><tr><td>Google</td><td>Correo y agenda (si los conectas)</td><td>Canadá / Estados Unidos</td></tr><tr><td>GitHub Pages</td><td>Alojamiento del sitio</td><td>Estados Unidos</td></tr></table></div>`],
+ ["cons2","Conservación", `<ul><li><b>Solicitudes de demo que no avanzan</b>: se borran después de 12 meses.</li><li><b>Datos del servicio</b> (llamadas, mensajes, transcripciones): se conservan durante el contrato, luego se pueden exportar durante 30 días y se borran, salvo instrucción escrita del cliente.</li><li><b>Documentos contables</b>: el tiempo que exigen las leyes fiscales.</li></ul>`],
+ ["sec","Seguridad", `<p>Acceso limitado a quien lo necesita, cifrado en tránsito, datos separados por cliente, accesos revocables en cualquier momento y ninguna clave ni contraseña en el código del sitio. Ninguna medida es perfecta: si un incidente de confidencialidad presenta un riesgo de perjuicio grave, avisaremos a la Commission d'accès à l'information y a las personas afectadas, y llevamos un registro de incidentes.</p>`],
+ ["droits","Tus derechos", `<p>Puedes pedir acceso a tu información, corregirla, recibir una copia en un formato tecnológico estructurado, retirar tu consentimiento o detener su difusión. Escribe a ${MAIL}; respondemos en 30 días. Si llamaste a uno de nuestros clientes, le transmitiremos tu solicitud y le ayudaremos a responderla.</p><p>También puedes presentar una queja ante la <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener">Commission d'accès à l'information du Québec</a>.</p>`],
+ ["mod","Cambios", `<p>Publicaremos cualquier cambio en esta página, con su fecha. Si un cambio es importante, avisaremos a nuestros clientes por correo.</p>`]
+ ]}
+};
+const qs = new URLSearchParams(location.search);
+let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
+function render(){
+  const d = P[lang]; document.documentElement.lang = lang;
+  document.title = "AI Staff — " + d.h1;
+  eb.textContent = d.eb; h1.textContent = d.h1; lead.textContent = d.lead;
+  meta.innerHTML = d.meta.map(m=>`<span class="pill">${m}</span>`).join("");
+  toc.innerHTML = d.S.map(([id,h])=>`<a href="#${id}">${h}</a>`).join("");
+  body.innerHTML = d.S.map(([id,h,html,hl],i)=>`<section class="card${hl?" hl":""}" id="${id}"><h2><span>${String(i+1).padStart(2,"0")}</span>${h}</h2>${html}</section>`).join("");
+  homeL.textContent = d.home; homeL.href = "/" + (lang==="fr"?"":"?lang="+lang);
+  obL.textContent = d.ob; obL.href = "/onboarding/" + (lang==="fr"?"":"?lang="+lang);
+  document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("on", b.dataset.lang===lang));
+}
+const themeBtn = document.getElementById("themeToggle");
+function paintTheme(){ themeBtn.textContent = document.documentElement.getAttribute("data-theme")==="dark" ? "☀️" : "🌙"; }
+themeBtn.addEventListener("click", ()=>{ const n = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", n); try{ localStorage.setItem("aistaff-theme", n); }catch(e){} paintTheme(); });
+paintTheme();
+document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); history.replaceState(null,"",location.pathname+(p.toString()?"?"+p:"")+location.hash); }catch(e){} render(); }));
+render();
+})();
+</script>
+</body>
+</html>
