@@ -5,7 +5,7 @@
 // analiza la llamada y la pasa a `calls`.
 
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM } from "./prompt";
+import { SYSTEM, GREETING } from "./prompt";
 
 export interface Env {
   CALLS: DurableObjectNamespace;
