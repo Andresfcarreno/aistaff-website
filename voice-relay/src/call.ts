@@ -93,18 +93,23 @@ export function handleCall(socket: WebSocket, env: Env) {
       body: JSON.stringify({ call_sid: sid || "unknown", ...row, last_activity: new Date().toISOString() }),
     }).catch((e) => console.error("save failed", e));
 
-  // Send greeting immediately on connection
-  console.log("Sending greeting immediately on connection");
+  // Send greeting with small delay to ensure WebSocket is fully ready
+  console.log("Scheduling greeting send (100ms delay)");
   console.log("GREETING value:", GREETING.slice(0, 100));
-  try {
-    send({ type: "text", token: GREETING, last: true });
-    greetingSent = true;
-    turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
-    saveSession({ turns, lang });
-    console.log("Greeting sent and saved to session");
-  } catch (e) {
-    console.error("Failed to send immediate greeting:", e);
-  }
+  setTimeout(() => {
+    console.log("Sending greeting now");
+    try {
+      const msg = { type: "text", token: GREETING, last: true };
+      console.log("Message object:", JSON.stringify(msg).slice(0, 200));
+      send(msg);
+      greetingSent = true;
+      turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
+      saveSession({ turns, lang });
+      console.log("Greeting sent and saved to session");
+    } catch (e) {
+      console.error("Failed to send greeting:", e instanceof Error ? e.message : String(e));
+    }
+  }, 100);
 
   async function respond() {
     if (turns.filter((t) => t.role === "user").length > MAX_TURNS) {
