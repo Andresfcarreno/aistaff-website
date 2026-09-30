@@ -4,11 +4,11 @@
 - **Dueño:** Andrés Carreño, emprendedor solo en Montreal.
   - Habla ES/EN y **no habla francés**: todo el copy FR debe salir listo.
   - Quiere entregables completos, no instrucciones.
-- **Producto:** AI Staff, una asistente personal con IA (voz trilingüe FR/EN/ES sobre Vapi) más un dashboard por cliente.
+- **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude en una Edge Function de Supabase) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
   - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
-- **Stack:** Vapi (voz: ElevenLabs + Soniox + GPT-4.1), Twilio (+1 438-805-8804, línea demo), Make.com (plan Free: 2 escenarios, 1 000 ops/mes), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`) y Resend.
-  - Estado real de Make y Supabase, IDs y trampas conocidas: `docs/make-supabase.md`. Prompt del asistente de Vapi: `docs/vapi-asistente-sofia.md`.
+- **Stack:** Twilio (+1 438-805-8804, línea demo; voz Polly y reconocimiento de voz), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Function `voice`, pg_cron), Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
+  - Voz de la línea demo: `docs/voz-propia.md` (código en `supabase/functions/voice/index.ts`; el prompt de Sofía vive ahí). Make y Supabase: `docs/make-supabase.md`.
 - **Meta de negocio:** cerrar clientes de unos 1 000 $/mes. Cada tarea debe acercar a un cliente que pague.
 
 ## Estructura del sitio (estático, sin build)
@@ -61,7 +61,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - Tomás, masculina.
 - **Logos oficiales:** vienen de Simple Icons (CC0), embebidos como `LOGOS`. Outlook no está en Simple Icons, así que se usa un ícono genérico de sobre.
 - **Idiomas por plan:** Assistante 3, Exécutive hasta 5, Dédiée todas.
-  - "20+ langues" debe coincidir con lo que la configuración de Vapi (Soniox + ElevenLabs) soporte de verdad; hoy el transcriptor está solo en FR/EN/ES. Verificarlo.
+  - "20+ langues" debe coincidir con lo que la voz soporte de verdad; hoy la línea demo habla solo FR/EN/ES. Verificarlo.
 - **Dashboard:**
   - gráfica apilada por canal (con tooltip y vista de tabla) y gráfica de línea con crosshair, siguiendo la guía de dataviz;
   - vista de semana en la agenda;
@@ -88,5 +88,5 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 ## Pendientes conocidos
 - Aviso por correo de cada lead nuevo: agregar un módulo Gmail en el escenario de onboarding (ver `docs/make-supabase.md`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Pegar en Vapi el prompt de `docs/vapi-asistente-sofia.md` (Sofía, marca AI Staff, precios correctos, *Server Messages* solo `end-of-call-report`). Hoy el asistente "Alex" dice "MeetAIstaff" y cotiza 797/997/1 497 $.
-- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Vapi y Supabase; requiere un plan de pago de Make (necesita 4 escenarios) y la tabla `clients`.
+- Activar la voz propia (`docs/voz-propia.md`): poner `ANTHROPIC_API_KEY` y `TWILIO_AUTH_TOKEN` en los secretos de Supabase, liberar el número en Vapi y apuntar el webhook de voz de Twilio a la función `voice`.
+- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Conviene implementarlo con Edge Functions de Supabase (como `voice`) en vez de Make; requiere la tabla `clients`.

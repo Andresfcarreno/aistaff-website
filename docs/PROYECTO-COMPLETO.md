@@ -48,7 +48,7 @@ Nota obligatoria cerca de los precios: **« Déploiement progressif : les canaux
 ### Stack técnico del producto
 | Pieza | Uso |
 |---|---|
-| **Vapi** | Voz de la asistente (llamadas entrantes y, más adelante, briefings salientes), trilingüe FR/EN/ES. Usa ElevenLabs (voz), Soniox (transcripción) y GPT-4.1 (conversación). Prompt: `docs/vapi-asistente-sofia.md` |
+| **Voz propia** | Edge Function `voice` en Supabase: Twilio `<Gather>` (reconocimiento de voz) + Claude + `<Say>` (voces Polly), trilingüe FR/EN/ES. Reemplaza a Vapi desde el 30 sept. 2026. Detalle: `docs/voz-propia.md` |
 | **Twilio** | Números de teléfono y SMS (+1 438-805-8804 es la línea demo) |
 | **Make.com** | Automatizaciones: webhooks, orquestación de briefings, formularios |
 | **Claude API (Anthropic)** | Redacción de briefings y resúmenes |
@@ -254,7 +254,7 @@ const CONTACT_EMAIL = "hello@meetaistaff.com";
   - finalidades;
   - consentimiento y retiro;
   - IA y supervisión humana;
-  - **tabla de subcontratistas** con su ubicación: Vapi, ElevenLabs, Soniox, OpenAI, Twilio, Anthropic, Make.com, Supabase, Resend, Google y GitHub Pages;
+  - **tabla de subcontratistas** con su ubicación: Twilio, Anthropic, Make.com, Supabase, Resend, Google y GitHub Pages;
   - transferencias fuera de Quebec;
   - conservación: prospectos 12 meses; datos del servicio durante el contrato, más 30 días para exportarlos;
   - seguridad y registro de incidentes;
@@ -316,7 +316,7 @@ const CONTACT_EMAIL = "hello@meetaistaff.com";
 1. **Interés:** respuesta en menos de 1 hora hábil con el link de onboarding (plantilla A).
 2. **El prospecto llena `/onboarding/`** (unos 8 minutos).
 3. **Construcción de la demo:**
-   - se duplica el asistente de Vapi y se personaliza con su negocio;
+   - se duplica la voz de la línea demo (`supabase/functions/voice/`) y se personaliza su prompt con el negocio;
    - se muestra el dashboard con `/demo/?n=Nombre&a=sofia`;
    - se hacen 3 llamadas de prueba;
    - se envía la plantilla C.
@@ -339,7 +339,7 @@ El playbook incluye 6 plantillas de correo y SMS en FR y EN.
 
 **Documentos:** `docs/briefing-backend.md` y `backend/supabase/001_briefings.sql`.
 
-> El diseño se escribió para Retell; la voz ahora corre en **Vapi**. Equivalencias: `create-phone-call` → `POST /call` con `assistantId` y `assistantOverrides.variableValues`; webhook `call_ended` → mensaje `end-of-call-report` en el Server URL; inbound webhook → mensaje `assistant-request`; custom functions → *tools* de Vapi. Verificar en docs.vapi.ai antes de conectar.
+> El diseño se escribió para Retell. Hoy la voz es propia (Edge Function `voice`, ver `docs/voz-propia.md`): el briefing saliente se haría con la API de llamadas de Twilio apuntando a una variante de esa función, y el « modo jefe » reconociendo `From` en `owner_profiles`.
 
 - **Supabase:**
   - `owner_profiles`: teléfono del dueño, idioma, persona, horarios y `consent_at` (si está vacío, nunca se llama);
@@ -381,15 +381,15 @@ Desde entonces, cada merge a `main` publica el sitio automáticamente.
 
 1. **Publicar el sitio:** merge del PR, activar Pages y cambiar el DNS (sección 12).
 2. **Onboarding:** el webhook ya guarda en Supabase (`leads`). Falta el aviso por correo de cada lead (módulo Gmail en Make, ver `docs/make-supabase.md`) y la confirmación al prospecto.
-3. **Asistente de la línea demo en Vapi:** hoy se presenta como « Alex » de « MeetAIstaff » y cotiza precios viejos. El prompt corregido (« Sofía, l'adjointe IA d'AI Staff ») está listo en `docs/vapi-asistente-sofia.md` para pegarlo en el panel de Vapi.
+3. **Activar la voz propia de la línea demo** (`docs/voz-propia.md`): la función `voice` ya está desplegada y probada; faltan los secretos `ANTHROPIC_API_KEY` y `TWILIO_AUTH_TOKEN`, liberar el número en Vapi y apuntar el webhook de Twilio a la función.
 4. **Contratos:** completar NEQ, dirección, TPS/TVQ e interés por mora, y hacerlos revisar por un abogado de Quebec.
 5. **Obligaciones de la Ley 25** (lista en `docs/legal/LEEME.md`):
    - evaluación de factores de privacidad para los proveedores fuera de Quebec;
    - aceptar el DPA de cada proveedor;
    - registro de incidentes;
    - Supabase en la región `ca-central-1` si es posible.
-6. **Backend del briefing:** implementar la sección 11 en Supabase, Make y Vapi (necesita un plan de pago de Make y la tabla `clients`). Primero para el propio Andrés, como prueba interna.
-7. **Verificar los idiomas de Vapi:** el sitio ofrece "20+ langues" en el plan Dédiée. Hay que confirmar qué idiomas soporta de verdad la configuración de Vapi (hoy el transcriptor está solo en FR/EN/ES) y ajustar el texto si hace falta.
+6. **Backend del briefing:** implementar la sección 11 con Edge Functions de Supabase y Twilio (necesita la tabla `clients`). Primero para el propio Andrés, como prueba interna.
+7. **Idiomas:** el sitio ofrece "20+ langues" en el plan Dédiée, pero la voz de hoy habla FR/EN/ES. Twilio `<Gather>` y Polly cubren más idiomas; hay que agregarlos a la función antes de venderlo, o ajustar el texto del sitio.
 8. **`presentation.html`:** eliminada (era una página vieja no enlazada).
 9. **Videos** por nicho a partir de `docs/guiones-video.md`.
 
@@ -437,10 +437,12 @@ docs/guiones-video.md          Guiones de video por nicho
 docs/onboarding-playbook.md    Proceso comercial y plantillas
 docs/legal/                    Contratos, entente de démo y guía legal
 docs/make-supabase.md          Estado real de Make y Supabase (IDs, escenarios, trampas)
-docs/vapi-asistente-sofia.md   Prompt y configuración del asistente de Vapi
+docs/voz-propia.md             Voz propia de la línea demo (Twilio + Claude), activación y diagnóstico
+supabase/functions/voice/      Código de la Edge Function de voz
 backend/supabase/000_calls_bookings.sql   Tablas calls y bookings (aplicado)
 backend/supabase/001_briefings.sql   Esquema SQL de briefings (sin aplicar)
 backend/supabase/002_leads.sql       Tabla leads del onboarding (aplicado)
+backend/supabase/003_voice.sql       Sesiones de voz, secretos en Vault y cron de barrido (aplicado)
 marketing/flyers/              Flyers PNG/PDF y sus fuentes HTML
 tools/build_sectors.py         Generador de páginas de sector
 tools/sectors_fr.py sectors_en.py sectors_es.py generic_text.py   Contenido de sectores

@@ -1,4 +1,4 @@
-# Make + Supabase: estado real (29 sept. 2026)
+# Make + Supabase: estado real (30 sept. 2026)
 
 ## Cuentas
 | Servicio | Detalle |
@@ -11,29 +11,22 @@
 | Tabla | Para qué | SQL |
 |---|---|---|
 | `calls` | Una fila por llamada terminada en la línea demo | `backend/supabase/000_calls_bookings.sql` |
+| `voice_sessions` | Estado de cada llamada en curso (voz propia) | `backend/supabase/003_voice.sql` |
 | `bookings` | Citas ligadas a una llamada (aún sin uso) | idem |
 | `leads` | Prospectos del formulario `/onboarding/` | `backend/supabase/002_leads.sql` |
 
-`001_briefings.sql` (backend del briefing) **no está aplicado**: depende de una tabla `clients` que todavía no existe y de 4 escenarios de Make que no caben en el plan Free.
+`001_briefings.sql` (backend del briefing) **no está aplicado**: depende de una tabla `clients` que todavía no existe.
 
-## Escenario 1: "Vapi fin de llamada" (id 6450247) — activo
-```
-Vapi (end-of-call-report) ──► Webhook 2873422 ──► [filtro: message.type = end-of-call-report]
-   ──► Claude Sonnet 5.5 (analiza la transcripción, devuelve JSON)
-   ──► Parse JSON (estructura 515936) ──► Supabase: insert en calls
-```
-- **Webhook:** `https://hook.us2.make.com/5uei5v69nkb4kwmgxh9v9gakvpy8m0mw` (configurado como Server URL del asistente en Vapi).
-- **Costo:** 4 operaciones por llamada, más 1 por cada evento de Vapi que no sea `end-of-call-report`. Por eso en Vapi hay que dejar *Server Messages* solo en `end-of-call-report` (ver `docs/vapi-asistente-sofia.md`).
-- **Mapeo:** transcripción `message.artifact.transcript`, grabación `message.artifact.recordingUrl`, fechas `message.startedAt` / `message.endedAt`, duración `message.durationSeconds`, número `message.customer.number`, asistente `message.assistant.id`, id `message.call.id`.
+## Llamadas de la línea demo: ya no pasan por Make
+Desde el 30 sept. 2026, la voz es propia (Edge Function `voice` de Supabase, ver `docs/voz-propia.md`) y escribe directo en `calls`. El escenario "Vapi fin de llamada" (id 6450247) y su webhook se **borraron** de Make.
 
-### Trampas encontradas (no repetir)
-1. **Sin filtro**, cada `status-update` y `speech-update` de Vapi disparaba Claude y Supabase: 146 ejecuciones fallidas y la cola llena.
-2. **Con Sonnet 5.5, el campo `textResponse` del módulo de Claude viene vacío.** El texto está en `content[].text`. El Parse JSON usa `join(map(2.content; "text"); emptystring)` (y quita ``` por si acaso).
-3. En `end-of-call-report`, la transcripción y las fechas están en `message.*`, **no** en `message.call.*` (ahí no existen).
-4. El conector de Supabase declara todas las columnas como texto: `duration_sec` va con `toString(round(...))` y un objeto entero (`{{1}}`) en un campo de texto falla con "Validation failed for 1 parameter(s)".
-5. El módulo de Claude no acepta `thinking: disabled` con Sonnet 5.5, y `max_tokens` debe ser número.
+Lecciones de ese escenario, por si se vuelve a usar Make con Claude:
+1. Con Sonnet 5.5, el campo `textResponse` del módulo de Claude viene **vacío**; el texto está en `content[].text` (`join(map(2.content; "text"); emptystring)`).
+2. El conector de Supabase declara todas las columnas como texto: números con `toString(...)`, y un objeto entero en un campo de texto falla con "Validation failed for 1 parameter(s)".
+3. El módulo de Claude no acepta `thinking: disabled` con Sonnet 5.5, y `max_tokens` debe ser número.
+4. Filtrar siempre el tipo de evento justo después del webhook, para no gastar operaciones en eventos que no interesan.
 
-## Escenario 2: "AI Staff onboarding → Supabase leads" (id 6451758) — activo
+## Escenario de Make activo: "AI Staff onboarding → Supabase leads" (id 6451758)
 ```
 /onboarding/ (fetch no-cors, text/plain) ──► Webhook 2874072 (JSON pass-through)
    ──► [filtro: "c1": true y un email válido] ──► Supabase: insert en leads (payload)
@@ -45,7 +38,7 @@ Vapi (end-of-call-report) ──► Webhook 2873422 ──► [filtro: message.t
 
 ### Aviso por correo (pendiente, 1 clic de Andrés)
 Hoy el lead queda en Supabase, pero nadie recibe un aviso. Para recibir un correo en cada formulario:
-1. Make → escenario 2 → agregar después de Supabase un módulo **Gmail → Send an email** (conectar meetaistaff@gmail.com).
+1. Make → escenario de onboarding → agregar después de Supabase un módulo **Gmail → Send an email** (conectar meetaistaff@gmail.com).
 2. Para: hello@meetaistaff.com · Asunto: `Nouveau lead : {{2.biz_name}} ({{2.sector}})` · Cuerpo: nombre, email, teléfono, plan y `ref`, mapeados desde la salida del módulo de Supabase.
 Suma 1 operación por formulario. Resend no está conectado en Make todavía.
 
@@ -53,7 +46,7 @@ Suma 1 operación por formulario. Resend no está conectado en Make todavía.
 | Uso | Operaciones |
 |---|---|
 | Ya gastadas el 29 sept. (depuración) | ~460 |
-| Por llamada a la línea demo | 4 (≈ 14 si Vapi sigue mandando todos los eventos) |
+| Por llamada a la línea demo | 0 (ya no pasa por Make) |
 | Por formulario de onboarding | 2 (3 con aviso por Gmail) |
 
-Si se acerca el tope, Make pausa los escenarios hasta el siguiente ciclo. Un plan de pago de Make (Core o superior) quita el límite de 2 escenarios y sube las operaciones; hace falta para el backend del briefing (4 escenarios). Revisar el precio vigente en make.com/pricing.
+Si se acerca el tope, Make pausa los escenarios hasta el siguiente ciclo. Con la voz fuera de Make, el plan Free alcanza para el onboarding. Queda 1 escenario libre.

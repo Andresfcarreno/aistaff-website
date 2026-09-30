@@ -313,7 +313,7 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 
 ## Antes de publicar: checklist
 
-- [ ] **El asistente de Vapi de la línea demo debe coincidir con el anuncio.** Si el video dice "Appelez Sofía", el número +1 438-805-8804 tiene que contestar como Sofía, asistente personal, y no como "Alex, recepcionista inmobiliario". Hay dos opciones:
+- [ ] **La voz de la línea demo debe coincidir con el anuncio.** Si el video dice "Appelez Sofía", el número +1 438-805-8804 tiene que contestar como Sofía, asistente personal, y no como "Alex, recepcionista inmobiliario". Hay dos opciones:
   1. Un solo agente que se presente como "Sofía d'AI Staff".
   2. Un número demo distinto por persona.
 - [ ] Texto en pantalla en **francés** para cualquier anuncio segmentado a Quebec (Ley 96). La versión ES puede segmentarse a hispanohablantes.

@@ -1,14 +1,14 @@
--- AI Staff — llamadas de la línea demo (Vapi → Make → Supabase)
+-- AI Staff — llamadas de la línea demo (Twilio → Edge Function `voice` → Supabase)
 -- YA APLICADO en el proyecto Supabase "MEETAISTAFF BUSINESS" (vqvdmcxkkmkyxpfnxmzo, us-east-2).
 -- Este archivo documenta el esquema; es idempotente por si hay que recrearlo.
 --
 -- Nota: la columna se llama `retell_call_id` por historia, pero hoy guarda el id de
--- llamada de Vapi (`message.call.id`). No se renombra para no romper el escenario de Make.
+-- llamada de Twilio (CallSid). Las 2 primeras filas (29 sept.) son de la etapa con Vapi.
 
 create table if not exists public.calls (
   id                   uuid primary key default gen_random_uuid(),
-  retell_call_id       text unique,            -- id de llamada del proveedor de voz (Vapi)
-  agent_id             text,                   -- id del asistente de Vapi
+  retell_call_id       text unique,            -- CallSid de Twilio
+  agent_id             text,                   -- 'aistaff-voice'
   phone_number         text,                   -- número de quien llama (E.164)
   caller_name          text,                   -- extraído por Claude
   language             text,                   -- fr / en / es (Claude)
@@ -21,8 +21,8 @@ create table if not exists public.calls (
   sentiment            text,                   -- positive / neutral / negative (Claude)
   intent               text,                   -- viewing_request / info / callback / other (Claude)
   qualified            boolean default false,  -- prospecto calificado (Claude)
-  disconnection_reason text,                   -- endedReason de Vapi
-  raw_payload          jsonb,                  -- sin uso (el payload completo de Vapi pesa ~30 KB)
+  disconnection_reason text,                   -- silence / assistant-ended-call / customer-ended-call / max-duration
+  raw_payload          jsonb,                  -- sin uso
   created_at           timestamptz default now()
 );
 
