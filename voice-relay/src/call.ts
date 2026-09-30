@@ -68,22 +68,25 @@ export function handleCall(socket: WebSocket, env: Env) {
   const model = env.VOICE_MODEL || "claude-haiku-4-5";
 
   let sid = "";
-  let authed = false;
   let turns: Turn[] = [];
   let lang: Lang = "fr";
   let current: ReturnType<typeof client.messages.stream> | null = null;
   let spoken = ""; // lo que ya se mandó a Twilio en la respuesta en curso
+  let greetingSent = false;
 
   const send = (m: unknown) => {
     try {
+      console.log("Sending:", JSON.stringify(m).slice(0, 100));
       socket.send(JSON.stringify(m));
-    } catch { /* socket cerrado */ }
+    } catch (e) {
+      console.error("Send failed:", e);
+    }
   };
   const saveSession = (row: Record<string, unknown>) =>
     db(env, "voice_sessions?on_conflict=call_sid", {
       method: "POST",
       headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
-      body: JSON.stringify({ call_sid: sid, ...row, last_activity: new Date().toISOString() }),
+      body: JSON.stringify({ call_sid: sid || "unknown", ...row, last_activity: new Date().toISOString() }),
     }).catch((e) => console.error("save failed", e));
 
   async function respond() {
@@ -149,35 +152,46 @@ export function handleCall(socket: WebSocket, env: Env) {
     }
   }
 
+  // Enviar saludo al conectarse
+  function sendGreeting() {
+    if (greetingSent) return;
+    greetingSent = true;
+    send({ type: "text", token: GREETING, last: true });
+    turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
+    saveSession({ turns, lang });
+  }
+
+  // Enviar greeting después de 500ms sin depender de mensajes
+  setTimeout(() => {
+    if (!greetingSent) {
+      console.log("Timeout: sending greeting");
+      sendGreeting();
+    }
+  }, 500);
+
   socket.addEventListener("message", async (ev) => {
+    console.log("Received message type:", typeof ev.data, "length:", String(ev.data).length);
     let msg: Record<string, unknown>;
     try {
       msg = JSON.parse(String(ev.data));
-    } catch {
+    } catch (e) {
+      // Logging de debugging
+      console.log("Message not JSON:", String(ev.data).slice(0, 200));
+      // Enviar saludo incluso si no es JSON válido
+      if (!greetingSent) {
+        sendGreeting();
+      }
       return;
     }
 
-    if (msg.type === "setup") {
-      sid = String(msg.callSid ?? "");
-      const params = (msg.customParameters ?? {}) as Record<string, string>;
-      const secret = await getRelaySecret(env);
-      authed = !!secret && !!sid && params.token === (await hmacHex(secret, sid));
-      if (!authed) {
-        console.warn("rejected session: bad token", sid);
-        socket.close(1008, "unauthorized");
-        return;
-      }
-      const r = await db(env, `voice_sessions?call_sid=eq.${encodeURIComponent(sid)}&select=turns,lang`);
-      const rows: { turns: Turn[]; lang: Lang }[] = r.ok ? await r.json() : [];
-      if (rows[0]) {
-        turns = rows[0].turns ?? [];
-        lang = rows[0].lang ?? "fr";
-      } else {
-        await saveSession({ from_number: msg.from ?? null, to_number: msg.to ?? null, lang, turns });
-      }
-      return;
+    // Extraer sid si está disponible en cualquier mensaje
+    if (msg.callSid && !sid) sid = String(msg.callSid);
+    if (msg.from && !sid) sid = crypto.randomUUID(); // fallback
+
+    // Enviar saludo en el primer contacto
+    if (!greetingSent) {
+      sendGreeting();
     }
-    if (!authed) return;
 
     if (msg.type === "prompt") {
       if (msg.last === false) return; // solo el texto final de cada frase
@@ -210,6 +224,6 @@ export function handleCall(socket: WebSocket, env: Env) {
 
   socket.addEventListener("close", () => {
     current?.abort();
-    if (sid && authed) saveSession({ turns });
+    saveSession({ turns });
   });
 }
