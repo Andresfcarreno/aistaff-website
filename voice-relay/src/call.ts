@@ -76,6 +76,9 @@ export function handleCall(socket: WebSocket, env: Env) {
   let spoken = ""; // lo que ya se mandó a Twilio en la respuesta en curso
   let greetingSent = false;
 
+  // Código de voz de Twilio según el idioma de la conversación.
+  const ttsLang = () => ({ es: "es-US", fr: "fr-CA", en: "en-US" })[lang];
+
   const send = (m: unknown) => {
     try {
       const msg = JSON.stringify(m);
@@ -95,7 +98,7 @@ export function handleCall(socket: WebSocket, env: Env) {
 
   async function respond() {
     if (turns.filter((t) => t.role === "user").length > MAX_TURNS) {
-      send({ type: "text", token: "Merci beaucoup! L'équipe d'AI Staff vous recontacte. Bonne journée!", last: true });
+      send({ type: "text", lang: ttsLang(), token: "Merci beaucoup! L'équipe d'AI Staff vous recontacte. Bonne journée!", last: true });
       setTimeout(() => send({ type: "end", handoffData: JSON.stringify({ reason: "max-turns" }) }), 6000);
       return;
     }
@@ -115,11 +118,11 @@ export function handleCall(socket: WebSocket, env: Env) {
         pending = open >= 0 ? pending.slice(open) : "";
         if (out) {
           spoken += out;
-          send({ type: "text", token: out, last: false });
+          send({ type: "text", lang: ttsLang(), token: out, last: false });
         }
         if (pending.length > 12) { // no era una etiqueta: se suelta
           spoken += pending;
-          send({ type: "text", token: pending, last: false });
+          send({ type: "text", lang: ttsLang(), token: pending, last: false });
           pending = "";
         }
       }
@@ -127,9 +130,9 @@ export function handleCall(socket: WebSocket, env: Env) {
       const rest = pending.replace(/\[\[END\]\]/gi, "");
       if (rest) {
         spoken += rest;
-        send({ type: "text", token: rest, last: false });
+        send({ type: "text", lang: ttsLang(), token: rest, last: false });
       }
-      send({ type: "text", token: "", last: true });
+      send({ type: "text", lang: ttsLang(), token: "", last: true });
       const text = spoken.trim();
       const end = /\[\[END\]\]/i.test(final.content.map((b) => (b.type === "text" ? b.text : "")).join(""));
       if (text) {
@@ -150,7 +153,7 @@ export function handleCall(socket: WebSocket, env: Env) {
         en: "Sorry, I had a small problem. Could you say that again?",
         es: "Perdón, tuve un pequeño problema. ¿Me lo repite?",
       };
-      send({ type: "text", token: oops[lang], last: true });
+      send({ type: "text", lang: ttsLang(), token: oops[lang], last: true });
     } finally {
       if (current === stream) current = null;
     }
@@ -185,6 +188,8 @@ export function handleCall(socket: WebSocket, env: Env) {
       const text = String(msg.voicePrompt ?? "").trim();
       if (!text) return;
       current?.abort();
+      const heardLang = String(msg.lang ?? "").slice(0, 2).toLowerCase();
+      if (heardLang === "es" || heardLang === "fr" || heardLang === "en") lang = heardLang;
       turns.push({ role: "user", text, at: new Date().toISOString() });
       saveSession({ turns });
       await respond();

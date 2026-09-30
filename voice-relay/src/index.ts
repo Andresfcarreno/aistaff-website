@@ -6,10 +6,6 @@ import { DurableObject } from "cloudflare:workers";
 import { handleCall, type Env } from "./call";
 import { GREETING } from "./prompt";
 
-// Voz femenina de ElevenLabs (Sarah) con el modelo multilingüe rápido: velocidad_estabilidad_similitud.
-// Para cambiarla: reemplaza el ID por el de otra voz de ElevenLabs.
-const VOICE = "EXAVITQu4vr4xnSDxMaL-flash_v2_5-1.0_0.6_0.8";
-
 const esc = (v: string) =>
   v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -46,7 +42,11 @@ export default {
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
-    <ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" language="multi" transcriptionProvider="deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${VOICE}" interruptible="true" />
+    <ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" language="multi" transcriptionProvider="deepgram" speechModel="nova-3-general" ttsProvider="Google" voice="fr-CA-Chirp3-HD-Aoede" interruptible="true">
+      <Language code="fr-CA" ttsProvider="Google" voice="fr-CA-Chirp3-HD-Aoede" />
+      <Language code="es-US" ttsProvider="Google" voice="es-US-Chirp3-HD-Aoede" />
+      <Language code="en-US" ttsProvider="Google" voice="en-US-Chirp3-HD-Aoede" />
+    </ConversationRelay>
   </Connect>
 </Response>`;
 
