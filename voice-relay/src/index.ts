@@ -18,16 +18,21 @@ export class CallSession extends DurableObject<Env> {
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
+    console.log(`Request: ${req.method} ${url.pathname}`);
+
     if (url.pathname === "/health") return new Response("ok");
 
-    if (url.pathname === "/ws") {
+    // Handle both /ws and / (root) for Twilio webhook
+    if (url.pathname === "/ws" || url.pathname === "/") {
       // Twilio Conversational AI uses WebSocket for audio streaming
       if (req.headers.get("Upgrade")?.toLowerCase() === "websocket") {
+        console.log("WebSocket upgrade request received");
         const sid = url.searchParams.get("sid") || crypto.randomUUID();
         return env.CALLS.get(env.CALLS.idFromName(sid)).fetch(req);
       }
 
       // Initial HTTP POST from Twilio: respond with TwiML that connects to WebSocket
+      console.log("Twilio webhook POST - responding with TwiML");
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
