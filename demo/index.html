@@ -855,6 +855,7 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
     <div class="top-actions">
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="Mode clair / sombre"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <div class="language-switch" aria-label="Langue"><button type="button" class="on" data-ui-lang="fr">FR</button><button type="button" data-ui-lang="en">EN</button><button type="button" data-ui-lang="es">ES</button></div>
+      <button type="button" class="secondary-button" id="authBtn" style="padding:8px 12px;font-size:12px"></button>
       <div class="avatar" id="clientAv">MC</div>
     </div>
   </div>
@@ -1804,6 +1805,7 @@ let activeBrief = 0;
 let calendarCursor = new Date(2026,8,1), selectedDate = "2026-09-22";
 let slotState = null;
 let simAdded = false, simRunning = false;
+let live = null; /* datos reales de Supabase cuando hay sesión */
 const approvedMsgs = new Set();
 const chatLog = [];
 
@@ -1843,14 +1845,14 @@ function paintSim(){
 
 /* ================= OVERVIEW ================= */
 function renderOverview(){
-  const x = d();
-  document.getElementById("heroNum").textContent = simAdded ? "105" : "104";
+  const x = live ? liveOverview(d()) : d();
+  document.getElementById("heroNum").textContent = live ? String(live.week) : simAdded ? "105" : "104";
   document.getElementById("kpis").innerHTML = x.kpis.map((k,i)=>`<div class="kpi"><div class="v${k[3]?" gold":""}">${i===0&&simAdded?"42":i===2&&simAdded?"13":esc(k[0])}</div><div class="l">${esc(k[1])}</div><div class="d">${esc(k[2])}</div></div>`).join("");
   const rec = (simAdded?[x.sim.recent]:[]).concat(x.recent);
   document.getElementById("recentCalls").innerHTML = rec.map(r=>`<div class="row">${pic(r[0])}<div class="info"><div class="name">${esc(r[1])}</div><div class="meta">${F(r[2])}</div></div>${badge(r[3])}</div>`).join("");
   const v = x.visits.map(v=>`<div class="visit"><div class="vdate"><span>${esc(v[0])}</span><b>${v[1]}</b></div><div class="info"><div class="t">${esc(v[2])}</div><div class="a">${F(v[3])}</div></div>${badge(v[4])}</div>`);
-  document.getElementById("overviewVisitOne").innerHTML = v[0];
-  document.getElementById("overviewVisitTwo").innerHTML = v[1];
+  document.getElementById("overviewVisitOne").innerHTML = v[0]||"";
+  document.getElementById("overviewVisitTwo").innerHTML = v[1]||"";
   renderActivity();
 }
 function buildWave(){
@@ -1859,7 +1861,7 @@ function buildWave(){
 }
 
 /* ================= CALLS ================= */
-function allCalls(){ const c = Object.assign({}, simAdded?{jordan:d().sim.call}:{}, d().calls); return c; }
+function allCalls(){ if(live) return live.calls; const c = Object.assign({}, simAdded?{jordan:d().sim.call}:{}, d().calls); return c; }
 function renderCallList(){
   const calls = allCalls(), dirL = {in:u("dirIn"),out:u("dirOut"),missed:u("dirMissed")};
   const entries = Object.entries(calls).filter(([,c])=>callFilter==="all"||c.dir===callFilter);
@@ -1868,7 +1870,7 @@ function renderCallList(){
     `<span class="info"><span class="name">${esc(c.name)}</span><span class="meta">${dirL[c.dir]} · ${esc(c.time)} · ${esc(c.dur)}</span></span>${badge(c.tag)}</button>`).join("");
   document.querySelectorAll("#callList [data-call]").forEach(b=>b.addEventListener("click",()=>{ activeCall=b.dataset.call; renderCallList(); renderCallDetail(); }));
   const all = Object.values(calls);
-  document.getElementById("callPills").innerHTML = `<span class="status-pill"><strong>${all.filter(c=>c.dir==="in").length+30}</strong> ${u("inW")}</span><span class="status-pill"><strong>${all.filter(c=>c.dir==="out").length+9}</strong> ${u("outW")}</span><span class="status-pill"><strong>98 %</strong> ${u("answeredW")}</span>`;
+  document.getElementById("callPills").innerHTML = `<span class="status-pill"><strong>${all.filter(c=>c.dir==="in").length+(live?0:30)}</strong> ${u("inW")}</span><span class="status-pill"><strong>${all.filter(c=>c.dir==="out").length+(live?0:9)}</strong> ${u("outW")}</span><span class="status-pill"><strong>${live?Math.round(100*all.filter(c=>c.dir==="in").length/(all.length||1))+" %":"98 %"}</strong> ${u("answeredW")}</span>`;
 }
 function renderCallDetail(){
   const calls = allCalls(); if(!calls[activeCall]) activeCall = Object.keys(calls)[0];
@@ -1878,7 +1880,7 @@ function renderCallDetail(){
     `<div class="detail-head"><div class="detail-person">${pic(c.ini,44)}<div><div class="detail-name">${esc(c.name)}</div><div class="detail-number">${esc(c.num)} · ${esc(c.time)}</div></div></div><div style="display:flex;gap:8px;align-items:center">${c.tr.length?listenBtn(vt("listen"),'id="callListen"'):""}${badge(c.tag)}</div></div>`+
     `<div class="detail-stats"><div class="detail-stat"><span>${u("labDir")}</span><strong>${dirL[c.dir]}</strong></div><div class="detail-stat"><span>${u("labDur")}</span><strong>${esc(c.dur)}</strong></div><div class="detail-stat"><span>${u("labScore")}</span><strong>${esc(c.score)}</strong></div></div>`+
     `<div class="insight-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${u("labSummary")}</strong><span>${F(c.sum)}</span><strong style="margin-top:8px">${u("labNext")}</strong><span>${F(c.next)}</span></div></div>`+
-    `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3><span class="recording">${u("recording")}</span></div>${tr}</div>`;
+    `<div class="transcript"><div class="transcript-top"><h3>${u("transcript")}</h3>${live?"":`<span class="recording">${u("recording")}</span>`}</div>${tr}</div>`;
   const cl = document.getElementById("callListen");
   if(cl) cl.addEventListener("click",()=>vcOpen(vt("call")+" · "+c.name, c.time+" · "+c.dur, c.tr));
 }
@@ -2143,10 +2145,109 @@ function renderAll(){
   applyStatic(); renderOverview(); renderCallList(); renderCallDetail();
   renderMsgList(); renderMsgDetail(); renderEmailList(); renderEmailDetail();
   renderCalendar(); renderBriefings(); renderSocial(); renderContacts(); renderAssistant();
-  renderLangs(); renderIntegrations(); paintLivePill();
+  renderLangs(); renderIntegrations(); paintLivePill(); paintAuth();
   document.getElementById("chatVoiceWrap").innerHTML = listenBtn(vt("listen"),'id="chatListen"');
   document.getElementById("chatListen").onclick = ()=>{ const last = [...chatLog].reverse().find(m=>m[0]==="ai"); vcOpen(P().name+" · AI Staff", vt("chatVoice"), [["A", last ? last[1] : d().chatHello]]); };
 }
+
+/* ================= DATOS REALES (Supabase) =================
+   Inicio de sesión por enlace al correo (sin contraseñas). La clave publicable es pública por diseño:
+   lo que protege los datos es la regla RLS de Supabase (solo el correo del dueño puede leer `calls`). */
+const SB_URL = "https://vqvdmcxkkmkyxpfnxmzo.supabase.co", SB_KEY = "sb_publishable_TrK_aqIhFlEJf1XCyXpFGg_k-3bAqHf";
+const SES_KEY = "aistaff-sb-session";
+const AUTH = {
+  fr:{in:"Mes données réelles",out:"Se déconnecter",title:"Connexion",hint:"Entrez votre courriel : vous recevrez un lien de connexion, sans mot de passe.",send:"Envoyer le lien",sent:"Lien envoyé à {e}. Ouvrez-le dans ce navigateur.",err:"Impossible d'envoyer le lien.",close:"Fermer",chip:"En direct : appels réels · les autres sections sont une démo",unk:"Numéro inconnu",caller:"Appelant",more:"Actions à venir"},
+  en:{in:"My live data",out:"Sign out",title:"Sign in",hint:"Enter your email: you'll get a sign-in link, no password.",send:"Send link",sent:"Link sent to {e}. Open it in this browser.",err:"Couldn't send the link.",close:"Close",chip:"Live: real calls · other sections are a demo",unk:"Unknown number",caller:"Caller",more:"Upcoming actions"},
+  es:{in:"Mis datos reales",out:"Cerrar sesión",title:"Iniciar sesión",hint:"Escribe tu correo: recibirás un enlace de acceso, sin contraseña.",send:"Enviar enlace",sent:"Enlace enviado a {e}. Ábrelo en este navegador.",err:"No se pudo enviar el enlace.",close:"Cerrar",chip:"En vivo: llamadas reales · las demás secciones son demo",unk:"Número desconocido",caller:"Llamante",more:"Próximas acciones"}
+};
+function au(k){ return AUTH[uiLang][k]; }
+function getSes(){ try{ return JSON.parse(localStorage.getItem(SES_KEY)||"null"); }catch(e){ return null; } }
+function setSes(v){ try{ if(v) localStorage.setItem(SES_KEY, JSON.stringify(v)); else localStorage.removeItem(SES_KEY); }catch(e){} }
+function captureHash(){
+  const h = new URLSearchParams((location.hash||"").replace(/^#/,""));
+  if(!h.get("access_token")) return;
+  setSes({access_token:h.get("access_token"), refresh_token:h.get("refresh_token"), expires_at:Math.floor(Date.now()/1000)+(+h.get("expires_in")||3600)});
+  history.replaceState(null,"",location.pathname+location.search);
+}
+async function token(){
+  let s = getSes(); if(!s) return null;
+  if(s.expires_at - 60 > Date.now()/1000) return s.access_token;
+  try{
+    const r = await fetch(SB_URL+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({refresh_token:s.refresh_token})});
+    if(!r.ok) throw 0;
+    const j = await r.json();
+    s = {access_token:j.access_token, refresh_token:j.refresh_token, expires_at:Math.floor(Date.now()/1000)+(j.expires_in||3600)};
+    setSes(s); return s.access_token;
+  }catch(e){ setSes(null); return null; }
+}
+async function sb(path){
+  const t = await token(); if(!t) return null;
+  const r = await fetch(SB_URL+"/rest/v1/"+path,{headers:{apikey:SB_KEY,Authorization:"Bearer "+t}});
+  if(r.status===401){ setSes(null); return null; }
+  return r.ok ? r.json() : null;
+}
+function mapCall(r){
+  const secs = r.duration_sec||0, name = (r.caller_name||"").trim() || r.phone_number || au("unk");
+  const ini = ((r.caller_name||"").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase()) || "?";
+  const who = (r.caller_name||"").trim().split(/\s+/)[0] || au("caller");
+  const tr = String(r.transcript||"").split(/\n(?=(?:AI|User): )/).map(l=>{
+    const m = l.match(/^(AI|User): ([\s\S]*)$/); return m ? [m[1]==="AI"?"A":who, m[2].trim()] : null;
+  }).filter(x=>x&&x[1]);
+  const tag = r.qualified ? "hot" : secs===0 ? "cold" : r.sentiment==="positive" ? "warm" : "ok";
+  const when = r.started_at ? new Intl.DateTimeFormat(uiLang,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).format(new Date(r.started_at)) : "—";
+  return {ini, name, num:r.phone_number||"—", dir:secs>0?"in":"missed", time:when,
+    dur:Math.floor(secs/60)+" min "+String(secs%60).padStart(2,"0"), score:r.qualified?"✓":"—", tag,
+    sum:r.summary||"—", next:r.intent?String(r.intent).replace(/_/g," "):"—", tr};
+}
+async function loadLive(){
+  const rows = await sb("calls?select=retell_call_id,phone_number,caller_name,started_at,duration_sec,transcript,summary,sentiment,intent,qualified&order=started_at.desc.nullslast&limit=100");
+  if(!rows){ live = null; return; }
+  const calls = {}; rows.forEach(r=>{ calls[r.retell_call_id] = mapCall(r); });
+  const weekAgo = Date.now()-7*864e5, wk = rows.filter(r=>r.started_at && new Date(r.started_at).getTime()>weekAgo && (r.duration_sec||0)>0);
+  const b = await sb("bookings?select=id&created_at=gte."+new Date(weekAgo).toISOString());
+  live = {calls, week:wk.length, minutes:Math.round(wk.reduce((a,r)=>a+(r.duration_sec||0),0)/60), bookings:b?b.length:0};
+  activeCall = Object.keys(calls)[0] || activeCall;
+}
+function liveOverview(x){
+  const L = live, kp = x.kpis.map(k=>k.slice());
+  kp[0][0] = String(L.week); kp[0][2] = "";
+  kp[1][0] = "—"; kp[1][2] = "";
+  kp[2][0] = String(L.bookings); kp[2][2] = "";
+  kp[3][0] = "≈ "+L.minutes+" min"; kp[3][2] = "";
+  const recent = Object.values(L.calls).slice(0,3).map(c=>[c.ini,c.name,c.time+" · "+c.dur,c.tag]);
+  return Object.assign({}, x, {kpis:kp, recent, visits:[]});
+}
+function paintAuth(){
+  const btn = document.getElementById("authBtn"); if(!btn) return;
+  btn.textContent = live ? au("out") : au("in");
+  const sim = document.getElementById("simulateCall"); if(sim && live) sim.style.display = "none";
+  if(live){ const c = document.querySelector(".demo-chip"); if(c) c.textContent = au("chip"); }
+}
+function authModal(){
+  let m = document.getElementById("authModal"); if(m) m.remove();
+  m = document.createElement("div"); m.id = "authModal";
+  m.style.cssText = "position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;";
+  m.innerHTML = `<div style="background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:22px;max-width:380px;width:100%"><h3 style="margin:0 0 6px">${esc(au("title"))}</h3><p style="margin:0 0 12px;color:var(--muted);font-size:13px">${esc(au("hint"))}</p><input id="authEmail" type="email" autocomplete="email" placeholder="email@…" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit"><div id="authMsg" style="min-height:18px;margin:8px 0;font-size:12px;color:var(--muted)"></div><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="secondary-button" id="authClose">${esc(au("close"))}</button><button type="button" class="primary-button" id="authSend">${esc(au("send"))}</button></div></div>`;
+  document.body.appendChild(m);
+  const msg = document.getElementById("authMsg");
+  m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  document.getElementById("authClose").onclick = ()=>m.remove();
+  document.getElementById("authSend").onclick = async ()=>{
+    const email = document.getElementById("authEmail").value.trim(); if(!email) return;
+    try{
+      const r = await fetch(SB_URL+"/auth/v1/otp?redirect_to="+encodeURIComponent(location.origin+location.pathname),{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({email, create_user:true})});
+      msg.textContent = r.ok ? au("sent").replace("{e}",email) : au("err");
+    }catch(e){ msg.textContent = au("err"); }
+  };
+  document.getElementById("authEmail").focus();
+}
+document.getElementById("authBtn").addEventListener("click",()=>{
+  if(live){ setSes(null); live = null; renderAll(); }
+  else authModal();
+});
+captureHash();
+if(getSes()) loadLive().then(()=>renderAll()).catch(()=>{});
+
 buildWave();
 renderAll();
 initMiniNebula();
