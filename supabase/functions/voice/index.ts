@@ -18,7 +18,11 @@ const BASE = `${SUPABASE_URL}/functions/v1/voice`;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ??
   (JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") ?? "{}").default as string);
 
-const MODEL = Deno.env.get("VOICE_MODEL") ?? "claude-opus-5-5";
+// Conversación: el modelo más rápido (latencia al teléfono). Análisis final: más capaz, sin prisa.
+const MODEL = Deno.env.get("VOICE_MODEL") ?? "claude-haiku-4-5";
+const ANALYSIS_MODEL = Deno.env.get("ANALYSIS_MODEL") ?? "claude-opus-5-5";
+// Misma voz (mismo timbre) en los tres idiomas: Google Chirp3-HD vía Twilio <Say>.
+const VOICE_NAME = Deno.env.get("VOICE_NAME") ?? "Aoede";
 const MAX_TURNS = 40;
 const MAX_CALL_MS = 15 * 60 * 1000;
 
@@ -38,16 +42,16 @@ type Session = {
 };
 
 const VOICE: Record<Lang, { voice: string; code: string }> = {
-  fr: { voice: "Polly.Gabrielle-Neural", code: "fr-CA" },
-  en: { voice: "Polly.Joanna-Neural", code: "en-US" },
-  es: { voice: "Polly.Lupe-Neural", code: "es-US" },
+  fr: { voice: `Google.fr-CA-Chirp3-HD-${VOICE_NAME}`, code: "fr-CA" },
+  en: { voice: `Google.en-US-Chirp3-HD-${VOICE_NAME}`, code: "en-US" },
+  es: { voice: `Google.es-US-Chirp3-HD-${VOICE_NAME}`, code: "es-US" },
 };
 
 const TXT = {
   greeting: {
-    fr: "Bonjour! Ici Sofía, l'adjointe IA d'AI Staff. Cet appel est transcrit pour mieux vous servir. Comment puis-je vous aider?",
-    en: "Hi! This is Sofía, AI Staff's AI assistant. This call is transcribed so we can serve you better. How can I help you?",
-    es: "¡Hola! Soy Sofía, la asistente con IA de AI Staff. Esta llamada se transcribe para atenderle mejor. ¿En qué puedo ayudarle?",
+    fr: "Bonjour! Ici Sofía, l'adjointe IA d'AI Staff. Cet appel est transcrit. Comment puis-je vous aider?",
+    en: "Hi! This is Sofía, AI Staff's AI assistant. This call is transcribed. How can I help you?",
+    es: "¡Hola! Soy Sofía, la asistente con IA de AI Staff. Esta llamada se transcribe. ¿En qué le puedo ayudar?",
   },
   still: {
     fr: "Vous êtes toujours là?",
@@ -82,7 +86,7 @@ You are speaking on the phone. Your reply is read aloud by a text-to-speech voic
 - The caller's words come from speech recognition and may contain errors; if something is unclear, ask them to repeat.
 
 LANGUAGE
-- The call started in French (Quebec). Reply in the caller's language (French, English or Spanish) and never mix languages in one sentence.
+- The call started in French (Quebec) and you said you also speak English and Spanish. Speech recognition is multilingual: from the caller's very first words, reply in the language they speak (French, English or Spanish). Never mix languages in one sentence.
 - When you switch language, start your reply with the tag [[LANG:en]], [[LANG:es]] or [[LANG:fr]] (nothing before it). Only use the tag when switching.
 
 HONESTY (non-negotiable)
@@ -173,8 +177,9 @@ function say(text: string, lang: Lang) {
   return `<Say voice="${v.voice}" language="${v.code}">${esc(text)}</Say>`;
 }
 
-function gather(inner: string, lang: Lang, digits = false) {
-  return `<Gather input="${digits ? "speech dtmf" : "speech"}"${digits ? ' numDigits="1"' : ""} language="${VOICE[lang].code}" speechTimeout="auto" timeout="6" bargeIn="true" actionOnEmptyResult="true" method="POST" action="${esc(`${BASE}?step=turn`)}">${inner}</Gather>`;
+// Reconocimiento multilingüe (Deepgram Nova-3, language="multi"): detecta FR/EN/ES solo.
+function gather(inner: string) {
+  return `<Gather input="speech" speechModel="deepgram_nova-3" language="multi" speechTimeout="auto" timeout="6" bargeIn="true" actionOnEmptyResult="true" method="POST" action="${esc(`${BASE}?step=turn`)}">${inner}</Gather>`;
 }
 
 const twiml = (body: string) =>
@@ -219,13 +224,10 @@ async function reply(s: Session): Promise<{ text: string; lang: Lang; end: boole
   if (!c) throw new Error("ANTHROPIC_API_KEY missing");
   const first = s.turns.findIndex((t) => t.role === "user");
   const messages = s.turns.slice(first).map((t) => ({ role: t.role, content: t.text }));
-  const res = await c.beta.messages.create({
+  const res = await c.messages.create({
     model: MODEL,
-    max_tokens: 1024,
-    output_config: { effort: "low" },
-    betas: ["server-side-fallback-2026-07-01"],
-    fallbacks: "default",
-    system: `${SYSTEM}\n\nYou opened the call with: "${TXT.greeting.fr}"`,
+    max_tokens: 300,
+    system: `${SYSTEM}\n\nYou opened the call with: "${GREETING}"`,
     messages,
   });
   if (res.stop_reason === "refusal") throw new Error("refusal");
@@ -242,9 +244,11 @@ async function reply(s: Session): Promise<{ text: string; lang: Lang; end: boole
   return { text, lang, end };
 }
 
+const GREETING = `${TXT.greeting.fr} I also speak English. También hablo español.`;
+
 async function onIncoming(p: URLSearchParams) {
   const sid = p.get("CallSid")!;
-  const greeting = TXT.greeting.fr;
+  const greeting = GREETING;
   await saveSession({
     call_sid: sid,
     from_number: p.get("From"),
@@ -254,7 +258,7 @@ async function onIncoming(p: URLSearchParams) {
     silences: 0,
   });
   return twiml(
-    gather(say(greeting, "fr") + say("For English, press 2.", "en") + say("Para español, marque 3.", "es"), "fr", true) +
+    gather(say(TXT.greeting.fr, "fr") + say("I also speak English.", "en") + say("También hablo español.", "es")) +
       `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`,
   );
 }
@@ -267,17 +271,7 @@ async function onTurn(p: URLSearchParams) {
     s = (await getSession(sid))!;
   }
   const now = new Date().toISOString();
-  const digit = p.get("Digits");
   const speech = (p.get("SpeechResult") ?? "").trim();
-
-  // Elección de idioma con el teclado
-  if (digit === "2" || digit === "3" || (digit === "1" && s.lang !== "fr")) {
-    const lang: Lang = digit === "2" ? "en" : digit === "3" ? "es" : "fr";
-    const g = TXT.greeting[lang];
-    s.turns.push({ role: "assistant", text: g, at: now });
-    await saveSession({ call_sid: sid, lang, turns: s.turns, silences: 0 });
-    return twiml(gather(say(g, lang), lang) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
-  }
 
   // Silencio
   if (!speech) {
@@ -289,7 +283,7 @@ async function onTurn(p: URLSearchParams) {
       return twiml(say(TXT.bye[s.lang], s.lang) + "<Hangup/>");
     }
     await saveSession({ call_sid: sid, silences });
-    return twiml(gather(say(TXT.still[s.lang], s.lang), s.lang) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
+    return twiml(gather(say(TXT.still[s.lang], s.lang)) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
   }
 
   s.turns.push({ role: "user", text: speech, at: now });
@@ -310,16 +304,17 @@ async function onTurn(p: URLSearchParams) {
     console.error("reply failed", e);
     s.turns.pop(); // se repite la pregunta en el siguiente turno
     await saveSession({ call_sid: sid, silences: 0 });
-    return twiml(gather(say(TXT.oops[s.lang], s.lang), s.lang) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
+    return twiml(gather(say(TXT.oops[s.lang], s.lang)) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
   }
 
   s.turns.push({ role: "assistant", text: r.text, at: new Date().toISOString() });
-  await saveSession({ call_sid: sid, lang: r.lang, turns: s.turns, silences: 0, ended: r.end });
+  const saved = saveSession({ call_sid: sid, lang: r.lang, turns: s.turns, silences: 0, ended: r.end });
   if (r.end) {
-    EdgeRuntime.waitUntil(finalize(sid, "assistant-ended-call"));
+    EdgeRuntime.waitUntil(saved.then(() => finalize(sid, "assistant-ended-call")));
     return twiml(say(r.text, r.lang) + "<Hangup/>");
   }
-  return twiml(gather(say(r.text, r.lang), r.lang) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
+  EdgeRuntime.waitUntil(saved);
+  return twiml(gather(say(r.text, r.lang)) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
 }
 
 // ---------------------------------------------------------------- fin de llamada
@@ -348,7 +343,7 @@ async function finalize(sid: string, reason?: string) {
       const c = await claude();
       if (c) {
         const res = await c.beta.messages.create({
-          model: MODEL,
+          model: ANALYSIS_MODEL,
           max_tokens: 2048,
           output_config: { effort: "low", format: { type: "json_schema", schema: ANALYSIS_SCHEMA } },
           betas: ["server-side-fallback-2026-07-01"],
