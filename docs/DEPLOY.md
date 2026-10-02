@@ -38,11 +38,12 @@ Netlify **ya no se usa** (los deploys estaban pausados por créditos). El sitio 
 
 ## Parámetros de URL útiles (para anuncios y videos)
 
-| Parámetro | Ejemplo | Efecto |
-|---|---|---|
-| `lang` | `?lang=es` | Idioma (fr por defecto, en, es) |
-| `a` | `?a=alex` | Persona: `sofia` (por defecto), `alex`, `tomas` |
-| `niche` | `?niche=cvc` | Pestaña "Pour qui" preseleccionada: `immobilier`, `cvc`, `paysagement`, `deneigement`, `garages`, `nettoyage`, `barbiers`, `dental` (o `dentiste`), `metiers`, `pro`, `createur`, `maison` |
-| `n` | `?n=Julie` | Nombre del visitante en el briefing y el dashboard |
+| Parámetro | Dónde | Ejemplo | Efecto |
+|---|---|---|---|
+| `lang` | todas las páginas | `?lang=es` | Idioma (fr por defecto, en, es) |
+| `a` | home, sectores, dashboard | `?a=alex` | Persona: `sofia` (por defecto), `alex`, `tomas` |
+| `n` | dashboard | `?n=Julie` | Nombre del visitante en el dashboard de demo |
+| `secteur` | `/onboarding/` | `?secteur=cvc` | Sector preseleccionado en el formulario |
+| `ref` | `/onboarding/` | `?ref=flyer` | Origen del prospecto (viaja con sus respuestas) |
 
 En `/demo/` funcionan `lang`, `a` y `n`, y además `#briefings`, `#messages`, etc. `/demo/?v=immobilier` redirige a la versión inmobiliaria.
