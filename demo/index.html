@@ -2200,8 +2200,10 @@ function mapCall(r){
     sum:r.summary||"—", next:r.intent?String(r.intent).replace(/_/g," "):"—", tr};
 }
 async function loadLive(){
-  const rows = await sb("calls?select=retell_call_id,phone_number,caller_name,started_at,duration_sec,transcript,summary,sentiment,intent,qualified&order=started_at.desc.nullslast&limit=100");
+  let rows = await sb("calls?select=retell_call_id,phone_number,caller_name,started_at,duration_sec,transcript,summary,sentiment,intent,qualified&order=started_at.desc.nullslast&limit=100");
   if(!rows){ live = null; return; }
+  // Se ocultan las llamadas vacías: nadie habló (solo el saludo o nada de transcripción).
+  rows = rows.filter(r=>/(^|\n)User: \S/.test(String(r.transcript||"")));
   const calls = {}; rows.forEach(r=>{ calls[r.retell_call_id] = mapCall(r); });
   const weekAgo = Date.now()-7*864e5, wk = rows.filter(r=>r.started_at && new Date(r.started_at).getTime()>weekAgo && (r.duration_sec||0)>0);
   const b = await sb("bookings?select=id&created_at=gte."+new Date(weekAgo).toISOString());
