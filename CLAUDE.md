@@ -84,8 +84,12 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - `marketing/flyers/`: flyers carta (PNG 3x + PDF) y cuadrados 1080 (FR/EN, general e immobilier). Los QR llevan a `/onboarding/?ref=flyer`.
   - Regenerar: `NODE_PATH=<node_modules con playwright+qrcode> node tools/flyers/build.js`.
 
+## Línea demo adaptable (diseñada, sin implementar)
+- `docs/demo-agent-retell.md`: flujo, prompt y nodos del agente de Retell que pregunta por el negocio de quien llama y luego actúa como su asistente; envía el enlace a `/onboarding/` por SMS (solo con consentimiento verbal). Incluye el escenario de Make y el plan por fases.
+- `backend/supabase/002_demo_calls.sql`: tabla `demo_calls` (RLS sin políticas, solo service role; borrado a los 12 meses).
+
 ## Pendientes conocidos
 - Pegar la URL del webhook de Make en `onboarding/index.html` (`ONBOARDING_WEBHOOK`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía".
+- Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía". El prompt nuevo está en `docs/demo-agent-retell.md`.
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
