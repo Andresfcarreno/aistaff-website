@@ -1,6 +1,6 @@
 # Playbook de onboarding: del "me interesa" al cliente que paga
 
-Objetivo: que un prospecto pase de **"me interesa"** a **cliente activo a 997–2 497 $/mes**, con el menor trabajo posible de tu lado y sin prometer nada que no esté listo.
+Objetivo: que un prospecto pase de **"me interesa"** a **cliente activo a 397–797 $/mes + impuestos**, con el menor trabajo posible de tu lado y sin prometer nada que no esté listo.
 
 ```
 1. Interés → 2. Link /onboarding/ → 3. Demo construida → 4. Llamada de descubrimiento
@@ -47,7 +47,7 @@ Guion:
 1. **2 min.** Qué le quita el sueño (llamadas perdidas, noches, idiomas).
 2. **8 min.** Que llame a la demo en vivo, delante de ti. Luego enséñale el dashboard.
 3. **5 min.** Qué canales se activan hoy (llamadas, SMS, agenda) y cuáles **por fases**. Sé claro: *"Déploiement progressif : les canaux s'activent par phases et sont confirmés lors de l'appel découverte."*
-4. **5 min.** Plan y precio. Recomienda Exécutive (1 497 $) si tiene más de 1 empleado o recibe más de 20 llamadas por semana. No uses estadísticas sin fuente. El costo de una asistente humana es una **estimación** (≈ 3 500–4 500 $/mes).
+4. **5 min.** Plan y precio. Empieza por el plan **Pro (597 $)** si usa WhatsApp o quiere que Sofía lo llame; si solo necesita llamadas, SMS y agenda, el **Esencial (397 $)**; si además vive de Instagram y Facebook, el **Completo (797 $)**. No uses estadísticas sin fuente. El costo de una asistente humana es una **estimación** (≈ 3 500–4 500 $/mes).
 5. **3 min.** Número: ¿transferir el suyo, uno nuevo o desvío? (ver sección 6).
 6. **Cierre:** "¿Te mando el contrato hoy?" Llena el **Anexo A** con él en la llamada.
 

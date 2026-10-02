@@ -14,7 +14,7 @@
 | Primeros clientes: contactos propios, 30 días constantes, publicando en su perfil personal | Entra al playbook como "Fase 0" (sección 6) | Documentado aquí |
 | Cámara de comercio local y referidos | Entra al playbook (sección 6) | Documentado aquí |
 | Garantía de 30 días | **Decisión tuya.** Hoy el contrato dice que no se reembolsa el mes empezado. Si la quieres, hay que cambiar el art. 8.2, el sitio y los flyers, y que lo vea el abogado. | Pendiente de decidir |
-| Precio plano de 297 $ + 1 centavo por minuto | **No aplica.** Ellos venden a agencias; nosotros vendemos una asistente personal hecha a medida desde 997 $. Se mantiene nuestro modelo. | Descartado |
+| Precio plano de 297 $ + 1 centavo por minuto | **No aplica.** Ellos venden a agencias; nosotros vendemos una asistente personal hecha a medida desde 397 $. Se mantiene nuestro modelo. | Descartado |
 | "Es como un humano que nunca tiene un mal día" y "contesta varias llamadas a la vez" | Útil como argumento, pero **hay que comprobar el límite de llamadas simultáneas de Retell** antes de prometerlo en el sitio. Y siempre con honestidad: la IA puede equivocarse. | Verificar |
 
 ## 2. Flujo de la llamada
@@ -69,7 +69,7 @@ REGLAS FIJAS
 - No des consejo médico, legal, financiero ni de corretaje inmobiliario. Si te lo piden, di que eso lo responde el profesional y ofrece tomar el mensaje.
 - Si hay una emergencia, di que marquen el 911.
 - Nunca pidas contraseñas, números de tarjeta ni datos de acceso.
-- Precios de AI Staff, solo si te los piden: desde 997 $ al mes, mes a mes, sin contrato; los canales se activan por fases y se confirman en la llamada de descubrimiento. No prometas plazos.
+- Precios de AI Staff, solo si te los piden: desde 397 $ al mes más impuestos, mes a mes, sin contrato; los canales se activan por fases y se confirman en la llamada de descubrimiento. No prometas plazos.
 - No prometas resultados ni cifras de ahorro.
 
 FASE 1: DESCUBRIMIENTO (máximo 90 segundos)

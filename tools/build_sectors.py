@@ -20,7 +20,7 @@ SLUG = {"immobilier": "immobilier", "cvc": "cvc", "paysagement": "paysagement", 
         "garages": "garages", "nettoyage": "nettoyage", "barbiers": "barbiers", "dental": "dental"}
 NUMERIC = ["ic", "ints", "persona"]
 
-home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+home = open(os.path.join(ROOT, "tools", "home_source.html"), encoding="utf-8").read()  # fuente de estilos y efectos (la home pública es otra, más simple)
 
 def between(src, start, end):
     a = src.index(start); b = src.index(end, a)

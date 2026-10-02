@@ -109,9 +109,9 @@ const body = [
 ["h", "1. Plan choisi (cocher)"],
 ["table", [
   ["", "Plan", "Prix / mois", "Comprend"],
-  ["☐", "**Assistante**", "997 $", "Appels et SMS 24/7, prise de rendez-vous, tableau de bord, jusqu'à 3 langues"],
-  ["☐", "**Exécutive** (recommandé)", "1 497 $", "Tout Assistante + suivis, briefings, canaux supplémentaires par phases, jusqu'à 5 langues"],
-  ["☐", "**Dédiée**", "2 497 $", "Tout Exécutive + configuration sur mesure, soutien prioritaire, toutes les langues offertes"],
+  ["☐", "**Essentiel**", "397 $", "Numéro dédié et appels 24/7 (FR, EN, ES), SMS, rendez-vous dans votre agenda, tableau de bord privé, appels à l'adjointe pour demander vos rapports"],
+  ["☐", "**Pro**", "597 $", "Tout Essentiel + WhatsApp, appels programmés de l'adjointe vers vous (jusqu'à 3 par jour), appels illimités (usage raisonnable)"],
+  ["☐", "**Complet**", "797 $", "Tout Pro + messages Instagram et Facebook, statistiques de vos réseaux sociaux, accès prioritaire"],
 ], { w: [6, 24, 16, 54], header: true }],
 ["fields", [
   ["Frais d'installation", "☐ 0 $ (offre de lancement)   ☐ ________ $"],
@@ -122,7 +122,7 @@ const body = [
 ["h", "2. Adjointe"],
 ["fields", [
   ["Persona", "☐ Sofía   ☐ Alex   ☐ Tomás   ☐ Autre : __________"],
-  ["Langues", "________________________________________ (selon le plan)"],
+  ["Langues", "________________________________________ (FR, EN, ES)"],
   ["Message d'accueil approuvé", "________________________________________________"],
   ["Transfert des urgences vers", "Nom : ______________   Tél. : ______________"],
 ]],
@@ -133,7 +133,6 @@ const body = [
   ["Appels entrants", "☐ Actif", ""],
   ["SMS", "☐ Actif", ""],
   ["Agenda (Google / Outlook / Apple / autre)", "☐ Actif", ""],
-  ["Courriel", "☐ Par phases", ""],
   ["WhatsApp", "☐ Par phases", ""],
   ["Messages privés (Instagram / Facebook)", "☐ Par phases", ""],
   ["Briefings vocaux (appel sortant au Client)", "☐ Par phases", ""],

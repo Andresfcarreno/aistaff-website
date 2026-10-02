@@ -47,9 +47,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Elle répond. Elle prend les rendez-vous. Elle vous appelle chaque matin. »
 
 **[16–23 s · PRIX]** *(écran : section comparaison)*
-> Une réceptionniste de plus, c'est environ 4 000 $ par mois. Sofía, c'est à partir de 997 $, 24 h sur 24, en français, en anglais et en espagnol.
+> Une réceptionniste de plus, c'est environ 4 000 $ par mois. Sofía, c'est à partir de 397 $, 24 h sur 24, en français, en anglais et en espagnol.
 
-**Texte :** « ≈ 4 000 $/mois → dès 997 $/mois »
+**Texte :** « ≈ 4 000 $/mois → dès 397 $/mois »
 
 **[23–30 s · CTA]**
 > Appelez Sofía vous-même : 438-805-8804.
@@ -68,9 +68,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Contesta. Agenda. Te llama cada mañana.»
 
 **[16–23 s · PRECIO]**
-> Otra recepcionista cuesta alrededor de 4 000 $ al mes. Sofía, desde 997 $, las 24 horas, en francés, inglés y español.
+> Otra recepcionista cuesta alrededor de 4 000 $ al mes. Sofía, desde 397 $, las 24 horas, en francés, inglés y español.
 
-**Texto:** «≈ 4 000 $/mes → desde 997 $/mes»
+**Texto:** «≈ 4 000 $/mes → desde 397 $/mes»
 
 **[23–30 s · CTA]**
 > Llama a Sofía tú mismo: 438-805-8804.
@@ -93,9 +93,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Il répond. Il pré-qualifie. Il vous fait le point chaque matin. »
 
 **[16–23 s · PRIX]**
-> Une adjointe, c'est environ 4 000 $ par mois. Alex, c'est à partir de 997 $, et il ne prend jamais congé.
+> Une adjointe, c'est environ 4 000 $ par mois. Alex, c'est à partir de 397 $, et il ne prend jamais congé.
 
-**Texte :** « ≈ 4 000 $/mois → dès 997 $/mois · Conforme à votre rôle : Alex ne donne jamais de conseil en courtage. »
+**Texte :** « ≈ 4 000 $/mois → dès 397 $/mois · Conforme à votre rôle : Alex ne donne jamais de conseil en courtage. »
 
 **[23–30 s · CTA]**
 > Appelez Alex : 438-805-8804. Faites-lui passer le test.
@@ -116,9 +116,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Contesta. Precalifica. Te pone al día cada mañana.»
 
 **[16–23 s · PRECIO]**
-> Una asistente cuesta alrededor de 4 000 $ al mes. Alex, desde 997 $, y nunca se va de vacaciones.
+> Una asistente cuesta alrededor de 4 000 $ al mes. Alex, desde 397 $, y nunca se va de vacaciones.
 
-**Texto:** «≈ 4 000 $/mes → desde 997 $/mes»
+**Texto:** «≈ 4 000 $/mes → desde 397 $/mes»
 
 **[23–30 s · CTA]**
 > Llama a Alex y ponlo a prueba: 438-805-8804.
@@ -141,9 +141,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Elle filtre. Elle planifie. Rien ne part sans votre accord. »
 
 **[16–23 s · PRIX]**
-> Une adjointe juridique, c'est environ 4 000 $ par mois. Sofía, c'est à partir de 997 $. Et elle ne donne jamais d'avis juridique : elle prend le message.
+> Une adjointe juridique, c'est environ 4 000 $ par mois. Sofía, c'est à partir de 397 $. Et elle ne donne jamais d'avis juridique : elle prend le message.
 
-**Texte :** « ≈ 4 000 $/mois → dès 997 $/mois »
+**Texte :** « ≈ 4 000 $/mois → dès 397 $/mois »
 
 **[23–30 s · CTA]**
 > Appelez Sofía : 438-805-8804.
@@ -162,9 +162,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Filtra. Agenda. Nada sale sin tu aprobación.»
 
 **[16–23 s · PRECIO]**
-> Una asistente legal cuesta alrededor de 4 000 $ al mes. Sofía, desde 997 $. Y nunca da asesoría legal: toma el mensaje.
+> Una asistente legal cuesta alrededor de 4 000 $ al mes. Sofía, desde 397 $. Y nunca da asesoría legal: toma el mensaje.
 
-**Texto:** «≈ 4 000 $/mes → desde 997 $/mes»
+**Texto:** «≈ 4 000 $/mes → desde 397 $/mes»
 
 **[23–30 s · CTA]**
 > Llama a Sofía: 438-805-8804.
@@ -187,9 +187,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Elle répond à tes DM. Elle te donne tes stats. Chaque matin. »
 
 **[16–23 s · PRIX]**
-> Une assistante virtuelle à temps plein, c'est environ 3 500 $ par mois. Sofía : à partir de 997 $.
+> Une assistante virtuelle à temps plein, c'est environ 3 500 $ par mois. Sofía : à partir de 397 $.
 
-**Texte :** « ≈ 3 500 $/mois → dès 997 $/mois · DM Instagram/Facebook : activation par phases »
+**Texte :** « ≈ 3 500 $/mois → dès 397 $/mois · DM Instagram/Facebook : activation par phases »
 
 **[23–30 s · CTA]**
 > Appelle Sofía, et teste-la toi-même : 438-805-8804.
@@ -208,9 +208,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Responde tus DMs. Te da tus métricas. Cada mañana.»
 
 **[16–23 s · PRECIO]**
-> Una asistente virtual a tiempo completo cuesta alrededor de 3 500 $ al mes. Sofía, desde 997 $.
+> Una asistente virtual a tiempo completo cuesta alrededor de 3 500 $ al mes. Sofía, desde 397 $.
 
-**Texto:** «≈ 3 500 $/mes → desde 997 $/mes · DMs de Instagram/Facebook: activación por fases»
+**Texto:** «≈ 3 500 $/mes → desde 397 $/mes · DMs de Instagram/Facebook: activación por fases»
 
 **[23–30 s · CTA]**
 > Llama a Sofía y pruébala tú misma: 438-805-8804.
@@ -233,9 +233,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Il répond. Il planifie tes soumissions. Il te fait le bilan le soir. »
 
 **[16–23 s · PRIX]**
-> Une secrétaire, c'est environ 3 500 $ par mois. Tomás, c'est à partir de 997 $, et il répond aussi le samedi.
+> Une secrétaire, c'est environ 3 500 $ par mois. Tomás, c'est à partir de 397 $, et il répond aussi le samedi.
 
-**Texte :** « ≈ 3 500 $/mois → dès 997 $/mois »
+**Texte :** « ≈ 3 500 $/mois → dès 397 $/mois »
 
 **[23–30 s · CTA]**
 > Appelle-le : 438-805-8804.
@@ -254,9 +254,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Contesta. Agenda tus presupuestos. Te da el balance en la noche.»
 
 **[16–23 s · PRECIO]**
-> Una secretaria cuesta alrededor de 3 500 $ al mes. Tomás, desde 997 $, y también contesta los sábados.
+> Una secretaria cuesta alrededor de 3 500 $ al mes. Tomás, desde 397 $, y también contesta los sábados.
 
-**Texto:** «≈ 3 500 $/mes → desde 997 $/mes»
+**Texto:** «≈ 3 500 $/mes → desde 397 $/mes»
 
 **[23–30 s · CTA]**
 > Llámalo: 438-805-8804.
@@ -279,9 +279,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texte :** « Elle répond. Elle prend les commandes. Tu te concentres sur ton produit. »
 
 **[16–23 s · PRIX]**
-> Engager quelqu'un, c'est environ 3 500 $ par mois. Sofía, à partir de 997 $.
+> Engager quelqu'un, c'est environ 3 500 $ par mois. Sofía, à partir de 397 $.
 
-**Texte :** « ≈ 3 500 $/mois → dès 997 $/mois »
+**Texte :** « ≈ 3 500 $/mois → dès 397 $/mois »
 
 **[23–30 s · CTA]**
 > Appelle Sofía : 438-805-8804.
@@ -300,9 +300,9 @@ Son 6 guiones, uno por nicho de la sección "Pour qui" de la home, cada uno en *
 **Texto:** «Contesta. Toma pedidos. Tú te enfocas en tu producto.»
 
 **[16–23 s · PRECIO]**
-> Contratar a alguien cuesta alrededor de 3 500 $ al mes. Sofía, desde 997 $.
+> Contratar a alguien cuesta alrededor de 3 500 $ al mes. Sofía, desde 397 $.
 
-**Texto:** «≈ 3 500 $/mes → desde 997 $/mes»
+**Texto:** «≈ 3 500 $/mes → desde 397 $/mes»
 
 **[23–30 s · CTA]**
 > Llama a Sofía: 438-805-8804.

@@ -13,10 +13,10 @@
 ## Estructura del sitio (estático, sin build)
 | Ruta | Archivo | Notas |
 |---|---|---|
-| `/` | `index.html` | Home horizontal. FR por defecto, EN/ES, claro/oscuro. Parámetros `?lang= &a=sofia\|alex\|tomas &niche= &n=` |
+| `/` | `index.html` (**generado**: `python3 tools/build_home.py`) | Home simple y limpia. FR por defecto, EN/ES, claro/oscuro. Parámetros `?lang= &a=sofia\|alex\|tomas`. Plantilla: `tools/home_template.html`; planes: `tools/plans.json`; sectores: `tools/sectors_menu.json`. |
 | `/demo/` | `demo/index.html` | Dashboard generalizado: Aperçu, Appels, Messages, Courriel, Agenda, Briefings, Réseaux, Contacts y chat con la asistente. `?v=immobilier` redirige a `/immobilier/demo/` |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard inmobiliario original, con la marca unificada |
-| `/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/`, `/dental/` | **generadas**, no se editan a mano | Plantilla común en `tools/build_sectors.py`, que toma el CSS, el orbe y los avatares de `index.html`. El contenido FR/EN/ES está en `tools/sectors_*.py` y `generic_text.py`. Después de cambiar la home o el contenido: `python3 tools/build_sectors.py` (también inyecta `HOME_SECTORS` en la home: menú, pestañas y banda). |
+| `/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/`, `/dental/` | **generadas**, no se editan a mano | Plantilla común en `tools/build_sectors.py`, que toma el CSS, el orbe y los avatares de `tools/home_source.html` (la home v2 anterior, conservada solo como fuente de estilos). El contenido FR/EN/ES está en `tools/sectors_*.py` y `generic_text.py`. Después de cambiar la home o el contenido: `python3 tools/build_sectors.py` (la home nueva ya no recibe `HOME_SECTORS`). |
 | `404.html`, `CNAME`, `.nojekyll`, `robots.txt`, `sitemap.xml` | | Configuración de GitHub Pages |
 | `docs/` | | `DEPLOY.md`, `briefing-backend.md`, `guiones-video.md` |
 | `backend/supabase/` | | SQL de briefings |
@@ -29,11 +29,13 @@ Toma como referencia `immobilier/index.html` (navy `#0A1A33`, azul `#1F6FEB`, ta
 - Todo el texto en un diccionario `STR` / `U` / `D` con claves FR/EN/ES.
 
 ## Precios (CAD, mes a mes, sin contrato, instalación gratis en el lanzamiento)
-| Plan FR / EN / ES | Precio |
-|---|---|
-| Assistante / Assistant / Asistente | 997 $ |
-| **Exécutive / Executive / Ejecutiva** (destacado) | 1 497 $ |
-| Dédiée / Dedicated / Dedicada | 2 497 $ |
+| Plan FR / EN / ES | Precio (+ impuestos) | Incluye |
+|---|---|---|
+| Essentiel / Essential / Esencial | 397 $ | Número dedicado, llamadas 24/7 (FR/EN/ES), SMS, citas en agenda, dashboard privado, llamar a la asistente para pedir reportes |
+| Pro | 597 $ | Todo lo anterior, más WhatsApp (por fases), llamadas programadas de la asistente al dueño, hasta 3 por día (por fases), llamadas ilimitadas con uso razonable |
+| Complet / Complete / Completo | 797 $ | Todo lo anterior, más Instagram y Facebook y métricas de redes (por fases) y acceso prioritario |
+
+Tres planes iguales en jerarquía visual (ninguno "destacado"). El correo no está en los planes. No se menciona a un humano de respaldo. Los precios se venden **+ taxes** (TPS 5 % y TVQ 9,975 %).
 
 Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et sont confirmés lors de l'appel découverte."
 
@@ -52,17 +54,13 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Nunca poner claves API en el HTML. Todo pasa por Make o por una función serverless.
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
-## Home v2 (efectos y secciones)
-- **Hero:** orbe WebGL propio (sin librerías) que "late" cuando habla la asistente. El teléfono se inclina en 3D con el mouse, hay tarjetas flotantes y una línea que va rotando los canales.
-- **Siluetas de persona:** son SVG propios (`avatarSVG`):
-  - Sofía, femenina;
-  - Alex, neutra, con un anillo arcoíris sutil;
-  - Tomás, masculina.
-- **Logos oficiales:** vienen de Simple Icons (CC0), embebidos como `LOGOS`. Outlook no está en Simple Icons, así que se usa un ícono genérico de sobre.
-- **Idiomas por plan:** Assistante 3, Exécutive hasta 5, Dédiée todas.
-  - "20+ langues" debe coincidir con lo que la configuración de Retell soporte de verdad. Verificarlo.
-- **Dashboard:**
-  - gráfica apilada por canal (con tooltip y vista de tabla) y gráfica de línea con crosshair, siguiendo la guía de dataviz;
+## Home (simple, estilo limpio)
+- Estructura: nav, hero (titular, lead, orbe CSS, dos botones), el dolor (3 tarjetas), cómo funciona (3 pasos), qué hace la asistente (4 puntos), **3 planes**, sectores, FAQ y cierre.
+- Sin marquesinas, nube de idiomas, rejilla de integraciones, pestañas automáticas ni tarjetas flotantes (retirados el 2 oct. 2026; la v2 está en `tools/home_source.html`).
+- **Siluetas de persona:** son SVG propios (`avatarSVG`) en las páginas de sector y el onboarding: Sofía femenina; Alex neutra con anillo arcoíris sutil; Tomás masculina.
+- **Idiomas:** los tres planes hablan FR, EN y ES. "20+ langues" ya no se usa; si se vuelve a ofrecer, verificar primero lo que soporta Retell.
+- **Dashboard** (`/demo/`):
+  - gráfica apilada por canal (con tooltip y vista de tabla) y gráfica de línea con crosshair;
   - vista de semana en la agenda;
   - tarjetas de Langues e Intégrations en la pestaña de la asistente.
 

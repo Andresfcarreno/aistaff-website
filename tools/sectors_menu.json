@@ -1,0 +1,128 @@
+{
+ "fr": [
+  {
+   "slug": "immobilier",
+   "ic": "🏡",
+   "name": "Courtiers immobiliers"
+  },
+  {
+   "slug": "cvc",
+   "ic": "🔥",
+   "name": "Chauffage & climatisation"
+  },
+  {
+   "slug": "paysagement",
+   "ic": "🌿",
+   "name": "Paysagement"
+  },
+  {
+   "slug": "deneigement",
+   "ic": "❄️",
+   "name": "Déneigement"
+  },
+  {
+   "slug": "garages",
+   "ic": "🔧",
+   "name": "Garages & mécanique"
+  },
+  {
+   "slug": "nettoyage",
+   "ic": "🧽",
+   "name": "Entreprises de nettoyage"
+  },
+  {
+   "slug": "barbiers",
+   "ic": "💈",
+   "name": "Salons & barbiers"
+  },
+  {
+   "slug": "dental",
+   "ic": "🦷",
+   "name": "Cliniques dentaires"
+  }
+ ],
+ "en": [
+  {
+   "slug": "immobilier",
+   "ic": "🏡",
+   "name": "Real estate brokers"
+  },
+  {
+   "slug": "cvc",
+   "ic": "🔥",
+   "name": "Heating & cooling (HVAC)"
+  },
+  {
+   "slug": "paysagement",
+   "ic": "🌿",
+   "name": "Landscaping"
+  },
+  {
+   "slug": "deneigement",
+   "ic": "❄️",
+   "name": "Snow removal"
+  },
+  {
+   "slug": "garages",
+   "ic": "🔧",
+   "name": "Garages & auto repair"
+  },
+  {
+   "slug": "nettoyage",
+   "ic": "🧽",
+   "name": "Cleaning companies"
+  },
+  {
+   "slug": "barbiers",
+   "ic": "💈",
+   "name": "Barbers & salons"
+  },
+  {
+   "slug": "dental",
+   "ic": "🦷",
+   "name": "Dental clinics"
+  }
+ ],
+ "es": [
+  {
+   "slug": "immobilier",
+   "ic": "🏡",
+   "name": "Courtiers inmobiliarios"
+  },
+  {
+   "slug": "cvc",
+   "ic": "🔥",
+   "name": "Calefacción y climatización (HVAC)"
+  },
+  {
+   "slug": "paysagement",
+   "ic": "🌿",
+   "name": "Paisajismo y jardinería"
+  },
+  {
+   "slug": "deneigement",
+   "ic": "❄️",
+   "name": "Remoción de nieve"
+  },
+  {
+   "slug": "garages",
+   "ic": "🔧",
+   "name": "Talleres mecánicos"
+  },
+  {
+   "slug": "nettoyage",
+   "ic": "🧽",
+   "name": "Empresas de limpieza"
+  },
+  {
+   "slug": "barbiers",
+   "ic": "💈",
+   "name": "Barberías y salones"
+  },
+  {
+   "slug": "dental",
+   "ic": "🦷",
+   "name": "Clínicas dentales"
+  }
+ ]
+}
