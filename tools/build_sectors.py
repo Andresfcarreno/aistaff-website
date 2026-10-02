@@ -20,7 +20,7 @@ SLUG = {"immobilier": "immobilier", "cvc": "cvc", "paysagement": "paysagement", 
         "garages": "garages", "nettoyage": "nettoyage", "barbiers": "barbiers", "dental": "dental"}
 NUMERIC = ["ic", "ints", "persona"]
 
-home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+home = open(os.path.join(ROOT, "tools", "home_source.html"), encoding="utf-8").read()  # fuente de estilos y efectos (la home pública es otra, más simple)
 
 def between(src, start, end):
     a = src.index(start); b = src.index(end, a)
@@ -470,7 +470,7 @@ def build():
         page = TEMPLATE
         rep = {
             "__TITLE__": html.escape(sec["fr"]["title"]), "__DESC__": html.escape(sec["fr"]["desc"]), "__SLUG__": SLUG[k],
-            "__CSS__": CSS, "__ID__": json.dumps(k), "__SEC__": json.dumps(sec, ensure_ascii=False),
+            "__CSS__": CSS + "\nhtml{overflow-x:clip}\n", "__ID__": json.dumps(k), "__SEC__": json.dumps(sec, ensure_ascii=False),
             "__G__": json.dumps(G, ensure_ascii=False), "__SECTORS__": json.dumps(sectors, ensure_ascii=False),
             "__LOGOS__": json.dumps(sub_logos, ensure_ascii=False), "__AVATAR__": JS_AVATAR, "__LOGO__": JS_LOGO,
             "__ORB__": JS_ORB, "__REVEAL__": JS_REVEAL,

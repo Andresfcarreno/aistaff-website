@@ -109,9 +109,9 @@ const body = [
 ["h", "1. Plan (check one)"],
 ["table", [
   ["", "Plan", "Price / month", "Includes"],
-  ["☐", "**Assistant**", "$997", "Calls and SMS 24/7, appointment booking, dashboard, up to 3 languages"],
-  ["☐", "**Executive** (recommended)", "$1,497", "Everything in Assistant + follow-ups, briefings, additional channels in phases, up to 5 languages"],
-  ["☐", "**Dedicated**", "$2,497", "Everything in Executive + custom configuration, priority support, all available languages"],
+  ["☐", "**Essential**", "$397", "Dedicated number and 24/7 calls (FR, EN, ES), SMS, appointments in your calendar, private dashboard, calls to the assistant to ask for your reports"],
+  ["☐", "**Pro**", "$597", "Everything in Essential + WhatsApp, scheduled calls from the assistant to you (up to 3 a day), unlimited calls (fair use)"],
+  ["☐", "**Complete**", "$797", "Everything in Pro + Instagram and Facebook messages, social media stats, priority access"],
 ], { w: [6, 24, 16, 54], header: true }],
 ["fields", [
   ["Setup fee", "☐ $0 (launch offer)   ☐ $________"],
@@ -122,7 +122,7 @@ const body = [
 ["h", "2. Assistant"],
 ["fields", [
   ["Persona", "☐ Sofía   ☐ Alex   ☐ Tomás   ☐ Other: __________"],
-  ["Languages", "________________________________________ (per plan)"],
+  ["Languages", "________________________________________ (FR, EN, ES)"],
   ["Approved greeting", "________________________________________________"],
   ["Urgent transfers to", "Name: ______________   Phone: ______________"],
 ]],
@@ -133,7 +133,6 @@ const body = [
   ["Incoming calls", "☐ Active", ""],
   ["SMS", "☐ Active", ""],
   ["Calendar (Google / Outlook / Apple / other)", "☐ Active", ""],
-  ["Email", "☐ In phases", ""],
   ["WhatsApp", "☐ In phases", ""],
   ["Direct messages (Instagram / Facebook)", "☐ In phases", ""],
   ["Voice briefings (outbound call to the Client)", "☐ In phases", ""],

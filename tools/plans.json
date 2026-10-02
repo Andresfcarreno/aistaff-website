@@ -1,0 +1,125 @@
+{
+ "fr": [
+  {
+   "name": "Essentiel",
+   "tag": "Vos appels, vos textos et votre agenda, pris en charge.",
+   "price": 397,
+   "cta": "Choisir Essentiel",
+   "feat": [
+    "Numéro de téléphone dédié et appels 24/7",
+    "Français, anglais et espagnol",
+    "Réponses par texto (SMS)",
+    "Rendez-vous pris dans votre agenda",
+    "Tableau de bord privé",
+    "Appelez {a} pour demander vos rapports (par phases)"
+   ]
+  },
+  {
+   "name": "Pro",
+   "tag": "L'essentiel, plus WhatsApp et des appels programmés.",
+   "price": 597,
+   "cta": "Choisir Pro",
+   "feat": [
+    "Tout le plan Essentiel, plus :",
+    "WhatsApp avec le même numéro (par phases)",
+    "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)",
+    "Appelez {a} à toute heure",
+    "Appels illimités, usage raisonnable"
+   ]
+  },
+  {
+   "name": "Complet",
+   "tag": "Tous vos canaux, avec un accès prioritaire.",
+   "price": 797,
+   "cta": "Choisir Complet",
+   "feat": [
+    "Tout le plan Pro, plus :",
+    "Messages Instagram et Facebook (par phases)",
+    "Statistiques de vos réseaux sociaux (par phases)",
+    "Accès prioritaire : vos questions et changements passent en premier"
+   ]
+  }
+ ],
+ "en": [
+  {
+   "name": "Essential",
+   "tag": "Your calls, texts and calendar, handled.",
+   "price": 397,
+   "cta": "Choose Essential",
+   "feat": [
+    "Dedicated phone number and 24/7 calls",
+    "French, English and Spanish",
+    "Text message (SMS) replies",
+    "Appointments booked in your calendar",
+    "Private dashboard",
+    "Call {a} to ask for your reports (in phases)"
+   ]
+  },
+  {
+   "name": "Pro",
+   "tag": "The essentials, plus WhatsApp and scheduled calls.",
+   "price": 597,
+   "cta": "Choose Pro",
+   "feat": [
+    "Everything in Essential, plus:",
+    "WhatsApp on the same number (in phases)",
+    "{a} calls you at the times you choose, up to 3 times a day (in phases)",
+    "Call {a} any time",
+    "Unlimited calls, fair use"
+   ]
+  },
+  {
+   "name": "Complete",
+   "tag": "Every channel, with priority access.",
+   "price": 797,
+   "cta": "Choose Complete",
+   "feat": [
+    "Everything in Pro, plus:",
+    "Instagram and Facebook messages (in phases)",
+    "Social media stats (in phases)",
+    "Priority access: your questions and changes come first"
+   ]
+  }
+ ],
+ "es": [
+  {
+   "name": "Esencial",
+   "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.",
+   "price": 397,
+   "cta": "Elegir Esencial",
+   "feat": [
+    "Número de teléfono propio y llamadas 24/7",
+    "Francés, inglés y español",
+    "Respuestas por mensaje de texto (SMS)",
+    "Citas agendadas en tu calendario",
+    "Dashboard privado",
+    "Llama a {a} para pedirle tus reportes (por fases)"
+   ]
+  },
+  {
+   "name": "Pro",
+   "tag": "Lo esencial, más WhatsApp y llamadas programadas.",
+   "price": 597,
+   "cta": "Elegir Pro",
+   "feat": [
+    "Todo el plan Esencial, más:",
+    "WhatsApp con el mismo número (por fases)",
+    "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)",
+    "Llama a {a} a cualquier hora",
+    "Llamadas ilimitadas, uso razonable"
+   ]
+  },
+  {
+   "name": "Completo",
+   "tag": "Todos tus canales, con acceso prioritario.",
+   "price": 797,
+   "cta": "Elegir Completo",
+   "feat": [
+    "Todo el plan Pro, más:",
+    "Mensajes de Instagram y Facebook (por fases)",
+    "Estadísticas de tus redes sociales (por fases)",
+    "Acceso prioritario: tus preguntas y cambios van primero"
+   ]
+  }
+ ]
+}

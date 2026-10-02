@@ -26,14 +26,19 @@
 
 No hay fotos de personas: solo siluetas SVG propias (función `avatarSVG`/`avatar`) o un orbe.
 
-### Precios (CAD, mes a mes, sin contrato, instalación gratis durante el lanzamiento, taxes aparte)
-| Plan FR / EN / ES | Precio/mes | Idiomas | Contenido |
-|---|---|---|---|
-| Assistante / Assistant / Asistente | **997 $** | hasta 3 | Llamadas y SMS 24/7, citas, dashboard |
-| **Exécutive / Executive / Ejecutiva** (plan destacado) | **1 497 $** | hasta 5 | Todo lo anterior, más seguimientos, briefings y canales adicionales por fases |
-| Dédiée / Dedicated / Dedicada | **2 497 $** | todos | Todo lo anterior, más configuración a medida y soporte prioritario |
+### Precios (CAD, + impuestos, mes a mes, sin contrato, instalación gratis durante el lanzamiento)
+| Plan FR / EN / ES | Precio/mes | Incluye |
+|---|---|---|
+| Essentiel / Essential / Esencial | **397 $** | Número de teléfono dedicado, llamadas 24/7 en FR/EN/ES, SMS, citas en la agenda, dashboard privado, y llamar a la asistente para pedirle reportes |
+| Pro | **597 $** | Todo lo anterior, más WhatsApp con el mismo número, llamadas programadas de la asistente al dueño (hasta 3 al día) y llamadas ilimitadas con uso razonable |
+| Complet / Complete / Completo | **797 $** | Todo lo anterior, más mensajes de Instagram y Facebook, estadísticas de redes y acceso prioritario |
 
-Nota obligatoria cerca de los precios: **« Déploiement progressif : les canaux s'activent par phases et sont confirmés lors de l'appel découverte. »**
+- Los tres planes se muestran con el mismo peso visual (ninguno "destacado").
+- WhatsApp, las llamadas programadas, Instagram y Facebook se marcan "par phases" hasta que estén construidos.
+- El correo no está en los planes. No se promete ningún humano de respaldo.
+- Se vende **+ TPS (5 %) y TVQ (9,975 %)**. La factura necesita los números de registro de impuestos.
+- Referencia de ventas: una asistente humana cuesta alrededor de 3 500 a 4 500 $ al mes (siempre como estimación).
+- Costos y cálculo de margen: `docs/precios-y-costos.md`.
 
 ### Reglas de contenido (no negociables)
 1. **Nada de estadísticas sin fuente.** El costo de una asistente humana (≈ 3 500–4 500 $/mes) siempre se presenta como **estimación**.
@@ -72,7 +77,7 @@ Nota obligatoria cerca de los precios: **« Déploiement progressif : les canaux
 ### Mapa de URLs
 | URL | Archivo | Qué es |
 |---|---|---|
-| `/` | `index.html` | Home v2 (la página principal) |
+| `/` | `index.html` | Home simple (generada) |
 | `/demo/` | `demo/index.html` | Dashboard de demostración general |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard de demostración inmobiliario |
 | `/immobilier/` | generado | Landing para courtiers inmobiliarios (persona Alex, bloque OACIQ) |
@@ -103,50 +108,23 @@ Ejemplo para un anuncio: `https://meetaistaff.com/?lang=es&niche=dentiste&n=Andr
 
 ---
 
-## 3. La home (`index.html`)
+## 3. La home (`index.html`, generada)
 
-La página se recorre de arriba abajo en este orden:
-1. **Nav:**
-   - logo;
-   - menú desplegable **Secteurs** (`#ddSectors` / `#ddMenu`) que lleva a las 8 páginas de sector;
-   - selector FR/EN/ES y botón de tema;
-   - botón « 📞 Parler à Sofía » (`tel:`).
-2. **Hero:**
-   - titular « Votre prochaine employée est une IA. », animado palabra por palabra;
-   - **orbe WebGL propio** (shader de ruido fbm, sin librerías) que "late" cuando habla la asistente;
-   - teléfono que se inclina en 3D con el mouse (`initTilt`);
-   - tarjetas flotantes alrededor (`.fcard s0..s3`) y una línea que rota los canales (`#rot1`);
-   - chips de persona con avatar;
-   - botones « Réserver ma démo » (lleva a `/onboarding/`) y « Parler à {a} ».
-3. **Banda de industrias:** dos marquesinas en movimiento (`#indRow1`/`#indRow2`). Las tarjetas de sector enlazan a su página.
-4. **Comparación:** asistente humana (estimación) contra AI Staff.
-5. **Canales:** llamadas, SMS, agenda, correo, WhatsApp, DMs, briefings, cada uno con viñetas concretas y la etiqueta « Par phases » donde corresponde.
-6. **Integraciones:** logos oficiales en marquesina más una rejilla (`#intGrid`): Google Calendar, Outlook, Apple Calendar, Gmail, WhatsApp, Instagram, Facebook, Calendly, etc.
-7. **Idiomas:** nube de saludos orbitando (`#langCloud`, `.hello`) y niveles por plan (`#langTiers`: 3, 5 o todos).
-8. **Cómo funciona:** línea de tiempo.
-9. **Pour qui:**
-   - pestañas por nicho que avanzan solas cada 7 segundos;
-   - los nichos de sector los inyecta el generador (`HOME_SECTORS`);
-   - se suman pro, créateur, métiers y maison.
-10. **Mini dashboard** de muestra.
-11. **Confianza y privacidad:** prácticas, sin afirmar cumplimiento.
-12. **Precios:** las 3 tarjetas, más un modal que se abre al elegir un plan.
-13. **FAQ.**
-14. **CTA final.**
-15. **Footer:** enlaces a sectores, demo y privacidad.
+Se genera con `python3 tools/build_home.py` a partir de `tools/home_template.html`, `tools/plans.json` (planes y precios en los tres idiomas) y `tools/sectors_menu.json` (menú de sectores). **No se edita a mano `index.html`.**
 
-**Funciones JS principales:** `avatarSVG(id)`, `logoSVG(k)`, `initOrb()`/`orbState`, `initTilt()`, `initReveal()` (aparición al hacer scroll, con respaldo), `buildBands()`, `buildLanguages()`, `tickRotator`, `tickFcards`, `splitTitle`, `scheduleNiche`, `applyStatic()`.
+Secciones, de arriba abajo:
+1. **Nav:** logo, menú **Secteurs** (las 8 páginas), Tarifs, FAQ, selector FR/EN/ES, tema y botón de llamada.
+2. **Hero:** titular « Votre prochaine employée est une IA. », texto breve, botones « Réserver ma démo » (a `/onboarding/`) y « Appeler la démo », y un orbe animado en CSS.
+3. **El dolor:** « Un appel manqué, c'est un client qui appelle ailleurs. », con 3 tarjetas.
+4. **Cómo funciona:** 3 pasos (preguntas, demo, conexión del número).
+5. **Qué hace la asistente:** llamadas, textos, agenda, resúmenes.
+6. **Planes:** los 3, más la comparación en una frase (estimación de la asistente humana) y la nota de despliegue progresivo.
+7. **Sectores:** enlaces a las 8 páginas.
+8. **FAQ**, **cierre** y **footer** con privacidad y contacto.
 
-**Variables y constantes:** `STR` (textos por idioma), `EXTRA` (textos añadidos en la v2), `PERSONAS`, `GENDER` (`{sofia:"f", alex:"n", tomas:"m"}`), `ADJ`/`YOUR` (concordancias de género en FR), `HELLOS`, `LOGOS`, `ICON`, `CH_ICO`.
+El texto vive en el objeto `STR` (FR/EN/ES) dentro de la plantilla. Los marcadores `{a}` se sustituyen por el nombre de la persona (`?a=sofia|alex|tomas`).
 
-**Marcadores en los textos:**
-- `{a}`: nombre de la persona;
-- `{n}`: nombre del visitante;
-- `{adj}`: adjointe, adjoint o adjoint·e según el género;
-- `{role}`, `{the}`, `{your}`: artículos con concordancia;
-- `{aud}`: público del nicho.
-
-**Bloque generado:** entre `/*SECTORS:start*/` y `/*SECTORS:end*/` está `HOME_SECTORS`, que escribe `tools/build_sectors.py`. No se edita a mano.
+La versión anterior, más cargada (orbe WebGL, tarjetas flotantes, marquesinas, nube de idiomas), se conserva en `tools/home_source.html` solo porque las páginas de sector toman de ahí su CSS y sus efectos.
 
 ---
 
@@ -305,7 +283,7 @@ const CONTACT_EMAIL = "hello@meetaistaff.com";
 | `AI-Staff_flyer-immobilier_FR` / `_EN` (.png y .pdf) | Flyer para courtiers tamaño carta (Alex, con la nota OACIQ) |
 | `…_carre-1080.png` (4 archivos) | Versiones cuadradas para Instagram y Facebook |
 
-- **Estilo:** fondo navy con orbe y anillo HUD, conversación de ejemplo (cliente, asistente y cita confirmada), funciones, precio « À partir de 997 $/mois », teléfono de la demo y **QR hacia `/onboarding/?ref=flyer`** (con `secteur=immobilier` en los inmobiliarios).
+- **Estilo:** fondo navy con orbe y anillo HUD, conversación de ejemplo (cliente, asistente y cita confirmada), funciones, precio « À partir de 397 $/mois », teléfono de la demo y **QR hacia `/onboarding/?ref=flyer`** (con `secteur=immobilier` en los inmobiliarios).
 - **Fuentes y regeneración:** los HTML fuente están en `marketing/flyers/src/`; el generador es `tools/flyers/build.js` (Playwright y el paquete npm `qrcode`).
 - **Guiones de video:** `docs/guiones-video.md` tiene 6 guiones por nicho, en FR y ES.
 
@@ -411,7 +389,7 @@ Desde entonces, cada merge a `main` publica el sitio automáticamente.
   - que no haya scroll horizontal ni errores en la consola.
 - **Estilo del copy en francés:**
   - espacio antes de `:` en francés (« Déploiement progressif : … »);
-  - montos como `1 497 $`;
+  - montos como `1 497 $` (ejemplo de formato);
   - horas como `14 h 30`;
   - formas neutras con punto medio (`adjoint·e`) para Alex.
 - **Tono:** directo, cálido, concreto. Nada de estadísticas inventadas ni de promesas de fechas.
@@ -444,6 +422,11 @@ backend/supabase/001_briefings.sql   Esquema SQL de briefings (sin aplicar)
 backend/supabase/002_leads.sql       Tabla leads del onboarding (aplicado)
 backend/supabase/003_voice.sql       Sesiones de voz, secretos en Vault y cron de barrido (aplicado)
 marketing/flyers/              Flyers PNG/PDF y sus fuentes HTML
+tools/build_home.py            Generador de la home (plantilla, planes y sectores)
+tools/home_template.html       Plantilla de la home
+tools/plans.json               Planes y precios FR/EN/ES
+tools/sectors_menu.json        Menú de sectores FR/EN/ES
+tools/home_source.html         Home v2 anterior (fuente de estilos de los sectores)
 tools/build_sectors.py         Generador de páginas de sector
 tools/sectors_fr.py sectors_en.py sectors_es.py generic_text.py   Contenido de sectores
 tools/legal/                   Generador de contratos (.docx)
