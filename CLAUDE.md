@@ -87,6 +87,10 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - `docs/demo-agent-retell.md`: flujo, prompt y nodos (escritos para Retell; la lógica aplica igual a la voz propia de `docs/voz-propia.md`) del agente que pregunta por el negocio de quien llama y luego actúa como su asistente; envía el enlace a `/onboarding/` por SMS (solo con consentimiento verbal). Incluye el escenario de Make y el plan por fases.
 - `backend/supabase/002_demo_calls.sql`: tabla `demo_calls` (RLS sin políticas, solo service role; borrado a los 12 meses).
 
+## Bitácora y estado (léela antes de continuar)
+- **`docs/BITACORA.md`**: qué se hizo hasta el 3 oct. 2026, decisiones del dueño (precios 397/597/797 + impuestos), estado de Supabase y Make, lo que no se pudo hacer y los pendientes en orden.
+- Ojo: hay **dos implementaciones de voz** en el repo (función `voice` de Supabase y `voice-relay/` de Cloudflare). Confirmar a cuál apunta Twilio antes de dar por buena la descripción de voz de este archivo.
+
 ## Pendientes conocidos
 - Aviso por correo de cada lead nuevo: agregar un módulo Gmail en el escenario de onboarding (ver `docs/make-supabase.md`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
