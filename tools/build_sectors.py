@@ -470,7 +470,7 @@ def build():
         page = TEMPLATE
         rep = {
             "__TITLE__": html.escape(sec["fr"]["title"]), "__DESC__": html.escape(sec["fr"]["desc"]), "__SLUG__": SLUG[k],
-            "__CSS__": CSS, "__ID__": json.dumps(k), "__SEC__": json.dumps(sec, ensure_ascii=False),
+            "__CSS__": CSS + "\nhtml{overflow-x:clip}\n", "__ID__": json.dumps(k), "__SEC__": json.dumps(sec, ensure_ascii=False),
             "__G__": json.dumps(G, ensure_ascii=False), "__SECTORS__": json.dumps(sectors, ensure_ascii=False),
             "__LOGOS__": json.dumps(sub_logos, ensure_ascii=False), "__AVATAR__": JS_AVATAR, "__LOGO__": JS_LOGO,
             "__ORB__": JS_ORB, "__REVEAL__": JS_REVEAL,

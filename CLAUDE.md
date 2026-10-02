@@ -4,10 +4,11 @@
 - **Dueño:** Andrés Carreño, emprendedor solo en Montreal.
   - Habla ES/EN y **no habla francés**: todo el copy FR debe salir listo.
   - Quiere entregables completos, no instrucciones.
-- **Producto:** AI Staff, una asistente personal con IA (voz trilingüe FR/EN/ES sobre Retell AI) más un dashboard por cliente.
+- **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude en una Edge Function de Supabase) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
   - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
-- **Stack:** Retell AI, Twilio (+1 438-805-8804, línea demo), Make.com, Claude API, Supabase (multi-tenant, `dashboard_token`) y Resend.
+- **Stack:** Twilio (+1 438-805-8804, línea demo; voz Polly y reconocimiento de voz), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Function `voice`, pg_cron), Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
+  - Voz de la línea demo: `docs/voz-propia.md` (código en `supabase/functions/voice/index.ts`; el prompt de Sofía vive ahí). Make y Supabase: `docs/make-supabase.md`.
 - **Meta de negocio:** cerrar clientes de unos 1 000 $/mes. Cada tarea debe acercar a un cliente que pague.
 
 ## Estructura del sitio (estático, sin build)
@@ -50,7 +51,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - No afirmar "cumplimiento Ley 25": solo describir prácticas (acceso revocable, datos no revendidos, supervisión humana).
 - Quebec: el francés es el idioma por defecto (Ley 96).
 - Inmobiliario: la IA **nunca** da consejo de corretaje (OACIQ).
-- Retell no hace llamadas en frío. Las salientes van solo a clientes con consentimiento (briefings).
+- La asistente no hace llamadas en frío. Las salientes van solo a clientes con consentimiento (briefings).
 - Nunca poner claves API en el HTML. Todo pasa por Make o por una función serverless.
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
@@ -58,7 +59,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Estructura: nav, hero (titular, lead, orbe CSS, dos botones), el dolor (3 tarjetas), cómo funciona (3 pasos), qué hace la asistente (4 puntos), **3 planes**, sectores, FAQ y cierre.
 - Sin marquesinas, nube de idiomas, rejilla de integraciones, pestañas automáticas ni tarjetas flotantes (retirados el 2 oct. 2026; la v2 está en `tools/home_source.html`).
 - **Siluetas de persona:** son SVG propios (`avatarSVG`) en las páginas de sector y el onboarding: Sofía femenina; Alex neutra con anillo arcoíris sutil; Tomás masculina.
-- **Idiomas:** los tres planes hablan FR, EN y ES. "20+ langues" ya no se usa; si se vuelve a ofrecer, verificar primero lo que soporta Retell.
+- **Idiomas:** los tres planes hablan FR, EN y ES. "20+ langues" ya no se usa; si se vuelve a ofrecer, verificar primero lo que soporta la voz (hoy la línea demo habla FR/EN/ES).
 - **Dashboard** (`/demo/`):
   - gráfica apilada por canal (con tooltip y vista de tabla) y gráfica de línea con crosshair;
   - vista de semana en la agenda;
@@ -73,7 +74,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 
 ## Onboarding, legal y marketing (sept. 2026)
 - `/onboarding/`: formulario para prospectos (FR/EN/ES, 7 pasos, sin contraseñas). Guarda un borrador en localStorage (`aistaff-onboarding`). Acepta `?secteur=`, `?ref=` y `?lang=`.
-  - Envío: si `ONBOARDING_WEBHOOK` (Make) está vacío, usa mailto a hello@ más descarga JSON.
+  - Envío: `ONBOARDING_WEBHOOK` apunta al escenario de Make "AI Staff onboarding → Supabase leads", que guarda cada envío en la tabla `leads`. Si el POST falla, la página ofrece mailto a hello@ y descarga JSON.
   - Todos los CTA "Réserver ma démo" (home y sectores) apuntan aquí.
 - `/confidentialite/`: política de privacidad Ley 25 (FR/EN/ES). La persona responsable es Andrés. Tiene la tabla de subcontratistas.
 - `docs/legal/`: contrato de servicio y entente de démo (FR/EN, docx+pdf) más `LEEME.md` (checklist Ley 25, que hay que hacer revisar por un abogado de Quebec).
@@ -83,11 +84,11 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
   - Regenerar: `NODE_PATH=<node_modules con playwright+qrcode> node tools/flyers/build.js`.
 
 ## Línea demo adaptable (diseñada, sin implementar)
-- `docs/demo-agent-retell.md`: flujo, prompt y nodos del agente de Retell que pregunta por el negocio de quien llama y luego actúa como su asistente; envía el enlace a `/onboarding/` por SMS (solo con consentimiento verbal). Incluye el escenario de Make y el plan por fases.
+- `docs/demo-agent-retell.md`: flujo, prompt y nodos (escritos para Retell; la lógica aplica igual a la voz propia de `docs/voz-propia.md`) del agente que pregunta por el negocio de quien llama y luego actúa como su asistente; envía el enlace a `/onboarding/` por SMS (solo con consentimiento verbal). Incluye el escenario de Make y el plan por fases.
 - `backend/supabase/002_demo_calls.sql`: tabla `demo_calls` (RLS sin políticas, solo service role; borrado a los 12 meses).
 
 ## Pendientes conocidos
-- Webhook de Make conectado en `onboarding/index.html` (escenario "AI Staff onboarding → Supabase leads"). Falta probarlo de punta a punta con el sitio publicado.
+- Aviso por correo de cada lead nuevo: agregar un módulo Gmail en el escenario de onboarding (ver `docs/make-supabase.md`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía". El prompt nuevo está en `docs/demo-agent-retell.md`.
-- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
+- Activar la voz propia (`docs/voz-propia.md`): poner `ANTHROPIC_API_KEY` y `TWILIO_AUTH_TOKEN` en los secretos de Supabase, liberar el número en Vapi y apuntar el webhook de voz de Twilio a la función `voice`.
+- Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Conviene implementarlo con Edge Functions de Supabase (como `voice`) en vez de Make; requiere la tabla `clients`.

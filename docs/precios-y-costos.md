@@ -10,6 +10,8 @@
 Decisión del dueño: tres precios sin plan "destacado", sin humano de respaldo, correo fuera de los planes, instalación gratis en el lanzamiento y mes a mes.
 
 ## Costos que respaldan el precio
+> **Ojo (3 oct. 2026):** la voz de la línea ya no usa Retell sino la voz propia (Twilio + Anthropic, ver `docs/voz-propia.md`). La fila de Retell es solo una referencia de mercado: hay que recalcular el costo por minuto con la factura real de Twilio (voz, reconocimiento y síntesis) y los tokens de Anthropic.
+
 Datos de **fuentes de segunda mano** (las páginas oficiales estaban bloqueadas al investigarlos). Confirmarlos en las cuentas propias antes de cambiar precios.
 
 | Pieza | Costo | Fuente |
