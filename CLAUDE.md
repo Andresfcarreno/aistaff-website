@@ -87,7 +87,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - `backend/supabase/002_demo_calls.sql`: tabla `demo_calls` (RLS sin políticas, solo service role; borrado a los 12 meses).
 
 ## Pendientes conocidos
-- Pegar la URL del webhook de Make en `onboarding/index.html` (`ONBOARDING_WEBHOOK`).
+- Webhook de Make conectado en `onboarding/index.html` (escenario "AI Staff onboarding → Supabase leads"). Falta probarlo de punta a punta con el sitio publicado.
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
 - Actualizar el agente de Retell de la línea demo para que se presente como **Sofía, asistente personal**, no como recepcionista inmobiliario, porque la home dice "Parler à Sofía". El prompt nuevo está en `docs/demo-agent-retell.md`.
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Hay que implementarlo en Make, Retell y Supabase.
