@@ -15,6 +15,8 @@ from sectors_en import EN
 from sectors_es import ES
 from generic_text import G
 from general_content import GEN
+from dash_text import DASH
+for _l in DASH: G[_l]["dash.t"] = DASH[_l]
 FR["general"] = GEN["fr"]; EN["general"] = GEN["en"]; ES["general"] = GEN["es"]
 
 ORDER = ["immobilier", "cvc", "paysagement", "deneigement", "garages", "nettoyage", "barbiers", "dental"]
@@ -107,6 +109,27 @@ __CSS__
 .fcard.s0{left:-34px;top:60px;}.fcard.s1{right:-92px;top:250px;}.fcard.s2{left:-44px;top:470px;}
 .hero-ic{font-size:15px;}
 @media(max-width:640px){.calc-out .big{font-size:42px;}.calc{padding:24px 18px;}}
+/* muestra del dashboard con pestañas */
+.dch-h{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;}
+.dchart{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:16px 18px 12px;margin-bottom:6px;}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:130px;}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%;}
+.bar i{display:block;width:100%;max-width:44px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#3987e5,#2a78d6);}
+.bar .bv{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;}
+.bar .bd{font-size:11.5px;color:var(--muted);}
+.tr-box{margin:10px 0 4px;padding:10px 12px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);font-size:13px;line-height:1.55;}
+.tr-box .tr-t{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.dpane .feed-row .ini{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
+.dnote{font-size:13px;color:var(--muted);margin-bottom:12px;}
+.wk{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;overflow-x:auto;padding-bottom:4px;}
+.wk-col{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:8px;align-content:start;min-height:170px;}
+.wk-h{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.wk-ev{background:linear-gradient(135deg,rgba(31,111,235,.16),rgba(34,184,230,.12));border:1px solid rgba(31,111,235,.35);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.35;}
+.wk-ev small{display:block;color:var(--muted);margin-top:2px;}
+.wk-free{border:1.5px dashed var(--line);border-radius:10px;padding:8px;font-size:12px;color:var(--muted);text-align:center;}
+.soc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:640px){.soc-grid{grid-template-columns:1fr;}.bars{gap:5px;}}
+
 </style>
 </head>
 <body>
@@ -215,10 +238,8 @@ __CSS__
         <div><div class="nm" data-i18n="dash.name"></div><div class="sb" data-i18n="dash.sub"></div></div>
         <a class="full" href="/demo/" id="dashMore" data-i18n="dash.more"></a>
       </div>
-      <div class="dpane active" style="display:block">
-        <div class="stats" id="stats"></div>
-        <div id="calls"></div>
-      </div>
+      <div class="dash-tabs" id="dtabs" role="tablist"></div>
+      <div id="dpanes"></div>
     </div>
   </section>
 
@@ -348,10 +369,7 @@ function render(){
   document.getElementById("doesList").innerHTML = s.does.map(d=>`<li>${esc(fill(d))}</li>`).join("");
   document.getElementById("featGrid").innerHTML = s.features.map(f=>`<div class="card feat"><div class="top"><div class="ic">${f[0]}</div></div><h3>${esc(fill(f[1]))}</h3><p>${esc(fill(f[2]))}</p></div>`).join("");
   document.getElementById("steps").innerHTML = s.steps.map((st,i)=>`<div class="card step"><div class="num">${i+1}</div><h3>${esc(fill(st[0]))}</h3><p>${esc(fill(st[1]))}</p></div>`).join("");
-  document.getElementById("stats").innerHTML = s.stats.map(x=>`<div class="stat-tile"><div class="lbl">${esc(x[0])}</div><div class="val">${esc(x[1])}</div><div class="delta">${esc(x[2])}</div></div>`).join("");
-  const T = g("tags");
-  document.getElementById("calls").innerHTML = s.calls.map(c=>{ const ini = c[0].replace(/[^A-Za-zÀ-ÿ ]/g,"").split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "@";
-    return `<div class="call-card"><div class="who"><div class="ini" style="background:linear-gradient(135deg,#3B82F6,#1858C4)">${esc(ini)}</div><div><div class="nm">${esc(c[0])}</div><div class="mt">${esc(c[1])}</div></div><span class="tag ${c[3]}" style="margin-left:auto;">${esc(T[c[3]])}</span></div><div class="sm">${esc(fill(c[2]))}</div><div class="nx">→ ${esc(g("dash.next"))} : ${esc(fill(c[4]))}</div></div>`; }).join("");
+  buildDash(s);
   document.getElementById("dashAv").innerHTML = SEC.fr.ic;
   document.getElementById("logoGrid").innerHTML = s.ints.filter(k=>LOGOS[k]).map(k=>`<div class="logo-tile"><span class="lg">${logoSVG(k)}</span><span>${esc(LOGOS[k][0])}</span></div>`).join("");
   const faqs = s.faq.concat(g("faqGen"));
@@ -372,6 +390,41 @@ function render(){
   document.getElementById("footLinks").innerHTML = `<a href="/${q}">${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("")+`<a href="/demo/${q}">Demo</a><a href="/confidentialite/${q}">${({fr:"Confidentialité",en:"Privacy",es:"Privacidad"})[lang]}</a>`;
   document.getElementById("dashMore").href = "/demo/"+q;
   buildCalc(); buildFcards(); resetPhone();
+}
+
+/* ---------- dashboard sample (tabs) ---------- */
+let dashTab = 0;
+const iniOf = n => n.replace(/[^A-Za-zÀ-ÿ ]/g,"").split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "@";
+const AVBG = ["linear-gradient(135deg,#3B82F6,#1858C4)","linear-gradient(135deg,#22B8E6,#1F6FEB)","linear-gradient(135deg,#8B5CF6,#4F46E5)","linear-gradient(135deg,#10B981,#047857)"];
+function buildDash(s){
+  const D = g("dash.t"), T = g("tags"), calls = s.calls, first = n => n.split(" ")[0];
+  const total = parseInt(String(s.stats[0][1]).replace(/\D/g,""),10) || 40, wts = [.13,.18,.15,.2,.17,.1,.07];
+  let vals = wts.map(w=>Math.round(total*w)); vals[3] += total - vals.reduce((a,b)=>a+b,0);
+  const mx = Math.max.apply(null, vals);
+  const tiles = `<div class="stats">${s.stats.map(x=>`<div class="stat-tile"><div class="lbl">${esc(x[0])}</div><div class="val">${esc(x[1])}</div><div class="delta">${esc(x[2])}</div></div>`).join("")}</div>`;
+  const bars = `<div class="dchart"><div class="dch-h">${esc(D.chart)}</div><div class="bars">${vals.map((v,i)=>`<div class="bar"><span class="bv">${v}</span><i style="height:${Math.max(8,Math.round(v/mx*100))}%"></i><span class="bd">${esc(D.days[i])}</span></div>`).join("")}</div></div>`;
+  const callCard = (c,i,full) => `<div class="call-card"><div class="who"><div class="ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</div><div><div class="nm">${esc(c[0])}</div><div class="mt">${esc(c[1])}</div></div><span class="tag ${c[3]}" style="margin-left:auto;">${esc(T[c[3]])}</span></div><div class="sm">${esc(fill(c[2]))}</div>`+
+    (full && i===0 && s.script ? `<div class="tr-box"><div class="tr-t">${esc(D.transcript)}</div>${s.script.map(l=>`<div class="tr-line"><b>${l[0]==="agent"?esc(aName()):esc(first(c[0]))} :</b> ${esc(fill(l[1]))}</div>`).join("")}</div>` : "")+
+    `<div class="nx">→ ${esc(g("dash.next"))} : ${esc(fill(c[4]))}</div></div>`;
+  const msgs = calls.map((c,i)=>`<div class="feed-row wrapm"><div class="feed-ico">💬</div><div class="tx"><b>${esc(c[0])}</b> <small style="display:inline;">· ${esc(D.smsLbl)}</small><div class="draft"><b>${esc(aName())}</b> — ${esc(D.sms.split("{n}").join(first(c[0])).split("{a}").join(aName()).split("{x}").join(fill(c[4])))}</div></div><span class="tag new">${esc(D.sent)}</span></div>`).join("")+
+    `<div class="feed-row wrapm"><div class="feed-ico">🟢</div><div class="tx"><b>${esc(D.wa[0])}</b> <small style="display:inline;">· ${esc(D.wa[1])}</small><div class="draft"><b>${esc(aName())}</b> — ${esc(D.wa[2].split("{a}").join(aName()))}</div></div><span class="tag info">${esc(D.wa[3])}</span></div>`;
+  const DAYIDX = {lundi:0,monday:0,lunes:0,mardi:1,tuesday:1,martes:1,mercredi:2,wednesday:2,miercoles:2,jeudi:3,thursday:3,jueves:3,vendredi:4,friday:4,viernes:4,samedi:5,saturday:5,sabado:5};
+  const dayOf = txt => { const m = txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").match(/\b(lundi|monday|lunes|mardi|tuesday|martes|mercredi|wednesday|miercoles|jeudi|thursday|jueves|vendredi|friday|viernes|samedi|saturday|sabado)\b/); return m ? DAYIDX[m[1]] : -1; };
+  const evs = calls.filter(c=>/\d/.test(c[4])).map(c=>({c, d: dayOf(c[4])}));
+  const used = new Set(evs.filter(e=>e.d>=0).map(e=>e.d)), spare = [0,2,3,1,4,5].filter(d=>!used.has(d));
+  evs.forEach(e=>{ if(e.d<0) e.d = spare.shift(); });
+  const week = `<div class="wk">${[0,1,2,3,4,5].map(d=>{ const here = evs.filter(e=>e.d===d);
+    return `<div class="wk-col"><div class="wk-h">${esc(D.days[d])}</div>${here.map(e=>`<div class="wk-ev"><b>${esc(fill(e.c[4]))}</b><small>${esc(e.c[0])}</small></div>`).join("")}<div class="wk-free">${esc(D.free)}</div>${here.length?"":'<div class="wk-free">'+esc(D.free)+'</div>'}</div>`; }).join("")}</div>`;
+  const soc = `<p class="dnote">${esc(D.socNote)}</p><div class="soc-grid">${D.soc.map(x=>`<div class="soc-card"><div class="h"><b>${x[1]} ${esc(x[0])}</b><span>${esc(D.week)}</span></div><div class="soc-kpis">${x[2].map(k=>`<div><b>${esc(k[1])}</b><span>${esc(k[0])}</span></div>`).join("")}</div></div>`).join("")}</div>`;
+  const contacts = `<p class="dnote">${esc(D.contactsNote)}</p>`+calls.map((c,i)=>`<div class="feed-row"><div class="ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</div><div class="tx"><b>${esc(c[0])}</b><small>${esc(D.last)} · ${esc(c[1])}</small></div><span class="tag ${c[3]}">${esc(T[c[3]])}</span></div>`).join("");
+  const panes = [
+    tiles+bars+`<div class="dch-h" style="margin:18px 0 8px;">${esc(D.recent)}</div>`+calls.map((c,i)=>callCard(c,i,false)).join(""),
+    calls.map((c,i)=>callCard(c,i,true)).join(""), msgs, week, soc, contacts];
+  document.getElementById("dtabs").innerHTML = D.tabs.map((t,i)=>`<button type="button" class="dtab${i===dashTab?" active":""}" role="tab" aria-selected="${i===dashTab}" data-i="${i}">${esc(t)}</button>`).join("");
+  document.getElementById("dpanes").innerHTML = panes.map((h,i)=>`<div class="dpane" role="tabpanel" style="display:${i===dashTab?"block":"none"}">${h}</div>`).join("");
+  document.querySelectorAll("#dtabs .dtab").forEach(b=>b.addEventListener("click",()=>{ dashTab = +b.dataset.i;
+    document.querySelectorAll("#dtabs .dtab").forEach((x,i)=>{ x.classList.toggle("active", i===dashTab); x.setAttribute("aria-selected", i===dashTab); });
+    document.querySelectorAll("#dpanes .dpane").forEach((x,i)=>x.style.display = i===dashTab?"block":"none"); }));
 }
 
 /* ---------- calculator ---------- */

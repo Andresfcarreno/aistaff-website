@@ -57,6 +57,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 
 ## Página principal (general) y sectores
 - La home ya no es una página aparte: es el sector **"general"** de `tools/build_sectors.py`, así que **se ve igual que las páginas de sector** (3 de octubre de 2026). Texto en `tools/general_content.py`; precios y textos comunes en `tools/generic_text.py`.
+- **Dashboard de muestra con 6 pestañas intercambiables** (Aperçu con gráfica semanal, Appels con transcripción, Messages, Agenda semanal, Réseaux, Contacts), armado desde los datos de cada sector; rótulos en `tools/dash_text.py`. Datos siempre marcados como demostración.
 - Secciones: hero con celular flotante y llamada de ejemplo, problema y qué hace, 4 funciones, **calculadora** (cuánto cuesta un empleado que contesta el teléfono frente a AI Staff), cómo funciona, **dashboard de muestra**, **integraciones** (logos), **3 planes**, preguntas y cierre.
 - La calculadora general usa `mode: "human"`: horas por semana × salario por hora × 4,33. Los valores iniciales son solo ejemplos; la cifra de 3 500 a 4 500 $ de una asistente humana sigue siendo una estimación.
 - La home v2 anterior se conserva en `tools/home_source.html` solo como fuente de estilos y efectos del generador. La home "simple" de planes que existió el 2 de octubre se eliminó.

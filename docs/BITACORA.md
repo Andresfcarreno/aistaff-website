@@ -34,6 +34,7 @@
 ### 3.1 Sitio
 - **Página principal** (`index.html`, **generada**): el 2 de octubre se hizo una home mínima aparte, pero al dueño le gustaron más las páginas de sector. **El 3 de octubre la home pasó a ser el sector "general"** de `tools/build_sectors.py`: mismo diseño que los sectores (celular flotante, dashboard de muestra, integraciones), con una calculadora que compara un empleado real con AI Staff. Contenido en `tools/general_content.py`.
   - `tools/home_source.html` (home v2 anterior) se conserva **solo porque el generador toma de ahí el CSS y los efectos**.
+  - **Dashboard de muestra con pestañas** (3 oct.): en todas las páginas generadas, 6 pestañas intercambiables (Aperçu, Appels, Messages, Agenda, Réseaux, Contacts) derivadas de los datos de cada sector; rótulos en `tools/dash_text.py`. Las citas de la agenda caen en el día que dice su texto.
   - Se eliminaron `tools/build_home.py`, `home_template.html`, `plans.json` y `sectors_menu.json`.
 - Las 8 páginas de sector se regeneraron con los planes nuevos (`python3 tools/build_sectors.py`; `generic_text.py` y `sectors_*.py` ya no mencionan "Exécutive", "Dédiée" ni a un equipo humano).
 - Se corrigió un desborde horizontal en las páginas de sector entre 1100 y 1250 px (`html{overflow-x:clip}` en la plantilla).
