@@ -18,7 +18,7 @@
 ## Estructura del sitio (estático, sin build)
 | Ruta | Archivo | Notas |
 |---|---|---|
-| `/` | `index.html` (**generado**: `python3 tools/build_sectors.py`) | Página principal = el sector "general" de la misma plantilla de los sectores (celular flotante, dashboard de muestra, calculadora empleado vs. AI Staff, integraciones, planes y preguntas). Contenido FR/EN/ES en `tools/general_content.py`. FR por defecto, EN/ES, claro/oscuro. Parámetros `?lang= &a=sofia\|alex\|tomas`. |
+| `/` | `index.html` (**generado**: `python3 tools/build_sectors.py`) | Página principal **sencilla** (4 oct. 2026): plantilla `tools/home_template.html`; los planes, precios y la lista de sectores se inyectan desde `tools/generic_text.py` y `tools/sectors_*.py`. Hero con **orbe geométrico** (esfera geodésica en canvas) que habla: «Écouter Sofía» reproduce una llamada de ejemplo con la voz del navegador, subtítulos palabra por palabra y el texto que recibe el dueño; y botón para llamar a la línea demo. Luego: cómo funciona (3 pasos), qué hace (hoy / por fases), 3 planes, sectores, preguntas y cierre. FR por defecto, EN/ES, claro/oscuro, `?lang= &a=sofia\|alex\|tomas`. |
 | `/demo/` | `demo/index.html` | Dashboard generalizado: Aperçu, Appels, Messages, Courriel, Agenda, Briefings, Réseaux, Contacts y chat con la asistente. `?v=immobilier` redirige a `/immobilier/demo/` |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard inmobiliario original, con la marca unificada |
 | `/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/`, `/dental/` | **generadas**, no se editan a mano | Plantilla común en `tools/build_sectors.py`, que toma el CSS, el orbe y los avatares de `tools/home_source.html` (la home v2 anterior, conservada solo como fuente de estilos). El contenido FR/EN/ES está en `tools/sectors_*.py` y `generic_text.py`. Después de cambiar la home o el contenido: `python3 tools/build_sectors.py` (genera también la página principal). |
@@ -59,12 +59,10 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Nunca poner claves API en el HTML. Todo pasa por Make o por una función serverless.
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
-## Página principal (general) y sectores
-- La home ya no es una página aparte: es el sector **"general"** de `tools/build_sectors.py`, así que **se ve igual que las páginas de sector** (3 de octubre de 2026). Texto en `tools/general_content.py`; precios y textos comunes en `tools/generic_text.py`.
-- **Dashboard de muestra con 6 pestañas intercambiables** (Aperçu con gráfica semanal, Appels con transcripción, Messages, Agenda semanal, Réseaux, Contacts), armado desde los datos de cada sector; rótulos en `tools/dash_text.py`. Datos siempre marcados como demostración.
-- Secciones: hero con celular flotante y llamada de ejemplo, problema y qué hace, 4 funciones, **calculadora** (cuánto cuesta un empleado que contesta el teléfono frente a AI Staff), cómo funciona, **dashboard de muestra**, **integraciones** (logos), **3 planes**, preguntas y cierre.
-- La calculadora general usa `mode: "human"`: horas por semana × salario por hora × 4,33. Los valores iniciales son solo ejemplos; la cifra de 3 500 a 4 500 $ de una asistente humana sigue siendo una estimación.
-- La home v2 anterior se conserva en `tools/home_source.html` solo como fuente de estilos y efectos del generador. La home "simple" de planes que existió el 2 de octubre se eliminó.
+## Página principal y sectores
+- **Home sencilla (4 oct. 2026):** el dueño la quiso más vacía y entendible, con un orbe llamativo que hable. Texto en el diccionario `STR` de `tools/home_template.html`; planes y precios vienen de `tools/generic_text.py` (no se escriben a mano). La demo de voz es un ejemplo con la voz del navegador y lo dice; la voz real es la de la línea demo.
+- La asistente del ejemplo **nunca confirma** la cita: dice que el equipo confirma por texto (igual que la voz real de los clientes).
+- **Páginas de sector:** siguen con el diseño completo (celular flotante, dashboard de muestra con 6 pestañas, calculadora, integraciones). `tools/general_content.py` ya no se usa (era la home del 3 oct. con el diseño de sector).
 - **Siluetas de persona:** son SVG propios (`avatarSVG`): Sofía femenina; Alex neutra con anillo arcoíris sutil; Tomás masculina.
 - **Idiomas:** los tres planes hablan FR, EN y ES. "20+ langues" ya no se usa.
 - **Dashboard** (`/demo/`): gráfica apilada por canal, gráfica de línea con crosshair, vista de semana en la agenda, tarjetas de Langues e Intégrations.

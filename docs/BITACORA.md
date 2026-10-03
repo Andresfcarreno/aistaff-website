@@ -168,3 +168,9 @@ alter function public.leads_fill_from_payload() set search_path = '';
 - `TWILIO_ACCOUNT_SID` y `NOTIFY_PHONE` (celular de Andrés) guardados en el **Vault** de Supabase (las funciones leen primero los secretos de Edge Functions y, si no están, el Vault). `TWILIO_AUTH_TOKEN` ya existía.
 - Probado: `lead-notify` mandó el SMS de prueba (Twilio respondió 201). El mismo SID sirve para el SMS de resumen al dueño de cada cliente (`voice`).
 - Correo activo: `RESEND_API_KEY` en el Vault; probado (Resend respondió 200, remitente leads@meetaistaff.com → hello@meetaistaff.com). Los dos avisos (correo y SMS) funcionan.
+
+## 14. 4 de octubre: home sencilla con orbe que habla
+- A pedido del dueño, la página principal pasó a ser **más vacía y fácil de entender**. Plantilla nueva `tools/home_template.html`; `tools/build_sectors.py` ya no genera la home con el diseño de sector, sino desde esta plantilla (planes, precios y sectores siguen saliendo de `generic_text.py` y `sectors_*.py`).
+- Hero: título, una frase, «Écouter Sofía» y «Appeler la ligne démo». A la derecha, **orbe geométrico** (esfera geodésica con órbitas) que se deforma y brilla cuando la asistente habla. La demo usa la voz del navegador (speechSynthesis) con subtítulos palabra por palabra; si el navegador no tiene voz, sigue con tiempos simulados. Al final aparece el texto que recibe el dueño.
+- Secciones: cómo funciona (3 pasos), qué hace (hoy / por fases), 3 planes iguales, sectores (enlaces), 5 preguntas, cierre.
+- Revisado con capturas: escritorio claro y oscuro, móvil, FR/EN/ES, sin desborde horizontal ni errores de consola.

@@ -525,7 +525,7 @@ def build():
             d = re.search(r' d="([^"]+)"', open(path, encoding="utf-8").read()).group(1)
             logos[k] = [title, color, d]
     sectors = sector_list()
-    for k in ORDER + ["general"]:
+    for k in ORDER:
         sec = {lang: sector(k, lang) for lang in ["fr", "en", "es"]}
         used = set()
         for lang in sec: used.update(sec[lang]["ints"]); used.update(c[0] for c in sec[lang]["fcards"])
@@ -544,23 +544,14 @@ def build():
         os.makedirs(os.path.dirname(out), exist_ok=True)
         open(out, "w", encoding="utf-8").write(page)
         print("wrote", out, len(page))
-    # sectors block for the home page
-    home_sectors = {}
-    for lang in ["fr", "en", "es"]:
-        home_sectors[lang] = []
-        for k in ORDER:
-            s = sector(k, lang)
-            quote = s["script"][4][1]
-            home_sectors[lang].append({"id": k, "slug": SLUG[k], "ic": s["ic"], "name": s["name"], "tab": s["tab"],
-                "h": s["painH"], "pain": s["painP"], "does": s["does"][:3], "line": "« " + quote + " »" if lang == "fr" else ("“" + quote + "”" if lang == "en" else "«" + quote + "»")})
-    block = "/*SECTORS:start*/const HOME_SECTORS=" + json.dumps(home_sectors, ensure_ascii=False) + ";/*SECTORS:end*/"
-    h = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-    if "/*SECTORS:start*/" in h:
-        h = re.sub(r"/\*SECTORS:start\*/.*?/\*SECTORS:end\*/", lambda m: block, h, flags=re.S)
-        open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(h)
-        print("updated HOME_SECTORS in index.html")
-    else:
-        print("NOTE: add /*SECTORS:start*//*SECTORS:end*/ marker to index.html to inject sectors")
+    # Página principal (sencilla, orbe geométrico): tools/home_template.html + planes y sectores
+    data = {lang: {"plans": G[lang]["plans"], "priceTop": G[lang]["priceTop"], "per": G[lang]["price.per"],
+                   "rollout": G[lang]["rollout"]} for lang in ["fr", "en", "es"]}
+    data["sectors"] = sectors
+    home = open(os.path.join(HERE, "home_template.html"), encoding="utf-8").read()
+    home = home.replace("__DATA__", json.dumps(data, ensure_ascii=False))
+    open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(home)
+    print("wrote", os.path.join(ROOT, "index.html"), len(home))
 
 if __name__ == "__main__":
     build()
