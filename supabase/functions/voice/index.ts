@@ -150,6 +150,101 @@ const ANALYSIS_SCHEMA = {
   },
 };
 
+// Llamadas a la línea de un CLIENTE (no la demo): resumen para el dueño del negocio.
+const DEMO_TENANT = "00000000-0000-0000-0000-000000000001";
+type Tenant = { id: string; name: string; business_info: string | null; greeting: string | null; notify_phone: string | null; report_lang: string | null; twilio_number: string | null };
+const CLIENT_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["caller_name", "language", "summary", "sentiment", "intent", "callback_number", "requested_time"],
+  properties: {
+    caller_name: { type: ["string", "null"] },
+    language: { type: "string", enum: ["fr", "en", "es"] },
+    summary: { type: "string" },
+    sentiment: { type: "string", enum: ["positive", "neutral", "negative"] },
+    intent: { type: "string", enum: ["appointment_request", "quote_request", "info", "callback", "complaint", "other"] },
+    callback_number: { type: ["string", "null"] },
+    requested_time: { type: ["string", "null"] },
+  },
+};
+const LANG_NAME: Record<string, string> = { es: "Spanish", fr: "French", en: "English" };
+
+async function clientTenant(toNumber: string | null): Promise<Tenant | null> {
+  if (!toNumber) return null;
+  const r = await db(`tenants?twilio_number=eq.${encodeURIComponent(toNumber)}&select=id,name,business_info,greeting,notify_phone,report_lang,twilio_number&limit=1`);
+  const t: Tenant | undefined = r.ok ? (await r.json())[0] : undefined;
+  return t && t.id !== DEMO_TENANT && t.business_info?.trim() ? t : null;
+}
+
+// Mismo saludo y guion que voice-relay/src/prompt.ts (clientGreeting / clientSystem).
+function clientGreeting(t: Tenant): string {
+  return t.greeting?.trim() ||
+    `Bonjour, vous avez joint ${t.name}. Ici l'adjointe virtuelle; cet appel est transcrit. Comment puis-je vous aider? I also speak English. También hablo español.`;
+}
+function clientSystem(t: Tenant): string {
+  return `You are the AI phone assistant (receptionist) of "${t.name}", a business in the Montreal area. You answer its incoming calls when the team cannot.
+
+You opened the call with: "${clientGreeting(t)}"
+
+BUSINESS INFORMATION (your only source of truth about this business):
+"""
+${t.business_info?.trim()}
+"""
+
+You are speaking on the phone. Your reply is read aloud by a text-to-speech voice, so:
+- Plain spoken sentences only. No lists, no markdown, no emojis, no URLs.
+- 1 or 2 short sentences per turn. One question at a time. Be warm, calm and efficient.
+- The caller's words come from speech recognition and may contain errors; if something is unclear, ask them to repeat.
+
+LANGUAGE
+- Always reply in the language the caller is speaking right now: French (Quebec), English or Spanish. Never mix languages in one sentence.
+- When you switch language, start your reply with the tag [[LANG:en]], [[LANG:es]] or [[LANG:fr]] (nothing before it). Only use the tag when switching.
+
+RULES (non-negotiable)
+- You are an AI assistant, and you already said the call is transcribed. If asked whether you are human, say clearly that you are an AI assistant.
+- Use ONLY the business information above. Never invent prices, hours, services, availability, policies, names or promises. If the answer is not there, say you will pass the question to the team and take a message.
+- Appointments and quotes: you cannot see the real calendar. Ask what they need, their preferred day and time (inside the business hours if they are listed), their name and the best number to reach them. Then say the team will confirm by text or by phone. Never say an appointment is confirmed or booked.
+- Messages: get the caller's name, the reason for the call and the best number and time to call back. Read the number back to confirm it.
+- Emergencies (fire, injury, danger, a medical emergency): tell them to hang up and call 911 now.
+- Never give medical, legal, financial or real estate brokerage advice. Never ask for passwords, card numbers or bank details.
+- Do not talk about AI Staff. Only if asked who provides this assistant, say "AI Staff, at meetaistaff point com".
+- If the caller is rude or the call is clearly spam, end politely.
+
+ENDING
+- Before ending, briefly confirm what you will pass on to the team. When the conversation is over, end your final reply with the tag [[END]].`;
+}
+const CLIENT_TXT = {
+  bye: {
+    fr: "Je n'entends plus rien, alors je vais raccrocher. Rappelez-nous quand vous voulez. Bonne journée!",
+    en: "I can't hear anything, so I'll hang up now. Call us back anytime. Have a great day!",
+    es: "No escucho nada, así que voy a colgar. Llámenos cuando quiera. ¡Que tenga un buen día!",
+  },
+  limit: {
+    fr: "Merci beaucoup pour votre appel! L'équipe vous recontacte. Bonne journée!",
+    en: "Thank you for calling! The team will get back to you. Have a great day!",
+    es: "¡Muchas gracias por llamar! El equipo le contactará. ¡Que tenga un buen día!",
+  },
+};
+
+// SMS al dueño con el resumen de la llamada (sale del número del cliente).
+async function notifyOwner(t: Tenant, s: Session, a: Record<string, unknown>) {
+  if (!t.notify_phone) return;
+  const [sid, token] = await Promise.all([secret("TWILIO_ACCOUNT_SID"), secret("TWILIO_AUTH_TOKEN")]);
+  if (!sid || !token) {
+    console.warn("owner sms skipped: missing TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN");
+    return;
+  }
+  const who = [a.caller_name, a.callback_number ?? s.from_number].filter((x) => typeof x === "string" && x).join(" · ");
+  const when = typeof a.requested_time === "string" && a.requested_time ? ` (${a.requested_time})` : "";
+  const body = `${t.name}: llamada de ${who || "número oculto"}${when}. ${a.summary ?? ""} Panel: meetaistaff.com/demo/`.slice(0, 600);
+  const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+    method: "POST",
+    headers: { Authorization: `Basic ${btoa(`${sid}:${token}`)}`, "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ From: t.twilio_number ?? "+14388058804", To: t.notify_phone, Body: body }),
+  });
+  if (!r.ok) console.error("owner sms failed", r.status, (await r.text()).slice(0, 200));
+}
+
 // ---------------------------------------------------------------- helpers
 const secretCache = new Map<string, string>();
 async function secret(name: string): Promise<string | null> {
@@ -240,10 +335,11 @@ async function reply(s: Session): Promise<{ text: string; lang: Lang; end: boole
   if (!c) throw new Error("ANTHROPIC_API_KEY missing");
   const first = s.turns.findIndex((t) => t.role === "user");
   const messages = s.turns.slice(first).map((t) => ({ role: t.role, content: t.text }));
+  const t = await clientTenant(s.to_number);
   const res = await c.messages.create({
     model: MODEL,
     max_tokens: 300,
-    system: `${SYSTEM}\n\nYou opened the call with: "${GREETING}"`,
+    system: t ? clientSystem(t) : `${SYSTEM}\n\nYou opened the call with: "${GREETING}"`,
     messages,
   });
   if (res.stop_reason === "refusal") throw new Error("refusal");
@@ -271,16 +367,17 @@ async function hmacHex(key: string, data: string): Promise<string> {
 // Fase 2: si hay servidor de streaming configurado (secreto RELAY_URL, p. ej. wss://…/ws),
 // la llamada va por ConversationRelay. Si esa sesión falla, Twilio vuelve a ?step=relay-end
 // y ahí se sigue en modo por turnos.
-async function relayTwiml(sid: string): Promise<string | null> {
+async function relayTwiml(sid: string, greeting = GREETING, tenantId?: string): Promise<string | null> {
   const url = await secret("RELAY_URL");
   const key = await secret("RELAY_SECRET");
   if (!url || !key) return null;
   const token = await hmacHex(key, sid);
-  const wsUrl = `${url}${url.includes("?") ? "&" : "?"}sid=${encodeURIComponent(sid)}`; // un Durable Object por llamada
-  return `<Connect action="${esc(`${BASE}?step=relay-end`)}"><ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" welcomeGreetingInterruptible="speech" language="multi" transcriptionProvider="Deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${esc(RELAY_VOICE)}" interruptible="speech"><Parameter name="token" value="${token}"/></ConversationRelay></Connect>`;
+  const wsUrl = `${url}${url.includes("?") ? "&" : "?"}sid=${encodeURIComponent(sid)}${tenantId ? `&t=${encodeURIComponent(tenantId)}` : ""}`; // un Durable Object por llamada; t = cliente
+  return `<Connect action="${esc(`${BASE}?step=relay-end`)}"><ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(greeting)}" welcomeGreetingInterruptible="speech" language="multi" transcriptionProvider="Deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${esc(RELAY_VOICE)}" interruptible="speech"><Parameter name="token" value="${token}"/></ConversationRelay></Connect>`;
 }
 
-function gatherGreeting() {
+function gatherGreeting(t?: Tenant | null) {
+  if (t) return gather(say(clientGreeting(t), "fr")) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`;
   return gather(say(TXT.greeting.fr, "fr") + say("I also speak English.", "en") + say("También hablo español.", "es")) +
     `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`;
 }
@@ -292,13 +389,14 @@ async function onRelayEnd(p: URLSearchParams) {
   if (handoff) return twiml("<Hangup/>"); // la asistente terminó la llamada
   console.warn("relay session ended without handoff", sid, status, p.get("ErrorMessage") ?? "");
   if (status === "completed" || status === "ended") return twiml("<Hangup/>");
-  return twiml(gatherGreeting()); // respaldo: modo por turnos
+  return twiml(gatherGreeting(await clientTenant(p.get("To")))); // respaldo: modo por turnos
 }
 
 async function onIncoming(p: URLSearchParams) {
   const sid = p.get("CallSid")!;
-  const greeting = GREETING;
-  const relay = await relayTwiml(sid);
+  const tenant = await clientTenant(p.get("To")); // número de un cliente → su saludo y su guion
+  const greeting = tenant ? clientGreeting(tenant) : GREETING;
+  const relay = await relayTwiml(sid, greeting, tenant?.id);
   await saveSession({
     call_sid: sid,
     from_number: p.get("From"),
@@ -307,7 +405,7 @@ async function onIncoming(p: URLSearchParams) {
     turns: [{ role: "assistant", text: greeting, at: new Date().toISOString() }],
     silences: 0,
   });
-  return twiml(relay ?? gatherGreeting());
+  return twiml(relay ?? gatherGreeting(tenant));
 }
 
 async function onTurn(p: URLSearchParams) {
@@ -319,15 +417,16 @@ async function onTurn(p: URLSearchParams) {
   }
   const now = new Date().toISOString();
   const speech = (p.get("SpeechResult") ?? "").trim();
+  const T = (await clientTenant(s.to_number)) ? { ...TXT, ...CLIENT_TXT } : TXT;
 
   // Silencio
   if (!speech) {
     const silences = s.silences + 1;
     if (silences >= 2) {
-      s.turns.push({ role: "assistant", text: TXT.bye[s.lang], at: now });
+      s.turns.push({ role: "assistant", text: T.bye[s.lang], at: now });
       await saveSession({ call_sid: sid, turns: s.turns, silences, ended: true });
       EdgeRuntime.waitUntil(finalize(sid, "silence"));
-      return twiml(say(TXT.bye[s.lang], s.lang) + "<Hangup/>");
+      return twiml(say(T.bye[s.lang], s.lang) + "<Hangup/>");
     }
     await saveSession({ call_sid: sid, silences });
     return twiml(gather(say(TXT.still[s.lang], s.lang)) + `<Redirect method="POST">${esc(`${BASE}?step=turn`)}</Redirect>`);
@@ -338,10 +437,10 @@ async function onTurn(p: URLSearchParams) {
   // Límites de seguridad (costo)
   const userTurns = s.turns.filter((t) => t.role === "user").length;
   if (userTurns > MAX_TURNS || Date.now() - new Date(s.started_at).getTime() > MAX_CALL_MS) {
-    s.turns.push({ role: "assistant", text: TXT.limit[s.lang], at: now });
+    s.turns.push({ role: "assistant", text: T.limit[s.lang], at: now });
     await saveSession({ call_sid: sid, turns: s.turns, ended: true });
     EdgeRuntime.waitUntil(finalize(sid, "max-duration"));
-    return twiml(say(TXT.limit[s.lang], s.lang) + "<Hangup/>");
+    return twiml(say(T.limit[s.lang], s.lang) + "<Hangup/>");
   }
 
   let r: { text: string; lang: Lang; end: boolean };
@@ -381,6 +480,10 @@ async function finalize(sid: string, reason?: string) {
   const started = new Date(s.started_at);
   const ended = new Date(s.last_activity);
   const disconnection = reason ?? (s.ended ? "assistant-ended-call" : "customer-ended-call");
+
+  // Número de un cliente: reporte para su dueño, sin crear leads de AI Staff.
+  const tenant = await clientTenant(s.to_number);
+  if (tenant) return finalizeClient(tenant, s, transcript, disconnection, hasUser);
 
   let a: Record<string, unknown> = {
     caller_name: null, language: s.lang, summary: null, sentiment: null, intent: null, qualified: false,
@@ -432,6 +535,57 @@ async function finalize(sid: string, reason?: string) {
   // Un interesado se vuelve lead (misma bandeja que el formulario de /onboarding/).
   const email = typeof a.email === "string" && /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(a.email) ? a.email.toLowerCase() : null;
   if (a.qualified || email) await saveCallLead(s, a, email);
+}
+
+async function finalizeClient(t: Tenant, s: Session, transcript: string, disconnection: string, hasUser: boolean) {
+  const report = LANG_NAME[t.report_lang ?? "es"] ?? "Spanish";
+  let a: Record<string, unknown> = { caller_name: null, language: s.lang, summary: null, sentiment: null, intent: null };
+  if (hasUser) {
+    try {
+      const c = await claude();
+      if (c) {
+        const res = await c.beta.messages.create({
+          model: ANALYSIS_MODEL,
+          max_tokens: 2048,
+          output_config: { effort: "low", format: { type: "json_schema", schema: CLIENT_SCHEMA } },
+          betas: ["server-side-fallback-2026-07-01"],
+          fallbacks: "default",
+          messages: [{
+            role: "user",
+            content:
+              `This is a call to the phone line of the business "${t.name}", answered by its AI assistant. Write the report for the business owner. caller_name: the caller's name or null. language: the language the caller spoke. summary: 1 to 3 short sentences in ${report} for the owner: who called, what they want, and what the assistant said it would pass on; include any appointment or quote details. Do not invent anything. sentiment: the caller's. intent: appointment_request, quote_request, info, callback, complaint or other. callback_number: a number the caller gave to call back, or null (their caller ID is ${s.from_number ?? "unknown"}). requested_time: the day or time they asked for, in their own words, or null.\n\nCall transcript:\n${transcript}\nCall ended reason: ${disconnection}`,
+          }],
+        });
+        if (res.stop_reason !== "refusal") a = JSON.parse(textOf(res.content));
+      }
+    } catch (e) {
+      console.error("client analysis failed", e);
+    }
+  }
+  const started = new Date(s.started_at);
+  const ended = new Date(s.last_activity);
+  await db("calls?on_conflict=retell_call_id", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify({
+      retell_call_id: s.call_sid,
+      tenant_id: t.id,
+      agent_id: "aistaff-voice",
+      phone_number: s.from_number,
+      caller_name: a.caller_name ?? null,
+      language: a.language ?? s.lang,
+      started_at: s.started_at,
+      ended_at: s.last_activity,
+      duration_sec: Math.max(0, Math.round((ended.getTime() - started.getTime()) / 1000)),
+      transcript,
+      summary: a.summary ?? null,
+      sentiment: a.sentiment ?? null,
+      intent: a.intent ?? null,
+      qualified: false,
+      disconnection_reason: disconnection,
+    }),
+  });
+  if (hasUser) await notifyOwner(t, s, a);
 }
 
 async function saveCallLead(s: Session, a: Record<string, unknown>, email: string | null) {

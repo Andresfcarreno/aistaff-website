@@ -3,8 +3,8 @@
 // durante toda la llamada.
 
 import { DurableObject } from "cloudflare:workers";
-import { handleCall, type Env } from "./call";
-import { GREETING } from "./prompt";
+import { handleCall, loadTenant, type Env } from "./call";
+import { GREETING, clientGreeting, isClient } from "./prompt";
 
 // Voz femenina de ElevenLabs (Sarah) con el modelo multilingüe rápido: velocidad_estabilidad_similitud.
 // Para cambiarla: reemplaza el ID por el de otra voz de ElevenLabs.
@@ -16,11 +16,12 @@ const esc = (v: string) =>
   v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export class CallSession extends DurableObject<Env> {
-  async fetch(_req: Request): Promise<Response> {
+  async fetch(req: Request): Promise<Response> {
+    const tenantId = new URL(req.url).searchParams.get("t");
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
     server.accept();
-    handleCall(server, this.env);
+    handleCall(server, this.env, tenantId);
     return new Response(null, { status: 101, webSocket: client });
   }
 }
@@ -44,11 +45,23 @@ export default {
       // Llamada entrante de Twilio: TwiML de ConversationRelay (STT + TTS los maneja Twilio;
       // este worker solo recibe texto y responde texto por WebSocket).
       console.log("Twilio webhook - responding with ConversationRelay TwiML");
-      const wsUrl = `wss://${url.host}/ws?sid=call-${crypto.randomUUID()}`;
+      // ¿El número llamado es de un cliente? Entonces su saludo y su guion.
+      let greeting = GREETING;
+      let t = "";
+      const form = req.method === "POST" ? await req.formData().catch(() => null) : null;
+      const to = form?.get("To");
+      if (typeof to === "string" && to) {
+        const tenant = await loadTenant(env, { number: to });
+        if (isClient(tenant)) {
+          greeting = clientGreeting(tenant);
+          t = `&t=${encodeURIComponent(tenant.id)}`;
+        }
+      }
+      const wsUrl = `wss://${url.host}/ws?sid=call-${crypto.randomUUID()}${t}`;
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
-    <ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(GREETING)}" language="multi" transcriptionProvider="deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${VOICE}" interruptible="true" />
+    <ConversationRelay url="${esc(wsUrl)}" welcomeGreeting="${esc(greeting)}" language="multi" transcriptionProvider="deepgram" speechModel="nova-3-general" ttsProvider="ElevenLabs" voice="${VOICE}" interruptible="true" />
   </Connect>
 </Response>`;
 

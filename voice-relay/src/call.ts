@@ -5,7 +5,7 @@
 // analiza la llamada y la pasa a `calls`.
 
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM, GREETING } from "./prompt";
+import { SYSTEM, GREETING, clientGreeting, clientSystem, isClient, type Tenant } from "./prompt";
 
 export interface Env {
   CALLS: DurableObjectNamespace;
@@ -21,7 +21,7 @@ type Turn = { role: "assistant" | "user"; text: string; at: string };
 
 const MAX_TURNS = 40;
 
-function db(env: Env, path: string, init: RequestInit = {}): Promise<Response> {
+export function db(env: Env, path: string, init: RequestInit = {}): Promise<Response> {
   const key = env.SUPABASE_SERVICE_ROLE_KEY;
   const headers = new Headers(init.headers);
   headers.set("apikey", key);
@@ -58,10 +58,38 @@ function guessLang(text: string, fallback: Lang): Lang {
   return best[1] > 0 ? best[0] : fallback;
 }
 
-export function handleCall(socket: WebSocket, env: Env) {
-  console.log("handleCall invoked - WebSocket connection starting");
+// Datos del cliente (fila de `tenants`) por id o por el número de Twilio llamado.
+export async function loadTenant(env: Env, by: { id?: string; number?: string }): Promise<Tenant | null> {
+  const filter = by.id ? `id=eq.${encodeURIComponent(by.id)}` : by.number ? `twilio_number=eq.${encodeURIComponent(by.number)}` : "";
+  if (!filter) return null;
+  try {
+    const r = await db(env, `tenants?${filter}&select=id,name,business_info,greeting,lang&limit=1`);
+    const rows: Tenant[] = r.ok ? await r.json() : [];
+    return rows[0] ?? null;
+  } catch (e) {
+    console.error("tenant lookup failed", e);
+    return null;
+  }
+}
 
-  const client = new Anthropic({
+export function handleCall(socket: WebSocket, env: Env, tenantId?: string | null) {
+  console.log("handleCall invoked - WebSocket connection starting", tenantId ?? "demo");
+
+  // Línea demo (Sofía de AI Staff) salvo que el número llamado sea de un cliente.
+  let system = SYSTEM;
+  let greeting = GREETING;
+  let client = false;
+  const ready: Promise<void> = tenantId
+    ? loadTenant(env, { id: tenantId }).then((t) => {
+        if (isClient(t)) {
+          system = clientSystem(t);
+          greeting = clientGreeting(t);
+          client = true;
+        }
+      })
+    : Promise.resolve();
+
+  const anthropic = new Anthropic({
     apiKey: env.ANTHROPIC_API_KEY,
     baseURL: env.ANTHROPIC_BASE_URL || undefined,
     timeout: 15000,
@@ -72,7 +100,7 @@ export function handleCall(socket: WebSocket, env: Env) {
   let sid = "";
   let turns: Turn[] = [];
   let lang: Lang = "fr";
-  let current: ReturnType<typeof client.messages.stream> | null = null;
+  let current: ReturnType<typeof anthropic.messages.stream> | null = null;
   let spoken = ""; // lo que ya se mandó a Twilio en la respuesta en curso
   let greetingSent = false;
 
@@ -94,8 +122,10 @@ export function handleCall(socket: WebSocket, env: Env) {
     }).catch((e) => console.error("save failed", e));
 
   async function respond() {
+    await ready;
     if (turns.filter((t) => t.role === "user").length > MAX_TURNS) {
-      send({ type: "text", token: "Merci beaucoup! L'équipe d'AI Staff vous recontacte. Bonne journée!", last: true });
+      const bye = client ? "Merci beaucoup! L'équipe vous recontacte. Bonne journée!" : "Merci beaucoup! L'équipe d'AI Staff vous recontacte. Bonne journée!";
+      send({ type: "text", token: bye, last: true });
       setTimeout(() => send({ type: "end", handoffData: JSON.stringify({ reason: "max-turns" }) }), 6000);
       return;
     }
@@ -103,7 +133,7 @@ export function handleCall(socket: WebSocket, env: Env) {
     const messages = turns.slice(first).map((t) => ({ role: t.role, content: t.text }));
     spoken = "";
     let pending = ""; // texto retenido mientras puede ser el inicio de una etiqueta [[END]]
-    const stream = client.messages.stream({ model, max_tokens: 300, system: SYSTEM, messages });
+    const stream = anthropic.messages.stream({ model, max_tokens: 300, system, messages });
     current = stream;
     try {
       for await (const event of stream) {
@@ -157,10 +187,11 @@ export function handleCall(socket: WebSocket, env: Env) {
   }
 
   // El saludo lo dice Twilio (welcomeGreeting en el TwiML); aquí solo se registra en la sesión.
-  function recordGreeting() {
+  async function recordGreeting() {
+    await ready;
     if (greetingSent) return;
     greetingSent = true;
-    turns.push({ role: "assistant", text: GREETING, at: new Date().toISOString() });
+    turns.push({ role: "assistant", text: greeting, at: new Date().toISOString() });
     saveSession({ turns, lang });
   }
 
@@ -178,7 +209,7 @@ export function handleCall(socket: WebSocket, env: Env) {
     if (msg.type === "setup") {
       // Twilio manda quién llama y a qué número; se guarda para el dashboard.
       saveSession({ from_number: msg.from ?? null, to_number: msg.to ?? null });
-      recordGreeting();
+      await recordGreeting();
       return;
     }
 
