@@ -9,330 +9,1113 @@
 </script>
 <title>AI Staff — Votre adjointe personnelle IA</title>
 <meta name="description" content="Votre prochaine employée est une IA. Elle répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. À partir de 397 $ par mois.">
+<meta property="og:title" content="AI Staff — Votre adjointe personnelle IA">
+<meta property="og:description" content="Votre prochaine employée est une IA. Elle répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. À partir de 397 $ par mois.">
+<meta property="og:url" content="https://meetaistaff.com/">
 <link rel="canonical" href="https://meetaistaff.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230A1A33'/%3E%3Cstop offset='1' stop-color='%231F6FEB'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3EAI%3C/text%3E%3C/svg%3E">
 <style>
+
 :root{
-  --navy:#0A1A33;--blue:#1F6FEB;--blue-d:#1858C4;--cyan:#22B8E6;
-  --bg:#FBFBFD;--bg-2:#F2F4F8;--card:#FFFFFF;--ink:#1D1D1F;--muted:#5F6B7C;--line:rgba(10,26,51,.1);--accent-ink:#1858C4;
-  --shadow:0 1px 2px rgba(10,26,51,.04),0 12px 32px rgba(10,26,51,.06);
+  --navy:#0A1A33; --navy-2:#10254a;
+  --blue:#1F6FEB; --blue-d:#1858C4; --blue-soft:rgba(31,111,235,.1);
+  --bg:#EDF0F6; --bg-2:#E4E9F2;
+  --card:#FFFFFF; --ink:#0B1B33; --muted:#5B6B82;
+  --line:rgba(11,27,51,.1);
+  --green:#1FA855; --green-soft:rgba(31,168,85,.12);
+  --amber:#DD7A0A; --amber-soft:rgba(221,122,10,.13);
+  --red:#DF5454; --red-soft:rgba(223,84,84,.12);
+  --r:22px;
+  --shadow:0 10px 30px rgba(10,26,51,.08);
+  --shadow-lg:0 24px 60px rgba(10,26,51,.14);
+  --accent-ink:#1858C4;
+  color-scheme:light dark;
 }
 html[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#0A0E16;--bg-2:#0F1522;--card:#121A2B;--ink:#F5F5F7;--muted:#9BA7BA;--line:rgba(160,185,230,.14);--accent-ink:#8DB4F7;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+  --bg:#071120; --bg-2:#0A1830;
+  --card:#0D1C36; --ink:#EAF0FA; --muted:#93A3BD;
+  --line:rgba(148,178,226,.14);
+  --blue-soft:rgba(64,130,246,.16);
+  --green-soft:rgba(46,204,113,.14);
+  --amber-soft:rgba(240,165,60,.15);
+  --red-soft:rgba(240,110,110,.15);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+  --accent-ink:#7FA8F5;
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
-/* nav */
-nav.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--line)}
-.nav-in{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:-.01em;text-decoration:none}
-.mk{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800}
-.links{margin-left:auto;display:flex;align-items:center;gap:6px}
-.nl,.dd summary{font-size:14px;color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;cursor:pointer;list-style:none}
-.nl:hover,.dd summary:hover{color:var(--ink)}
-.dd{position:relative}.dd summary::-webkit-details-marker{display:none}
-.dd summary::after{content:" ▾";font-size:10px}
-.dd-menu{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:6px;display:grid}
-.dd-menu a{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:9px;text-decoration:none;font-size:14px}
-.dd-menu a:hover{background:var(--bg-2)}
-.seg{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:2px}
-.seg button{border:0;background:none;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:5px 10px;border-radius:999px;cursor:pointer}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(10,26,51,.18)}
-.tbtn{border:1px solid var(--line);background:var(--card);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--ink)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:600;font-size:16px;text-decoration:none;border-radius:999px;padding:13px 24px;border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
-.btn:hover{transform:translateY(-1px)}
-.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:var(--blue-d)}
-.btn-ghost{background:transparent;color:var(--accent-ink);border-color:var(--line)}
-.btn-sm{font-size:13.5px;padding:8px 16px}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-/* hero */
-.hero{padding-block:72px 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
-h1{font-size:clamp(40px,6.4vw,72px);line-height:1.04;letter-spacing:-.035em;font-weight:750;margin:14px 0 20px;text-wrap:balance}
-h1 em{font-style:normal;background:linear-gradient(100deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:clamp(18px,2.2vw,22px);color:var(--muted);max-width:30em}
-.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.hint{margin-top:16px;font-size:14px;color:var(--muted)}
-.hint a{font-weight:700;color:var(--ink);text-decoration:none}
-.orb-wrap{display:grid;place-items:center;min-height:300px}
-.orb{width:min(380px,80vw);aspect-ratio:1;border-radius:50%;position:relative;background:
-  radial-gradient(circle at 34% 28%,rgba(255,255,255,.9),rgba(190,225,255,.55) 10%,transparent 24%),
-  radial-gradient(circle at 62% 66%,rgba(178,143,255,.85),transparent 48%),
-  radial-gradient(circle at 30% 72%,rgba(34,200,210,.7),transparent 46%),
-  radial-gradient(circle at 50% 50%,#2F7BFF,#1446B8 52%,#0A1A55 74%);
-  box-shadow:0 30px 80px rgba(31,111,235,.35),inset 0 0 50px rgba(255,255,255,.2);animation:float 9s ease-in-out infinite}
-.orb::after{content:"";position:absolute;inset:-9%;border-radius:50%;border:1px solid rgba(31,111,235,.25)}
-@keyframes float{50%{transform:translateY(-12px) scale(1.015)}}
-@media (prefers-reduced-motion:reduce){.orb{animation:none}html{scroll-behavior:auto}}
-/* sections */
-section{padding-block:80px}
-section.alt{background:var(--bg-2)}
-h2{font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.03em;font-weight:720;text-wrap:balance;max-width:20em}
-.sub{margin-top:14px;font-size:18px;color:var(--muted);max-width:36em}
-.grid{display:grid;gap:18px;margin-top:40px}
-.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--shadow)}
-.card h3{font-size:19px;letter-spacing:-.01em;margin-bottom:6px}
-.card p{color:var(--muted);font-size:15.5px}
-.ic{font-size:26px;margin-bottom:12px}
-.step b.n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;font-size:15px;margin-bottom:14px}
-/* pricing */
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.chips span{font-size:13px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
-.plan{display:flex;flex-direction:column;gap:14px}
-.plan .pn{font-size:15px;font-weight:700;color:var(--accent-ink);letter-spacing:.04em;text-transform:uppercase}
-.plan .price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
-.plan .num{font-size:46px;font-weight:750;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.plan .per{color:var(--muted);font-size:14px}
-.plan ul{list-style:none;display:grid;gap:9px;flex:1}
-.plan li{display:grid;grid-template-columns:20px 1fr;gap:8px;font-size:15px}
-.plan li::before{content:"✓";color:var(--blue);font-weight:800}
-.plan li.inc{font-weight:700}.plan li.inc::before{content:"＋"}
-.plan .btn{width:100%}
-.note{margin-top:22px;font-size:14px;color:var(--muted);max-width:46em}
-/* sectors */
-.sec a{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:600;font-size:16px;padding:16px 18px}
-.sec a:hover{border-color:var(--blue)}
-.sec .e{font-size:24px}
-/* faq */
-.faq{margin-top:34px;max-width:760px;display:grid;gap:10px}
-.faq details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 20px}
-.faq summary{cursor:pointer;font-weight:650;font-size:17px;padding:18px 0;list-style:none;display:flex;justify-content:space-between;gap:14px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:22px;line-height:1;color:var(--muted)}
-.faq details[open] summary::after{content:"–"}
-.faq p{color:var(--muted);padding-bottom:18px;font-size:16px}
-/* final + footer */
-.final{background:linear-gradient(135deg,var(--navy),#16336A);color:#fff;border-radius:28px;padding:clamp(34px,6vw,64px);text-align:center}
-.final h2{margin:0 auto;color:#fff}.final .sub{margin-inline:auto;color:#C4D2EA}
-.final .ctas{justify-content:center}
-.final .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35)}
-.final .btn-blue{background:#fff;color:var(--navy)}
-footer{padding-block:40px 60px;color:var(--muted);font-size:14px}
-footer .row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px}
-footer a{color:var(--muted)}
-@media(max-width:860px){
-  .hero{grid-template-columns:1fr;padding-block:40px 20px}.orb-wrap{order:-1;min-height:220px}.orb{width:min(230px,60vw)}
-  .g3,.g4{grid-template-columns:1fr 1fr}
-  .nl{display:none}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;line-height:1.5;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+section[id],header[id]{scroll-margin-top:80px;}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
+  border-bottom:1px solid var(--line);}
+.nav-in{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:19px;letter-spacing:-.3px;white-space:nowrap;}
+.brand .mk{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13.5px;letter-spacing:.02em;
+  box-shadow:0 6px 16px rgba(31,111,235,.35);}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.nav-links a.nl{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none;padding:9px 12px;border-radius:12px;}
+.nav-links a.nl:hover{color:var(--ink);background:var(--blue-soft);}
+.seg{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.seg button{border:none;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);
+  padding:7px 12px;border-radius:999px;cursor:pointer;min-width:40px;}
+.seg button.active{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(10,26,51,.16);}
+.tbtn{border:1px solid var(--line);background:var(--card);width:38px;height:38px;border-radius:999px;cursor:pointer;
+  font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--ink);box-shadow:var(--shadow);flex-shrink:0;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;cursor:pointer;font:inherit;
+  font-weight:700;border-radius:16px;padding:15px 30px;font-size:16px;text-decoration:none;transition:transform .15s, box-shadow .2s;}
+.btn:active{transform:scale(.97);}
+.btn-blue{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;
+  box-shadow:0 10px 26px rgba(31,111,235,.4), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-blue:hover{box-shadow:0 14px 32px rgba(31,111,235,.5), inset 0 1px 2px rgba(255,255,255,.35);}
+.btn-ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:var(--shadow);}
+.btn-sm{padding:10px 18px;font-size:13.5px;border-radius:13px;}
+@media(max-width:900px){.nav-links a.nl{display:none;}}
+@media(max-width:560px){.nav-cta{display:none !important;}}
+
+/* ---------- Hero (v2: 3D orb, motion) ---------- */
+.hero{padding:118px 0 40px;position:relative;isolation:isolate;}
+.hero-bg{position:absolute;inset:-120px calc(50% - 50vw) 0;z-index:-1;pointer-events:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent);}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform;}
+.blob.b1{width:520px;height:520px;left:calc(50% + 60px);top:40px;background:radial-gradient(circle,#3B82F6,transparent 65%);animation:drift1 16s ease-in-out infinite;}
+.blob.b2{width:440px;height:440px;left:calc(50% - 520px);top:260px;background:radial-gradient(circle,#7C9CFF,transparent 65%);opacity:.35;animation:drift2 19s ease-in-out infinite;}
+.blob.b3{width:360px;height:360px;left:calc(50% + 380px);top:420px;background:radial-gradient(circle,#22D3EE,transparent 65%);opacity:.28;animation:drift1 22s ease-in-out infinite reverse;}
+html[data-theme="dark"] .blob{opacity:.42;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-60px,40px) scale(1.12);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(70px,-30px) scale(.92);}}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(11,27,51,.13) 1px,transparent 1.4px);background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 60% 55% at 60% 40%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 60% 55% at 60% 40%,#000 30%,transparent 75%);}
+html[data-theme="dark"] .dots{background-image:radial-gradient(rgba(148,178,226,.16) 1px,transparent 1.4px);}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center;}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:26px;}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-ink);background:var(--blue-soft);border:1px solid var(--line);
+  padding:8px 16px;border-radius:999px;margin-bottom:20px;backdrop-filter:blur(8px);}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(.7);opacity:.6;}}
+h1{font-size:clamp(42px,6.2vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.02;max-width:640px;}
+h1 em{font-style:normal;color:var(--blue);}
+h1 em .w{background:linear-gradient(100deg,#1F6FEB 10%,#5B8DEF 45%,#22B8E6 70%,#1F6FEB 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em;}
+html[data-theme="dark"] h1 em .w{background-image:linear-gradient(100deg,#6EA3F8 10%,#A5C4FF 45%,#5EE0F5 70%,#6EA3F8 100%);}
+.ready h1 em .w{animation:wordIn .9s cubic-bezier(.2,.8,.2,1) forwards,sheen 6s ease-in-out infinite;animation-delay:calc(.12s + var(--i) * .075s),1.2s;}
+@keyframes sheen{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+h1 .w{display:inline-block;opacity:0;transform:translateY(.45em) rotateX(-40deg);filter:blur(8px);transform-origin:50% 100%;}
+.ready h1 .w{animation:wordIn .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(.12s + var(--i) * .075s);}
+@keyframes wordIn{to{opacity:1;transform:none;filter:none;}}
+.rise{opacity:0;transform:translateY(18px);}
+.ready .rise{animation:riseIn .8s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,.4s);}
+@keyframes riseIn{to{opacity:1;transform:none;}}
+.rotator{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:18px 0 6px;font-size:clamp(19px,2.2vw,24px);font-weight:700;letter-spacing:-.4px;line-height:1.45;}
+.rotator .rot{position:relative;display:inline-grid;height:1.45em;line-height:1.45em;overflow:hidden;}
+.rotator .rot span{grid-area:1/1;white-space:nowrap;color:var(--accent-ink);transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .55s;}
+.rotator .rot span.in{transform:none;opacity:1;}
+.rotator .rot span.out{transform:translateY(-110%);opacity:0;}
+.rotator .rot span.wait{transform:translateY(110%);opacity:0;}
+.rotator .caret{display:inline-block;width:3px;height:1.05em;background:var(--blue);border-radius:2px;animation:blink 1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:580px;margin:10px 0 22px;}
+.pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px;}
+.pick .pl{font-size:13px;font-weight:700;color:var(--muted);width:100%;}
+.persona{display:inline-flex;align-items:center;gap:9px;border:1.5px solid var(--line);background:color-mix(in srgb,var(--card) 85%,transparent);border-radius:999px;
+  padding:5px 16px 5px 5px;font:inherit;font-size:14.5px;font-weight:700;color:var(--muted);cursor:pointer;box-shadow:var(--shadow);
+  backdrop-filter:blur(8px);transition:transform .2s,border-color .2s,background .2s;}
+.persona:hover{transform:translateY(-2px);}
+.persona .av{width:34px;height:34px;display:block;}
+.persona.active{border-color:var(--blue);color:var(--accent-ink);background:var(--blue-soft);}
+.persona small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:0;}
+.persona .pn{text-align:left;line-height:1.15;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px;}
+.btn-blue.glow{position:relative;overflow:hidden;}
+.btn-blue.glow::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  transform:translateX(-120%);animation:shine 3.8s ease-in-out infinite 2s;}
+@keyframes shine{0%{transform:translateX(-120%);}40%,100%{transform:translateX(120%);}}
+.trust{display:flex;gap:34px;flex-wrap:wrap;}
+.trust .n{font-size:28px;font-weight:800;letter-spacing:-.6px;color:var(--navy);}
+html[data-theme="dark"] .trust .n{color:#fff;}
+.trust .l{font-size:13px;color:var(--muted);margin-top:2px;max-width:160px;}
+
+/* stage: WebGL orb + phone + floating cards */
+.stage{position:relative;height:680px;perspective:1400px;}
+@media(max-width:980px){.stage{height:640px;}}
+#orbGL{position:absolute;left:50%;top:48%;width:640px;height:640px;transform:translate(-50%,-50%);pointer-events:none;z-index:0;}
+.orb-fallback{position:absolute;left:50%;top:48%;width:420px;height:420px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#9DBCFB,#3B74E8 55%,#173F94 80%,transparent 81%);filter:drop-shadow(0 0 60px rgba(59,130,246,.55));opacity:.9;z-index:0;}
+.phone-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;transform-style:preserve-3d;}
+.phone{width:292px;background:#0A1A33;border-radius:50px;padding:11px;transform-style:preserve-3d;
+  box-shadow:0 40px 90px rgba(10,26,51,.35),0 0 0 1px rgba(255,255,255,.06), inset 0 2px 4px rgba(255,255,255,.18);
+  transition:transform .25s ease-out;}
+.ready .phone-wrap .phone{animation:phoneIn 1.3s cubic-bezier(.2,.8,.2,1) both .35s;}
+@keyframes phoneIn{from{opacity:0;transform:translateY(80px) rotateX(28deg) rotateY(-18deg) scale(.9);}to{opacity:1;transform:none;}}
+.phone::before{content:"";position:absolute;inset:0;border-radius:50px;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.18),transparent 30%,transparent 70%,rgba(255,255,255,.06));z-index:3;}
+.screen{background:var(--card);border-radius:40px;overflow:hidden;height:590px;display:flex;flex-direction:column;position:relative;}
+.notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:104px;height:25px;background:#0A1A33;border-radius:14px;z-index:2;}
+.call-head{padding:50px 20px 12px;text-align:center;border-bottom:1px solid var(--line);}
+.call-av{width:74px;height:74px;margin:0 auto 10px;position:relative;}
+.call-av .av{width:74px;height:74px;display:block;position:relative;z-index:1;}
+.call-av::before,.call-av::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,99,235,.35);opacity:0;}
+.call-av.talking::before,.call-av.talking::after{animation:ring 2s ease-out infinite;}
+.call-av.talking::after{animation-delay:1s;}
+@keyframes ring{from{transform:scale(.9);opacity:1;}to{transform:scale(1.45);opacity:0;}}
+.eq{display:flex;gap:3px;justify-content:center;align-items:flex-end;height:14px;margin-top:6px;opacity:0;transition:opacity .3s;}
+.eq.on{opacity:1;}
+.eq i{width:3px;border-radius:2px;background:var(--blue);height:4px;animation:eq 0.9s ease-in-out infinite;}
+.eq i:nth-child(2){animation-delay:.12s}.eq i:nth-child(3){animation-delay:.24s}.eq i:nth-child(4){animation-delay:.36s}.eq i:nth-child(5){animation-delay:.48s}
+@keyframes eq{0%,100%{height:3px;}50%{height:14px;}}
+.call-head .nm{font-weight:700;font-size:16px;}
+.call-head .st{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600;}
+.call-head .st.live{color:var(--green);}
+.transcript{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;scrollbar-width:none;}
+.bubble{max-width:86%;padding:10px 14px;border-radius:17px;font-size:13.5px;line-height:1.45;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.bubble.agent{background:var(--bg-2);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start;}
+.bubble.user{background:linear-gradient(135deg,#3B82F6,#1858C4);color:#fff;border-bottom-right-radius:5px;align-self:flex-end;}
+.typing{align-self:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:17px;border-bottom-left-radius:5px;
+  padding:12px 15px;display:flex;gap:5px;}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:tp 1s infinite;}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{opacity:.3;transform:none;}50%{opacity:1;transform:translateY(-3px);}}
+.call-foot{padding:12px 16px 22px;border-top:1px solid var(--line);}
+.call-btn{width:100%;border:none;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;border-radius:16px;
+  padding:14px;background:linear-gradient(135deg,#3B82F6,#1858C4);
+  box-shadow:0 8px 20px rgba(31,111,235,.42), inset 0 1px 2px rgba(255,255,255,.35);}
+.call-btn.hang{background:linear-gradient(135deg,#E0655A,#B03227);box-shadow:0 8px 20px rgba(180,60,40,.35);}
+.call-btn:disabled{opacity:.55;cursor:default;}
+.phone-hint{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:12.5px;color:var(--muted);font-weight:500;z-index:3;}
+.phone-hint a{color:var(--accent-ink);font-weight:800;text-decoration:none;}
+/* floating notification cards */
+.fcard{position:absolute;z-index:4;display:flex;gap:10px;align-items:center;min-width:210px;max-width:250px;padding:11px 14px 11px 11px;border-radius:16px;
+  background:color-mix(in srgb,var(--card) 78%,transparent);border:1px solid var(--line);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 18px 40px rgba(10,26,51,.16);opacity:0;transform:translateY(14px) scale(.94);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none;}
+.fcard.show{opacity:1;transform:none;}
+.fcard .fi{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--blue-soft);}
+.fcard .fi svg{width:20px;height:20px;}
+.fcard b{display:block;font-size:13px;line-height:1.25;}
+.fcard span{display:block;font-size:11.5px;color:var(--muted);line-height:1.3;margin-top:2px;}
+.fcard .ok{margin-left:auto;font-size:11px;font-weight:800;color:var(--green);}
+.fcard{max-width:205px;min-width:0;}
+.fcard.s0{left:-34px;top:40px;}.fcard.s1{right:-92px;top:150px;}.fcard.s2{left:-44px;top:178px;}.fcard.s3{right:-80px;top:420px;}
+.fcard.show.bob{animation:bob 5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@media(max-width:1280px){.fcard.s0,.fcard.s2{left:-20px}.fcard.s1,.fcard.s3{right:-30px}}
+@media(max-width:980px){.hero{overflow-x:clip;}.fcard.s0,.fcard.s2{left:0}.fcard.s1,.fcard.s3{right:0}}
+@media(max-width:640px){
+  .stage{height:600px;margin:0 -8px;}
+  #orbGL{width:470px;height:470px;}
+  .fcard{min-width:0;max-width:190px;padding:8px 10px 8px 8px;}
+  .fcard .fi{width:30px;height:30px;}
+  .fcard .ok{display:none;}
+  .fcards{display:none;}
+  .phone{width:270px;}.screen{height:540px;}
 }
-@media(max-width:560px){
-  .g3,.g4{grid-template-columns:1fr}
-  section{padding-block:56px}
-  .nav-in{gap:8px}.nav-cta{display:none}
+
+/* ---------- Sectors dropdown ---------- */
+.dd{position:relative;}
+.dd summary{list-style:none;cursor:pointer;font-size:14px;font-weight:700;color:var(--muted);padding:9px 12px;border-radius:12px;display:flex;align-items:center;gap:6px;user-select:none;}
+.dd summary::-webkit-details-marker{display:none;}
+.dd summary::after{content:"▾";font-size:11px;transition:transform .2s;}
+.dd[open] summary{color:var(--ink);background:var(--blue-soft);}
+.dd[open] summary::after{transform:rotate(180deg);}
+.dd-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:250px;padding:8px;border-radius:18px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:80;display:grid;gap:2px;animation:fadeUp .2s ease;}
+.dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;}
+.dd-menu a span{width:28px;height:28px;border-radius:9px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.dd-menu a:hover,.dd-menu a.cur{background:var(--blue-soft);color:var(--accent-ink);}
+@media(max-width:900px){.dd summary{padding:8px 8px;font-size:13px;}.dd-menu{left:auto;right:-80px;transform:none;}}
+@media(max-width:400px){.dd summary{font-size:12px;padding:8px 4px;}}
+a.ind{color:inherit;text-decoration:none;transition:transform .2s,border-color .2s;}
+a.ind:hover{transform:translateY(-3px);border-color:var(--blue);}
+a.ind .go{font-size:12px;color:var(--accent-ink);font-weight:800;margin-left:4px;}
+
+/* ---------- Marquees ---------- */
+.marquee{position:relative;overflow:hidden;padding:6px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.mtrack{display:flex;gap:12px;width:max-content;animation:scrollX var(--dur,48s) linear infinite;}
+.marquee.rev .mtrack{animation-direction:reverse;}
+.marquee:hover .mtrack{animation-play-state:paused;}
+@keyframes scrollX{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ind{display:flex;align-items:center;gap:10px;padding:12px 18px 12px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);white-space:nowrap;font-weight:700;font-size:14.5px;}
+.ind .ie{width:36px;height:36px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.ind small{display:block;font-size:11.5px;color:var(--muted);font-weight:600;}
+.band{padding:18px 0 8px;}
+.band .cap{text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+
+/* ---------- Integrations ---------- */
+.logo-tile{display:flex;align-items:center;gap:12px;padding:14px 20px 14px 14px;border-radius:18px;background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);white-space:nowrap;font-weight:700;font-size:14.5px;}
+.logo-tile .lg{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--bg-2);}
+.logo-tile .lg svg{width:22px;height:22px;}
+.logo-tile small{display:block;font-size:11.5px;color:var(--muted);font-weight:600;}
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;}
+@media(max-width:900px){.int-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.int-grid{grid-template-columns:1fr;}}
+.int-cat{padding:20px;}
+.int-cat h3{font-size:15px;font-weight:800;margin-bottom:4px;}
+.int-cat p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px;}
+.int-logos{display:flex;flex-wrap:wrap;gap:8px;}
+.int-logos span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;padding:7px 10px 7px 8px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line);}
+.int-logos svg{width:16px;height:16px;flex-shrink:0;}
+
+/* ---------- Languages ---------- */
+.lang-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;}
+@media(max-width:900px){.lang-wrap{grid-template-columns:1fr;}}
+.card.lang-cloud{position:relative;min-height:380px;overflow:hidden;background:linear-gradient(140deg,#12294f,#0A1A33 75%);border:none;}
+.lang-cloud::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(64,130,246,.45),transparent 65%);}
+.hello{position:absolute;translate:-50% -50%;padding:7px 13px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;
+  font-weight:700;font-size:16px;white-space:nowrap;backdrop-filter:blur(6px);animation:floaty var(--fd,7s) ease-in-out infinite;animation-delay:var(--fdl,0s);}
+.hello small{display:block;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.02em;}
+.hello.hl{background:rgba(59,130,246,.35);border-color:rgba(147,197,253,.6);}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.lang-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#fff;z-index:2;}
+.lang-center .big{transition:opacity .25s;font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.lang-center .sm{font-size:13px;color:rgba(255,255,255,.75);margin-top:6px;}
+.lang-tiers{padding:24px;display:flex;flex-direction:column;gap:12px;}
+.tier{display:flex;gap:14px;align-items:center;padding:14px;border-radius:16px;background:var(--bg-2);border:2px solid var(--line);}
+.tier .tn{font-size:26px;font-weight:800;letter-spacing:-.6px;min-width:58px;text-align:center;color:var(--navy);}
+html[data-theme="dark"] .tier .tn{color:#fff;}
+.tier b{display:block;font-size:14.5px;}
+.tier span{font-size:13px;color:var(--muted);}
+.tier.feat{border:2px solid var(--blue);background:var(--blue-soft);}
+
+/* channels detailed */
+.feat ul{list-style:none;margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+.feat li{font-size:13.5px;color:var(--ink);padding:5px 0 5px 22px;position:relative;line-height:1.45;}
+.feat li::before{content:"✓";position:absolute;left:2px;color:var(--blue);font-weight:800;}
+/* niche autoplay progress */
+.ntab{position:relative;overflow:hidden;}
+.ntab .prog{position:absolute;left:0;bottom:0;height:2px;background:var(--blue);width:0;}
+.ntab.active.auto .prog{animation:prog 7s linear forwards;}
+@keyframes prog{to{width:100%;}}
+.niche{transition:opacity .35s;}
+.niche.swap{opacity:.25;}
+/* scroll reveal for sections */
+.sr{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);}
+.sr.vis{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.sr{opacity:1;transform:none;}h1 .w,.rise{opacity:1;transform:none;filter:none;}.mtrack{animation:none;}}
+
+/* ---------- Sections ---------- */
+section.block{padding:66px 0;}
+.sec-eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px;}
+h2.sec-title{font-size:clamp(29px,4vw,43px);font-weight:800;letter-spacing:-1px;line-height:1.12;margin-bottom:14px;max-width:720px;}
+.sec-lead{font-size:17px;color:var(--muted);line-height:1.62;max-width:660px;margin-bottom:32px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:14px;}
+.center-note{max-width:680px;margin:20px auto 0;text-align:center;font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ---------- Compare ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:760px){.cmp{grid-template-columns:1fr;}}
+.cmp-col{padding:26px 24px;}
+.cmp-col.ai{border:2px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box, linear-gradient(135deg,#3B82F6,#0A1A33) border-box;box-shadow:var(--shadow-lg);}
+.cmp-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.cmp-ico{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--bg-2);border:1px solid var(--line);flex-shrink:0;}
+.cmp-col.ai .cmp-ico{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-weight:800;font-size:17px;border:none;}
+.cmp-head h3{font-size:18px;font-weight:800;letter-spacing:-.3px;}
+.cmp-head .price{font-size:13px;color:var(--muted);font-weight:600;}
+.cmp-row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14.5px;align-items:flex-start;}
+.cmp-row .k{width:110px;flex-shrink:0;color:var(--muted);font-size:13px;font-weight:600;padding-top:1px;}
+.cmp-row .v{flex:1;line-height:1.45;}
+.cmp-col.human .cmp-row .v::before{content:"○ ";color:var(--muted);}
+.cmp-col.ai .cmp-row .v::before{content:"✓ ";color:var(--blue);font-weight:800;}
+
+/* ---------- Channels ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:900px){.feat-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.feat-grid{grid-template-columns:1fr;}}
+.feat{padding:24px 22px;}
+.feat .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.feat .ic{width:46px;height:46px;border-radius:15px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.feat h3{font-size:17px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px;}
+.feat p{font-size:14.5px;color:var(--muted);line-height:1.6;}
+.tag{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+.tag.hot{background:var(--red-soft);color:var(--red);}
+.tag.warm{background:var(--amber-soft);color:var(--amber);}
+.tag.cold{background:var(--bg-2);color:var(--muted);border:1px solid var(--line);}
+.tag.new,.tag.live{background:var(--green-soft);color:var(--green);}
+.tag.info,.tag.phase{background:var(--blue-soft);color:var(--accent-ink);}
+
+/* ---------- Timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.tl{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.tl{grid-template-columns:1fr;}}
+.tl-step{padding:22px 20px;position:relative;}
+.tl-time{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--navy),var(--blue));padding:6px 12px;border-radius:999px;margin-bottom:14px;
+  box-shadow:0 6px 14px rgba(31,111,235,.3);}
+.tl-step h3{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.2px;}
+.tl-step p{font-size:13.8px;color:var(--muted);line-height:1.55;}
+.anytime{margin-top:16px;padding:20px 22px;display:flex;gap:14px;align-items:center;background:var(--blue-soft);}
+.anytime .ic{font-size:26px;flex-shrink:0;}
+.anytime p{font-size:14.5px;line-height:1.6;}
+.anytime q{font-style:italic;color:var(--accent-ink);quotes:"« " " »";}
+html[lang="en"] .anytime q{quotes:"“" "”";}
+html[lang="es"] .anytime q{quotes:"«" "»";}
+
+/* ---------- Niches ---------- */
+.ntabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:thin;}
+.ntab{flex-shrink:0;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:10px 16px;
+  font:inherit;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;gap:7px;align-items:center;white-space:nowrap;}
+.ntab.active{border-color:var(--blue);color:var(--accent-ink);background:var(--blue-soft);}
+.niche{display:grid;grid-template-columns:1fr 1.15fr;gap:0;overflow:hidden;}
+@media(max-width:820px){.niche{grid-template-columns:1fr;}}
+.niche-pain{padding:30px 28px;background:linear-gradient(140deg,#12294f,#0A1A33 75%);color:#fff;}
+.niche-pain .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px;}
+.niche-pain h3{font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1.2;margin-bottom:12px;}
+.niche-pain p{font-size:15px;line-height:1.65;color:rgba(255,255,255,.85);}
+.niche-do{padding:30px 28px;}
+.niche-do .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px;}
+.niche-do ul{list-style:none;}
+.niche-do li{font-size:15px;padding:9px 0 9px 30px;position:relative;line-height:1.5;border-bottom:1px solid var(--line);}
+.niche-do li:last-child{border:none;}
+.niche-do li::before{content:"✓";position:absolute;left:4px;top:9px;color:var(--blue);font-weight:800;}
+.niche-line{margin-top:16px;background:var(--bg-2);border:1px dashed var(--line);border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.55;}
+.niche-line b{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.niche-link{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:700;color:var(--accent-ink);text-decoration:none;}
+
+/* ---------- Dashboard ---------- */
+.pers{padding:22px 24px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;}
+.pers label{display:block;font-size:13px;font-weight:700;margin-bottom:8px;}
+.pers input{width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);outline:none;}
+.pers input:focus{border-color:var(--blue);}
+.pers .f{flex:1 1 240px;}
+.demo-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--accent-ink);
+  background:var(--blue-soft);border:1px solid var(--line);padding:7px 14px;border-radius:999px;margin-bottom:18px;}
+.dash{overflow:hidden;}
+.dash-top{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line);}
+.dash-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:18px;flex-shrink:0;}
+.dash-top .nm{font-weight:700;font-size:16px;}
+.dash-top .sb{font-size:12.5px;color:var(--muted);}
+.dash-top .full{margin-left:auto;font-size:13px;font-weight:700;color:var(--accent-ink);text-decoration:none;white-space:nowrap;}
+.dash-tabs{display:flex;gap:4px;padding:12px 24px 0;border-bottom:1px solid var(--line);overflow-x:auto;}
+.dtab{border:none;background:none;font:inherit;font-size:14px;font-weight:700;color:var(--muted);padding:12px 14px;
+  cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;}
+.dtab.active{color:var(--ink);border-color:var(--blue);}
+.dpane{display:none;padding:24px;animation:fadeUp .3s ease;}
+.dpane.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr;}}
+.stat-tile{padding:18px;border-radius:18px;background:var(--bg-2);border:1px solid var(--line);}
+.stat-tile .lbl{font-size:12px;color:var(--muted);font-weight:600;}
+.stat-tile .val{font-size:27px;font-weight:800;letter-spacing:-.6px;margin-top:6px;color:var(--navy);}
+html[data-theme="dark"] .stat-tile .val{color:#fff;}
+.stat-tile .delta{font-size:12px;margin-top:4px;color:var(--green);font-weight:700;}
+.sub-h{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 0 8px;}
+.feed-row{display:flex;gap:13px;align-items:center;padding:13px 4px;border-bottom:1px solid var(--line);}
+.feed-row:last-child{border:none;}
+.feed-ico{width:40px;height:40px;border-radius:12px;background:var(--blue-soft);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-weight:800;color:var(--accent-ink);}
+.feed-row .tx{flex:1;font-size:14px;line-height:1.45;min-width:0;}
+.feed-row .tx small{display:block;color:var(--muted);font-size:12.5px;}
+.feed-row .tm{font-size:12px;color:var(--muted);white-space:nowrap;}
+.call-card{border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px;background:var(--bg-2);}
+.call-card .who{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.call-card .ini{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#fff;font-size:14px;flex-shrink:0;}
+.call-card .nm{font-weight:700;font-size:15px;}
+.call-card .mt{font-size:12.5px;color:var(--muted);}
+.call-card .sm{font-size:14px;color:var(--muted);line-height:1.55;margin-top:8px;}
+.call-card .nx{margin-top:10px;font-size:13px;font-weight:700;color:var(--accent-ink);}
+.tr-box{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;}
+.tr-line{font-size:13px;color:var(--muted);margin:5px 0;line-height:1.5;}
+.tr-line b{color:var(--ink);}
+.draft{margin-top:6px;font-size:12.5px;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);line-height:1.5;}
+.draft b{color:var(--ink);}
+.soc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+@media(max-width:640px){.soc{grid-template-columns:1fr;}}
+.soc-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--bg-2);}
+.soc-card .h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.soc-card .h b{font-size:15px;}
+.soc-card .h span{font-size:12px;color:var(--muted);}
+.soc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.soc-kpis div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;}
+.soc-kpis b{display:block;font-size:19px;letter-spacing:-.4px;}
+.soc-kpis span{font-size:11.5px;color:var(--muted);}
+
+/* ---------- Trust / privacy ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.trust-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.trust-grid{grid-template-columns:1fr;}}
+.trust-card{padding:22px 20px;}
+.trust-card .ic{font-size:24px;margin-bottom:12px;}
+.trust-card h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.trust-card p{font-size:13.8px;color:var(--muted);line-height:1.58;}
+
+/* ---------- Pricing ---------- */
+.price-top{display:flex;gap:8px;flex-wrap:wrap;margin:-14px 0 26px;}
+.price-top span{font-size:12.5px;font-weight:700;color:var(--accent-ink);background:var(--blue-soft);border:1px solid var(--line);padding:6px 12px;border-radius:999px;}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr;}}
+.plan{padding:30px 28px;display:flex;flex-direction:column;position:relative;}
+.plan.featured{border:2px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box, linear-gradient(135deg,#3B82F6,#0A1A33) border-box;
+  box-shadow:var(--shadow-lg);}
+.plan .ribbon{position:absolute;top:-13px;left:28px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:linear-gradient(135deg,#3B82F6,#1858C4);padding:6px 12px;border-radius:999px;box-shadow:0 6px 14px rgba(31,111,235,.35);}
+.plan .pname{font-size:20px;font-weight:800;letter-spacing:-.3px;}
+.plan .ptag{font-size:14px;color:var(--muted);margin:8px 0 18px;line-height:1.5;min-height:42px;}
+.plan .pnum{font-size:44px;font-weight:800;letter-spacing:-1.2px;color:var(--navy);}
+html[data-theme="dark"] .plan .pnum{color:#fff;}
+.plan .pper{font-size:14px;color:var(--muted);font-weight:600;}
+.plan ul{list-style:none;margin:20px 0 24px;flex:1;}
+.plan li{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:7px 0;line-height:1.45;}
+.plan li .ck{color:var(--blue);font-weight:800;flex-shrink:0;}
+.plan li.inc{font-weight:700;}
+.plan .btn{width:100%;}
+
+/* ---------- FAQ ---------- */
+.faq-item{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
+.faq-q{width:100%;border:none;background:none;font:inherit;text-align:left;padding:20px 22px;font-size:15.5px;font-weight:700;
+  color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.faq-q .pl{font-size:20px;color:var(--blue);flex-shrink:0;font-weight:400;transition:transform .2s;}
+.faq-item.open .faq-q .pl{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a p{padding:0 22px 20px;font-size:14.5px;color:var(--muted);line-height:1.65;}
+
+/* ---------- Final CTA ---------- */
+.final{border-radius:30px;padding:58px 40px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#12294f,#0A1A33 70%);box-shadow:var(--shadow-lg);}
+.final::before{content:"";position:absolute;top:-90px;right:8%;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(64,130,246,.35),transparent 65%);}
+.final h2{font-size:clamp(30px,4.5vw,46px);font-weight:800;letter-spacing:-1px;color:#fff;line-height:1.12;position:relative;max-width:760px;margin:0 auto;}
+.final p{color:rgba(255,255,255,.85);font-size:17px;margin:14px auto 28px;max-width:560px;line-height:1.6;position:relative;}
+.final-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-white{background:#fff;color:var(--navy);box-shadow:0 10px 26px rgba(0,0,0,.3);}
+.final .tel{display:block;margin-top:22px;color:#fff;font-weight:800;font-size:21px;letter-spacing:.02em;text-decoration:none;position:relative;}
+
+footer{padding:42px 0 90px;text-align:center;font-size:13px;color:var(--muted);line-height:1.7;}
+footer .links{display:flex;gap:6px 16px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
+footer .links a{color:var(--muted);font-weight:600;text-decoration:none;}
+footer .links a:hover{color:var(--ink);}
+footer .demo{display:inline-block;margin-top:10px;font-size:11.5px;border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;color:var(--muted);background:var(--blue-soft);}
+
+/* ---------- Sticky mobile CTA ---------- */
+.sticky-cta{position:fixed;left:14px;right:14px;bottom:14px;z-index:55;display:none;gap:10px;}
+.sticky-cta .btn{flex:1;padding:15px 10px;font-size:14.5px;}
+@media(max-width:760px){.sticky-cta{display:flex;} footer{padding-bottom:110px;}}
+
+/* ---------- Modal / toast ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(7,17,32,.55);backdrop-filter:blur(6px);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:22px;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--card);border-radius:26px;padding:32px 28px;max-width:400px;width:100%;text-align:center;
+  box-shadow:var(--shadow-lg);animation:fadeUp .35s ease;border:1px solid var(--line);}
+.modal .ok{width:62px;height:62px;margin:0 auto 16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;
+  font-size:27px;color:#fff;box-shadow:0 10px 24px rgba(31,111,235,.4);}
+.modal h3{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;}
+.modal p{font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:18px;}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--navy);
+  color:#fff;font-size:14px;font-weight:600;padding:13px 22px;border-radius:999px;z-index:120;transition:all .3s;pointer-events:none;
+  box-shadow:var(--shadow-lg);max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:640px){
+  .wrap{padding:0 16px;}
+  .nav-in{padding:10px 14px;gap:8px;}
+  .brand{font-size:17px;}
+  .seg button{padding:6px 10px;font-size:12px;min-width:36px;}
+  .tbtn{width:36px;height:36px;}
+  .hero{padding:108px 0 30px;}
+  .lead{font-size:17px;}
+  .hero-ctas .btn{flex:1 1 100%;}
+  .trust{gap:22px;}
+  .phone{width:min(300px,100%);}
+  section.block{padding:48px 0;}
+  .dash-top{padding:16px;}
+  .dash-top .full{display:none;}
+  .dash-tabs{padding:10px 16px 0;}
+  .dpane{padding:20px 14px;}
+  .final{padding:44px 22px;border-radius:24px;}
+  .final-ctas .btn{flex:1 1 100%;}
+  .niche-pain,.niche-do{padding:24px 20px;}
+  .cmp-row .k{width:92px;}
+  .feed-row.wrapm{flex-wrap:wrap;}
+  .feed-row.wrapm .tx{flex:1 1 calc(100% - 60px);}
+  .feed-row.wrapm .tag{margin-left:53px;}
 }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+}
+
+html{overflow-x:clip}
+
+/* ---------- sector page additions ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.steps{grid-template-columns:1fr;}}
+.step{padding:24px 20px;}
+.step .num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:14px;box-shadow:0 6px 14px rgba(31,111,235,.35);}
+.step h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.step p{font-size:13.8px;color:var(--muted);line-height:1.55;}
+.calc{padding:30px 28px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+@media(max-width:760px){.calc-grid{grid-template-columns:1fr;}}
+.calc label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;}
+.calc label .v{color:var(--accent-ink);font-weight:800;}
+.calc input[type=range]{width:100%;margin:6px 0 20px;accent-color:var(--blue);height:28px;}
+.calc-out{background:linear-gradient(135deg,var(--navy),#14315e);border-radius:18px;padding:28px 26px;color:#fff;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow-lg);}
+.calc-out .big{font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.calc-out .cap{font-size:14.5px;color:rgba(255,255,255,.85);margin-top:8px;line-height:1.55;}
+.calc-out .note{font-size:12px;color:rgba(255,255,255,.6);margin-top:14px;line-height:1.5;}
+.calc-disc{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6;}
+.note-card{padding:22px 24px;display:flex;gap:14px;align-items:flex-start;background:var(--blue-soft);margin-top:18px;}
+.note-card .ic{font-size:24px;flex-shrink:0;}
+.note-card p{font-size:14px;color:var(--muted);line-height:1.65;}
+.note-card b{color:var(--ink);}
+.logo-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.fcard.s0{left:-34px;top:60px;}.fcard.s1{right:-92px;top:250px;}.fcard.s2{left:-44px;top:470px;}
+.hero-ic{font-size:15px;}
+@media(max-width:640px){.calc-out .big{font-size:42px;}.calc{padding:24px 18px;}}
+/* muestra del dashboard con pestañas */
+.dch-h{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;}
+.dchart{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:16px 18px 12px;margin-bottom:6px;}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:130px;}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%;}
+.bar i{display:block;width:100%;max-width:44px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#3987e5,#2a78d6);}
+.bar .bv{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;}
+.bar .bd{font-size:11.5px;color:var(--muted);}
+.tr-box{margin:10px 0 4px;padding:10px 12px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);font-size:13px;line-height:1.55;}
+.tr-box .tr-t{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.dpane .feed-row .ini{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
+.dnote{font-size:13px;color:var(--muted);margin-bottom:12px;}
+.wk{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;overflow-x:auto;padding-bottom:4px;}
+.wk-col{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:8px;align-content:start;min-height:170px;}
+.wk-h{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.wk-ev{background:linear-gradient(135deg,rgba(31,111,235,.16),rgba(34,184,230,.12));border:1px solid rgba(31,111,235,.35);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.35;}
+.wk-ev small{display:block;color:var(--muted);margin-top:2px;}
+.wk-free{border:1.5px dashed var(--line);border-radius:10px;padding:8px;font-size:12px;color:var(--muted);text-align:center;}
+.soc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:640px){.soc-grid{grid-template-columns:1fr;}.bars{gap:5px;}}
+
 </style>
 </head>
 <body>
-<nav class="top">
+<nav>
   <div class="nav-in">
-    <a class="brand" href="#top"><span class="mk">AI</span>AI Staff</a>
-    <div class="links">
+    <a class="brand" href="/"><span class="mk">AI</span>AI Staff</a>
+    <div class="nav-links">
       <details class="dd" id="ddSectors"><summary data-i18n="nav.sectors">Secteurs</summary><div class="dd-menu" id="ddMenu"></div></details>
+      <a class="nl" href="#demo" data-i18n="nav.demo">Démo</a>
       <a class="nl" href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
       <a class="nl" href="#faq" data-i18n="nav.faq">FAQ</a>
-      <div class="seg" id="langSeg"><button data-lang="fr" class="on">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
-      <button class="tbtn" id="themeToggle" aria-label="Theme">🌙</button>
-      <a href="tel:+14388058804" class="btn btn-blue btn-sm nav-cta" data-i18n="nav.call">📞 Appeler la démo</a>
+      <div class="seg" id="langSeg"><button data-lang="fr" class="active">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+      <button class="tbtn" id="themeToggle" aria-label="Mode clair / sombre">🌙</button>
+      <a href="tel:+14388058804" class="btn btn-blue btn-sm nav-cta" data-i18n="nav.cta"></a>
     </div>
   </div>
 </nav>
 
-<main id="top">
-  <div class="wrap hero">
-    <div>
-      <div class="eyebrow" data-i18n="hero.eyebrow"></div>
-      <h1 data-i18n-html="hero.title"></h1>
-      <p class="lead" data-i18n="hero.lead"></p>
-      <div class="ctas">
-        <a class="btn btn-blue obcta" href="/onboarding/" data-i18n="hero.cta1"></a>
-        <a class="btn btn-ghost" href="tel:+14388058804" data-i18n="hero.cta2"></a>
-      </div>
-      <p class="hint"><a href="tel:+14388058804">+1 (438) 805-8804</a> · <span data-i18n="hero.hint"></span></p>
-    </div>
-    <div class="orb-wrap" aria-hidden="true"><div class="orb"></div></div>
-  </div>
-
-  <section>
-    <div class="wrap">
-      <h2 data-i18n="pain.title"></h2>
-      <div class="grid g3" id="pain"></div>
-    </div>
-  </section>
-
-  <section class="alt">
-    <div class="wrap">
-      <h2 data-i18n="how.title"></h2>
-      <div class="grid g3" id="how"></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2 data-i18n="does.title"></h2>
-      <div class="grid g4" id="does"></div>
-    </div>
-  </section>
-
-  <section class="alt" id="tarifs">
-    <div class="wrap">
-      <h2 data-i18n="price.title"></h2>
-      <p class="sub" data-i18n="price.lead"></p>
-      <div class="chips" id="priceTop"></div>
-      <div class="grid g3" id="plans"></div>
-      <p class="note" data-i18n="rollout"></p>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2 data-i18n="sect.title"></h2>
-      <p class="sub" data-i18n="sect.lead"></p>
-      <div class="grid g4 sec" id="sectors"></div>
-    </div>
-  </section>
-
-  <section class="alt" id="faq">
-    <div class="wrap">
-      <h2 data-i18n="faq.title"></h2>
-      <div class="faq" id="faqList"></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="final">
-        <h2 data-i18n="final.title"></h2>
-        <p class="sub" data-i18n="final.lead"></p>
-        <div class="ctas">
-          <a class="btn btn-blue obcta" href="/onboarding/" data-i18n="hero.cta1"></a>
-          <a class="btn btn-ghost" href="tel:+14388058804" data-i18n="hero.cta2"></a>
+<div class="wrap">
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true"><div class="dots"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow rise" style="--d:.05s"><span class="hero-ic" id="heroIc"></span><span data-s="eyebrow"></span></span>
+        <h1 id="heroTitle" data-s="h1"></h1>
+        <p class="lead rise" style="--d:.7s;margin-top:18px" data-s="lead"></p>
+        <div class="pick rise" style="--d:.85s">
+          <span class="pl" data-i18n="hero.pick"></span>
+          <button class="persona" data-persona="sofia"><span class="av" data-av="sofia"></span><span class="pn">Sofía<small data-i18n="p.sofia"></small></span></button>
+          <button class="persona" data-persona="alex"><span class="av" data-av="alex"></span><span class="pn">Alex<small data-i18n="p.alex"></small></span></button>
+          <button class="persona" data-persona="tomas"><span class="av" data-av="tomas"></span><span class="pn">Tomás<small data-i18n="p.tomas"></small></span></button>
         </div>
+        <div class="hero-ctas rise" style="--d:1s">
+          <a href="mailto:hello@meetaistaff.com" class="btn btn-blue glow mailcta" data-i18n="hero.cta1"></a>
+          <a href="tel:+14388058804" class="btn btn-ghost" data-i18n="hero.cta2"></a>
+        </div>
+        <div class="trust rise" style="--d:1.12s" id="trust"></div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="orbGL" aria-hidden="true"></canvas>
+        <div class="fcards" id="fcards" aria-hidden="true"></div>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen">
+              <div class="notch"></div>
+              <div class="call-head">
+                <div class="call-av" id="callAv"></div>
+                <div class="nm" id="phoneName"></div>
+                <div class="st" id="callStatus"></div>
+                <div class="eq" id="eq"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="transcript" id="transcript"></div>
+              <div class="call-foot"><button class="call-btn" id="callBtn"></button></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-hint"><a href="tel:+14388058804">+1 (438) 805-8804</a> · <span data-i18n="phone.hint"></span></div>
       </div>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer>
-  <div class="wrap">
-    <div><b>AI Staff</b> · <span data-i18n="foot.tag"></span></div>
-    <div class="row">
-      <a href="mailto:hello@meetaistaff.com">hello@meetaistaff.com</a>
-      <a href="tel:+14388058804">+1 (438) 805-8804</a>
-      <a href="/confidentialite/" id="footPriv"></a>
+  <section class="block" id="probleme" style="padding-top:26px;">
+    <div class="card niche">
+      <div class="niche-pain"><div class="k" data-i18n="pain.k"></div><h3 data-s="painH"></h3><p data-s="painP"></p></div>
+      <div class="niche-do"><div class="k" data-i18n="does.k"></div><ul id="doesList"></ul></div>
     </div>
-    <div class="row"><span>meetaistaff.com · © 2026 AI Staff</span></div>
+  </section>
+
+  <section class="block" id="fonctions" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="feat.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="feat.title"></h2>
+    <div class="feat-grid" id="featGrid" style="grid-template-columns:repeat(2,1fr)"></div>
+  </section>
+
+  <section class="block" id="calcul" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="calc.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="calc.title"></h2>
+    <p class="sec-lead" data-i18n="calc.lead"></p>
+    <div class="card calc">
+      <div class="calc-grid">
+        <div>
+          <label><span id="cl1"></span> : <span class="v" id="cv1"></span></label><input type="range" id="cr1">
+          <label><span id="cl2"></span> : <span class="v" id="cv2"></span></label><input type="range" id="cr2">
+          <label><span id="cl3"></span> : <span class="v" id="cv3"></span></label><input type="range" id="cr3">
+        </div>
+        <div class="calc-out"><div class="big" id="calcBig"></div><div class="cap" data-i18n="calc.cap"></div><div class="note" data-i18n="calc.note"></div></div>
+      </div>
+      <p class="calc-disc" id="calcDisc"></p>
+    </div>
+  </section>
+
+  <section class="block" id="comment" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="how.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="how.title"></h2>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <section class="block" id="demo" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="dash.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="dash.title"></h2>
+    <p class="sec-lead" data-i18n="dash.lead"></p>
+    <span class="demo-badge" data-i18n="dash.badge"></span>
+    <div class="card dash">
+      <div class="dash-top">
+        <div class="dash-av" id="dashAv"></div>
+        <div><div class="nm" data-i18n="dash.name"></div><div class="sb" data-i18n="dash.sub"></div></div>
+        <a class="full" href="/demo/" id="dashMore" data-i18n="dash.more"></a>
+      </div>
+      <div class="dash-tabs" id="dtabs" role="tablist"></div>
+      <div id="dpanes"></div>
+    </div>
+  </section>
+
+  <section class="block" id="integrations" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="int.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="int.title"></h2>
+    <div class="logo-grid" id="logoGrid"></div>
+    <p class="fine" data-i18n="int.note"></p>
+  </section>
+
+  <section class="block" id="tarifs" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="price.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="price.title"></h2>
+    <p class="sec-lead" data-i18n="price.lead"></p>
+    <div class="price-top" id="priceTop"></div>
+    <div class="price-grid" id="priceGrid"></div>
+    <p class="center-note" data-i18n="rollout"></p>
+  </section>
+
+  <section class="block" id="faq" style="padding-top:0;">
+    <div class="sec-eyebrow" data-i18n="faq.eyebrow"></div>
+    <h2 class="sec-title" data-i18n="faq.title"></h2>
+    <div id="faqList" style="margin-top:26px;"></div>
+    <div class="card note-card" id="noteCard" style="display:none"><div class="ic">⚖️</div><p id="noteText"></p></div>
+  </section>
+
+  <section class="block" style="padding-top:10px;">
+    <div class="final">
+      <h2 data-i18n="final.title"></h2>
+      <p data-i18n="final.lead"></p>
+      <div class="final-ctas">
+        <a href="mailto:hello@meetaistaff.com" class="btn btn-white mailcta" data-i18n="final.cta1"></a>
+        <a href="tel:+14388058804" class="btn btn-blue" data-i18n="final.cta2"></a>
+      </div>
+      <a class="tel" href="tel:+14388058804">+1 (438) 805-8804</a>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>AI Staff</b> · <span data-i18n="footer.tag"></span></div>
+    <div class="links" id="footLinks"></div>
+    <div><a href="mailto:hello@meetaistaff.com" style="color:inherit;">hello@meetaistaff.com</a> · <a href="tel:+14388058804" style="color:inherit;">+1 (438) 805-8804</a></div>
+    <div>meetaistaff.com · © 2026 AI Staff</div>
+    <div><span class="demo" data-i18n="footer.line"></span></div>
+  </footer>
+</div>
+
+<div class="sticky-cta">
+  <a href="mailto:hello@meetaistaff.com" class="btn btn-ghost mailcta" data-i18n="sticky.demo"></a>
+  <a href="tel:+14388058804" class="btn btn-blue" data-i18n="sticky.call"></a>
+</div>
+
+<div class="modal-bg" id="priceModal">
+  <div class="modal">
+    <div class="ok">✦</div>
+    <h3 data-i18n="prM.title"></h3>
+    <p data-i18n="prM.lead"></p>
+    <a class="btn btn-blue" style="width:100%;text-decoration:none;" id="priceMailto" href="mailto:hello@meetaistaff.com" data-i18n="prM.cta"></a>
+    <div style="margin-top:12px;"><a href="#" id="priceLater" style="font-size:13px;color:var(--muted);" data-i18n="prM.later"></a></div>
   </div>
-</footer>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
 (function(){
-const PLANS = {"fr": [{"name": "Essentiel", "tag": "Vos appels, vos textos et votre agenda, pris en charge.", "price": 397, "cta": "Choisir Essentiel", "feat": ["Numéro de téléphone dédié et appels 24/7", "Français, anglais et espagnol", "Réponses par texto (SMS)", "Rendez-vous pris dans votre agenda", "Tableau de bord privé", "Appelez {a} pour demander vos rapports (par phases)"]}, {"name": "Pro", "tag": "L'essentiel, plus WhatsApp et des appels programmés.", "price": 597, "cta": "Choisir Pro", "feat": ["Tout le plan Essentiel, plus :", "WhatsApp avec le même numéro (par phases)", "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)", "Appelez {a} à toute heure", "Appels illimités, usage raisonnable"]}, {"name": "Complet", "tag": "Tous vos canaux, avec un accès prioritaire.", "price": 797, "cta": "Choisir Complet", "feat": ["Tout le plan Pro, plus :", "Messages Instagram et Facebook (par phases)", "Statistiques de vos réseaux sociaux (par phases)", "Accès prioritaire : vos questions et changements passent en premier"]}], "en": [{"name": "Essential", "tag": "Your calls, texts and calendar, handled.", "price": 397, "cta": "Choose Essential", "feat": ["Dedicated phone number and 24/7 calls", "French, English and Spanish", "Text message (SMS) replies", "Appointments booked in your calendar", "Private dashboard", "Call {a} to ask for your reports (in phases)"]}, {"name": "Pro", "tag": "The essentials, plus WhatsApp and scheduled calls.", "price": 597, "cta": "Choose Pro", "feat": ["Everything in Essential, plus:", "WhatsApp on the same number (in phases)", "{a} calls you at the times you choose, up to 3 times a day (in phases)", "Call {a} any time", "Unlimited calls, fair use"]}, {"name": "Complete", "tag": "Every channel, with priority access.", "price": 797, "cta": "Choose Complete", "feat": ["Everything in Pro, plus:", "Instagram and Facebook messages (in phases)", "Social media stats (in phases)", "Priority access: your questions and changes come first"]}], "es": [{"name": "Esencial", "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.", "price": 397, "cta": "Elegir Esencial", "feat": ["Número de teléfono propio y llamadas 24/7", "Francés, inglés y español", "Respuestas por mensaje de texto (SMS)", "Citas agendadas en tu calendario", "Dashboard privado", "Llama a {a} para pedirle tus reportes (por fases)"]}, {"name": "Pro", "tag": "Lo esencial, más WhatsApp y llamadas programadas.", "price": 597, "cta": "Elegir Pro", "feat": ["Todo el plan Esencial, más:", "WhatsApp con el mismo número (por fases)", "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)", "Llama a {a} a cualquier hora", "Llamadas ilimitadas, uso razonable"]}, {"name": "Completo", "tag": "Todos tus canales, con acceso prioritario.", "price": 797, "cta": "Elegir Completo", "feat": ["Todo el plan Pro, más:", "Mensajes de Instagram y Facebook (por fases)", "Estadísticas de tus redes sociales (por fases)", "Acceso prioritario: tus preguntas y cambios van primero"]}]};
-const SECTORS = {"fr": [{"slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]};
-const NAMES = {sofia:"Sofía", alex:"Alex", tomas:"Tomás"};
-const STR = {
-fr:{
- "nav.sectors":"Secteurs","nav.pricing":"Tarifs","nav.faq":"FAQ","nav.call":"📞 Appeler la démo",
- "hero.eyebrow":"Adjointe personnelle IA · Montréal","hero.title":"Votre prochaine employée est <em>une&nbsp;IA.</em>",
- "hero.lead":"{a} répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. Vous travaillez, {a} s'occupe du reste.",
- "hero.cta1":"Réserver ma démo","hero.cta2":"📞 Appeler la démo","hero.hint":"ligne démo : appelez pour vrai",
- "pain.title":"Un appel manqué, c'est un client qui appelle ailleurs.",
- pain:[["Vous êtes occupé","Chantier, visite, rendez-vous : vous ne pouvez pas décrocher."],["Le soir et la fin de semaine","Personne ne répond, et le client appelle quelqu'un d'autre."],["Un message oublié","Une demande sans réponse, c'est une vente de moins."]],
- "how.title":"Comment ça marche.",
- how:[["Vous répondez à quelques questions","Environ 8 minutes. Aucun mot de passe demandé."],["On prépare votre démo","Avec le nom de votre entreprise, vos services et vos heures d'ouverture."],["Vous l'essayez, puis on la branche","On transfère votre numéro ou on vous en donne un nouveau. Les canaux s'activent par phases."]],
- "does.title":"Ce que fait {a} pour vous.",
- does:[["📞","Répond à vos appels","Jour et nuit, en français, en anglais et en espagnol."],["💬","Répond à vos textos","Confirmations, questions simples, prise de message."],["📅","Gère votre agenda","Propose vos plages libres et réserve les rendez-vous."],["📊","Vous tient au courant","Chaque appel résumé dans votre tableau de bord privé."]],
- "price.title":"Une fraction du prix d'une adjointe.","price.per":"/ mois",
- "price.lead":"Une adjointe humaine coûte environ 3 500 à 4 500 $ par mois (estimation). Choisissez ce dont vous avez besoin.",
- top:["CAD · mois par mois · taxes en sus","Sans contrat","Installation gratuite au lancement"],
- "rollout":"Déploiement progressif : les canaux s'activent par phases et sont confirmés lors de l'appel découverte.",
- "sect.title":"Faite pour votre métier.","sect.lead":"Une page par secteur, avec des exemples d'appels de vos clients.",
- "faq.title":"Questions fréquentes.",
- faq:[["Qui configure {a}?","Nous préparons la configuration selon vos instructions, et vous pouvez corriger les réponses en tout temps. Quand une demande sort du cadre prévu, {a} prend le message pour que vous puissiez rappeler."],["Puis-je garder mon numéro?","Oui. On peut transférer votre numéro actuel, vous en donner un nouveau, ou renvoyer vos appels vers {a}. Le transfert dépend de votre fournisseur et sa date ne peut pas être garantie."],["Quelles langues parle {a}?","Le français, l'anglais et l'espagnol. {a} détecte la langue de l'appelant et répond dans la même."],["{a} peut-elle se tromper?","Oui, comme toute IA. Vous gardez la supervision et vous pouvez corriger ses réponses en tout temps. Pour une urgence, {a} invite à composer le 911."],["Et mes données?","Vous choisissez les comptes à connecter et vous pouvez révoquer l'accès en tout temps. Vos données servent uniquement à faire fonctionner votre service et ne sont jamais revendues."],["Y a-t-il un contrat?","Non. C'est mois par mois, sans engagement. L'installation est gratuite pendant le lancement."]],
- "final.title":"Écoutez-la répondre à vos clients.","final.lead":"Appelez la ligne démo ou préparez votre démo personnalisée en 8 minutes. Sans engagement.",
- "foot.tag":"l'adjointe personnelle IA, à Montréal","foot.priv":"Confidentialité"},
-en:{
- "nav.sectors":"Industries","nav.pricing":"Pricing","nav.faq":"FAQ","nav.call":"📞 Call the demo",
- "hero.eyebrow":"AI personal assistant · Montréal","hero.title":"Your next employee is <em>an&nbsp;AI.</em>",
- "hero.lead":"{a} answers your calls and texts day and night and books your appointments. You work; {a} handles the rest.",
- "hero.cta1":"Book my demo","hero.cta2":"📞 Call the demo","hero.hint":"demo line: call for real",
- "pain.title":"A missed call is a customer calling someone else.",
- pain:[["You're busy","On a job, at a showing, in a meeting: you can't pick up."],["Evenings and weekends","Nobody answers, and the customer calls someone else."],["A forgotten message","A request with no reply is one less sale."]],
- "how.title":"How it works.",
- how:[["You answer a few questions","About 8 minutes. No passwords asked."],["We prepare your demo","With your business name, services and opening hours."],["You try it, then we connect it","We port your number or give you a new one. Channels are activated in phases."]],
- "does.title":"What {a} does for you.",
- does:[["📞","Answers your calls","Day and night, in French, English and Spanish."],["💬","Answers your texts","Confirmations, simple questions, taking a message."],["📅","Runs your calendar","Offers your open slots and books appointments."],["📊","Keeps you posted","Every call summarized in your private dashboard."]],
- "price.title":"A fraction of the cost of an assistant.","price.per":"/ month",
- "price.lead":"A human assistant costs roughly $3,500 to $4,500 a month (estimate). Choose what you need.",
- top:["CAD · month to month · plus taxes","No contract","Free setup during launch"],
- "rollout":"Phased rollout: channels are activated in phases and confirmed during the discovery call.",
- "sect.title":"Built for your trade.","sect.lead":"One page per industry, with examples of your customers' calls.",
- "faq.title":"Frequently asked questions.",
- faq:[["Who sets up {a}?","We prepare the configuration to your instructions, and you can correct the answers at any time. When a request falls outside the plan, {a} takes a message so you can call back."],["Can I keep my number?","Yes. We can port your current number, give you a new one, or forward your calls to {a}. Porting depends on your carrier and its date can't be guaranteed."],["Which languages does {a} speak?","French, English and Spanish. {a} detects the caller's language and answers in the same one."],["Can {a} make mistakes?","Yes, like any AI. You keep oversight and can correct the answers at any time. For an emergency, {a} tells callers to dial 911."],["What about my data?","You choose which accounts to connect and can revoke access at any time. Your data is used only to run your service and is never resold."],["Is there a contract?","No. It's month to month, no commitment. Setup is free during the launch."]],
- "final.title":"Hear her answer your customers.","final.lead":"Call the demo line or prepare your personalized demo in 8 minutes. No commitment.",
- "foot.tag":"the AI personal assistant, in Montréal","foot.priv":"Privacy"},
-es:{
- "nav.sectors":"Sectores","nav.pricing":"Precios","nav.faq":"FAQ","nav.call":"📞 Llamar a la demo",
- "hero.eyebrow":"Asistente personal con IA · Montreal","hero.title":"Tu próxima empleada es <em>una&nbsp;IA.</em>",
- "hero.lead":"{a} contesta tus llamadas y tus mensajes de texto de día y de noche y agenda tus citas. Tú trabajas, {a} se ocupa del resto.",
- "hero.cta1":"Reservar mi demo","hero.cta2":"📞 Llamar a la demo","hero.hint":"línea demo: llama de verdad",
- "pain.title":"Una llamada perdida es un cliente que llama a otro.",
- pain:[["Estás ocupado","En una obra, en una visita, en una reunión: no puedes contestar."],["Noches y fines de semana","Nadie contesta y el cliente llama a otro lado."],["Un mensaje olvidado","Una solicitud sin respuesta es una venta menos."]],
- "how.title":"Cómo funciona.",
- how:[["Respondes unas preguntas","Unos 8 minutos. No pedimos contraseñas."],["Preparamos tu demo","Con el nombre de tu negocio, tus servicios y tus horarios."],["La pruebas y luego la conectamos","Transferimos tu número o te damos uno nuevo. Los canales se activan por fases."]],
- "does.title":"Lo que hace {a} por ti.",
- does:[["📞","Contesta tus llamadas","De día y de noche, en francés, inglés y español."],["💬","Responde tus mensajes de texto","Confirmaciones, preguntas simples, toma de mensajes."],["📅","Maneja tu agenda","Ofrece tus horarios libres y agenda las citas."],["📊","Te mantiene al tanto","Cada llamada resumida en tu dashboard privado."]],
- "price.title":"Una fracción de lo que cuesta una asistente.","price.per":"/ mes",
- "price.lead":"Una asistente humana cuesta alrededor de 3 500 a 4 500 $ al mes (estimación). Elige lo que necesitas.",
- top:["CAD · mes a mes · más impuestos","Sin contrato","Instalación gratis en el lanzamiento"],
- "rollout":"Despliegue progresivo: los canales se activan por fases y se confirman en la llamada de descubrimiento.",
- "sect.title":"Hecha para tu oficio.","sect.lead":"Una página por sector, con ejemplos de llamadas de tus clientes.",
- "faq.title":"Preguntas frecuentes.",
- faq:[["¿Quién configura a {a}?","Nosotros preparamos la configuración según tus instrucciones y puedes corregir las respuestas en cualquier momento. Si algo se sale de lo previsto, {a} toma el mensaje para que puedas devolver la llamada."],["¿Puedo conservar mi número?","Sí. Podemos transferir tu número actual, darte uno nuevo o desviar tus llamadas a {a}. La transferencia depende de tu operador y no se puede garantizar su fecha."],["¿Qué idiomas habla {a}?","Francés, inglés y español. {a} detecta el idioma de quien llama y responde en el mismo."],["¿{a} puede equivocarse?","Sí, como cualquier IA. Tú mantienes la supervisión y puedes corregir sus respuestas en cualquier momento. Ante una emergencia, {a} indica marcar el 911."],["¿Y mis datos?","Tú eliges qué cuentas conectar y puedes revocar el acceso en cualquier momento. Tus datos se usan solo para que funcione tu servicio y nunca se revenden."],["¿Hay contrato?","No. Es mes a mes, sin compromiso. La instalación es gratis durante el lanzamiento."]],
- "final.title":"Escúchala contestar a tus clientes.","final.lead":"Llama a la línea demo o prepara tu demo personalizada en 8 minutos. Sin compromiso.",
- "foot.tag":"la asistente personal con IA, en Montreal","foot.priv":"Privacidad"}
-};
+"use strict";
+const SECTOR_ID = "general";
+const SEC = {"fr": {"name": "AI Staff", "tab": "Général", "ic": "✨", "persona": "sofia", "aud": "les gens occupés et les petites entreprises", "title": "AI Staff — Votre adjointe personnelle IA", "desc": "Votre prochaine employée est une IA. Elle répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. À partir de 397 $ par mois.", "eyebrow": "Adjointe personnelle IA · Montréal", "h1": "Votre prochaine employée est <em>une IA.</em>", "lead": "{a} répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. Vous travaillez, {a} s'occupe du reste. En français, en anglais et en espagnol.", "trust": [["24/7", "jour, nuit et fins de semaine"], ["< 10 s", "pour décrocher"], ["FR · EN · ES", "la langue de vos clients"]], "script": [["agent", "Déménagement Tremblay, bonsoir, c'est {a}. Comment puis-je vous aider?"], ["lead", "Bonjour, je voudrais une soumission pour un déménagement le 28."], ["agent", "Avec plaisir. Quelle est l'adresse de départ et d'arrivée, et combien de pièces?"], ["lead", "De Laval à Longueuil, un 4 et demi."], ["agent", "Parfait. J'ai une visite jeudi à 10 h. Je vous texte la confirmation."], ["lead", "Super, merci!"], ["agent", "Avec plaisir. Bonne soirée!"]], "ended": "Rendez-vous réservé ✓", "fcards": [["phone", "Appel manqué évité", "Soumission · Laval → Longueuil"], ["googlecalendar", "Visite réservée", "Jeudi 10 h · 4 ½"], ["sms", "Confirmation envoyée", "Texto au client"]], "painH": "Un appel manqué, c'est un client qui appelle ailleurs.", "painP": "Vous êtes au travail, en rendez-vous ou sur la route : le téléphone sonne et vous ne pouvez pas répondre. Le soir et la fin de semaine, personne ne répond. Le client appelle quelqu'un d'autre.", "does": ["Répond à vos appels jour et nuit, en français, en anglais et en espagnol", "Prend vos rendez-vous dans votre agenda", "Répond à vos textos et envoie les confirmations", "Résume chaque appel dans votre tableau de bord privé"], "features": [["📞", "Appels 24/7", "Plus d'appel manqué, même le soir et la fin de semaine."], ["📅", "Votre agenda", "{a} propose vos plages libres et réserve directement."], ["💬", "Textos de suivi", "Confirmations et rappels envoyés pour vous."], ["🌎", "Dans la langue du client", "Français, anglais et espagnol."]], "steps": [["Le client appelle", "{a} décroche en moins de 10 secondes, jour ou nuit."], ["{a} comprend le besoin", "Qui appelle, pourquoi, adresse, disponibilités."], ["Le rendez-vous se réserve", "Dans votre agenda, avec confirmation par texto."], ["Vous recevez le résumé", "Chaque appel résumé dans votre tableau de bord."]], "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Heures à couvrir par semaine", "l2": "Salaire horaire", "l3": "", "eyebrow": "Faites le calcul", "title": "Combien coûte un employé qui répond au téléphone?", "lead": "Entrez les heures à couvrir et un salaire horaire : on compare avec {a}.", "cap": "par mois en salaire seulement, sans charges ni remplacements. {a} : dès {p} par mois, 24 h sur 24.", "note": "Calculé avec vos chiffres; les valeurs de départ ne sont que des exemples.", "disc": "Un employé couvre ses heures de travail. {a} couvre les 168 heures de la semaine."}, "stats": [["Appels répondus", "41", "cette semaine"], ["Messages traités", "58", "textos et appels"], ["Rendez-vous pris", "12", "↑ 3 cette semaine"], ["Temps libéré", "≈ 9 h", "estimation cette semaine"]], "calls": [["Karim Benali", "Cette nuit · 23 h 48", "Soumission pour un déménagement, 4 ½ de Laval à Longueuil.", "hot", "Visite · jeudi 10 h"], ["Sophie Gagnon", "Hier · 16 h 40", "Veut déplacer son rendez-vous de vendredi.", "warm", "Rendez-vous déplacé · lundi 9 h"], ["Luis Ramírez", "Hier · 11 h 05", "Demande vos heures d'ouverture, en espagnol.", "new", "Réponse donnée en espagnol"]], "ints": ["googlecalendar", "outlook", "gmail", "whatsapp", "instagram", "facebook", "google", "calendly", "stripe", "quickbooks"], "faq": [["Est-ce que ça convient à mon métier?", "Si vos clients vous appellent, vous écrivent ou prennent rendez-vous, oui. On configure {a} avec vos services, vos heures et vos réponses. Il y a une page par secteur dans le menu."], ["Puis-je garder mon numéro?", "Oui. On peut transférer votre numéro actuel, vous en donner un nouveau, ou renvoyer vos appels vers {a}. Le transfert dépend de votre fournisseur et sa date ne peut pas être garantie."]], "note": "<b>Transparence :</b> {a} se présente comme une assistante IA et annonce que l'appel peut être transcrit. Pour une urgence, {a} invite à composer le 911. Vous gardez la supervision et pouvez corriger ses réponses en tout temps."}, "en": {"name": "AI Staff", "tab": "General", "ic": "✨", "persona": "sofia", "aud": "busy people and small businesses", "title": "AI Staff — Your AI personal assistant", "desc": "Your next employee is an AI. She answers your calls and texts day and night and books your appointments. From $397 a month.", "eyebrow": "AI personal assistant · Montréal", "h1": "Your next employee is <em>an AI.</em>", "lead": "{a} answers your calls and texts day and night and books your appointments. You work; {a} handles the rest. In French, English and Spanish.", "trust": [["24/7", "day, night and weekends"], ["< 10 s", "to pick up"], ["FR · EN · ES", "your customers' language"]], "script": [["agent", "Tremblay Moving, good evening, this is {a}. How can I help?"], ["lead", "Hi, I'd like a quote for a move on the 28th."], ["agent", "Happy to help. What are the pickup and drop-off addresses, and how many rooms?"], ["lead", "From Laval to Longueuil, a 2-bedroom."], ["agent", "Perfect. I have a visit on Thursday at 10 AM. I'll text you the confirmation."], ["lead", "Great, thanks!"], ["agent", "My pleasure. Have a good evening!"]], "ended": "Appointment booked ✓", "fcards": [["phone", "Missed call avoided", "Quote · Laval → Longueuil"], ["googlecalendar", "Visit booked", "Thursday 10 AM · 2-bedroom"], ["sms", "Confirmation sent", "Text to the customer"]], "painH": "A missed call is a customer calling someone else.", "painP": "You're at work, in a meeting or on the road: the phone rings and you can't answer. Evenings and weekends, nobody picks up. The customer calls someone else.", "does": ["Answers your calls day and night, in French, English and Spanish", "Books appointments in your calendar", "Answers your texts and sends confirmations", "Summarizes every call in your private dashboard"], "features": [["📞", "Calls 24/7", "No more missed calls, even evenings and weekends."], ["📅", "Your calendar", "{a} offers your open slots and books directly."], ["💬", "Follow-up texts", "Confirmations and reminders sent for you."], ["🌎", "In your customer's language", "French, English and Spanish."]], "steps": [["The customer calls", "{a} picks up in under 10 seconds, day or night."], ["{a} understands the need", "Who's calling, why, address, availability."], ["The appointment is booked", "In your calendar, confirmed by text."], ["You get the summary", "Every call summarized in your dashboard."]], "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Hours to cover per week", "l2": "Hourly wage", "l3": "", "eyebrow": "Do the math", "title": "What does an employee who answers the phone cost?", "lead": "Enter the hours to cover and an hourly wage: we compare with {a}.", "cap": "per month in wages alone, before payroll costs and replacements. {a}: from {p} a month, 24 hours a day.", "note": "Calculated from your numbers; the starting values are only examples.", "disc": "An employee covers working hours. {a} covers all 168 hours of the week."}, "stats": [["Calls answered", "41", "this week"], ["Messages handled", "58", "texts and calls"], ["Appointments booked", "12", "↑ 3 this week"], ["Time freed", "≈ 9 h", "estimate this week"]], "calls": [["Karim Benali", "Last night · 11:48 PM", "Quote for a move, 2-bedroom from Laval to Longueuil.", "hot", "Visit · Thursday 10 AM"], ["Sophie Gagnon", "Yesterday · 4:40 PM", "Wants to move her Friday appointment.", "warm", "Appointment moved · Monday 9 AM"], ["Luis Ramírez", "Yesterday · 11:05 AM", "Asks for your opening hours, in Spanish.", "new", "Answered in Spanish"]], "ints": ["googlecalendar", "outlook", "gmail", "whatsapp", "instagram", "facebook", "google", "calendly", "stripe", "quickbooks"], "faq": [["Will it work for my line of business?", "If your customers call you, text you or book appointments, yes. We set up {a} with your services, hours and answers. There's a page per industry in the menu."], ["Can I keep my number?", "Yes. We can port your current number, give you a new one, or forward your calls to {a}. Porting depends on your carrier and its date can't be guaranteed."]], "note": "<b>Transparency:</b> {a} introduces itself as an AI assistant and says the call may be transcribed. For an emergency, {a} tells callers to dial 911. You keep oversight and can correct the answers at any time."}, "es": {"name": "AI Staff", "tab": "General", "ic": "✨", "persona": "sofia", "aud": "personas ocupadas y pequeños negocios", "title": "AI Staff — Tu asistente personal con IA", "desc": "Tu próxima empleada es una IA. Contesta tus llamadas y tus mensajes de texto de día y de noche y agenda tus citas. Desde 397 $ al mes.", "eyebrow": "Asistente personal con IA · Montreal", "h1": "Tu próxima empleada es <em>una IA.</em>", "lead": "{a} contesta tus llamadas y tus mensajes de texto de día y de noche y agenda tus citas. Tú trabajas, {a} se ocupa del resto. En francés, inglés y español.", "trust": [["24/7", "día, noche y fines de semana"], ["< 10 s", "para contestar"], ["FR · EN · ES", "el idioma de tus clientes"]], "script": [["agent", "Mudanzas Tremblay, buenas noches, habla {a}. ¿En qué puedo ayudarle?"], ["lead", "Hola, quisiera una cotización para una mudanza el día 28."], ["agent", "Con gusto. ¿Cuáles son la dirección de salida y la de llegada, y cuántas habitaciones?"], ["lead", "De Laval a Longueuil, un apartamento de dos habitaciones."], ["agent", "Perfecto. Tengo una visita el jueves a las 10. Le envío la confirmación por texto."], ["lead", "¡Genial, gracias!"], ["agent", "Con gusto. ¡Buenas noches!"]], "ended": "Cita agendada ✓", "fcards": [["phone", "Llamada perdida evitada", "Cotización · Laval → Longueuil"], ["googlecalendar", "Visita agendada", "Jueves 10 h · 2 habitaciones"], ["sms", "Confirmación enviada", "Texto al cliente"]], "painH": "Una llamada perdida es un cliente que llama a otro.", "painP": "Estás trabajando, en una cita o en la carretera: el teléfono suena y no puedes contestar. De noche y los fines de semana nadie responde. El cliente llama a otro lado.", "does": ["Contesta tus llamadas de día y de noche, en francés, inglés y español", "Agenda las citas en tu calendario", "Responde tus mensajes de texto y envía las confirmaciones", "Resume cada llamada en tu dashboard privado"], "features": [["📞", "Llamadas 24/7", "Cero llamadas perdidas, incluso de noche y en fin de semana."], ["📅", "Tu agenda", "{a} ofrece tus horarios libres y agenda directamente."], ["💬", "Textos de seguimiento", "Confirmaciones y recordatorios enviados por ti."], ["🌎", "En el idioma del cliente", "Francés, inglés y español."]], "steps": [["El cliente llama", "{a} contesta en menos de 10 segundos, de día o de noche."], ["{a} entiende lo que necesita", "Quién llama, para qué, dirección, disponibilidad."], ["Se agenda la cita", "En tu calendario, con confirmación por texto."], ["Recibes el resumen", "Cada llamada resumida en tu dashboard."]], "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Horas por cubrir a la semana", "l2": "Salario por hora", "l3": "", "eyebrow": "Haz la cuenta", "title": "¿Cuánto cuesta un empleado que contesta el teléfono?", "lead": "Escribe las horas por cubrir y un salario por hora: lo comparamos con {a}.", "cap": "al mes solo en salario, sin cargas ni reemplazos. {a}: desde {p} al mes, las 24 horas.", "note": "Calculado con tus cifras; los valores iniciales son solo ejemplos.", "disc": "Un empleado cubre su horario de trabajo. {a} cubre las 168 horas de la semana."}, "stats": [["Llamadas atendidas", "41", "esta semana"], ["Mensajes atendidos", "58", "textos y llamadas"], ["Citas agendadas", "12", "↑ 3 esta semana"], ["Tiempo liberado", "≈ 9 h", "estimación esta semana"]], "calls": [["Karim Benali", "Anoche · 23:48", "Cotización de mudanza, dos habitaciones de Laval a Longueuil.", "hot", "Visita · jueves 10 h"], ["Sophie Gagnon", "Ayer · 16:40", "Quiere mover su cita del viernes.", "warm", "Cita movida · lunes 9 h"], ["Luis Ramírez", "Ayer · 11:05", "Pregunta por tu horario de atención, en español.", "new", "Respondido en español"]], "ints": ["googlecalendar", "outlook", "gmail", "whatsapp", "instagram", "facebook", "google", "calendly", "stripe", "quickbooks"], "faq": [["¿Sirve para mi oficio?", "Si tus clientes te llaman, te escriben o agendan citas, sí. Configuramos a {a} con tus servicios, tus horarios y tus respuestas. En el menú hay una página por sector."], ["¿Puedo conservar mi número?", "Sí. Podemos transferir tu número actual, darte uno nuevo o desviar tus llamadas a {a}. La transferencia depende de tu operador y no se puede garantizar su fecha."]], "note": "<b>Transparencia:</b> {a} se presenta como asistente de IA y avisa que la llamada puede transcribirse. Ante una emergencia, {a} indica marcar el 911. Tú mantienes la supervisión y puedes corregir sus respuestas en cualquier momento."}};
+const G = {"fr": {"nav.demo": "Démo", "nav.pricing": "Tarifs", "nav.faq": "FAQ", "nav.sectors": "Secteurs", "nav.cta": "📞 Parler à {a}", "nav.home": "Accueil", "hero.pick": "Choisissez votre adjointe :", "hero.cta1": "Réserver ma démo", "hero.cta2": "📞 Parler à {a}", "p.sofia": "voix féminine", "p.alex": "voix neutre", "p.tomas": "voix masculine", "phone.idle": "Appel entrant · démo", "phone.call": "▶ Écouter un appel", "phone.connecting": "{a} décroche…", "phone.live": "En ligne · appel en cours", "phone.hangup": "Raccrocher", "phone.hint": "ligne démo — appelez pour vrai", "pain.k": "Le problème", "does.k": "Ce que {a} fait pour vous", "feat.eyebrow": "Conçu pour votre métier", "feat.title": "Pensé pour {aud}.", "calc.eyebrow": "Faites le calcul", "calc.title": "Combien vous coûtent les appels manqués?", "calc.lead": "Déplacez les curseurs avec vos chiffres — l'estimation se met à jour toute seule.", "calc.cap": "de revenus potentiels manqués par mois, selon vos chiffres.", "calc.note": "Estimation indicative calculée à partir de vos propres données. Vos résultats réels dépendent de votre marché et de votre pratique.", "how.eyebrow": "Comment ça marche", "how.title": "De l'appel au rendez-vous, sans toucher votre téléphone.", "dash.eyebrow": "Ce que vous verrez chaque matin", "dash.title": "Votre tableau de bord.", "dash.lead": "Chaque appel est transcrit, résumé et suivi d'une prochaine action.", "dash.badge": "◆ Données de démonstration", "dash.more": "Voir le tableau de bord complet →", "dash.sub": "avec {a} · AI Staff", "dash.name": "Votre entreprise", "dash.next": "Prochaine action", "int.eyebrow": "Intégrations", "int.title": "Avec les outils que vous utilisez déjà.", "int.note": "Connexions via nos automatisations sécurisées, activées selon votre plan et confirmées lors de l'appel découverte. Les marques citées appartiennent à leurs propriétaires.", "price.eyebrow": "Tarifs", "price.title": "Une fraction du prix d'une réceptionniste.", "price.lead": "Une adjointe humaine coûte environ 3 500 à 4 500 $ par mois (estimation). Choisissez ce dont vous avez besoin.", "price.per": "/ mois", "price.feat": "Recommandé", "priceTop": ["CAD · mois par mois · taxes en sus", "Sans contrat", "Installation gratuite au lancement"], "rollout": "Déploiement progressif : les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.", "faq.eyebrow": "Questions fréquentes", "faq.title": "Ce qu'on nous demande.", "faqGen": [["Qui configure {a}?", "Nous préparons la configuration selon vos instructions, et vous pouvez corriger les réponses en tout temps. Quand une demande sort du cadre prévu, {a} prend le message pour que vous puissiez rappeler."], ["Quelles langues parle {a}?", "Le français, l'anglais et l'espagnol. {a} détecte la langue de l'appelant et répond dans la même."], ["Y a-t-il un contrat?", "Non. C'est mois par mois, sans engagement. L'installation est gratuite pendant le lancement."]], "final.title": "Le prochain appel ne doit pas se perdre.", "final.lead": "15 minutes pour voir ce que {a} ferait pour votre entreprise.", "final.cta1": "Réserver ma démo", "final.cta2": "📞 Appeler {a}", "footer.tag": "l'adjointe personnelle IA, à Montréal", "footer.line": "◆ les tableaux de bord de cette page utilisent des données d'exemple", "sticky.demo": "Réserver ma démo", "sticky.call": "📞 {a}", "prM.title": "Excellent choix", "prM.lead": "Écrivez-nous : on planifie ensemble votre appel découverte et votre activation.", "prM.cta": "Nous écrire", "prM.later": "Peut-être plus tard", "tags": {"hot": "Chaud", "warm": "Tiède", "cold": "Froid", "new": "Nouveau"}, "your": {"f": "Votre adjointe : ", "m": "Votre adjoint : ", "n": "Votre adjoint·e : "}, "plans": [{"name": "Essentiel", "tag": "Vos appels, vos textos et votre agenda, pris en charge.", "price": 397, "cta": "Choisir Essentiel", "feat": ["Numéro de téléphone dédié et appels 24/7", "Français, anglais et espagnol", "Réponses par texto (SMS)", "Rendez-vous pris dans votre agenda", "Tableau de bord privé", "Appelez {a} pour demander vos rapports (par phases)"]}, {"name": "Pro", "tag": "L'essentiel, plus WhatsApp et des appels programmés.", "price": 597, "cta": "Choisir Pro", "feat": ["Tout le plan Essentiel, plus :", "WhatsApp avec le même numéro (par phases)", "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)", "Appelez {a} à toute heure", "Appels illimités, usage raisonnable"]}, {"name": "Complet", "tag": "Tous vos canaux, avec un accès prioritaire.", "price": 797, "cta": "Choisir Complet", "feat": ["Tout le plan Pro, plus :", "Messages Instagram et Facebook (par phases)", "Statistiques de vos réseaux sociaux (par phases)", "Accès prioritaire : vos questions et changements passent en premier"]}], "dash.t": {"tabs": ["Aperçu", "Appels", "Messages", "Agenda", "Réseaux", "Contacts"], "chart": "Appels répondus cette semaine", "days": ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"], "recent": "Derniers appels", "transcript": "Transcription", "free": "Libre", "week": "Cette semaine", "sms": "Bonjour {n}, c'est {a}. C'est confirmé : {x}. À bientôt!", "sent": "Envoyé", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "Un client demande vos heures d'ouverture.", "{a} répond avec vos heures et propose un rendez-vous.", "Par phases"], "soc": [["Instagram", "📸", [["Portée", "2 340"], ["Messages", "18"], ["Nouveaux abonnés", "+27"]]], ["Facebook", "📘", [["Portée", "1 120"], ["Messages", "9"], ["Mentions J'aime", "+14"]]]], "socNote": "Instagram et Facebook : plan Complet, par phases.", "last": "Dernier contact", "contactsNote": "Chaque appelant devient un contact, avec son historique."}}, "en": {"nav.demo": "Demo", "nav.pricing": "Pricing", "nav.faq": "FAQ", "nav.sectors": "Industries", "nav.cta": "📞 Talk to {a}", "nav.home": "Home", "hero.pick": "Pick your assistant:", "hero.cta1": "Book my demo", "hero.cta2": "📞 Talk to {a}", "p.sofia": "female voice", "p.alex": "neutral voice", "p.tomas": "male voice", "phone.idle": "Incoming call · demo", "phone.call": "▶ Play a call", "phone.connecting": "{a} is picking up…", "phone.live": "Live · call in progress", "phone.hangup": "Hang up", "phone.hint": "demo line — call it for real", "pain.k": "The problem", "does.k": "What {a} does for you", "feat.eyebrow": "Built for your trade", "feat.title": "Designed for {aud}.", "calc.eyebrow": "Do the math", "calc.title": "What do missed calls cost you?", "calc.lead": "Move the sliders with your numbers — the estimate updates live.", "calc.cap": "in potential revenue missed per month, based on your numbers.", "calc.note": "Indicative estimate computed from your own data. Actual results depend on your market and your practice.", "how.eyebrow": "How it works", "how.title": "From call to appointment, without touching your phone.", "dash.eyebrow": "What you'll see every morning", "dash.title": "Your dashboard.", "dash.lead": "Every call is transcribed, summarized and paired with a next action.", "dash.badge": "◆ Demo data", "dash.more": "See the full dashboard →", "dash.sub": "with {a} · AI Staff", "dash.name": "Your business", "dash.next": "Next action", "int.eyebrow": "Integrations", "int.title": "With the tools you already use.", "int.note": "Connections run through our secure automations, enabled according to your plan and confirmed on the discovery call. Brands shown belong to their owners.", "price.eyebrow": "Pricing", "price.title": "A fraction of the cost of a receptionist.", "price.lead": "A human assistant costs roughly $3,500 to $4,500 a month (estimate). Choose what you need.", "price.per": "/ month", "price.feat": "Recommended", "priceTop": ["CAD · month to month · plus taxes", "No contract", "Free setup during launch"], "rollout": "Progressive rollout: channels are enabled in phases and confirmed with you on the discovery call.", "faq.eyebrow": "FAQ", "faq.title": "What people ask us.", "faqGen": [["Who sets up {a}?", "We prepare the configuration to your instructions, and you can correct the answers at any time. When a request falls outside the plan, {a} takes a message so you can call back."], ["Which languages does {a} speak?", "French, English and Spanish. {a} detects the caller's language and answers in the same one."], ["Is there a contract?", "No. It's month to month, no commitment. Setup is free during launch."]], "final.title": "The next call shouldn't be lost.", "final.lead": "15 minutes to see what {a} would do for your business.", "final.cta1": "Book my demo", "final.cta2": "📞 Call {a}", "footer.tag": "the AI personal assistant, from Montréal", "footer.line": "◆ dashboards on this page use sample data", "sticky.demo": "Book my demo", "sticky.call": "📞 {a}", "prM.title": "Great choice", "prM.lead": "Email us and we'll plan your discovery call and activation together.", "prM.cta": "Email us", "prM.later": "Maybe later", "tags": {"hot": "Hot", "warm": "Warm", "cold": "Cold", "new": "New"}, "your": {"f": "Your assistant: ", "m": "Your assistant: ", "n": "Your assistant: "}, "plans": [{"name": "Essential", "tag": "Your calls, texts and calendar, handled.", "price": 397, "cta": "Choose Essential", "feat": ["Dedicated phone number and 24/7 calls", "French, English and Spanish", "Text message (SMS) replies", "Appointments booked in your calendar", "Private dashboard", "Call {a} to ask for your reports (in phases)"]}, {"name": "Pro", "tag": "The essentials, plus WhatsApp and scheduled calls.", "price": 597, "cta": "Choose Pro", "feat": ["Everything in Essential, plus:", "WhatsApp on the same number (in phases)", "{a} calls you at the times you choose, up to 3 times a day (in phases)", "Call {a} any time", "Unlimited calls, fair use"]}, {"name": "Complete", "tag": "Every channel, with priority access.", "price": 797, "cta": "Choose Complete", "feat": ["Everything in Pro, plus:", "Instagram and Facebook messages (in phases)", "Social media stats (in phases)", "Priority access: your questions and changes come first"]}], "dash.t": {"tabs": ["Overview", "Calls", "Messages", "Calendar", "Social", "Contacts"], "chart": "Calls answered this week", "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "recent": "Latest calls", "transcript": "Transcript", "free": "Open", "week": "This week", "sms": "Hi {n}, this is {a}. You're confirmed: {x}. See you soon!", "sent": "Sent", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "A customer asks for your opening hours.", "{a} replies with your hours and offers an appointment.", "In phases"], "soc": [["Instagram", "📸", [["Reach", "2,340"], ["Messages", "18"], ["New followers", "+27"]]], ["Facebook", "📘", [["Reach", "1,120"], ["Messages", "9"], ["New likes", "+14"]]]], "socNote": "Instagram and Facebook: Complete plan, in phases.", "last": "Last contact", "contactsNote": "Every caller becomes a contact, with their history."}}, "es": {"nav.demo": "Demo", "nav.pricing": "Precios", "nav.faq": "FAQ", "nav.sectors": "Sectores", "nav.cta": "📞 Hablar con {a}", "nav.home": "Inicio", "hero.pick": "Elige tu asistente:", "hero.cta1": "Agendar mi demo", "hero.cta2": "📞 Hablar con {a}", "p.sofia": "voz femenina", "p.alex": "voz neutra", "p.tomas": "voz masculina", "phone.idle": "Llamada entrante · demo", "phone.call": "▶ Escuchar una llamada", "phone.connecting": "{a} está contestando…", "phone.live": "En línea · llamada en curso", "phone.hangup": "Colgar", "phone.hint": "línea demo — llama de verdad", "pain.k": "El problema", "does.k": "Lo que {a} hace por ti", "feat.eyebrow": "Hecho para tu oficio", "feat.title": "Pensado para {aud}.", "calc.eyebrow": "Haz la cuenta", "calc.title": "¿Cuánto te cuestan las llamadas perdidas?", "calc.lead": "Mueve los controles con tus cifras — la estimación se actualiza sola.", "calc.cap": "en ingresos potenciales perdidos al mes, según tus cifras.", "calc.note": "Estimación indicativa calculada con tus propios datos. Los resultados reales dependen de tu mercado y tu práctica.", "how.eyebrow": "Cómo funciona", "how.title": "De la llamada a la cita, sin tocar tu teléfono.", "dash.eyebrow": "Lo que verás cada mañana", "dash.title": "Tu panel.", "dash.lead": "Cada llamada queda transcrita, resumida y con una próxima acción.", "dash.badge": "◆ Datos de demostración", "dash.more": "Ver el panel completo →", "dash.sub": "con {a} · AI Staff", "dash.name": "Tu negocio", "dash.next": "Próxima acción", "int.eyebrow": "Integraciones", "int.title": "Con las herramientas que ya usas.", "int.note": "Conexiones mediante nuestras automatizaciones seguras, activadas según tu plan y confirmadas en la llamada de descubrimiento. Las marcas mencionadas pertenecen a sus dueños.", "price.eyebrow": "Precios", "price.title": "Una fracción de lo que cuesta una recepcionista.", "price.lead": "Una asistente humana cuesta alrededor de 3 500 a 4 500 $ al mes (estimación). Elige lo que necesitas.", "price.per": "/ mes", "price.feat": "Recomendado", "priceTop": ["CAD · mes a mes · más impuestos", "Sin contrato", "Instalación gratis en el lanzamiento"], "rollout": "Despliegue progresivo: los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.", "faq.eyebrow": "Preguntas frecuentes", "faq.title": "Lo que nos preguntan.", "faqGen": [["¿Quién configura a {a}?", "Nosotros preparamos la configuración según tus instrucciones y puedes corregir las respuestas en cualquier momento. Si algo se sale de lo previsto, {a} toma el mensaje para que puedas devolver la llamada."], ["¿Qué idiomas habla {a}?", "Francés, inglés y español. {a} detecta el idioma de quien llama y responde en el mismo."], ["¿Hay contrato?", "No. Es mes a mes, sin compromiso. La instalación es gratis durante el lanzamiento."]], "final.title": "La próxima llamada no debería perderse.", "final.lead": "15 minutos para ver lo que {a} haría por tu negocio.", "final.cta1": "Agendar mi demo", "final.cta2": "📞 Llamar a {a}", "footer.tag": "la asistente personal con IA, desde Montreal", "footer.line": "◆ los paneles de esta página usan datos de ejemplo", "sticky.demo": "Agendar mi demo", "sticky.call": "📞 {a}", "prM.title": "Excelente elección", "prM.lead": "Escríbenos y planificamos juntos tu llamada de descubrimiento y tu activación.", "prM.cta": "Escríbenos", "prM.later": "Quizás después", "tags": {"hot": "Caliente", "warm": "Tibio", "cold": "Frío", "new": "Nuevo"}, "your": {"f": "Tu asistente: ", "m": "Tu asistente: ", "n": "Tu asistente: "}, "plans": [{"name": "Esencial", "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.", "price": 397, "cta": "Elegir Esencial", "feat": ["Número de teléfono propio y llamadas 24/7", "Francés, inglés y español", "Respuestas por mensaje de texto (SMS)", "Citas agendadas en tu calendario", "Dashboard privado", "Llama a {a} para pedirle tus reportes (por fases)"]}, {"name": "Pro", "tag": "Lo esencial, más WhatsApp y llamadas programadas.", "price": 597, "cta": "Elegir Pro", "feat": ["Todo el plan Esencial, más:", "WhatsApp con el mismo número (por fases)", "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)", "Llama a {a} a cualquier hora", "Llamadas ilimitadas, uso razonable"]}, {"name": "Completo", "tag": "Todos tus canales, con acceso prioritario.", "price": 797, "cta": "Elegir Completo", "feat": ["Todo el plan Pro, más:", "Mensajes de Instagram y Facebook (por fases)", "Estadísticas de tus redes sociales (por fases)", "Acceso prioritario: tus preguntas y cambios van primero"]}], "dash.t": {"tabs": ["Resumen", "Llamadas", "Mensajes", "Agenda", "Redes", "Contactos"], "chart": "Llamadas atendidas esta semana", "days": ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"], "recent": "Últimas llamadas", "transcript": "Transcripción", "free": "Libre", "week": "Esta semana", "sms": "Hola {n}, soy {a}. Quedó confirmado: {x}. ¡Hasta pronto!", "sent": "Enviado", "smsLbl": "SMS · confirmación", "wa": ["WhatsApp", "Un cliente pregunta por tu horario de atención.", "{a} responde con tu horario y propone una cita.", "Por fases"], "soc": [["Instagram", "📸", [["Alcance", "2 340"], ["Mensajes", "18"], ["Nuevos seguidores", "+27"]]], ["Facebook", "📘", [["Alcance", "1 120"], ["Mensajes", "9"], ["Nuevos me gusta", "+14"]]]], "socNote": "Instagram y Facebook: plan Completo, por fases.", "last": "Último contacto", "contactsNote": "Cada persona que llama se vuelve un contacto, con su historial."}}};
+const SECTORS = {"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]};
+const LOGOS = {"quickbooks": ["QuickBooks", "2CA01C", "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm.642 4.1335c.9554 0 1.7296.776 1.7296 1.7332v9.0667h1.6c1.614 0 2.9275-1.3156 2.9275-2.933 0-1.6173-1.3136-2.9333-2.9276-2.9333h-.6654V7.3334h.6654c2.5722 0 4.6577 2.0897 4.6577 4.667 0 2.5774-2.0855 4.6666-4.6577 4.6666H12.642zM7.9837 7.333h3.3291v12.533c-.9555 0-1.73-.7759-1.73-1.7332V9.0662H7.9837c-1.6146 0-2.9277 1.316-2.9277 2.9334 0 1.6175 1.3131 2.9333 2.9277 2.9333h.6654v1.7332h-.6654c-2.5725 0-4.6577-2.0892-4.6577-4.6665 0-2.5771 2.0852-4.6666 4.6577-4.6666Z"], "googlecalendar": ["Google Calendar", "4285F4", "M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557zM22.105 0h-3.289v5.184H24V1.895A1.894 1.894 0 0 0 22.105 0zm-3.289 23.5l4.684-4.684h-4.684V23.5zM0 22.105C0 23.152.848 24 1.895 24h3.289v-5.184H0v3.289z"], "whatsapp": ["WhatsApp", "25D366", "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"], "facebook": ["Facebook", "0866FF", "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"], "google": ["Google", "4285F4", "M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"], "gmail": ["Gmail", "EA4335", "M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"], "outlook": ["Outlook", "0078D4", "M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13zm2.3.2 7.1 5.6a1 1 0 0 0 1.2 0l7.1-5.6a.5.5 0 0 0-.3-.2h-14.8a.5.5 0 0 0-.3.2zM20 8.1l-6.2 4.9a3 3 0 0 1-3.6 0L4 8.1v10.4c0 .3.2.5.5.5h15c.3 0 .5-.2.5-.5V8.1z"], "stripe": ["Stripe", "635BFF", "M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"], "calendly": ["Calendly", "006BFF", "M19.655 14.262c.281 0 .557.023.828.064 0 .005-.005.01-.005.014-.105.267-.234.534-.381.786l-1.219 2.106c-1.112 1.936-3.177 3.127-5.411 3.127h-2.432c-2.23 0-4.294-1.191-5.412-3.127l-1.218-2.106a6.251 6.251 0 0 1 0-6.252l1.218-2.106C6.736 4.832 8.8 3.641 11.035 3.641h2.432c2.23 0 4.294 1.191 5.411 3.127l1.219 2.106c.147.252.271.519.381.786 0 .004.005.009.005.014-.267.041-.543.064-.828.064-1.816 0-2.501-.607-3.291-1.306-.764-.676-1.711-1.517-3.44-1.517h-1.029c-1.251 0-2.387.455-3.2 1.278-.796.805-1.233 1.904-1.233 3.099v1.411c0 1.196.437 2.295 1.233 3.099.813.823 1.949 1.278 3.2 1.278h1.034c1.729 0 2.676-.841 3.439-1.517.791-.703 1.471-1.306 3.287-1.301Zm.005-3.237c.399 0 .794-.036 1.179-.11-.002-.004-.002-.01-.002-.014-.073-.414-.193-.823-.349-1.218.731-.12 1.407-.396 1.986-.819 0-.004-.005-.013-.005-.018-.331-1.085-.832-2.101-1.489-3.03-.649-.915-1.435-1.719-2.331-2.395-1.867-1.398-4.088-2.138-6.428-2.138-1.448 0-2.855.28-4.175.841-1.273.543-2.423 1.315-3.407 2.299S2.878 6.552 2.341 7.83c-.557 1.324-.842 2.726-.842 4.175 0 1.448.281 2.855.842 4.174.542 1.274 1.314 2.423 2.298 3.407s2.129 1.761 3.407 2.299c1.324.556 2.727.841 4.175.841 2.34 0 4.561-.74 6.428-2.137a10.815 10.815 0 0 0 2.331-2.396c.652-.929 1.158-1.949 1.489-3.03 0-.004.005-.014.005-.018-.579-.423-1.255-.699-1.986-.819.161-.395.276-.804.349-1.218.005-.009.005-.014.005-.023.869.166 1.692.506 2.404 1.035.685.505.552 1.075.446 1.416C22.184 20.437 17.619 24 12.221 24c-6.625 0-12-5.375-12-12s5.37-12 12-12c5.398 0 9.963 3.563 11.471 8.464.106.341.239.915-.446 1.421-.717.529-1.535.873-2.404 1.034.128.716.128 1.45 0 2.166-.387-.074-.782-.11-1.182-.11-4.184 0-3.968 2.823-6.736 2.823h-1.029c-1.899 0-3.15-1.357-3.15-3.095v-1.411c0-1.738 1.251-3.094 3.15-3.094h1.034c2.768 0 2.552 2.823 6.731 2.827Z"], "instagram": ["Instagram", "FF0069", "M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"]};
+const PERSONAS = {sofia:{name:"Sofía",ini:"S"}, alex:{name:"Alex",ini:"A"}, tomas:{name:"Tomás",ini:"T"}};
+const GENDER = {sofia:"f", alex:"n", tomas:"m"};
 const qs = new URLSearchParams(location.search);
-let lang = STR[qs.get("lang")] ? qs.get("lang") : "fr";
-const persona = NAMES[qs.get("a")] ? qs.get("a") : "sofia";
-const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-const fill = s=>String(s).split("{a}").join(NAMES[persona]);
-const money = n=> lang==="en" ? "$"+n : n+" $";
-const $ = id=>document.getElementById(id);
-function render(){
-  const S = STR[lang], q = lang==="fr" ? "" : "?lang="+lang;
-  document.documentElement.lang = lang;
-  document.title = "AI Staff — " + ({fr:"Votre adjointe personnelle IA",en:"Your AI personal assistant",es:"Tu asistente personal con IA"})[lang];
-  document.querySelectorAll("[data-i18n]").forEach(e=>{ e.textContent = fill(S[e.dataset.i18n] ?? STR.fr[e.dataset.i18n] ?? ""); });
-  document.querySelectorAll("[data-i18n-html]").forEach(e=>{ e.innerHTML = S[e.dataset.i18nHtml]; });
-  document.querySelectorAll(".obcta").forEach(a=>a.href = "/onboarding/"+q);
-  $("pain").innerHTML = S.pain.map(x=>`<div class="card"><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p></div>`).join("");
-  $("how").innerHTML = S.how.map((x,i)=>`<div class="card step"><b class="n">${i+1}</b><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p></div>`).join("");
-  $("does").innerHTML = S.does.map(x=>`<div class="card"><div class="ic">${x[0]}</div><h3>${esc(x[1])}</h3><p>${esc(x[2])}</p></div>`).join("");
-  $("priceTop").innerHTML = S.top.map(x=>`<span>${esc(x)}</span>`).join("");
-  $("plans").innerHTML = PLANS[lang].map((p,i)=>`<div class="card plan"><div class="pn">${esc(p.name)}</div><div class="price"><span class="num">${money(p.price)}</span><span class="per">${esc(S["price.per"])}</span></div><p>${esc(p.tag)}</p><ul>${p.feat.map((f,j)=>`<li class="${j===0&&i>0?"inc":""}">${esc(fill(f))}</li>`).join("")}</ul><a class="btn btn-ghost obcta" href="/onboarding/${q}">${esc(p.cta)}</a></div>`).join("");
-  const secs = SECTORS[lang];
-  $("sectors").innerHTML = secs.map(x=>`<a class="card" href="/${x.slug}/${q}"><span class="e">${x.ic}</span>${esc(x.name)}</a>`).join("");
-  $("ddMenu").innerHTML = secs.map(x=>`<a href="/${x.slug}/${q}"><span>${x.ic}</span>${esc(x.name)}</a>`).join("");
-  $("faqList").innerHTML = S.faq.map(x=>`<details><summary>${esc(fill(x[0]))}</summary><p>${esc(fill(x[1]))}</p></details>`).join("");
-  const fp = $("footPriv"); fp.href = "/confidentialite/"+q; fp.textContent = S["foot.priv"];
-  document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("on", b.dataset.lang===lang));
+let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "sofia");
+let callTimers = [];
+
+function S(){ return SEC[lang]; }
+function g(k){ return G[lang][k] !== undefined ? G[lang][k] : G.fr[k]; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function aName(){ return PERSONAS[persona].name; }
+function fill(s){ return String(s).split("{a}").join(aName()).split("{aud}").join(S().aud); }
+function money(n){ return lang==="en" ? "$"+Math.round(n).toLocaleString("en-CA") : Math.round(n).toLocaleString("fr-CA").replace(/ | /g," ")+" $"; }
+
+function avatarSVG(id){
+  const uid = "g"+id+Math.random().toString(36).slice(2,7);
+  const hair = {
+    sofia:'<path d="M18.5 33c-.6-11 5-19.5 13.5-19.5S46.2 22 45.5 33c-.3 5.5.6 10.5 2.2 14.5-4.6 2.4-10 3.4-15.7 3.4s-11.1-1-15.7-3.4c1.6-4 2.5-9 2.2-14.5z" fill="#BFD3FA"/>',
+    tomas:'',
+    alex:'<path d="M19.5 31.5c-.4-9.5 4.6-17 12.8-17 7.4 0 12.6 5.6 12.3 14.2l-.3 6.3c-1.4-2.2-2.4-5.4-2.6-8.6-4.7 2.6-11.2 3.9-17.9 3.2-.9 1.9-1.7 4.3-2 6.9-1.3-1.3-2.2-2.9-2.3-5z" fill="#BFD3FA"/>'
+  }[id];
+  const top = {
+    sofia:'<path d="M20.6 27.2c1.4-7.2 6-11.7 11.4-11.7 5.9 0 10.3 4.6 11.3 11.5-3.1-2.9-7.4-5.1-12.2-5.6-3.9 1.8-7.4 3.9-10.5 5.8z" fill="#BFD3FA"/>',
+    tomas:'<path d="M20.9 27.6c.3-7.4 5-12.3 11.2-12.3s11 4.7 11.2 12.1c-2.4-2.5-5.4-3.9-8.4-4.2-1.9 1.4-4.6 2.1-7.6 2-2.7 0-4.9.8-6.4 2.4z" fill="#BFD3FA"/>',
+    alex:'<path d="M20.4 28.6c.2-8.1 5.1-13.3 11.9-13.3 6.9 0 11.5 5 11.4 12.3-1.7-2.9-4.2-4.9-7.3-5.8-3.3 3.5-9.6 5.8-16 6.8z" fill="#BFD3FA"/>'
+  }[id];
+  const ring = id==="alex"
+    ? `<defs><linearGradient id="${uid}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E88A8A"/><stop offset=".2" stop-color="#F2B774"/><stop offset=".4" stop-color="#EFDB7C"/><stop offset=".6" stop-color="#8FCB93"/><stop offset=".8" stop-color="#7FB3EE"/><stop offset="1" stop-color="#B28FD6"/></linearGradient></defs><circle cx="32" cy="32" r="30.6" fill="none" stroke="url(#${uid}r)" stroke-width="2.6" opacity=".9"/>`
+    : "";
+  return `<svg viewBox="0 0 64 64" class="av" aria-hidden="true"><defs><linearGradient id="${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1A33"/><stop offset="1" stop-color="#2F6FE0"/></linearGradient><clipPath id="${uid}c"><circle cx="32" cy="32" r="${id==="alex"?28.6:30}"/></clipPath></defs>`+
+    `<circle cx="32" cy="32" r="${id==="alex"?28.6:30}" fill="url(#${uid})"/><g clip-path="url(#${uid}c)">${hair}<path d="M9 66c1.5-12.5 10.5-19.5 23-19.5S53.5 53.5 55 66z" fill="#EAF1FF"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#DCE7FB"/><ellipse cx="32" cy="30" rx="10.2" ry="11.4" fill="#EAF1FF"/>${top}</g>${ring}</svg>`;
 }
-document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{
-  lang = b.dataset.lang;
-  try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); history.replaceState(null,"",location.pathname+(p.toString()?"?"+p:"")+location.hash); }catch(e){}
-  render();
-}));
-const themeBtn = $("themeToggle");
+
+function logoSVG(k, forceColor){
+  const L = LOGOS[k]; if(!L) return "";
+  const dark = L[1]==="000000" || L[1]==="262627" || L[1]==="3E4348";
+  const fillc = forceColor || (dark ? "currentColor" : "#"+L[1]);
+  return `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${fillc}" d="${L[2]}"/></svg>`;
+}
+const ICON = {
+  phone:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1F6FEB" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
+  globe:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1FA855" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-2.9a15.6 15.6 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4.1c.8 1.2 1.5 2.5 1.9 3.9h-3.8c.4-1.4 1.1-2.7 1.9-3.9zM4.3 14a8 8 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4H4.3zm.8 2H8c.3 1.3.8 2.5 1.4 3.6A8 8 0 0 1 5.1 16zM8 8H5.1a8 8 0 0 1 4.3-3.6C8.8 5.5 8.3 6.7 8 8zm4 11.9c-.8-1.2-1.5-2.5-1.9-3.9h3.8c-.4 1.4-1.1 2.7-1.9 3.9zm2.3-5.9H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h2.9a8 8 0 0 1-4.3 3.6zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8 8 0 0 1 0 4h-3.4z"/></svg>'
+};
+
+ICON.sms = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1F6FEB" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 6.5a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01z"/></svg>';
+const orbState = {talking:false, amp:0, mode:0, visible:true};
+function initOrb(){
+  const cv = document.getElementById("orbGL");
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let gl = null;
+  try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true,antialias:true}); }catch(e){}
+  if(!gl){ const f = document.createElement("div"); f.className = "orb-fallback"; cv.replaceWith(f); return; }
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const fs = `precision highp float;
+uniform vec2 uRes;uniform float uT;uniform float uAmp;uniform float uMode;
+float hash(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+float noise(vec3 x){vec3 i=floor(x);vec3 f=fract(x);f=f*f*(3.-2.*f);
+return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
+float fbm(vec3 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.03+vec3(1.7,9.2,3.1);a*=.5;}return v;}
+mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+vec3 rainbow(float t){return .58+.42*cos(6.2831*(t+vec3(0.,.33,.67)));}
+void main(){
+vec2 uv=(gl_FragCoord.xy-.5*uRes)/(.5*min(uRes.x,uRes.y));
+float R=.6+.012*sin(uT*1.3)+uAmp*.04;
+float d=length(uv);
+vec3 deep=vec3(.03,.09,.26),mid=vec3(.14,.40,.93),hi=vec3(.50,.82,1.);
+vec3 rim=uMode<.5?vec3(.66,.58,1.):vec3(.35,.92,.95);
+vec3 col=vec3(0.);float a=0.;
+if(d<R){
+vec2 q=uv/R;float z=sqrt(max(1.-dot(q,q),0.));vec3 n=vec3(q,z);
+vec3 p=n;p.xz*=rot(uT*.16);p.xy*=rot(uT*.06);
+float w=fbm(p*1.7+vec3(0.,0.,uT*.12));
+float f=fbm(p*2.3+w*1.7+vec3(uT*.05)+uAmp*.7);
+vec3 base=mix(deep,mid,smoothstep(.25,.7,f));
+base=mix(base,hi,smoothstep(.55,.85,f)*.85);
+vec3 L=normalize(vec3(-.45,.55,.75));
+float diff=.32+.78*max(dot(n,L),0.);
+float fres=pow(1.-z,2.2);
+vec3 rc=rim;
+if(uMode>.5&&uMode<1.5){rc=rainbow(atan(q.y,q.x)/6.2831+uT*.04);}
+float spec=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),28.);
+col=base*diff+rc*fres*.8+vec3(spec*.55)+hi*uAmp*.3*f;
+a=smoothstep(R,R-.012,d);col*=a;}
+float g=max(d-R,0.);
+float halo=exp(-g*7.)*(.45+uAmp*.55)*(1.-a);
+vec3 hc=mix(mid,hi,.4);
+if(uMode>.5&&uMode<1.5){hc=mix(hc,rainbow(atan(uv.y,uv.x)/6.2831+uT*.04),.3);}
+col+=hc*halo*.8;a=max(a,halo*.8);
+gl_FragColor=vec4(col,a);}`;
+  const sh = (type,src)=>{ const s = gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; };
+  const pr = gl.createProgram();
+  gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)){ const f = document.createElement("div"); f.className = "orb-fallback"; cv.replaceWith(f); return; }
+  gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uRes = gl.getUniformLocation(pr,"uRes"), uT = gl.getUniformLocation(pr,"uT"), uAmp = gl.getUniformLocation(pr,"uAmp"), uMode = gl.getUniformLocation(pr,"uMode");
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  function size(){
+    const dpr = Math.min(window.devicePixelRatio||1, 1.5), r = cv.getBoundingClientRect();
+    cv.width = Math.max(1, Math.round(r.width*dpr)); cv.height = Math.max(1, Math.round(r.height*dpr));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  size(); window.addEventListener("resize", size);
+  const t0 = performance.now();
+  function frame(now){
+    const t = (now - t0)/1000;
+    const target = orbState.talking ? .45 + .55*Math.abs(Math.sin(t*8.3)*Math.sin(t*3.1+1.2)) : 0;
+    orbState.amp += (target - orbState.amp) * .12;
+    gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uRes, cv.width, cv.height); gl.uniform1f(uT, t); gl.uniform1f(uAmp, orbState.amp); gl.uniform1f(uMode, orbState.mode);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    if(!reduce && orbState.visible && !document.hidden) requestAnimationFrame(frame); else orbState.paused = true;
+  }
+  orbState.resume = ()=>{ if(orbState.paused && !reduce){ orbState.paused = false; requestAnimationFrame(frame); } };
+  requestAnimationFrame(frame);
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(es=>{ orbState.visible = es[0].isIntersecting; if(orbState.visible) orbState.resume(); }).observe(cv);
+  }
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) orbState.resume(); });
+}
+/* 3D tilt of the phone following the pointer */
+function initTilt(){
+  const stage = document.getElementById("stage"), wrap = stage.querySelector(".phone-wrap"), cv = document.getElementById("orbGL");
+  if(!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
+  let raf = 0, tx = 0, ty = 0;
+  window.addEventListener("pointermove", e=>{
+    const r = stage.getBoundingClientRect();
+    tx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width/2)) / (r.width/1.2)));
+    ty = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height/2)) / (r.height/1.2)));
+    if(!raf) raf = requestAnimationFrame(()=>{
+      raf = 0;
+      wrap.style.transform = `translate(-50%,-50%) rotateY(${tx*9}deg) rotateX(${-ty*7}deg)`;
+      if(cv) cv.style.transform = `translate(calc(-50% + ${-tx*18}px), calc(-50% + ${-ty*14}px))`;
+    });
+  }, {passive:true});
+}
+
+/* reveal sections on scroll */
+function initReveal(){
+  const els = document.querySelectorAll("section.block, .band, .sr");
+  els.forEach(e=>e.classList.add("sr"));
+  if(!("IntersectionObserver" in window)){ els.forEach(e=>e.classList.add("vis")); return; }
+  const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("vis"); io.unobserve(en.target); } }), {threshold:.08, rootMargin:"0px 0px -40px 0px"});
+  els.forEach(e=>io.observe(e));
+  /* fallback for fast scrolls / anchor jumps: reveal everything above the fold line */
+  let tk = 0;
+  const sweep = ()=>{ tk = 0; const lim = window.innerHeight*1.05; els.forEach(e=>{ if(!e.classList.contains("vis") && e.getBoundingClientRect().top < lim) e.classList.add("vis"); }); };
+  window.addEventListener("scroll", ()=>{ if(!tk) tk = requestAnimationFrame(sweep); }, {passive:true});
+  window.addEventListener("hashchange", ()=>setTimeout(sweep, 60));
+  setTimeout(sweep, 300);
+}
+
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById("themeToggle");
 function paintTheme(){ themeBtn.textContent = document.documentElement.getAttribute("data-theme")==="dark" ? "☀️" : "🌙"; }
-themeBtn.addEventListener("click",()=>{ const n = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", n); try{ localStorage.setItem("aistaff-theme", n); }catch(e){} paintTheme(); });
-document.addEventListener("click",e=>{ const d=$("ddSectors"); if(d && d.open && !d.contains(e.target)) d.open=false; });
-paintTheme(); render();
+themeBtn.addEventListener("click", ()=>{
+  const next = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("aistaff-theme", next); }catch(e){}
+  paintTheme();
+});
+paintTheme();
+
+function splitTitle(){
+  const h = document.getElementById("heroTitle"); let i = 0;
+  const walk = node=>{ [...node.childNodes].forEach(ch=>{
+    if(ch.nodeType===3){ const frag = document.createDocumentFragment();
+      ch.textContent.split(/( )/).forEach(part=>{ if(part===" "){ frag.appendChild(document.createTextNode(" ")); return; } if(!part) return;
+        const s = document.createElement("span"); s.className = "w"; s.style.setProperty("--i", i++); s.textContent = part; frag.appendChild(s); });
+      ch.replaceWith(frag);
+    } else if(ch.nodeType===1){ walk(ch); } }); };
+  walk(h);
+}
+
+function render(){
+  const s = S();
+  document.documentElement.lang = lang;
+  document.title = s.title;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v = g(el.dataset.i18n); if(typeof v === "string") el.innerHTML = fill(v); });
+  document.querySelectorAll("[data-s]").forEach(el=>{ el.innerHTML = fill(s[el.dataset.s]); });
+  document.getElementById("heroIc").textContent = SEC.fr.ic;
+  splitTitle();
+  document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
+  document.querySelectorAll(".persona").forEach(b=>b.classList.toggle("active", b.dataset.persona===persona));
+  const subj = encodeURIComponent("AI Staff — "+s.name);
+  document.querySelectorAll(".mailcta").forEach(a=>a.href = SECTOR_ID==="general" ? "/onboarding/"+(lang==="fr"?"":"?lang="+lang) : "/onboarding/?secteur="+SECTOR_ID+(lang==="fr"?"":"&lang="+lang));
+  document.getElementById("trust").innerHTML = s.trust.map(t=>`<div><div class="n">${esc(t[0])}</div><div class="l">${esc(fill(t[1]))}</div></div>`).join("");
+  document.getElementById("doesList").innerHTML = s.does.map(d=>`<li>${esc(fill(d))}</li>`).join("");
+  document.getElementById("featGrid").innerHTML = s.features.map(f=>`<div class="card feat"><div class="top"><div class="ic">${f[0]}</div></div><h3>${esc(fill(f[1]))}</h3><p>${esc(fill(f[2]))}</p></div>`).join("");
+  document.getElementById("steps").innerHTML = s.steps.map((st,i)=>`<div class="card step"><div class="num">${i+1}</div><h3>${esc(fill(st[0]))}</h3><p>${esc(fill(st[1]))}</p></div>`).join("");
+  buildDash(s);
+  document.getElementById("dashAv").innerHTML = SEC.fr.ic;
+  document.getElementById("logoGrid").innerHTML = s.ints.filter(k=>LOGOS[k]).map(k=>`<div class="logo-tile"><span class="lg">${logoSVG(k)}</span><span>${esc(LOGOS[k][0])}</span></div>`).join("");
+  const faqs = s.faq.concat(g("faqGen"));
+  document.getElementById("faqList").innerHTML = faqs.map((f,i)=>`<div class="faq-item"><button class="faq-q" data-faq="${i}" aria-expanded="false"><span>${esc(fill(f[0]))}</span><span class="pl">+</span></button><div class="faq-a" id="faq-${i}"><p>${esc(fill(f[1]))}</p></div></div>`).join("");
+  document.querySelectorAll("[data-faq]").forEach(b=>b.addEventListener("click",()=>{ const it = b.parentElement, a = document.getElementById("faq-"+b.dataset.faq), open = it.classList.toggle("open"); b.setAttribute("aria-expanded", open); a.style.maxHeight = open ? a.scrollHeight+"px" : "0"; }));
+  const note = document.getElementById("noteCard");
+  if(s.note){ note.style.display = "flex"; document.getElementById("noteText").innerHTML = fill(s.note); } else note.style.display = "none";
+  document.getElementById("priceTop").innerHTML = g("priceTop").map(x=>`<span>${esc(x)}</span>`).join("");
+  document.getElementById("priceGrid").innerHTML = g("plans").map((p,i)=>`<div class="card plan${p.featured?" featured":""}">`+(p.featured?`<span class="ribbon">⭐ ${esc(g("price.feat"))}</span>`:"")+
+    `<div class="pname">${esc(p.name)}</div><div class="ptag">${esc(p.tag)}</div><div><span class="pnum">${money(p.price)}</span> <span class="pper">${esc(g("price.per"))}</span></div>`+
+    `<ul>${p.feat.map((f,j)=>`<li class="${j===0&&i>0?"inc":""}"><span class="ck">${j===0&&i>0?"＋":"✓"}</span><span>${esc(fill(f))}</span></li>`).join("")}</ul>`+
+    `<button class="btn ${p.featured?"btn-blue":"btn-ghost"}" data-plan="${esc(p.name)}">${esc(p.cta)}</button></div>`).join("");
+  document.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{ document.getElementById("priceMailto").href = "mailto:hello@meetaistaff.com?subject="+encodeURIComponent("AI Staff — "+s.name+" — "+b.dataset.plan); document.getElementById("priceModal").classList.add("show"); }));
+  /* sectors menu + footer */
+  const list = SECTORS[lang];
+  const q = lang==="fr" ? "" : "?lang="+lang;
+  document.getElementById("ddMenu").innerHTML = `<a href="/${q}"><span>🏠</span>${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}"${x.id===SECTOR_ID?' class="cur"':""}><span>${x.ic}</span>${esc(x.name)}</a>`).join("");
+  document.getElementById("footLinks").innerHTML = `<a href="/${q}">${esc(g("nav.home"))}</a>`+list.map(x=>`<a href="/${x.slug}/${q}">${esc(x.name)}</a>`).join("")+`<a href="/demo/${q}">Demo</a><a href="/confidentialite/${q}">${({fr:"Confidentialité",en:"Privacy",es:"Privacidad"})[lang]}</a>`;
+  document.getElementById("dashMore").href = "/demo/"+q;
+  buildCalc(); buildFcards(); resetPhone();
+}
+
+/* ---------- dashboard sample (tabs) ---------- */
+let dashTab = 0;
+const iniOf = n => n.replace(/[^A-Za-zÀ-ÿ ]/g,"").split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "@";
+const AVBG = ["linear-gradient(135deg,#3B82F6,#1858C4)","linear-gradient(135deg,#22B8E6,#1F6FEB)","linear-gradient(135deg,#8B5CF6,#4F46E5)","linear-gradient(135deg,#10B981,#047857)"];
+function buildDash(s){
+  const D = g("dash.t"), T = g("tags"), calls = s.calls, first = n => n.split(" ")[0];
+  const total = parseInt(String(s.stats[0][1]).replace(/\D/g,""),10) || 40, wts = [.13,.18,.15,.2,.17,.1,.07];
+  let vals = wts.map(w=>Math.round(total*w)); vals[3] += total - vals.reduce((a,b)=>a+b,0);
+  const mx = Math.max.apply(null, vals);
+  const tiles = `<div class="stats">${s.stats.map(x=>`<div class="stat-tile"><div class="lbl">${esc(x[0])}</div><div class="val">${esc(x[1])}</div><div class="delta">${esc(x[2])}</div></div>`).join("")}</div>`;
+  const bars = `<div class="dchart"><div class="dch-h">${esc(D.chart)}</div><div class="bars">${vals.map((v,i)=>`<div class="bar"><span class="bv">${v}</span><i style="height:${Math.max(8,Math.round(v/mx*100))}%"></i><span class="bd">${esc(D.days[i])}</span></div>`).join("")}</div></div>`;
+  const callCard = (c,i,full) => `<div class="call-card"><div class="who"><div class="ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</div><div><div class="nm">${esc(c[0])}</div><div class="mt">${esc(c[1])}</div></div><span class="tag ${c[3]}" style="margin-left:auto;">${esc(T[c[3]])}</span></div><div class="sm">${esc(fill(c[2]))}</div>`+
+    (full && i===0 && s.script ? `<div class="tr-box"><div class="tr-t">${esc(D.transcript)}</div>${s.script.map(l=>`<div class="tr-line"><b>${l[0]==="agent"?esc(aName()):esc(first(c[0]))} :</b> ${esc(fill(l[1]))}</div>`).join("")}</div>` : "")+
+    `<div class="nx">→ ${esc(g("dash.next"))} : ${esc(fill(c[4]))}</div></div>`;
+  const msgs = calls.map((c,i)=>`<div class="feed-row wrapm"><div class="feed-ico">💬</div><div class="tx"><b>${esc(c[0])}</b> <small style="display:inline;">· ${esc(D.smsLbl)}</small><div class="draft"><b>${esc(aName())}</b> — ${esc(D.sms.split("{n}").join(first(c[0])).split("{a}").join(aName()).split("{x}").join(fill(c[4])))}</div></div><span class="tag new">${esc(D.sent)}</span></div>`).join("")+
+    `<div class="feed-row wrapm"><div class="feed-ico">🟢</div><div class="tx"><b>${esc(D.wa[0])}</b> <small style="display:inline;">· ${esc(D.wa[1])}</small><div class="draft"><b>${esc(aName())}</b> — ${esc(D.wa[2].split("{a}").join(aName()))}</div></div><span class="tag info">${esc(D.wa[3])}</span></div>`;
+  const DAYIDX = {lundi:0,monday:0,lunes:0,mardi:1,tuesday:1,martes:1,mercredi:2,wednesday:2,miercoles:2,jeudi:3,thursday:3,jueves:3,vendredi:4,friday:4,viernes:4,samedi:5,saturday:5,sabado:5};
+  const dayOf = txt => { const m = txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").match(/\b(lundi|monday|lunes|mardi|tuesday|martes|mercredi|wednesday|miercoles|jeudi|thursday|jueves|vendredi|friday|viernes|samedi|saturday|sabado)\b/); return m ? DAYIDX[m[1]] : -1; };
+  const evs = calls.filter(c=>/\d/.test(c[4])).map(c=>({c, d: dayOf(c[4])}));
+  const used = new Set(evs.filter(e=>e.d>=0).map(e=>e.d)), spare = [0,2,3,1,4,5].filter(d=>!used.has(d));
+  evs.forEach(e=>{ if(e.d<0) e.d = spare.shift(); });
+  const week = `<div class="wk">${[0,1,2,3,4,5].map(d=>{ const here = evs.filter(e=>e.d===d);
+    return `<div class="wk-col"><div class="wk-h">${esc(D.days[d])}</div>${here.map(e=>`<div class="wk-ev"><b>${esc(fill(e.c[4]))}</b><small>${esc(e.c[0])}</small></div>`).join("")}<div class="wk-free">${esc(D.free)}</div>${here.length?"":'<div class="wk-free">'+esc(D.free)+'</div>'}</div>`; }).join("")}</div>`;
+  const soc = `<p class="dnote">${esc(D.socNote)}</p><div class="soc-grid">${D.soc.map(x=>`<div class="soc-card"><div class="h"><b>${x[1]} ${esc(x[0])}</b><span>${esc(D.week)}</span></div><div class="soc-kpis">${x[2].map(k=>`<div><b>${esc(k[1])}</b><span>${esc(k[0])}</span></div>`).join("")}</div></div>`).join("")}</div>`;
+  const contacts = `<p class="dnote">${esc(D.contactsNote)}</p>`+calls.map((c,i)=>`<div class="feed-row"><div class="ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</div><div class="tx"><b>${esc(c[0])}</b><small>${esc(D.last)} · ${esc(c[1])}</small></div><span class="tag ${c[3]}">${esc(T[c[3]])}</span></div>`).join("");
+  const panes = [
+    tiles+bars+`<div class="dch-h" style="margin:18px 0 8px;">${esc(D.recent)}</div>`+calls.map((c,i)=>callCard(c,i,false)).join(""),
+    calls.map((c,i)=>callCard(c,i,true)).join(""), msgs, week, soc, contacts];
+  document.getElementById("dtabs").innerHTML = D.tabs.map((t,i)=>`<button type="button" class="dtab${i===dashTab?" active":""}" role="tab" aria-selected="${i===dashTab}" data-i="${i}">${esc(t)}</button>`).join("");
+  document.getElementById("dpanes").innerHTML = panes.map((h,i)=>`<div class="dpane" role="tabpanel" style="display:${i===dashTab?"block":"none"}">${h}</div>`).join("");
+  document.querySelectorAll("#dtabs .dtab").forEach(b=>b.addEventListener("click",()=>{ dashTab = +b.dataset.i;
+    document.querySelectorAll("#dtabs .dtab").forEach((x,i)=>{ x.classList.toggle("active", i===dashTab); x.setAttribute("aria-selected", i===dashTab); });
+    document.querySelectorAll("#dpanes .dpane").forEach((x,i)=>x.style.display = i===dashTab?"block":"none"); }));
+}
+
+/* ---------- calculator ---------- */
+function buildCalc(){
+  const c = S().calc;
+  [1,2,3].forEach(i=>{ document.getElementById("cl"+i).textContent = c["l"+i]; const r = document.getElementById("cr"+i), rg = c.r[i-1];
+    r.min = rg[0]; r.max = rg[1]; r.step = rg[2]; if(!r.dataset.init){ r.value = c.v[i-1]; r.dataset.init = 1; } });
+  document.getElementById("calcDisc").textContent = fill(c.disc);
+  const human = c.mode === "human";
+  document.getElementById("cl3").closest("label").style.display = human ? "none" : ""; document.getElementById("cr3").style.display = human ? "none" : "";
+  ["eyebrow","title","lead","cap","note"].forEach(k=>{ const el = document.querySelector('[data-i18n="calc.'+k+'"]'); if(el && c[k]) el.textContent = fill(c[k]).split("{p}").join(money(g("plans")[0].price)); });
+  updateCalc();
+}
+function updateCalc(){
+  const a = +document.getElementById("cr1").value, b = +document.getElementById("cr2").value, v = +document.getElementById("cr3").value;
+  if(S().calc.mode === "human"){
+    document.getElementById("cv1").textContent = a+" h"; document.getElementById("cv2").textContent = money(b)+(lang==="fr"?" / h":(lang==="es"?" / h":"/h"));
+    document.getElementById("calcBig").textContent = "≈ "+money(Math.round(a*4.33*b)); return;
+  }
+  document.getElementById("cv1").textContent = a;
+  document.getElementById("cv2").textContent = b+" %";
+  document.getElementById("cv3").textContent = money(v);
+  document.getElementById("calcBig").textContent = "≈ "+money(a*4.33*(b/100)*v);
+}
+["cr1","cr2","cr3"].forEach(id=>document.getElementById(id).addEventListener("input", updateCalc));
+
+/* ---------- floating cards ---------- */
+function buildFcards(){
+  document.getElementById("fcards").innerHTML = S().fcards.map((c,i)=>`<div class="fcard s${i}"><span class="fi">${ICON[c[0]]||logoSVG(c[0])}</span><span><b>${esc(fill(c[1]))}</b><span>${esc(fill(c[2]))}</span></span><span class="ok">✓</span></div>`).join("");
+  document.querySelectorAll(".fcard").forEach((c,i)=>setTimeout(()=>c.classList.add("show","bob"), 1400+i*350));
+}
+
+/* ---------- phone: a customer call for this trade ---------- */
+const callBtn = document.getElementById("callBtn"), callStatus = document.getElementById("callStatus"), transcriptEl = document.getElementById("transcript");
+const callAv = document.getElementById("callAv"), eqEl = document.getElementById("eq");
+function setTalking(on){ callAv.classList.toggle("talking", on); eqEl.classList.toggle("on", on); orbState.talking = on; }
+function resetPhone(){
+  callTimers.forEach(clearTimeout); callTimers = [];
+  transcriptEl.innerHTML = ""; setTalking(false);
+  callAv.innerHTML = avatarSVG(persona);
+  document.getElementById("phoneName").textContent = aName()+" · AI Staff";
+  orbState.mode = persona==="sofia" ? 0 : persona==="alex" ? 1 : 2;
+  callBtn.textContent = g("phone.call"); callBtn.classList.remove("hang"); callBtn.disabled = false;
+  callStatus.textContent = g("phone.idle"); callStatus.classList.remove("live");
+  callBtn.onclick = startCall;
+}
+function startCall(){
+  callBtn.disabled = true; callStatus.textContent = fill(g("phone.connecting")); transcriptEl.innerHTML = "";
+  callTimers.push(setTimeout(()=>{
+    callStatus.textContent = g("phone.live"); callStatus.classList.add("live"); setTalking(true);
+    callBtn.textContent = g("phone.hangup"); callBtn.classList.add("hang"); callBtn.disabled = false; callBtn.onclick = ()=>endCall(false);
+    const lines = S().script;
+    lines.forEach((ln,i)=>callTimers.push(setTimeout(()=>{
+      const ty = document.createElement("div"); ty.className = "typing"; if(ln[0]==="lead") ty.style.alignSelf = "flex-end";
+      ty.innerHTML = "<i></i><i></i><i></i>"; transcriptEl.appendChild(ty); transcriptEl.scrollTop = transcriptEl.scrollHeight;
+      callTimers.push(setTimeout(()=>{ ty.remove(); const d = document.createElement("div"); d.className = "bubble "+(ln[0]==="agent"?"agent":"user"); d.textContent = fill(ln[1]); transcriptEl.appendChild(d); transcriptEl.scrollTop = transcriptEl.scrollHeight; }, 850));
+    }, i*2400)));
+    callTimers.push(setTimeout(()=>endCall(true), lines.length*2400+900));
+  }, 1200));
+}
+function endCall(done){
+  callTimers.forEach(clearTimeout); callTimers = []; setTalking(false);
+  callStatus.textContent = done ? S().ended : g("phone.idle"); callStatus.classList.remove("live");
+  callBtn.textContent = g("phone.call"); callBtn.classList.remove("hang"); callBtn.disabled = false; callBtn.onclick = startCall;
+}
+
+/* ---------- controls ---------- */
+function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"sofia")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
+document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; render(); syncUrl(); }));
+document.querySelectorAll(".persona").forEach(b=>b.addEventListener("click",()=>{ persona = b.dataset.persona; render(); syncUrl(); toast(g("your")[GENDER[persona]]+aName()+" ✓"); }));
+document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));
+document.getElementById("priceLater").addEventListener("click", e=>{ e.preventDefault(); document.getElementById("priceModal").classList.remove("show"); });
+document.addEventListener("click", e=>{ const dd = document.getElementById("ddSectors"); if(dd.open && !dd.contains(e.target)) dd.open = false; });
+let toastT;
+function toast(msg){ const el = document.getElementById("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"), 2400); }
+
+document.querySelectorAll("[data-av]").forEach(el=>{ el.outerHTML = avatarSVG(el.dataset.av); });
+render();
+initOrb(); initTilt(); initReveal();
+requestAnimationFrame(()=>document.documentElement.classList.add("ready"));
+if("IntersectionObserver" in window){
+  const io = new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); setTimeout(()=>{ if(!callTimers.length && !transcriptEl.children.length) startCall(); }, 900); } }, {threshold:.6});
+  io.observe(document.querySelector(".phone"));
+}
 })();
 </script>
 </body>

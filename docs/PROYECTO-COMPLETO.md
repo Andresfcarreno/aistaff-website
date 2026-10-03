@@ -77,7 +77,7 @@ No hay fotos de personas: solo siluetas SVG propias (función `avatarSVG`/`avata
 ### Mapa de URLs
 | URL | Archivo | Qué es |
 |---|---|---|
-| `/` | `index.html` | Home simple (generada) |
+| `/` | `index.html` | Página principal (generada, sector "general") |
 | `/demo/` | `demo/index.html` | Dashboard de demostración general |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard de demostración inmobiliario |
 | `/immobilier/` | generado | Landing para courtiers inmobiliarios (persona Alex, bloque OACIQ) |
@@ -108,23 +108,24 @@ Ejemplo para un anuncio: `https://meetaistaff.com/?lang=es&niche=dentiste&n=Andr
 
 ---
 
-## 3. La home (`index.html`, generada)
+## 3. La página principal (`index.html`, generada)
 
-Se genera con `python3 tools/build_home.py` a partir de `tools/home_template.html`, `tools/plans.json` (planes y precios en los tres idiomas) y `tools/sectors_menu.json` (menú de sectores). **No se edita a mano `index.html`.**
+Es el sector **"general"** de `tools/build_sectors.py`: usa la misma plantilla que las páginas de sector, así que se ve igual. Se regenera con `python3 tools/build_sectors.py`. **No se edita a mano `index.html`.**
 
-Secciones, de arriba abajo:
-1. **Nav:** logo, menú **Secteurs** (las 8 páginas), Tarifs, FAQ, selector FR/EN/ES, tema y botón de llamada.
-2. **Hero:** titular « Votre prochaine employée est une IA. », texto breve, botones « Réserver ma démo » (a `/onboarding/`) y « Appeler la démo », y un orbe animado en CSS.
-3. **El dolor:** « Un appel manqué, c'est un client qui appelle ailleurs. », con 3 tarjetas.
-4. **Cómo funciona:** 3 pasos (preguntas, demo, conexión del número).
-5. **Qué hace la asistente:** llamadas, textos, agenda, resúmenes.
-6. **Planes:** los 3, más la comparación en una frase (estimación de la asistente humana) y la nota de despliegue progresivo.
-7. **Sectores:** enlaces a las 8 páginas.
-8. **FAQ**, **cierre** y **footer** con privacidad y contacto.
-
-El texto vive en el objeto `STR` (FR/EN/ES) dentro de la plantilla. Los marcadores `{a}` se sustituyen por el nombre de la persona (`?a=sofia|alex|tomas`).
-
-La versión anterior, más cargada (orbe WebGL, tarjetas flotantes, marquesinas, nube de idiomas), se conserva en `tools/home_source.html` solo porque las páginas de sector toman de ahí su CSS y sus efectos.
+- Contenido (FR/EN/ES): `tools/general_content.py`. Precios y textos comunes: `tools/generic_text.py`.
+- Secciones, de arriba abajo:
+  1. Nav con menú **Secteurs**, selector de idioma, tema y botón de llamada.
+  2. Hero con titular « Votre prochaine employée est une IA. », celular flotante con una llamada de ejemplo (una mudanza), tarjetas flotantes y selector de persona.
+  3. El problema y lo que hace la asistente.
+  4. Cuatro funciones.
+  5. **Calculadora:** cuánto cuesta un empleado que contesta el teléfono (horas por semana × salario por hora) frente a AI Staff.
+  6. Cómo funciona, en 4 pasos.
+  7. **Dashboard de muestra** con datos de ejemplo.
+  8. **Integraciones** con logos oficiales.
+  9. **Los 3 planes**, con la nota de despliegue progresivo.
+  10. Preguntas frecuentes, cierre y footer.
+- Los marcadores `{a}` se sustituyen por el nombre de la persona (`?a=sofia|alex|tomas`).
+- La versión anterior más cargada (v2) queda en `tools/home_source.html`, solo porque el generador toma de ahí el CSS y los efectos.
 
 ---
 
@@ -422,11 +423,8 @@ backend/supabase/001_briefings.sql   Esquema SQL de briefings (sin aplicar)
 backend/supabase/002_leads.sql       Tabla leads del onboarding (aplicado)
 backend/supabase/003_voice.sql       Sesiones de voz, secretos en Vault y cron de barrido (aplicado)
 marketing/flyers/              Flyers PNG/PDF y sus fuentes HTML
-tools/build_home.py            Generador de la home (plantilla, planes y sectores)
-tools/home_template.html       Plantilla de la home
-tools/plans.json               Planes y precios FR/EN/ES
-tools/sectors_menu.json        Menú de sectores FR/EN/ES
-tools/home_source.html         Home v2 anterior (fuente de estilos de los sectores)
+tools/general_content.py       Contenido de la página principal FR/EN/ES
+tools/home_source.html         Home v2 anterior (fuente de estilos del generador)
 tools/build_sectors.py         Generador de páginas de sector
 tools/sectors_fr.py sectors_en.py sectors_es.py generic_text.py   Contenido de sectores
 tools/legal/                   Generador de contratos (.docx)
