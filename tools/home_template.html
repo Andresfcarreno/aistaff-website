@@ -105,7 +105,7 @@ h1{font-size:clamp(36px,5.2vw,62px);line-height:1.04;letter-spacing:-.035em;marg
 .nt b{display:block;font-size:14.5px;margin-top:1px}
 .nt p{margin:2px 0 0;font-size:13.5px;color:var(--muted);line-height:1.4}
 .callbar{display:none}
-.win{max-width:1000px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 70px rgba(10,26,51,.14);overflow:hidden}
+.win{max-width:1120px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 70px rgba(10,26,51,.14);overflow:hidden}
 .win-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 70%,var(--card));flex-wrap:wrap}
 .dots i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px}
 .dots i:nth-child(1){background:#FF5F57}.dots i:nth-child(2){background:#FEBC2E}.dots i:nth-child(3){background:#28C840}
@@ -116,6 +116,8 @@ h1{font-size:clamp(36px,5.2vw,62px);line-height:1.04;letter-spacing:-.035em;marg
 .dtab{border:0;background:none;padding:8px 15px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap;transition:background .2s,color .2s}
 .dtab:hover{color:var(--ink)}
 .dtab.active{background:var(--ink);color:var(--bg)}
+.win-live{position:relative;overflow:hidden;background:var(--bg)}
+.win-live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;display:block}
 .win-body{padding:18px;min-height:380px}
 .dpane{animation:paneIn .35s ease}
 @keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -411,8 +413,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
     </div>
     <div class="win reveal">
       <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title" id="dName"></span><span class="badge" id="dBadge"></span><a id="dMore" href="/demo/"></a></div>
-      <div class="win-tabs" id="dtabs" role="tablist"></div>
-      <div class="win-body" id="dpanes"></div>
+      <div class="win-live" id="dLive"><iframe id="dFrame" loading="lazy" tabindex="-1"></iframe></div>
     </div>
   </div>
 </section>
@@ -623,33 +624,19 @@ function buildDash(){
   document.getElementById("dEy").textContent = X.eyebrow; document.getElementById("dTi").textContent = X.title; document.getElementById("dLe").textContent = X.lead;
   document.getElementById("dName").textContent = X.name + " · " + fill(X.sub); document.getElementById("dBadge").textContent = X.badge;
   const dm = document.getElementById("dMore"); dm.textContent = X.more; dm.href = "/demo/" + (lang==="fr" ? "" : "?lang="+lang);
-  const total = parseInt(String(X.stats[0][1]).replace(/\D/g,""),10) || 40, wts = [.13,.18,.15,.2,.17,.1,.07];
-  let vals = wts.map(w=>Math.round(total*w)); vals[3] += total - vals.reduce((a,b)=>a+b,0);
-  const mx = Math.max.apply(null, vals);
-  const tiles = `<div class="d-stats">${X.stats.map(s=>`<div class="d-stat"><span>${esc(s[0])}</span><b>${esc(s[1])}</b><small>${esc(s[2])}</small></div>`).join("")}</div>`;
-  const bars = `<div class="d-h">${esc(D.chart)}</div><div class="d-bars">${vals.map((v,i)=>`<div class="d-bar"><span>${v}</span><i style="height:${Math.max(8,Math.round(v/mx*100))}%;animation-delay:${i*60}ms"></i><span>${esc(D.days[i])}</span></div>`).join("")}</div>`;
-  const tag = k => `<span class="d-tag ${k}">${esc(X.tags[k] || "")}</span>`;
-  const card = (c,i,full) => `<div class="d-call"><div class="d-who"><i style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</i><div><b>${esc(c[0])}</b><small>${esc(c[1])}</small></div>${tag(c[3])}</div><p>${esc(fill(c[2]))}</p>`+
-    (full && i===0 ? `<div class="d-tr"><span class="tt">${esc(D.transcript)}</span>${X.script.map(l=>`<div><b>${esc(l[0]==="agent" ? A : first(c[0]))} :</b> ${esc(fill(l[1]))}</div>`).join("")}</div>` : "")+
-    `<div class="d-next">→ ${esc(X.next)} : ${esc(fill(c[4]))}</div></div>`;
-  const msgs = calls.map(c=>`<div class="d-row"><span style="font-size:20px">💬</span><div class="tx"><b>${esc(c[0])}</b> <small>· ${esc(D.smsLbl)}</small><div class="draft"><b>${esc(A)}</b> — ${esc(D.sms.split("{n}").join(first(c[0])).split("{a}").join(A).split("{x}").join(fill(c[4])))}</div></div><span class="d-tag new">${esc(D.sent)}</span></div>`).join("")+
-    `<div class="d-row"><span style="font-size:20px">🟢</span><div class="tx"><b>${esc(D.wa[0])}</b> <small>· ${esc(D.wa[1])}</small><div class="draft"><b>${esc(A)}</b> — ${esc(D.wa[2].split("{a}").join(A))}</div></div><span class="d-tag info">${esc(D.wa[3])}</span></div>`;
-  const DAYIDX = {lundi:0,monday:0,lunes:0,mardi:1,tuesday:1,martes:1,mercredi:2,wednesday:2,miercoles:2,jeudi:3,thursday:3,jueves:3,vendredi:4,friday:4,viernes:4,samedi:5,saturday:5,sabado:5};
-  const dayOf = s => { const m = s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").match(/\b(lundi|monday|lunes|mardi|tuesday|martes|mercredi|wednesday|miercoles|jeudi|thursday|jueves|vendredi|friday|viernes|samedi|saturday|sabado)\b/); return m ? DAYIDX[m[1]] : -1; };
-  const evs = calls.filter(c=>/\d/.test(c[4])).map(c=>({c, d: dayOf(c[4])}));
-  const used = new Set(evs.filter(e=>e.d>=0).map(e=>e.d)), spare = [0,2,3,1,4,5].filter(d=>!used.has(d));
-  evs.forEach(e=>{ if(e.d<0) e.d = spare.shift(); });
-  const week = `<div class="d-wk">${[0,1,2,3,4,5].map(d=>{ const here = evs.filter(e=>e.d===d);
-    return `<div class="d-col"><h4>${esc(D.days[d])}</h4>${here.map(e=>`<div class="d-ev"><b>${esc(fill(e.c[4]))}</b><small>${esc(e.c[0])}</small></div>`).join("")}<div class="d-free">${esc(D.free)}</div></div>`; }).join("")}</div>`;
-  const soc = `<p class="d-note">${esc(D.socNote)}</p><div class="d-soc">${D.soc.map(x=>`<div class="d-sc"><div class="h"><b>${x[1]} ${esc(x[0])}</b><span>${esc(D.week)}</span></div><div class="d-kp">${x[2].map(k=>`<div><b>${esc(k[1])}</b><span>${esc(k[0])}</span></div>`).join("")}</div></div>`).join("")}</div>`;
-  const contacts = `<p class="d-note">${esc(D.contactsNote)}</p>`+calls.map((c,i)=>`<div class="d-row"><span class="d-ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</span><div class="tx"><b>${esc(c[0])}</b><br><small>${esc(D.last)} · ${esc(c[1])}</small></div>${tag(c[3])}</div>`).join("");
-  const panes = [tiles+bars+`<div class="d-h" style="margin-top:16px">${esc(D.recent)}</div>`+calls.map((c,i)=>card(c,i,false)).join(""), calls.map((c,i)=>card(c,i,true)).join(""), msgs, week, soc, contacts];
-  const tabs = document.getElementById("dtabs"), body = document.getElementById("dpanes");
-  tabs.innerHTML = D.tabs.map((x,i)=>`<button type="button" class="dtab${i===dashTab?" active":""}" role="tab" aria-selected="${i===dashTab}" data-i="${i}">${esc(x)}</button>`).join("");
-  const show = () => { body.innerHTML = `<div class="dpane" role="tabpanel">${panes[dashTab]}</div>`; tabs.querySelectorAll(".dtab").forEach((x,i)=>{ x.classList.toggle("active", i===dashTab); x.setAttribute("aria-selected", i===dashTab); }); };
-  tabs.querySelectorAll(".dtab").forEach(b => b.addEventListener("click", () => { dashTab = +b.dataset.i; show(); }));
-  show();
+  // Le vrai tableau de bord (/demo/), en direct dans la fenêtre : même design que ce que le client reçoit.
+  const fr = document.getElementById("dFrame"), src = "/demo/?embed=1&lang=" + lang + "#home";
+  fr.title = X.name;
+  if(fr.dataset.src !== src){ fr.dataset.src = src; fr.src = src; }
+  fitDash();
 }
+function fitDash(){
+  const box = document.getElementById("dLive"), fr = document.getElementById("dFrame"); if(!box || !fr) return;
+  const w = box.clientWidth;
+  if(w < 640){ fr.style.width = w + "px"; fr.style.height = "760px"; fr.style.transform = "none"; box.style.height = "760px"; }
+  else { const sc = w / 1280; fr.style.width = "1280px"; fr.style.height = "820px"; fr.style.transform = "scale(" + sc + ")"; box.style.height = Math.round(820 * sc) + "px"; }
+}
+addEventListener("resize", fitDash);
 
 /* mobile call bar: appears once the hero is out of view */
 const callbar = document.getElementById("callbar");

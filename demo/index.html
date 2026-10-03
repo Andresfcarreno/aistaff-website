@@ -548,6 +548,18 @@ a{color:inherit}
 .ct-top .legend{gap:4px 10px;font-size:11.5px}
 .cal .ev{padding:3px 6px;line-height:1.25}
 .cal .ev b,.cal .ev span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.teaser{margin:2px 0 0;font-size:14px;line-height:1.5;color:var(--muted);max-width:720px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bpop{top:9vh;width:min(560px,calc(100vw - 24px));padding:16px 20px 20px;background:color-mix(in srgb,var(--raise) 92%,transparent);backdrop-filter:saturate(1.8) blur(24px);-webkit-backdrop-filter:saturate(1.8) blur(24px);border-radius:24px;max-height:84vh;overflow:auto}
+.bp-h{display:flex;align-items:center;gap:10px}
+.bp-h .who{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--blue)}
+.bp-h .who i{width:14px;height:14px;border-radius:50%;background:conic-gradient(from 210deg,#1F6FEB,#7C5CFF,#22C7E8,#1F6FEB)}
+.bp-h small{font-size:12px}
+.bp-orb{display:flex;justify-content:center;padding:8px 0 14px}
+.bpop .orbx{width:168px;height:168px}
+.bpop .orbx .play{display:none}
+.bp-txt{font-size:16.5px;line-height:1.6;color:var(--ink-2);text-align:left;max-width:none}
+.bp-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media (max-width:860px){.bpop{top:auto;bottom:8px;max-height:88dvh}.bpop .orbx{width:132px;height:132px}.bp-txt{font-size:15.5px}}
 @media (max-width:1180px){
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   .h-act,.h-todo,.h-heat{grid-column:span 12}.h-why,.h-ag{grid-column:span 6}
@@ -1345,6 +1357,7 @@ function renderView(){
 function toast(msg){ const el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2600); }
 function openSheet(html){ const s = $("#sheet"); s.innerHTML = html; s.classList.add("on"); $("#scrim").classList.add("on"); ui.sheet = true; }
 function closeAll(){
+  closeBrief();
   $("#sheet").classList.remove("on"); $("#cmdk").classList.remove("on"); $("#authModal").classList.remove("on"); $("#scrim").classList.remove("on"); ui.sheet = false;
 }
 const sheetHead = (inner) => `<div class="sheet-h">${inner}<button class="ibtn" type="button" data-act="close" aria-label="${esc(t("close"))}" style="margin-left:auto">${ic("x", 2)}</button></div>`;
@@ -1381,9 +1394,9 @@ function renderHome(){
       <div class="hello-t">
         <h2>${greet}<button class="nm-edit" type="button" data-act="name-edit" title="${esc(B("editName"))}" aria-label="${esc(B("editName"))}">${owner ? "✎" : "+ " + esc(B("editName"))}</button></h2>
         <div class="date">${esc(cap(dtf({weekday:"long", day:"numeric", month:"long"}).format(now)))} · ${esc(f(t("sinceY"), {n:c24}))}</div>
-        <div class="brief" id="briefTxt">${ui.briefBusy ? `<span class="shimmer" style="width:92%"></span><br><span class="shimmer" style="width:74%"></span><div class="muted" style="font-size:12.5px;margin-top:4px">${esc(f(t("briefLoading")))}</div>` : b ? wordsHTML(briefText(b)) : `<span class="muted">${esc(f(t("briefNone")))}</span>`}</div>
+        <p class="teaser">${ui.briefBusy ? esc(f(t("briefLoading"))) : b ? esc(briefText(b)) : esc(f(t("briefNone")))}</p>
         <div class="acts">
-          <button class="btn p" type="button" data-act="play-brief" id="briefPlay"${b ? "" : " disabled"}>${ic("play")}<span>${esc(t("listen"))}</span></button>
+          ${b ? `<button class="btn p" type="button" data-act="play-brief">${ic("play")}<span>${esc(t("listen"))}</span></button>` : ""}
           <button class="btn" type="button" data-act="new-brief"${ui.briefBusy ? " disabled" : ""}>${ic("spark")}${esc(t("newBrief"))}</button>
           ${M.briefs.length ? `<button class="btn ghost" type="button" data-act="brief-hist">${ic("history")}${esc(t("history"))} · ${M.briefs.length}</button>` : ""}
           ${b ? `<span class="faint" style="font-size:12px">${esc(f(t("briefBy")))} · ${esc(whenShort(b.at))}</span>` : ""}
@@ -1533,8 +1546,43 @@ function nameEdit(){
   i.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); save(); } if(e.key === "Escape"){ done = true; renderHome(); } });
   i.addEventListener("blur", save);
 }
-/* ---- brief : lecture à voix haute, mot par mot ---- */
-let briefCtl = null;
+/* ---- brief : pop-out avec l'orbe, lecture à voix haute mot par mot ---- */
+let briefCtl = null, popOpen = false;
+function popEl(){
+  let p = $("#bpop");
+  if(!p){ p = document.createElement("div"); p.id = "bpop"; p.className = "modal bpop"; p.setAttribute("role", "dialog"); p.setAttribute("aria-modal", "true"); document.body.appendChild(p); }
+  return p;
+}
+function paintPop(){
+  const p = popEl(), b = M.briefs[ui.briefIdx];
+  if(helloOrb && p.contains(helloOrb.el)){ const ph = document.createElement("div"); ph.id = "bpOrbSlot"; helloOrb.el.replaceWith(ph); }
+  p.innerHTML = `<div class="bp-h"><span class="who"><i></i>${esc(f(t("briefBy")))}</span>${b && !ui.briefBusy ? `<small class="faint">${esc(whenShort(b.at))}</small>` : ""}<button class="ibtn" type="button" data-act="close" aria-label="${esc(t("close"))}" style="margin-left:auto">${ic("x", 2)}</button></div>
+    <div class="bp-orb"><div id="bpOrbSlot"></div></div>
+    <div class="brief bp-txt" id="briefTxt">${ui.briefBusy ? `<span class="shimmer" style="width:92%"></span><br><span class="shimmer" style="width:70%"></span><div class="muted" style="font-size:13px;margin-top:6px">${esc(f(t("briefLoading")))}</div>` : b ? wordsHTML(briefText(b)) : `<span class="muted">${esc(f(t("briefNone")))}</span>`}</div>
+    <div class="bp-acts">
+      ${b && !ui.briefBusy ? `<button class="btn p" type="button" data-act="brief-toggle" id="briefPlay">${ic("play")}<span>${esc(t("listen"))}</span></button>` : ""}
+      <button class="btn" type="button" data-act="new-brief"${ui.briefBusy ? " disabled" : ""}>${ic("spark")}${esc(t("newBrief"))}</button>
+      ${M.briefs.length > 1 ? `<button class="btn ghost" type="button" data-act="brief-hist">${ic("history")}${esc(t("history"))} · ${M.briefs.length}</button>` : ""}
+    </div>`;
+  if(helloOrb){
+    if(!p.contains(helloOrb.el) && helloOrb.el.isConnected){ const ph = document.createElement("div"); ph.id = "helloOrbSlot"; helloOrb.el.replaceWith(ph); }
+    $("#bpOrbSlot").replaceWith(helloOrb.el);
+  }
+  paintBriefBtn();
+}
+function openBrief(play){
+  closeAll();
+  if(!helloOrb) orbInto("helloOrbSlot", "hello");
+  popOpen = true; paintPop();
+  popEl().classList.add("on"); $("#scrim").classList.add("on");
+  if(play && M.briefs[ui.briefIdx] && !ui.briefBusy) setTimeout(briefPlay, 350);
+}
+function closeBrief(){
+  if(!popOpen) return;
+  popOpen = false; briefStop();
+  popEl().classList.remove("on");
+  const ph = $("#helloOrbSlot"); if(ph && helloOrb) ph.replaceWith(helloOrb.el);
+}
 function paintBriefBtn(){
   const b = $("#briefPlay"); if(!b) return;
   b.innerHTML = briefCtl ? `${ic("stop")}<span>${esc(B("stop"))}</span>` : `${ic("play")}<span>${esc(t("listen"))}</span>`;
@@ -1562,7 +1610,7 @@ function briefPlay(){
 async function newBrief(){
   if(ui.briefBusy) return;
   briefStop();
-  ui.briefBusy = true; renderHome();
+  ui.briefBusy = true; if(popOpen) paintPop(); else openBrief(false);
   try{
     if(M.demo){
       await new Promise(r => setTimeout(r, 1400));
@@ -1574,9 +1622,10 @@ async function newBrief(){
       M.briefs.unshift({at:new Date(j.created_at || Date.now()), text:j.text});
     }
     ui.briefIdx = 0; ui.briefBusy = false;
-    if(view === "home"){ renderHome(); toast(B("briefReady")); briefPlay(); }
+    if(view === "home") renderHome();
+    if(popOpen){ paintPop(); setTimeout(briefPlay, 300); } else toast(B("briefReady"));
   }catch(e){
-    ui.briefBusy = false; if(view === "home") renderHome(); toast(f(t("aiErr")));
+    ui.briefBusy = false; if(popOpen) paintPop(); if(view === "home") renderHome(); toast(f(t("aiErr")));
   }
 }
 // Démo : un brief construit à partir des données d'exemple, selon l'heure.
@@ -2074,10 +2123,11 @@ document.addEventListener("click", e => {
     case "lang": setLang(el.dataset.l); break;
     case "theme": toggleTheme(); break;
     case "acct": closeAll(); acct(); break;
-    case "play-brief": briefPlay(); break;
+    case "play-brief": if(popOpen) briefPlay(); else openBrief(true); break;
+    case "brief-toggle": briefPlay(); break;
     case "new-brief": newBrief(); break;
     case "brief-hist": briefHistory(); break;
-    case "brief-pick": ui.briefIdx = +el.dataset.i; closeAll(); briefStop(); renderHome(); briefPlay(); break;
+    case "brief-pick": ui.briefIdx = +el.dataset.i; closeAll(); if(view === "home") renderHome(); openBrief(true); break;
     case "name-edit": nameEdit(); break;
     case "chart": ui.chart = el.dataset.m; $$("[data-act=chart]").forEach(b => b.classList.toggle("on", b === el)); drawActivity(); break;
     case "ev": evSheet(+el.dataset.i); break;
@@ -2159,6 +2209,7 @@ function setLang(l){
 let rsz = 0;
 addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(() => { if(view === "home") drawActivity(); if(!isMobile() && ui.detail){ ui.detail = null; renderView(); renderChrome(); } }, 150); });
 addEventListener("hashchange", () => { const h = (location.hash || "").slice(1).split("/")[0]; const v = VIEWS.includes(h) ? h : OLD[h]; if(v && v !== view) go(v); });
+addEventListener("storage", e => { if(e.key === "aistaff-theme" && (e.newValue === "dark" || e.newValue === "light")){ document.documentElement.setAttribute("data-theme", e.newValue); if(view === "home") drawActivity(); } });
 addEventListener("pagehide", () => { try{ speechSynthesis.cancel(); }catch(e){} });
 
 /* ================= démarrage ================= */

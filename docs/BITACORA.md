@@ -197,4 +197,5 @@ alter function public.leads_fill_from_payload() set search_path = '';
 - **Backend:** nueva función `assistant` (publicada, v2) y tablas `briefs` y `contacts` (migración `dashboard_briefs_contacts`). Se probó con los datos reales: el chat respondió sobre las llamadas de prueba y el brief se guardó.
 - **Honestidad en la interfaz:** demo marcada «Démo · données d'exemple»; WhatsApp/Instagram/Facebook, envío de correo, llamadas programadas y que Sofía reconozca al dueño están «par phases»; las citas pedidas siempre dicen que el dueño confirma.
 - **Pendiente:** que el dueño lo revise antes de publicarlo (merge a `main`). Para verlo con sus datos: «Mes données réelles» → enlace mágico con el correo de su fila en `tenants`.
+- **Ajuste pedido por el dueño:** el brief ya no aparece como texto grande al lado del orbe; se abre en un pop-out con el orbe grande y la lectura palabra por palabra. La página principal ahora muestra el dashboard nuevo en vivo (iframe de `/demo/?embed=1`) en vez de la muestra vieja de 6 pestañas. Publicado (merge a `main`).
 
