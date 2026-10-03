@@ -190,3 +190,12 @@ alter function public.leads_fill_from_payload() set search_path = '';
 - **Dashboard de muestra con 6 pestañas** (Aperçu, Appels, Messages, Agenda, Réseaux, Contacts) en una ventana estilo Mac, entre los sectores y el FAQ.
 - Se corrigió la transcripción de ejemplo de la mudanza: ya no dice «je vous texte la confirmation» (la asistente no confirma citas; el equipo confirma).
 - **Siguiente paso acordado:** remodelar a fondo el dashboard (`/demo/`).
+
+## 17. 3–4 de octubre (noche): dashboard nuevo y asistente con datos reales
+- **Pedido del dueño:** dashboard muy profesional, tipo Mac, claro y plateado, poco texto, todo con gráficas; orbe con «Bonjour Andrés» que da un brief y lo guarda; llamadas sin scroll largo (resumen arriba); contactos que se guardan solos; mensajes unificados con pestañas de color (estilo iOS); correo con «lo que dice Sofía» y opciones de respuesta; configuración (idiomas, conexiones, plan); una página para chatear con Sofía con los datos reales y las llamadas programadas (Pro).
+- **Hecho:** `demo/index.html` reescrito de cero (ver CLAUDE.md, sección «Dashboard»). Probado con Playwright: escritorio, tablet y celular, claro/oscuro, FR/EN/ES, sin errores ni desbordes; y el modo en vivo con respuestas simuladas de Supabase (consultas, brief, resumen de correo, chat, SMS, ficha de contacto, cerrar sesión).
+- **Backend:** nueva función `assistant` (publicada, v2) y tablas `briefs` y `contacts` (migración `dashboard_briefs_contacts`). Se probó con los datos reales: el chat respondió sobre las llamadas de prueba y el brief se guardó.
+- **Honestidad en la interfaz:** demo marcada «Démo · données d'exemple»; WhatsApp/Instagram/Facebook, envío de correo, llamadas programadas y que Sofía reconozca al dueño están «par phases»; las citas pedidas siempre dicen que el dueño confirma.
+- **Pendiente:** que el dueño lo revise antes de publicarlo (merge a `main`). Para verlo con sus datos: «Mes données réelles» → enlace mágico con el correo de su fila en `tenants`.
+- **Ajuste pedido por el dueño:** el brief ya no aparece como texto grande al lado del orbe; se abre en un pop-out con el orbe grande y la lectura palabra por palabra. La página principal ahora muestra el dashboard nuevo en vivo (iframe de `/demo/?embed=1`) en vez de la muestra vieja de 6 pestañas. Publicado (merge a `main`).
+
