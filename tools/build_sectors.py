@@ -546,7 +546,7 @@ def build():
         print("wrote", out, len(page))
     # Página principal (sencilla, orbe geométrico): tools/home_template.html + planes y sectores
     data = {lang: {"plans": G[lang]["plans"], "priceTop": G[lang]["priceTop"], "per": G[lang]["price.per"],
-                   "rollout": G[lang]["rollout"]} for lang in ["fr", "en", "es"]}
+                   "rollout": G[lang]["rollout"], "calc": {**{k: GEN["fr"]["calc"][k] for k in ("mode", "v", "r")}, **{k: v for k, v in GEN[lang]["calc"].items() if v is not None}}} for lang in ["fr", "en", "es"]}
     data["sectors"] = sectors
     home = open(os.path.join(HERE, "home_template.html"), encoding="utf-8").read()
     home = home.replace("__DATA__", json.dumps(data, ensure_ascii=False))
