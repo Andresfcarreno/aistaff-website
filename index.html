@@ -53,20 +53,15 @@ nav.scrolled{border-bottom-color:var(--line)}
 .btn-sm{padding:9px 16px;font-size:14px}
 
 /* hero */
-.hero{position:relative;height:180vh}
+.hero{position:relative;padding:28px 0 36px}
 .hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(38% 26% at 78% 22%,rgba(124,92,255,.16),transparent 70%),radial-gradient(34% 26% at 18% 40%,rgba(34,199,232,.12),transparent 70%),radial-gradient(40% 30% at 60% 60%,rgba(31,111,235,.10),transparent 70%);animation:aurora 16s ease-in-out infinite alternate}
 @keyframes aurora{to{transform:translate3d(-3%,4%,0) scale(1.06)}}
-.hero-grid{position:sticky;top:64px;height:calc(100vh - 64px);height:calc(100svh - 64px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:28px}
-.scroll-hint{margin-top:34px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:calc(1 - var(--hm, 0)*2)}
-.scroll-hint:before{content:"";width:22px;height:34px;border:1.6px solid var(--muted);border-radius:12px;background:linear-gradient(var(--muted),var(--muted)) center 7px/2px 7px no-repeat;animation:wheel 1.8s ease-in-out infinite}
-@keyframes wheel{50%{background-position:center 15px}}
-.halo{position:absolute;inset:-9%;border-radius:50%;pointer-events:none;filter:blur(14px);
-  background:radial-gradient(circle at 50% calc(50% - var(--m,0)*16%),rgba(110,190,255,calc(.16 + .45*var(--glow))) 0%,rgba(124,92,255,calc(.08 + .22*var(--m,0))) 24%,rgba(34,199,232,calc(.05 + .1*var(--glow))) 40%,transparent 62%)}
+.hero-grid{position:relative;min-height:calc(100vh - 110px);min-height:calc(100svh - 110px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:28px}
 .hero-text .ctas{justify-content:flex-start}
 .hero-orb{text-align:center}
 .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--blue);background:var(--soft);padding:6px 12px;border-radius:999px}
 .orb-box{--glow:.35;position:relative;width:min(470px,100%);aspect-ratio:1;margin:0 auto;border-radius:50%;cursor:pointer;
-  background:radial-gradient(circle at 50% 42%,#12305e 0%,#081a36 46%,#040b18 72%,#030812 100%);
+  background:radial-gradient(circle at 50% 45%,rgba(18,40,90,.95) 0%,#06122a 55%,#020610 100%);
   box-shadow:0 0 calc(30px + 70px*var(--glow)) rgba(40,140,255,calc(.18 + .3*var(--glow))),inset 0 0 70px rgba(60,160,255,.18),0 30px 60px rgba(4,12,30,.25)}
 .orb-box:before{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(120,200,255,.045) 0 1px,transparent 1px 4px);pointer-events:none}
 .orb-box canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -77,6 +72,90 @@ h1{font-size:clamp(36px,5.2vw,62px);line-height:1.04;letter-spacing:-.035em;marg
 .lead{font-size:clamp(16px,1.7vw,19px);color:var(--muted);max-width:560px;margin:0 0 28px}
 .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .note{font-size:13px;color:var(--muted);margin-top:14px}
+
+.btn-call{font-size:16.5px;padding:16px 28px;position:relative}
+.btn-call:after{content:"";position:absolute;inset:-4px;border-radius:999px;border:2px solid rgba(31,111,235,.5);animation:ring 2.2s ease-out infinite}
+@keyframes ring{0%{opacity:.9;transform:scale(.96)}100%{opacity:0;transform:scale(1.18)}}
+.btn-call .ph{display:inline-block;animation:wiggle 2.2s ease-in-out infinite}
+@keyframes wiggle{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(-14deg)}75%{transform:rotate(12deg)}85%{transform:rotate(-8deg)}}
+.num-link{font-weight:700;color:var(--ink);text-decoration:none}
+.try{padding:24px 0 72px}
+.try-box{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:linear-gradient(135deg,#071a3a,#10306a 55%,#2b2780);color:#fff;border-radius:30px;padding:44px;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(10,26,51,.25)}
+.try-box:before{content:"";position:absolute;width:520px;height:520px;right:-140px;top:-200px;background:radial-gradient(circle,rgba(94,224,245,.28),transparent 65%);pointer-events:none}
+.try .eyebrow{color:#7FD4FF}
+.try h2{color:#fff;margin-bottom:10px}
+.try-sub{color:rgba(255,255,255,.78);font-size:17px;max-width:560px;margin:0 0 22px}
+.big-num{display:inline-flex;align-items:center;gap:16px;font-size:clamp(34px,5.4vw,56px);font-weight:800;letter-spacing:-.02em;color:#fff;text-decoration:none;line-height:1}
+.big-num .ring{width:18px;height:18px;border-radius:50%;background:#34D27B;box-shadow:0 0 0 0 rgba(52,210,123,.6);animation:live 1.8s infinite}
+@keyframes live{70%{box-shadow:0 0 0 16px rgba(52,210,123,0)}100%{box-shadow:0 0 0 0 rgba(52,210,123,0)}}
+.big-num:hover{text-shadow:0 0 30px rgba(127,212,255,.6)}
+.try-steps{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.try-steps span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+.try-steps b{color:#7FD4FF;margin-right:6px}
+.try-qr{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.75);text-align:center;max-width:180px}
+.qr{background:#fff;border-radius:18px;padding:14px;width:168px;height:168px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.qr svg{width:100%;height:100%;display:block}
+.notifs{display:grid;gap:10px;max-width:400px;margin:10px auto 0}
+.nt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:color-mix(in srgb,var(--card) 84%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border:1px solid var(--line);border-radius:18px;padding:12px 14px;box-shadow:0 14px 34px rgba(10,26,51,.16);opacity:0;transform:translateY(16px) scale(.95);transition:opacity .45s ease,transform .7s cubic-bezier(.2,1.5,.35,1)}
+.nt.in{opacity:1;transform:none}
+.nt .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;color:#fff;flex:none}
+.nt .ic.sms{background:linear-gradient(#62E584,#1FB84A)}
+.nt .ic.dash{background:linear-gradient(135deg,var(--blue),var(--violet))}
+.nt .hd{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.nt b{display:block;font-size:14.5px;margin-top:1px}
+.nt p{margin:2px 0 0;font-size:13.5px;color:var(--muted);line-height:1.4}
+.callbar{display:none}
+.win{max-width:1000px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 70px rgba(10,26,51,.14);overflow:hidden}
+.win-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 70%,var(--card));flex-wrap:wrap}
+.dots i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px}
+.dots i:nth-child(1){background:#FF5F57}.dots i:nth-child(2){background:#FEBC2E}.dots i:nth-child(3){background:#28C840}
+.win-title{font-weight:700;font-size:14px}
+.badge{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.win-bar a{margin-left:auto;font-size:13.5px;font-weight:600;color:var(--blue);text-decoration:none}
+.win-tabs{display:flex;gap:4px;padding:10px 14px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.dtab{border:0;background:none;padding:8px 15px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap;transition:background .2s,color .2s}
+.dtab:hover{color:var(--ink)}
+.dtab.active{background:var(--ink);color:var(--bg)}
+.win-body{padding:18px;min-height:380px}
+.dpane{animation:paneIn .35s ease}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.d-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.d-stat{background:var(--bg);border-radius:14px;padding:14px}
+.d-stat span{display:block;font-size:12.5px;color:var(--muted)}
+.d-stat b{display:block;font-size:26px;letter-spacing:-.02em;margin:2px 0}
+.d-stat small{font-size:12px;color:var(--green)}
+.d-h{font-size:13px;font-weight:700;color:var(--muted);margin:4px 0 10px}
+.d-bars{display:flex;align-items:flex-end;gap:12px;height:150px;background:var(--bg);border-radius:14px;padding:14px 16px 10px}
+.d-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px;font-size:11.5px;color:var(--muted)}
+.d-bar i{width:100%;max-width:38px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--blue),var(--violet));transform-origin:bottom;animation:grow .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes grow{from{transform:scaleY(0)}}
+.d-call{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.d-who{display:flex;align-items:center;gap:10px}
+.d-who i,.d-ini{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;font-style:normal;flex:none}
+.d-who b{display:block;font-size:14.5px}.d-who small{color:var(--muted);font-size:12.5px}
+.d-tag{margin-left:auto;font-size:11.5px;font-weight:800;border-radius:999px;padding:3px 9px;flex:none}
+.d-tag.hot{color:#D9480F;background:rgba(217,72,15,.12)}.d-tag.warm{color:var(--amber);background:color-mix(in srgb,var(--amber) 14%,transparent)}
+.d-tag.cold{color:var(--muted);background:color-mix(in srgb,var(--muted) 14%,transparent)}.d-tag.new{color:var(--blue);background:var(--soft)}
+.d-tag.info{color:var(--violet);background:color-mix(in srgb,var(--violet) 14%,transparent)}
+.d-call p{margin:8px 0 0;font-size:14px}
+.d-next{margin-top:8px;font-size:13px;font-weight:600;color:var(--blue)}
+.d-tr{background:var(--bg);border-radius:12px;padding:12px;margin-top:10px;font-size:13.5px;display:grid;gap:5px}
+.d-tr .tt{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.d-row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);font-size:14px}
+.d-row:last-child{border-bottom:0}
+.d-row .tx{flex:1;min-width:0}.d-row small{color:var(--muted)}
+.d-row .draft{margin-top:4px;background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.d-note{font-size:13px;color:var(--muted);margin:0 0 12px}
+.d-wk{display:grid;grid-template-columns:repeat(6,minmax(110px,1fr));gap:10px;overflow-x:auto}
+.d-col{background:var(--bg);border-radius:14px;padding:10px;display:grid;gap:8px;align-content:start;min-height:180px}
+.d-col h4{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.d-ev{background:linear-gradient(135deg,rgba(31,111,235,.16),rgba(124,92,255,.12));border:1px solid rgba(31,111,235,.3);border-radius:10px;padding:8px 10px;font-size:12.5px}
+.d-ev small{display:block;color:var(--muted)}
+.d-free{border:1.5px dashed var(--line);border-radius:10px;padding:8px;font-size:12px;color:var(--muted);text-align:center}
+.d-soc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.d-sc{background:var(--bg);border-radius:14px;padding:14px}
+.d-sc .h{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}.d-sc .h span{color:var(--muted);font-size:12.5px}
+.d-kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.d-kp b{display:block;font-size:20px}.d-kp span{font-size:12px;color:var(--muted)}
 
 /* captions */
 .cap{min-height:104px;max-width:460px;margin:14px auto 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
@@ -158,9 +237,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
 .step:hover,.plan:hover,.do:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(10,26,51,.1);border-color:color-mix(in srgb,var(--blue) 35%,var(--line))}
 
 @media (max-width:860px){
-  .hero{height:auto;padding:28px 0 36px}
-  .hero-grid{position:static;height:auto;grid-template-columns:1fr;text-align:center;gap:6px}
-  .scroll-hint{display:none}
+  .hero-grid{min-height:0;grid-template-columns:1fr;text-align:center;gap:6px}
   .hero-text .ctas{justify-content:center}
   .lead{margin-left:auto;margin-right:auto}
   .orb-box{width:min(330px,84vw);margin-top:18px}
@@ -172,13 +249,27 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
   .plan .t{min-height:0}
   section{padding:56px 0}
 }
+@media (max-width:860px){
+  .try-box{grid-template-columns:1fr;padding:30px 22px;text-align:center}
+  .try-sub{margin-left:auto;margin-right:auto}
+  .try-steps{justify-content:center}
+  .try-qr{display:none}
+  .d-stats{grid-template-columns:1fr 1fr}
+  .d-soc{grid-template-columns:1fr}
+  .win-bar a{margin-left:0}
+  .callbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:30;align-items:center;gap:12px;justify-content:center;background:linear-gradient(135deg,var(--blue),#5B4DFF);color:#fff;text-decoration:none;border-radius:18px;padding:12px 16px;box-shadow:0 14px 34px rgba(31,111,235,.45);transform:translateY(140%);transition:transform .45s cubic-bezier(.2,1.2,.3,1)}
+  .callbar.show{transform:none}
+  .callbar b{display:block;font-size:15.5px}.callbar small{opacity:.85;font-size:12.5px}
+  .callbar .ph{font-size:22px;animation:wiggle 2.2s ease-in-out infinite}
+  footer{padding-bottom:110px}
+}
 @media (max-width:420px){
   .nav-cta{display:none}
   .wrap{padding:0 16px}
 }
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;filter:none;transition:none}
-  .hero{height:auto;padding:28px 0 36px}.hero-grid{position:static;height:auto}.hero:before{animation:none}
+  .hero:before{animation:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -209,19 +300,36 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
       <h1 data-t="hero.h1"></h1>
       <p class="lead" data-t="hero.lead"></p>
       <div class="ctas">
-        <button class="btn btn-p" id="listenBtn"></button>
-        <a class="btn btn-g" href="tel:+14388058804" data-t="cta.call"></a>
+        <a class="btn btn-p btn-call" href="tel:+14388058804"><span class="ph">📞</span><span data-t="cta.callA"></span></a>
+        <button class="btn btn-g" id="listenBtn"></button>
       </div>
-      <div class="note" data-t="hero.note"></div>
-      <div class="scroll-hint" data-t="hero.scroll"></div>
+      <div class="note"><a class="num-link" href="tel:+14388058804">+1 (438) 805-8804</a> · <span data-t="hero.note"></span></div>
     </div>
     <div class="hero-orb">
-      <div class="orb-box" id="orbBox" role="button" tabindex="0"><div class="halo"></div><canvas id="orb" aria-hidden="true"></canvas><canvas id="hud" aria-hidden="true"></canvas></div>
+      <div class="orb-box" id="orbBox" role="button" tabindex="0"><canvas id="orb" aria-hidden="true"></canvas><canvas id="hud" aria-hidden="true"></canvas></div>
       <div class="cap" id="cap" aria-live="polite"><div class="hint" data-t="demo.hint"></div></div>
-      <div class="sms" id="sms"><b data-t="demo.smsLbl"></b><span id="smsTxt"></span></div>
+      <div class="notifs" id="notifs"></div>
     </div>
   </div>
 </header>
+
+<section id="try" class="try">
+  <div class="wrap">
+    <div class="try-box reveal">
+      <div class="try-text">
+        <p class="eyebrow" data-t="try.eyebrow"></p>
+        <h2 data-t="try.title"></h2>
+        <p class="try-sub" data-t="try.sub"></p>
+        <a class="big-num" href="tel:+14388058804"><span class="ring"></span>438 805-8804</a>
+        <div class="try-steps" id="trySteps"></div>
+      </div>
+      <div class="try-qr">
+        <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" shape-rendering="crispEdges"><path stroke="#0A1A33" d="M0 0.5h7m5 0h1m1 0h7M0 1.5h1m5 0h1m4 0h2m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h2M0 8.5h1m1 0h5m5 0h1m1 0h5M0 9.5h1m1 0h3m2 0h2m3 0h4m1 0h2m1 0h1M0 10.5h3m1 0h3m2 0h3m1 0h7M2 11.5h1m2 0h1m3 0h2m2 0h3m1 0h2M0 12.5h7m4 0h1m1 0h1m2 0h1m2 0h1M8 13.5h2m2 0h6m1 0h2M0 14.5h7m3 0h1m1 0h1m2 0h1m2 0h2M0 15.5h1m5 0h1m1 0h1m3 0h1m2 0h1m2 0h2M0 16.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1M0 17.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2M0 18.5h1m1 0h3m1 0h1m1 0h2m5 0h1M0 19.5h1m5 0h1m3 0h1m1 0h3m1 0h1m1 0h1M0 20.5h7m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1"/></svg></div>
+        <span data-t="try.qr"></span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="how">
   <div class="wrap">
@@ -294,6 +402,21 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
   </div>
 </section>
 
+<section id="dash" style="padding-top:0">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow" id="dEy"></p>
+      <h2 id="dTi"></h2>
+      <p class="sub" id="dLe"></p>
+    </div>
+    <div class="win reveal">
+      <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title" id="dName"></span><span class="badge" id="dBadge"></span><a id="dMore" href="/demo/"></a></div>
+      <div class="win-tabs" id="dtabs" role="tablist"></div>
+      <div class="win-body" id="dpanes"></div>
+    </div>
+  </div>
+</section>
+
 <section id="faq" style="padding-top:0">
   <div class="wrap">
     <div class="center reveal"><p class="eyebrow">FAQ</p><h2 data-t="faq.title"></h2></div>
@@ -322,8 +445,10 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
   </div>
 </footer>
 
+<a class="callbar" id="callbar" href="tel:+14388058804"><span class="ph">📞</span><span><b data-t="cta.callA"></b><small>+1 (438) 805-8804</small></span></a>
+
 <script>
-const DATA = {"fr": {"plans": [{"name": "Essentiel", "tag": "Vos appels, vos textos et votre agenda, pris en charge.", "price": 397, "cta": "Choisir Essentiel", "feat": ["Numéro de téléphone dédié et appels 24/7", "Français, anglais et espagnol", "Réponses par texto (SMS)", "Rendez-vous pris dans votre agenda", "Tableau de bord privé", "Appelez {a} pour demander vos rapports (par phases)"]}, {"name": "Pro", "tag": "L'essentiel, plus WhatsApp et des appels programmés.", "price": 597, "cta": "Choisir Pro", "feat": ["Tout le plan Essentiel, plus :", "WhatsApp avec le même numéro (par phases)", "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)", "Appelez {a} à toute heure", "Appels illimités, usage raisonnable"]}, {"name": "Complet", "tag": "Tous vos canaux, avec un accès prioritaire.", "price": 797, "cta": "Choisir Complet", "feat": ["Tout le plan Pro, plus :", "Messages Instagram et Facebook (par phases)", "Statistiques de vos réseaux sociaux (par phases)", "Accès prioritaire : vos questions et changements passent en premier"]}], "priceTop": ["CAD · mois par mois · taxes en sus", "Sans contrat", "Installation gratuite au lancement"], "per": "/ mois", "rollout": "Déploiement progressif : les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Heures à couvrir par semaine", "l2": "Salaire horaire", "l3": "", "eyebrow": "Faites le calcul", "title": "Combien coûte un employé qui répond au téléphone?", "lead": "Entrez les heures à couvrir et un salaire horaire : on compare avec {a}.", "cap": "par mois en salaire seulement, sans charges ni remplacements. {a} : dès {p} par mois, 24 h sur 24.", "note": "Calculé avec vos chiffres; les valeurs de départ ne sont que des exemples.", "disc": "Un employé couvre ses heures de travail. {a} couvre les 168 heures de la semaine."}}, "en": {"plans": [{"name": "Essential", "tag": "Your calls, texts and calendar, handled.", "price": 397, "cta": "Choose Essential", "feat": ["Dedicated phone number and 24/7 calls", "French, English and Spanish", "Text message (SMS) replies", "Appointments booked in your calendar", "Private dashboard", "Call {a} to ask for your reports (in phases)"]}, {"name": "Pro", "tag": "The essentials, plus WhatsApp and scheduled calls.", "price": 597, "cta": "Choose Pro", "feat": ["Everything in Essential, plus:", "WhatsApp on the same number (in phases)", "{a} calls you at the times you choose, up to 3 times a day (in phases)", "Call {a} any time", "Unlimited calls, fair use"]}, {"name": "Complete", "tag": "Every channel, with priority access.", "price": 797, "cta": "Choose Complete", "feat": ["Everything in Pro, plus:", "Instagram and Facebook messages (in phases)", "Social media stats (in phases)", "Priority access: your questions and changes come first"]}], "priceTop": ["CAD · month to month · plus taxes", "No contract", "Free setup during launch"], "per": "/ month", "rollout": "Progressive rollout: channels are enabled in phases and confirmed with you on the discovery call.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Hours to cover per week", "l2": "Hourly wage", "l3": "", "eyebrow": "Do the math", "title": "What does an employee who answers the phone cost?", "lead": "Enter the hours to cover and an hourly wage: we compare with {a}.", "cap": "per month in wages alone, before payroll costs and replacements. {a}: from {p} a month, 24 hours a day.", "note": "Calculated from your numbers; the starting values are only examples.", "disc": "An employee covers working hours. {a} covers all 168 hours of the week."}}, "es": {"plans": [{"name": "Esencial", "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.", "price": 397, "cta": "Elegir Esencial", "feat": ["Número de teléfono propio y llamadas 24/7", "Francés, inglés y español", "Respuestas por mensaje de texto (SMS)", "Citas agendadas en tu calendario", "Dashboard privado", "Llama a {a} para pedirle tus reportes (por fases)"]}, {"name": "Pro", "tag": "Lo esencial, más WhatsApp y llamadas programadas.", "price": 597, "cta": "Elegir Pro", "feat": ["Todo el plan Esencial, más:", "WhatsApp con el mismo número (por fases)", "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)", "Llama a {a} a cualquier hora", "Llamadas ilimitadas, uso razonable"]}, {"name": "Completo", "tag": "Todos tus canales, con acceso prioritario.", "price": 797, "cta": "Elegir Completo", "feat": ["Todo el plan Pro, más:", "Mensajes de Instagram y Facebook (por fases)", "Estadísticas de tus redes sociales (por fases)", "Acceso prioritario: tus preguntas y cambios van primero"]}], "priceTop": ["CAD · mes a mes · más impuestos", "Sin contrato", "Instalación gratis en el lanzamiento"], "per": "/ mes", "rollout": "Despliegue progresivo: los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Horas por cubrir a la semana", "l2": "Salario por hora", "l3": "", "eyebrow": "Haz la cuenta", "title": "¿Cuánto cuesta un empleado que contesta el teléfono?", "lead": "Escribe las horas por cubrir y un salario por hora: lo comparamos con {a}.", "cap": "al mes solo en salario, sin cargas ni reemplazos. {a}: desde {p} al mes, las 24 horas.", "note": "Calculado con tus cifras; los valores iniciales son solo ejemplos.", "disc": "Un empleado cubre su horario de trabajo. {a} cubre las 168 horas de la semana."}}, "sectors": {"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]}};
+const DATA = {"fr": {"plans": [{"name": "Essentiel", "tag": "Vos appels, vos textos et votre agenda, pris en charge.", "price": 397, "cta": "Choisir Essentiel", "feat": ["Numéro de téléphone dédié et appels 24/7", "Français, anglais et espagnol", "Réponses par texto (SMS)", "Rendez-vous pris dans votre agenda", "Tableau de bord privé", "Appelez {a} pour demander vos rapports (par phases)"]}, {"name": "Pro", "tag": "L'essentiel, plus WhatsApp et des appels programmés.", "price": 597, "cta": "Choisir Pro", "feat": ["Tout le plan Essentiel, plus :", "WhatsApp avec le même numéro (par phases)", "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)", "Appelez {a} à toute heure", "Appels illimités, usage raisonnable"]}, {"name": "Complet", "tag": "Tous vos canaux, avec un accès prioritaire.", "price": 797, "cta": "Choisir Complet", "feat": ["Tout le plan Pro, plus :", "Messages Instagram et Facebook (par phases)", "Statistiques de vos réseaux sociaux (par phases)", "Accès prioritaire : vos questions et changements passent en premier"]}], "priceTop": ["CAD · mois par mois · taxes en sus", "Sans contrat", "Installation gratuite au lancement"], "per": "/ mois", "rollout": "Déploiement progressif : les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Heures à couvrir par semaine", "l2": "Salaire horaire", "l3": "", "eyebrow": "Faites le calcul", "title": "Combien coûte un employé qui répond au téléphone?", "lead": "Entrez les heures à couvrir et un salaire horaire : on compare avec {a}.", "cap": "par mois en salaire seulement, sans charges ni remplacements. {a} : dès {p} par mois, 24 h sur 24.", "note": "Calculé avec vos chiffres; les valeurs de départ ne sont que des exemples.", "disc": "Un employé couvre ses heures de travail. {a} couvre les 168 heures de la semaine."}, "dash": {"t": {"tabs": ["Aperçu", "Appels", "Messages", "Agenda", "Réseaux", "Contacts"], "chart": "Appels répondus cette semaine", "days": ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"], "recent": "Derniers appels", "transcript": "Transcription", "free": "Libre", "week": "Cette semaine", "sms": "Bonjour {n}, c'est {a}. C'est confirmé : {x}. À bientôt!", "sent": "Envoyé", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "Un client demande vos heures d'ouverture.", "{a} répond avec vos heures et propose un rendez-vous.", "Par phases"], "soc": [["Instagram", "📸", [["Portée", "2 340"], ["Messages", "18"], ["Nouveaux abonnés", "+27"]]], ["Facebook", "📘", [["Portée", "1 120"], ["Messages", "9"], ["Mentions J'aime", "+14"]]]], "socNote": "Instagram et Facebook : plan Complet, par phases.", "last": "Dernier contact", "contactsNote": "Chaque appelant devient un contact, avec son historique."}, "tags": {"hot": "Chaud", "warm": "Tiède", "cold": "Froid", "new": "Nouveau"}, "next": "Prochaine action", "eyebrow": "Ce que vous verrez chaque matin", "title": "Votre tableau de bord.", "lead": "Chaque appel est transcrit, résumé et suivi d'une prochaine action.", "badge": "◆ Données de démonstration", "more": "Voir le tableau de bord complet →", "sub": "avec {a} · AI Staff", "name": "Votre entreprise", "stats": [["Appels répondus", "41", "cette semaine"], ["Messages traités", "58", "textos et appels"], ["Rendez-vous pris", "12", "↑ 3 cette semaine"], ["Temps libéré", "≈ 9 h", "estimation cette semaine"]], "calls": [["Karim Benali", "Cette nuit · 23 h 48", "Soumission pour un déménagement, 4 ½ de Laval à Longueuil.", "hot", "Visite · jeudi 10 h"], ["Sophie Gagnon", "Hier · 16 h 40", "Veut déplacer son rendez-vous de vendredi.", "warm", "Rendez-vous déplacé · lundi 9 h"], ["Luis Ramírez", "Hier · 11 h 05", "Demande vos heures d'ouverture, en espagnol.", "new", "Réponse donnée en espagnol"]], "script": [["agent", "Déménagement Tremblay, bonsoir, c'est {a}. Comment puis-je vous aider?"], ["lead", "Bonjour, je voudrais une soumission pour un déménagement le 28."], ["agent", "Avec plaisir. Quelle est l'adresse de départ et d'arrivée, et combien de pièces?"], ["lead", "De Laval à Longueuil, un 4 et demi."], ["agent", "Parfait. Je note une visite jeudi à 10 h; l'équipe vous confirme par texto."], ["lead", "Super, merci!"], ["agent", "Avec plaisir. Bonne soirée!"]]}}, "en": {"plans": [{"name": "Essential", "tag": "Your calls, texts and calendar, handled.", "price": 397, "cta": "Choose Essential", "feat": ["Dedicated phone number and 24/7 calls", "French, English and Spanish", "Text message (SMS) replies", "Appointments booked in your calendar", "Private dashboard", "Call {a} to ask for your reports (in phases)"]}, {"name": "Pro", "tag": "The essentials, plus WhatsApp and scheduled calls.", "price": 597, "cta": "Choose Pro", "feat": ["Everything in Essential, plus:", "WhatsApp on the same number (in phases)", "{a} calls you at the times you choose, up to 3 times a day (in phases)", "Call {a} any time", "Unlimited calls, fair use"]}, {"name": "Complete", "tag": "Every channel, with priority access.", "price": 797, "cta": "Choose Complete", "feat": ["Everything in Pro, plus:", "Instagram and Facebook messages (in phases)", "Social media stats (in phases)", "Priority access: your questions and changes come first"]}], "priceTop": ["CAD · month to month · plus taxes", "No contract", "Free setup during launch"], "per": "/ month", "rollout": "Progressive rollout: channels are enabled in phases and confirmed with you on the discovery call.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Hours to cover per week", "l2": "Hourly wage", "l3": "", "eyebrow": "Do the math", "title": "What does an employee who answers the phone cost?", "lead": "Enter the hours to cover and an hourly wage: we compare with {a}.", "cap": "per month in wages alone, before payroll costs and replacements. {a}: from {p} a month, 24 hours a day.", "note": "Calculated from your numbers; the starting values are only examples.", "disc": "An employee covers working hours. {a} covers all 168 hours of the week."}, "dash": {"t": {"tabs": ["Overview", "Calls", "Messages", "Calendar", "Social", "Contacts"], "chart": "Calls answered this week", "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "recent": "Latest calls", "transcript": "Transcript", "free": "Open", "week": "This week", "sms": "Hi {n}, this is {a}. You're confirmed: {x}. See you soon!", "sent": "Sent", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "A customer asks for your opening hours.", "{a} replies with your hours and offers an appointment.", "In phases"], "soc": [["Instagram", "📸", [["Reach", "2,340"], ["Messages", "18"], ["New followers", "+27"]]], ["Facebook", "📘", [["Reach", "1,120"], ["Messages", "9"], ["New likes", "+14"]]]], "socNote": "Instagram and Facebook: Complete plan, in phases.", "last": "Last contact", "contactsNote": "Every caller becomes a contact, with their history."}, "tags": {"hot": "Hot", "warm": "Warm", "cold": "Cold", "new": "New"}, "next": "Next action", "eyebrow": "What you'll see every morning", "title": "Your dashboard.", "lead": "Every call is transcribed, summarized and paired with a next action.", "badge": "◆ Demo data", "more": "See the full dashboard →", "sub": "with {a} · AI Staff", "name": "Your business", "stats": [["Calls answered", "41", "this week"], ["Messages handled", "58", "texts and calls"], ["Appointments booked", "12", "↑ 3 this week"], ["Time freed", "≈ 9 h", "estimate this week"]], "calls": [["Karim Benali", "Last night · 11:48 PM", "Quote for a move, 2-bedroom from Laval to Longueuil.", "hot", "Visit · Thursday 10 AM"], ["Sophie Gagnon", "Yesterday · 4:40 PM", "Wants to move her Friday appointment.", "warm", "Appointment moved · Monday 9 AM"], ["Luis Ramírez", "Yesterday · 11:05 AM", "Asks for your opening hours, in Spanish.", "new", "Answered in Spanish"]], "script": [["agent", "Tremblay Moving, good evening, this is {a}. How can I help?"], ["lead", "Hi, I'd like a quote for a move on the 28th."], ["agent", "Happy to help. What are the pickup and drop-off addresses, and how many rooms?"], ["lead", "From Laval to Longueuil, a 2-bedroom."], ["agent", "Perfect. I'm noting a visit on Thursday at 10 AM; the team will confirm by text."], ["lead", "Great, thanks!"], ["agent", "My pleasure. Have a good evening!"]]}}, "es": {"plans": [{"name": "Esencial", "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.", "price": 397, "cta": "Elegir Esencial", "feat": ["Número de teléfono propio y llamadas 24/7", "Francés, inglés y español", "Respuestas por mensaje de texto (SMS)", "Citas agendadas en tu calendario", "Dashboard privado", "Llama a {a} para pedirle tus reportes (por fases)"]}, {"name": "Pro", "tag": "Lo esencial, más WhatsApp y llamadas programadas.", "price": 597, "cta": "Elegir Pro", "feat": ["Todo el plan Esencial, más:", "WhatsApp con el mismo número (por fases)", "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)", "Llama a {a} a cualquier hora", "Llamadas ilimitadas, uso razonable"]}, {"name": "Completo", "tag": "Todos tus canales, con acceso prioritario.", "price": 797, "cta": "Elegir Completo", "feat": ["Todo el plan Pro, más:", "Mensajes de Instagram y Facebook (por fases)", "Estadísticas de tus redes sociales (por fases)", "Acceso prioritario: tus preguntas y cambios van primero"]}], "priceTop": ["CAD · mes a mes · más impuestos", "Sin contrato", "Instalación gratis en el lanzamiento"], "per": "/ mes", "rollout": "Despliegue progresivo: los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Horas por cubrir a la semana", "l2": "Salario por hora", "l3": "", "eyebrow": "Haz la cuenta", "title": "¿Cuánto cuesta un empleado que contesta el teléfono?", "lead": "Escribe las horas por cubrir y un salario por hora: lo comparamos con {a}.", "cap": "al mes solo en salario, sin cargas ni reemplazos. {a}: desde {p} al mes, las 24 horas.", "note": "Calculado con tus cifras; los valores iniciales son solo ejemplos.", "disc": "Un empleado cubre su horario de trabajo. {a} cubre las 168 horas de la semana."}, "dash": {"t": {"tabs": ["Resumen", "Llamadas", "Mensajes", "Agenda", "Redes", "Contactos"], "chart": "Llamadas atendidas esta semana", "days": ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"], "recent": "Últimas llamadas", "transcript": "Transcripción", "free": "Libre", "week": "Esta semana", "sms": "Hola {n}, soy {a}. Quedó confirmado: {x}. ¡Hasta pronto!", "sent": "Enviado", "smsLbl": "SMS · confirmación", "wa": ["WhatsApp", "Un cliente pregunta por tu horario de atención.", "{a} responde con tu horario y propone una cita.", "Por fases"], "soc": [["Instagram", "📸", [["Alcance", "2 340"], ["Mensajes", "18"], ["Nuevos seguidores", "+27"]]], ["Facebook", "📘", [["Alcance", "1 120"], ["Mensajes", "9"], ["Nuevos me gusta", "+14"]]]], "socNote": "Instagram y Facebook: plan Completo, por fases.", "last": "Último contacto", "contactsNote": "Cada persona que llama se vuelve un contacto, con su historial."}, "tags": {"hot": "Caliente", "warm": "Tibio", "cold": "Frío", "new": "Nuevo"}, "next": "Próxima acción", "eyebrow": "Lo que verás cada mañana", "title": "Tu panel.", "lead": "Cada llamada queda transcrita, resumida y con una próxima acción.", "badge": "◆ Datos de demostración", "more": "Ver el panel completo →", "sub": "con {a} · AI Staff", "name": "Tu negocio", "stats": [["Llamadas atendidas", "41", "esta semana"], ["Mensajes atendidos", "58", "textos y llamadas"], ["Citas agendadas", "12", "↑ 3 esta semana"], ["Tiempo liberado", "≈ 9 h", "estimación esta semana"]], "calls": [["Karim Benali", "Anoche · 23:48", "Cotización de mudanza, dos habitaciones de Laval a Longueuil.", "hot", "Visita · jueves 10 h"], ["Sophie Gagnon", "Ayer · 16:40", "Quiere mover su cita del viernes.", "warm", "Cita movida · lunes 9 h"], ["Luis Ramírez", "Ayer · 11:05", "Pregunta por tu horario de atención, en español.", "new", "Respondido en español"]], "script": [["agent", "Mudanzas Tremblay, buenas noches, habla {a}. ¿En qué puedo ayudarle?"], ["lead", "Hola, quisiera una cotización para una mudanza el día 28."], ["agent", "Con gusto. ¿Cuáles son la dirección de salida y la de llegada, y cuántas habitaciones?"], ["lead", "De Laval a Longueuil, un apartamento de dos habitaciones."], ["agent", "Perfecto. Anoto una visita el jueves a las 10; el equipo le confirma por mensaje de texto."], ["lead", "¡Genial, gracias!"], ["agent", "Con gusto. ¡Buenas noches!"]]}}, "sectors": {"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]}};
 
 const STR = {
 fr:{
@@ -332,9 +457,9 @@ fr:{
  "hero.kicker":"Adjointe IA · Montréal",
  "hero.h1":"Votre prochaine employée est une IA.",
  "hero.lead":"{a} répond à vos appels jour et nuit, en français, en anglais et en espagnol, prend les messages et les demandes de rendez-vous, et vous envoie un résumé par texto.",
- "hero.note":"Ligne démo : +1 (438) 805-8804 · l'appel est transcrit","hero.scroll":"Faites défiler pour rencontrer {a}",
- "listen":"▶ Écouter {a}","stop":"■ Arrêter",
- "demo.hint":"Appuyez sur « Écouter » pour entendre un appel d'exemple.",
+ "cta.callA":"Appeler {a} maintenant","try.eyebrow":"Essayez maintenant","try.title":"Appelez {a}. Pour vrai.","try.sub":"Sur la ligne démo, {a} vous répond en direct, en français, en anglais ou en espagnol. Dites quel genre d'entreprise vous avez, jouez un client, et écoutez comment vos clients seraient accueillis.","try.qr":"Scannez pour appeler depuis votre cellulaire","trySteps":["Appelez le 438 805-8804","Dites votre métier","Jouez un client"],"hero.note":"la vraie voix, en direct · l'appel est transcrit",
+ "listen":"▶ Écouter un exemple","stop":"■ Arrêter",
+ "demo.hint":"Touchez l'orbe pour entendre un appel d'exemple.",
  "demo.end":"Exemple avec la voix de votre navigateur. La vraie voix est au téléphone : appelez la ligne démo.",
  "demo.smsLbl":"Texto reçu par le propriétaire",
  "demo.who.c":"Client",
@@ -350,7 +475,8 @@ fr:{
  steps:[["Vous nous parlez de votre entreprise","Un court formulaire : vos heures, vos services, les questions qu'on vous pose."],["Vous recevez votre numéro","Renvoyez-y les appels que vous ne prenez pas, ou donnez-le directement à vos clients."],["{a} répond, vous êtes informé","Chaque appel arrive résumé par texto et dans votre tableau de bord privé."]],
  does:[["Répond aux appels 24/7, en français, en anglais et en espagnol",1],["Prend les messages et les demandes de rendez-vous",1],["Vous envoie un résumé par texto après chaque appel",1],["Tableau de bord privé avec appels et transcriptions",1],["WhatsApp, Instagram et Facebook",0],["Vous appelle pour faire le point (forfait Pro)",0]],
  faq:[["Mes clients sauront-ils que c'est une IA?","Oui. {a} se présente comme une IA dès le début de l'appel et indique que l'appel est transcrit."],["Et si la réponse n'est pas connue?","Rien n'est inventé. {a} répond seulement avec l'information de votre entreprise; sinon, le message est pris et transmis à votre équipe."],["Dois-je changer de numéro?","Non. Vous renvoyez vers votre numéro AI Staff les appels que vous ne prenez pas (une option offerte par les opérateurs), ou vous le donnez directement à vos clients."],["Les rendez-vous sont-ils confirmés automatiquement?","Non. {a} note la demande (service, jour, heure, coordonnées) et vous la transmet; c'est vous qui confirmez. La demande apparaît dans l'agenda de votre tableau de bord."],["Et mes données?","L'accès est révocable en tout temps, vos données ne sont jamais revendues et une personne supervise le service. Détails dans notre politique de confidentialité."]],
- demo:{biz:"Garage Martin",lang:"fr-CA",lines:[["a","Garage Martin, bonjour! Ici {a}, l'IA qui répond pour l'équipe. Comment puis-je vous aider?"],["c","Bonjour, j'aimerais faire changer mes pneus cette semaine."],["a","Avec plaisir. Quel jour vous conviendrait le mieux?"],["c","Jeudi après-midi, si possible."],["a","C'est noté : jeudi après-midi pour un changement de pneus. L'équipe vous confirme l'heure par texto. Bonne journée!"]],sms:"Nouvelle demande : changement de pneus, jeudi après-midi. Client : (514) 555-0142."}
+ demo:{lang:"fr-CA",lines:[["a","Bonjour, merci d'appeler! Ici {a}, l'IA qui répond pour l'équipe. Comment puis-je vous aider?"],["c","Bonjour! Êtes-vous ouverts samedi? J'aimerais prendre rendez-vous."],["a","Oui, nous sommes ouverts samedi. Quelle heure vous conviendrait?"],["c","Vers 10 h, si c'est possible."],["a","C'est noté : samedi vers 10 h. Je transmets votre demande et l'équipe vous confirme par texto. Bonne journée!"]],
+  notifs:[["sms","💬","Messages","Nouvelle demande de rendez-vous","Samedi vers 10 h · (514) 555-0142. Résumé dans votre tableau de bord."],["dash","◆","AI Staff","Appel ajouté au tableau de bord","Transcription et résumé prêts. Prochaine action : confirmer samedi 10 h."]],now:"maintenant"}
 },
 en:{
  "nav.how":"How it works","nav.calc":"Calculate","nav.plans":"Pricing","nav.sectors":"Industries","nav.faq":"FAQ",
@@ -358,9 +484,9 @@ en:{
  "hero.kicker":"AI assistant · Montréal",
  "hero.h1":"Your next employee is an AI.",
  "hero.lead":"{a} answers your calls day and night, in French, English and Spanish, takes messages and appointment requests, and texts you a summary.",
- "hero.note":"Demo line: +1 (438) 805-8804 · the call is transcribed","hero.scroll":"Scroll to meet {a}",
- "listen":"▶ Listen to {a}","stop":"■ Stop",
- "demo.hint":"Press “Listen” to hear a sample call.",
+ "cta.callA":"Call {a} now","try.eyebrow":"Try it now","try.title":"Call {a}. For real.","try.sub":"On the demo line, {a} answers live, in French, English or Spanish. Say what kind of business you run, play a customer, and hear how your customers would be greeted.","try.qr":"Scan to call from your phone","trySteps":["Call 438 805-8804","Say what you do","Play a customer"],"hero.note":"the real voice, live · the call is transcribed",
+ "listen":"▶ Hear a sample","stop":"■ Stop",
+ "demo.hint":"Tap the orb to hear a sample call.",
  "demo.end":"Sample using your browser's voice. The real voice is on the phone: call the demo line.",
  "demo.smsLbl":"Text the owner receives",
  "demo.who.c":"Customer",
@@ -376,7 +502,8 @@ en:{
  steps:[["Tell us about your business","A short form: your hours, your services, the questions people ask you."],["Get your number","Forward the calls you can't take to it, or give it to your customers directly."],["{a} answers, you stay informed","Every call reaches you as a text summary and in your private dashboard."]],
  does:[["Answers calls 24/7 in French, English and Spanish",1],["Takes messages and appointment requests",1],["Texts you a summary after every call",1],["Private dashboard with calls and transcripts",1],["WhatsApp, Instagram and Facebook",0],["Calls you with updates (Pro plan)",0]],
  faq:[["Will my customers know it's an AI?","Yes. {a} introduces itself as an AI at the start of the call and says the call is transcribed."],["What if the answer isn't known?","Nothing is made up. {a} only uses your business information; otherwise it takes a message and passes it to your team."],["Do I need a new number?","No. You forward the calls you don't take to your AI Staff number (carriers offer this), or you give it to your customers directly."],["Are appointments confirmed automatically?","No. {a} records the request (service, day, time, contact) and passes it on; you confirm. It shows up in your dashboard calendar."],["What about my data?","Access can be revoked at any time, your data is never resold, and a person supervises the service. Details in our privacy policy."]],
- demo:{biz:"Martin's Garage",lang:"en-US",lines:[["a","Martin's Garage, hello! This is {a}, the AI answering for the team. How can I help?"],["c","Hi, I'd like to get my tires changed this week."],["a","Happy to help. Which day works best for you?"],["c","Thursday afternoon, if possible."],["a","Got it: Thursday afternoon for a tire change. The team will confirm the time by text. Have a great day!"]],sms:"New request: tire change, Thursday afternoon. Customer: (514) 555-0142."}
+ demo:{lang:"en-US",lines:[["a","Hello, thanks for calling! This is {a}, the AI answering for the team. How can I help?"],["c","Hi! Are you open on Saturday? I'd like to book an appointment."],["a","Yes, we're open on Saturday. What time would suit you?"],["c","Around 10, if possible."],["a","Got it: Saturday around 10. I'm passing on your request and the team will confirm by text. Have a great day!"]],
+  notifs:[["sms","💬","Messages","New appointment request","Saturday around 10 · (514) 555-0142. Summary in your dashboard."],["dash","◆","AI Staff","Call added to your dashboard","Transcript and summary ready. Next step: confirm Saturday 10 AM."]],now:"now"}
 },
 es:{
  "nav.how":"Cómo funciona","nav.calc":"Calcular","nav.plans":"Precios","nav.sectors":"Sectores","nav.faq":"FAQ",
@@ -384,9 +511,9 @@ es:{
  "hero.kicker":"Asistente con IA · Montreal",
  "hero.h1":"Tu próxima empleada es una IA.",
  "hero.lead":"{a} contesta tus llamadas día y noche, en francés, inglés y español, toma mensajes y solicitudes de cita, y te manda un resumen por mensaje de texto.",
- "hero.note":"Línea demo: +1 (438) 805-8804 · la llamada se transcribe","hero.scroll":"Desliza para conocer a {a}",
- "listen":"▶ Escuchar a {a}","stop":"■ Detener",
- "demo.hint":"Pulsa «Escuchar» para oír una llamada de ejemplo.",
+ "cta.callA":"Llamar a {a} ahora","try.eyebrow":"Pruébala ahora","try.title":"Llama a {a}. De verdad.","try.sub":"En la línea demo, {a} contesta en vivo, en francés, inglés o español. Di qué tipo de negocio tienes, haz de cliente y escucha cómo atendería a tus clientes.","try.qr":"Escanea para llamar desde tu celular","trySteps":["Llama al 438 805-8804","Di a qué te dedicas","Haz de cliente"],"hero.note":"la voz real, en vivo · la llamada se transcribe",
+ "listen":"▶ Escuchar un ejemplo","stop":"■ Detener",
+ "demo.hint":"Toca el orbe para oír una llamada de ejemplo.",
  "demo.end":"Ejemplo con la voz de tu navegador. La voz real está en el teléfono: llama a la línea demo.",
  "demo.smsLbl":"Mensaje que recibe el dueño",
  "demo.who.c":"Cliente",
@@ -402,12 +529,13 @@ es:{
  steps:[["Nos cuentas de tu negocio","Un formulario corto: tu horario, tus servicios, las preguntas que te hacen."],["Recibes tu número","Desvía ahí las llamadas que no contestas, o dáselo directamente a tus clientes."],["{a} contesta, tú te enteras","Cada llamada te llega resumida por mensaje de texto y en tu dashboard privado."]],
  does:[["Contesta llamadas 24/7 en francés, inglés y español",1],["Toma mensajes y solicitudes de cita",1],["Te manda un resumen por texto después de cada llamada",1],["Dashboard privado con llamadas y transcripciones",1],["WhatsApp, Instagram y Facebook",0],["Te llama para ponerte al día (plan Pro)",0]],
  faq:[["¿Mis clientes sabrán que es una IA?","Sí. {a} se presenta como una IA al inicio de la llamada y avisa que la llamada se transcribe."],["¿Y si no sabe la respuesta?","No se inventa nada. {a} solo usa la información de tu negocio; si no la tiene, toma el mensaje y se lo pasa a tu equipo."],["¿Tengo que cambiar de número?","No. Desvías a tu número de AI Staff las llamadas que no contestas (los operadores lo ofrecen), o se lo das directamente a tus clientes."],["¿Las citas se confirman solas?","No. {a} anota la solicitud (servicio, día, hora y contacto) y te la pasa; tú confirmas. Aparece en la agenda de tu dashboard."],["¿Y mis datos?","El acceso se puede revocar en cualquier momento, tus datos nunca se revenden y una persona supervisa el servicio. Detalles en nuestra política de privacidad."]],
- demo:{biz:"Garage Martin",lang:"es-US",lines:[["a","Garage Martin, ¡hola! Habla {a}, la IA que contesta por el equipo. ¿En qué le puedo ayudar?"],["c","Hola, quisiera cambiar las llantas esta semana."],["a","Con gusto. ¿Qué día le queda mejor?"],["c","El jueves en la tarde, si se puede."],["a","Anotado: jueves en la tarde para cambio de llantas. El equipo le confirma la hora por mensaje de texto. ¡Que tenga buen día!"]],sms:"Nueva solicitud: cambio de llantas, jueves en la tarde. Cliente: (514) 555-0142."}
+ demo:{lang:"es-US",lines:[["a","¡Hola, gracias por llamar! Habla {a}, la IA que contesta por el equipo. ¿En qué le puedo ayudar?"],["c","¡Hola! ¿Abren el sábado? Quisiera hacer una cita."],["a","Sí, abrimos el sábado. ¿A qué hora le queda bien?"],["c","Como a las 10, si se puede."],["a","Anotado: sábado como a las 10. Paso su solicitud y el equipo le confirma por mensaje de texto. ¡Que tenga buen día!"]],
+  notifs:[["sms","💬","Mensajes","Nueva solicitud de cita","Sábado como a las 10 · (514) 555-0142. Resumen en tu dashboard."],["dash","◆","AI Staff","Llamada agregada a tu dashboard","Transcripción y resumen listos. Siguiente paso: confirmar el sábado a las 10."]],now:"ahora"}
 }};
 
 const qs = new URLSearchParams(location.search);
 const PERS = {sofia:"Sofía", alex:"Alex", tomas:"Tomás"};
-const persona = PERS[qs.get("a")] ? qs.get("a") : "alex";
+const persona = PERS[qs.get("a")] ? qs.get("a") : "sofia";
 const A = PERS[persona];
 let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -425,6 +553,8 @@ function render(){
   const q = lang==="fr" ? "" : "?lang="+lang;
   document.getElementById("planList").innerHTML = D.plans.map(p=>`<div class="plan"><h3>${esc(p.name)}</h3><div class="t">${esc(fill(p.tag))}</div><div class="p">${p.price} $<small> ${esc(D.per)}</small></div><ul>${p.feat.map(f=>`<li><span>${esc(fill(f))}</span></li>`).join("")}</ul><a class="btn btn-g" href="/onboarding/${q}">${esc(p.cta)}</a></div>`).join("");
   document.getElementById("rollout").textContent = D.rollout;
+  document.getElementById("trySteps").innerHTML = S.trySteps.map((x,i)=>`<span><b>${i+1}</b>${esc(x)}</span>`).join("");
+  buildDash();
   document.getElementById("secList").innerHTML = DATA.sectors[lang].map(s=>`<a class="sec" href="/${s.slug}/${q}"><span>${s.ic}</span>${esc(s.name)}</a>`).join("");
   document.getElementById("faqList").innerHTML = S.faq.map(f=>`<details><summary>${esc(fill(f[0]))}</summary><p>${esc(fill(f[1]))}</p></details>`).join("");
   document.querySelectorAll(".mailcta").forEach(a => a.href = "/onboarding/" + q);
@@ -484,6 +614,47 @@ function updateCalc(){
 }
 r1.addEventListener("input", updateCalc); r2.addEventListener("input", updateCalc);
 
+/* dashboard sample (same data and tabs as the sector pages) */
+let dashTab = 0;
+const AVBG = ["linear-gradient(135deg,#3B82F6,#1858C4)","linear-gradient(135deg,#22B8E6,#1F6FEB)","linear-gradient(135deg,#8B5CF6,#4F46E5)","linear-gradient(135deg,#10B981,#047857)"];
+const iniOf = n => n.replace(/[^A-Za-zÀ-ÿ ]/g,"").split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "@";
+function buildDash(){
+  const X = DATA[lang].dash, D = X.t, calls = X.calls, first = n => n.split(" ")[0];
+  document.getElementById("dEy").textContent = X.eyebrow; document.getElementById("dTi").textContent = X.title; document.getElementById("dLe").textContent = X.lead;
+  document.getElementById("dName").textContent = X.name + " · " + fill(X.sub); document.getElementById("dBadge").textContent = X.badge;
+  const dm = document.getElementById("dMore"); dm.textContent = X.more; dm.href = "/demo/" + (lang==="fr" ? "" : "?lang="+lang);
+  const total = parseInt(String(X.stats[0][1]).replace(/\D/g,""),10) || 40, wts = [.13,.18,.15,.2,.17,.1,.07];
+  let vals = wts.map(w=>Math.round(total*w)); vals[3] += total - vals.reduce((a,b)=>a+b,0);
+  const mx = Math.max.apply(null, vals);
+  const tiles = `<div class="d-stats">${X.stats.map(s=>`<div class="d-stat"><span>${esc(s[0])}</span><b>${esc(s[1])}</b><small>${esc(s[2])}</small></div>`).join("")}</div>`;
+  const bars = `<div class="d-h">${esc(D.chart)}</div><div class="d-bars">${vals.map((v,i)=>`<div class="d-bar"><span>${v}</span><i style="height:${Math.max(8,Math.round(v/mx*100))}%;animation-delay:${i*60}ms"></i><span>${esc(D.days[i])}</span></div>`).join("")}</div>`;
+  const tag = k => `<span class="d-tag ${k}">${esc(X.tags[k] || "")}</span>`;
+  const card = (c,i,full) => `<div class="d-call"><div class="d-who"><i style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</i><div><b>${esc(c[0])}</b><small>${esc(c[1])}</small></div>${tag(c[3])}</div><p>${esc(fill(c[2]))}</p>`+
+    (full && i===0 ? `<div class="d-tr"><span class="tt">${esc(D.transcript)}</span>${X.script.map(l=>`<div><b>${esc(l[0]==="agent" ? A : first(c[0]))} :</b> ${esc(fill(l[1]))}</div>`).join("")}</div>` : "")+
+    `<div class="d-next">→ ${esc(X.next)} : ${esc(fill(c[4]))}</div></div>`;
+  const msgs = calls.map(c=>`<div class="d-row"><span style="font-size:20px">💬</span><div class="tx"><b>${esc(c[0])}</b> <small>· ${esc(D.smsLbl)}</small><div class="draft"><b>${esc(A)}</b> — ${esc(D.sms.split("{n}").join(first(c[0])).split("{a}").join(A).split("{x}").join(fill(c[4])))}</div></div><span class="d-tag new">${esc(D.sent)}</span></div>`).join("")+
+    `<div class="d-row"><span style="font-size:20px">🟢</span><div class="tx"><b>${esc(D.wa[0])}</b> <small>· ${esc(D.wa[1])}</small><div class="draft"><b>${esc(A)}</b> — ${esc(D.wa[2].split("{a}").join(A))}</div></div><span class="d-tag info">${esc(D.wa[3])}</span></div>`;
+  const DAYIDX = {lundi:0,monday:0,lunes:0,mardi:1,tuesday:1,martes:1,mercredi:2,wednesday:2,miercoles:2,jeudi:3,thursday:3,jueves:3,vendredi:4,friday:4,viernes:4,samedi:5,saturday:5,sabado:5};
+  const dayOf = s => { const m = s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").match(/\b(lundi|monday|lunes|mardi|tuesday|martes|mercredi|wednesday|miercoles|jeudi|thursday|jueves|vendredi|friday|viernes|samedi|saturday|sabado)\b/); return m ? DAYIDX[m[1]] : -1; };
+  const evs = calls.filter(c=>/\d/.test(c[4])).map(c=>({c, d: dayOf(c[4])}));
+  const used = new Set(evs.filter(e=>e.d>=0).map(e=>e.d)), spare = [0,2,3,1,4,5].filter(d=>!used.has(d));
+  evs.forEach(e=>{ if(e.d<0) e.d = spare.shift(); });
+  const week = `<div class="d-wk">${[0,1,2,3,4,5].map(d=>{ const here = evs.filter(e=>e.d===d);
+    return `<div class="d-col"><h4>${esc(D.days[d])}</h4>${here.map(e=>`<div class="d-ev"><b>${esc(fill(e.c[4]))}</b><small>${esc(e.c[0])}</small></div>`).join("")}<div class="d-free">${esc(D.free)}</div></div>`; }).join("")}</div>`;
+  const soc = `<p class="d-note">${esc(D.socNote)}</p><div class="d-soc">${D.soc.map(x=>`<div class="d-sc"><div class="h"><b>${x[1]} ${esc(x[0])}</b><span>${esc(D.week)}</span></div><div class="d-kp">${x[2].map(k=>`<div><b>${esc(k[1])}</b><span>${esc(k[0])}</span></div>`).join("")}</div></div>`).join("")}</div>`;
+  const contacts = `<p class="d-note">${esc(D.contactsNote)}</p>`+calls.map((c,i)=>`<div class="d-row"><span class="d-ini" style="background:${AVBG[i%4]}">${esc(iniOf(c[0]))}</span><div class="tx"><b>${esc(c[0])}</b><br><small>${esc(D.last)} · ${esc(c[1])}</small></div>${tag(c[3])}</div>`).join("");
+  const panes = [tiles+bars+`<div class="d-h" style="margin-top:16px">${esc(D.recent)}</div>`+calls.map((c,i)=>card(c,i,false)).join(""), calls.map((c,i)=>card(c,i,true)).join(""), msgs, week, soc, contacts];
+  const tabs = document.getElementById("dtabs"), body = document.getElementById("dpanes");
+  tabs.innerHTML = D.tabs.map((x,i)=>`<button type="button" class="dtab${i===dashTab?" active":""}" role="tab" aria-selected="${i===dashTab}" data-i="${i}">${esc(x)}</button>`).join("");
+  const show = () => { body.innerHTML = `<div class="dpane" role="tabpanel">${panes[dashTab]}</div>`; tabs.querySelectorAll(".dtab").forEach((x,i)=>{ x.classList.toggle("active", i===dashTab); x.setAttribute("aria-selected", i===dashTab); }); };
+  tabs.querySelectorAll(".dtab").forEach(b => b.addEventListener("click", () => { dashTab = +b.dataset.i; show(); }));
+  show();
+}
+
+/* mobile call bar: appears once the hero is out of view */
+const callbar = document.getElementById("callbar");
+addEventListener("scroll", () => callbar.classList.toggle("show", scrollY > innerHeight * 0.75), {passive:true});
+
 /* reveal on scroll */
 let io = null;
 function observeReveal(){
@@ -493,174 +664,115 @@ function observeReveal(){
   els.forEach(e => io.observe(e));
 }
 
-/* ---------------------------------------------------------------- orb → virtual agent */
-// Partículas (WebGL). Estado 1: orbe de luz iridiscente que respira. Estado 2: busto de luz
-// (cabeza y hombros modelados con funciones de distancia), iluminado por el contorno, con
-// una luz detrás. Pasa de uno a otro al bajar por la página o cuando el agente habla.
+/* ---------------------------------------------------------------- orb (mismo de la consola de voz del dashboard /demo/) */
+// Copiado tal cual de demo/index.html (glNebula, hudState, hudDraw, sizeCanvas) para que el orbe sea el mismo.
+/* ---- WebGL nebula ---- */
+const VC_FS = `precision highp float;uniform vec2 uR;uniform float uT,uA,uU;
+float h(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+float n(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
+float fb(vec3 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.02+vec3(3.1,1.7,4.3);a*=.5;}return v;}
+void main(){vec2 uv=(gl_FragCoord.xy-.5*uR)/(.5*min(uR.x,uR.y));float d=length(uv);float ang=atan(uv.y,uv.x);
+float R=.46+uA*.07;
+vec2 q=uv*mat2(cos(uT*.12),-sin(uT*.12),sin(uT*.12),cos(uT*.12));
+float w=fb(vec3(q*1.6,uT*.18));
+float f=fb(vec3(q*2.4+w*1.8,uT*.22+uA*.6));
+vec3 a1=mix(vec3(.08,.25,.95),vec3(1.,.45,.15),uU),a2=mix(vec3(.3,.85,1.),vec3(1.,.8,.4),uU),a3=mix(vec3(.55,.3,1.),vec3(1.,.35,.45),uU);
+float core=smoothstep(R+.12,0.,d);
+float swirl=smoothstep(.35,.85,f);
+vec3 col=mix(a1,a2,swirl)*core*(.35+1.1*f)*(.75+uA*.9);
+col+=a3*core*pow(max(w-.35,0.),2.)*2.2;
+float shell=exp(-pow((d-R)*9.,2.))*(.55+uA*1.1);
+vec3 sc=mix(a2,a3,.5+.5*sin(ang*2.+uT*.8));
+col+=sc*shell;
+float halo=exp(-max(d-R,0.)*5.)*.35*(1.+uA);
+col+=a1*halo*(1.-core);
+float al=clamp(max(max(core*(.25+f),shell),halo),0.,1.);
+gl_FragColor=vec4(col,al);}`;
+function glNebula(cv){
+  let gl = null; try{ gl = cv.getContext("webgl",{premultipliedAlpha:true,alpha:true}); }catch(e){}
+  if(!gl) return null;
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const sh = (t,src)=>{ const o = gl.createShader(t); gl.shaderSource(o,src); gl.compileShader(o); return o; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER,VC_FS)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+  gl.useProgram(pr);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uR = gl.getUniformLocation(pr,"uR"), uT = gl.getUniformLocation(pr,"uT"), uA = gl.getUniformLocation(pr,"uA"), uU = gl.getUniformLocation(pr,"uU");
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  return {gl, cv, uR, uT, uA, uU, user:0,
+    draw(t, amp, user){ gl.viewport(0,0,cv.width,cv.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(uR,cv.width,cv.height); gl.uniform1f(uT,t); gl.uniform1f(uA,amp); gl.uniform1f(uU,user); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }};
+}
+/* ---- 2D HUD: radial voice bars, rotating arcs, particles (shared by console + mini card) ---- */
+function hudState(nParts){
+  const N = 96;
+  return {N, bars:new Float32Array(N), seeds:Array.from({length:N},()=>Math.random()*6.28),
+    parts:Array.from({length:nParts},()=>({r:.62+Math.random()*.34, a:Math.random()*6.28, s:(Math.random()*.25+.05)*(Math.random()<.5?-1:1), z:Math.random()}))};
+}
+function hudDraw(ctx, W, H, t, amp, u, st){
+  const cx = W/2, cy = H/2, S = Math.min(W,H)/2, N = st.N, bars = st.bars;
+  ctx.clearRect(0,0,W,H);
+  const c1 = u>.5 ? [255,170,110] : [110,180,255], c2 = u>.5 ? [255,120,140] : [150,120,255];
+  const r0 = S*.60;
+  for(let i=0;i<N;i++){
+    const k = i < N/2 ? i : N-1-i;
+    const nz = .5+.5*Math.sin(t*(3+k*.13)+st.seeds[k]) * Math.sin(t*1.7+k*.4);
+    const val = amp*(.25+.75*nz)*(1 - Math.abs(k-N/4)/(N/2)*.45);
+    bars[i] += (val - bars[i])*.35;
+    const a = i/N*Math.PI*2 - Math.PI/2 + t*.05, len = S*(.03 + bars[i]*.30);
+    const mix = i/N, col = c1.map((v,j)=>Math.round(v*(1-mix)+c2[j]*mix));
+    ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${.35+bars[i]*.9})`;
+    ctx.lineWidth = Math.max(1.2, S*.011); ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*r0); ctx.lineTo(cx+Math.cos(a)*(r0+len), cy+Math.sin(a)*(r0+len)); ctx.stroke();
+  }
+  ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.22)`; ctx.lineWidth = Math.max(1, S/200);
+  ctx.beginPath(); ctx.arc(cx,cy,r0-S*.035,0,Math.PI*2); ctx.stroke();
+  const rt = S*.955, rot = t*.12;
+  ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},.35)`; ctx.lineWidth = Math.max(1,S*.005);
+  for(let k=0;k<120;k++){ const a = k/120*Math.PI*2 + rot, l = k%10===0 ? S*.04 : S*.018;
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*rt, cy+Math.sin(a)*rt); ctx.lineTo(cx+Math.cos(a)*(rt-l), cy+Math.sin(a)*(rt-l)); ctx.stroke(); }
+  ctx.lineWidth = Math.max(1.2,S*.012); ctx.lineCap = "round";
+  [[.88,-t*.35,.9,.55],[.88,-t*.35+Math.PI,.5,.4],[.82,t*.5,.35,.3]].forEach(([rr,stt,len,al])=>{
+    ctx.strokeStyle = `rgba(${c2[0]},${c2[1]},${c2[2]},${al+amp*.3})`;
+    ctx.beginPath(); ctx.arc(cx,cy,S*rr,stt,stt+len); ctx.stroke(); });
+  st.parts.forEach(p=>{ p.a += p.s*.01*(1+amp*2); const r = S*(p.r + Math.sin(t*.8+p.z*6)*.01);
+    ctx.fillStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},${.25+p.z*.55})`;
+    ctx.beginPath(); ctx.arc(cx+Math.cos(p.a)*r, cy+Math.sin(p.a)*r, Math.max(.8,S*.006*(.6+p.z)), 0, Math.PI*2); ctx.fill(); });
+}
+function sizeCanvas(c){ const dpr = Math.min(window.devicePixelRatio||1, 2), r = c.getBoundingClientRect(); c.width = Math.max(1,Math.round(r.width*dpr)); c.height = Math.max(1,Math.round(r.height*dpr)); }
 const ORB = (() => {
-  const box = document.getElementById("orbBox");
-  const cv = document.getElementById("orb"), hud = document.getElementById("hud"), hx = hud.getContext("2d");
+  const box = document.getElementById("orbBox"), glc = document.getElementById("orb"), hud = document.getElementById("hud"), ctx = hud.getContext("2d");
+  const g = glNebula(glc), st = hudState(46), t0 = performance.now();
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const N = innerWidth < 700 ? 6000 : 10000;
-  let seed = 11; const R = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-
-  // ---- busto: funciones de distancia
-  const len3 = (x, y, z) => Math.sqrt(x * x + y * y + z * z);
-  const ell = (x, y, z, cx, cy, cz, rx, ry, rz) => { const px = (x - cx) / rx, py = (y - cy) / ry, pz = (z - cz) / rz;
-    const k0 = len3(px, py, pz), k1 = len3(px / rx, py / ry, pz / rz); return k1 ? k0 * (k0 - 1) / k1 : -1; };
-  const smin = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h * h * k * 0.25; };
-  const smax = (a, b, k) => -smin(-a, -b, k);
-  function sdf(x, y, z) {
-    let d = ell(x, y, z, 0, 0.36, 0, 0.35, 0.46, 0.41);                       // cráneo
-    d = smin(d, ell(x, y, z, 0, 0.13, 0.08, 0.26, 0.25, 0.29), 0.12);          // mandíbula
-    d = smin(d, ell(x, y, z, 0, 0.0, 0.17, 0.11, 0.07, 0.11), 0.08);           // mentón
-    d = smin(d, ell(x, y, z, 0, 0.29, 0.37, 0.05, 0.11, 0.08), 0.05);          // nariz
-    d = smin(d, ell(x, y, z, 0, 0.44, 0.3, 0.25, 0.06, 0.1), 0.06);            // frente / cejas
-    d = smin(d, ell(x, y, z, 0.19, 0.27, 0.25, 0.1, 0.08, 0.1), 0.08);         // pómulos
-    d = smin(d, ell(x, y, z, -0.19, 0.27, 0.25, 0.1, 0.08, 0.1), 0.08);
-    d = smin(d, ell(x, y, z, 0, 0.13, 0.33, 0.09, 0.03, 0.05), 0.03);          // labios
-    d = smin(d, ell(x, y, z, 0.355, 0.31, -0.01, 0.035, 0.09, 0.065), 0.03);  // orejas
-    d = smin(d, ell(x, y, z, -0.355, 0.31, -0.01, 0.035, 0.09, 0.065), 0.03);
-    d = smax(d, -ell(x, y, z, 0.13, 0.36, 0.37, 0.07, 0.045, 0.06), 0.035);   // cuencas de los ojos
-    d = smax(d, -ell(x, y, z, -0.13, 0.36, 0.37, 0.07, 0.045, 0.06), 0.035);
-    const qx = Math.hypot(x, z + 0.03) - 0.145, qy = Math.abs(y + 0.1) - 0.22;     // cuello
-    const neck = Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0));
-    d = smin(d, neck, 0.1);
-    d = smin(d, ell(x, y, z, 0, -0.56, -0.03, 0.78, 0.3, 0.3), 0.18);          // hombros
-    return Math.max(d, -(y + 0.78));                                          // corte del busto
-  }
-  const grad = (x, y, z) => { const e = 0.002;
-    const g = [sdf(x + e, y, z) - sdf(x - e, y, z), sdf(x, y + e, z) - sdf(x, y - e, z), sdf(x, y, z + e) - sdf(x, y, z - e)];
-    const l = len3(g[0], g[1], g[2]) || 1; return [g[0] / l, g[1] / l, g[2] / l]; };
-
-  const S = new Float32Array(N * 3), F = new Float32Array(N * 3), FN = new Float32Array(N * 3), RAND = new Float32Array(N);
-  for (let i = 0; i < N; i++) {                                   // esfera (Fibonacci)
-    const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963;
-    S.set([Math.cos(th) * r * 0.66, y * 0.66, Math.sin(th) * r * 0.66], i * 3);
-  }
-  let k = 0, guard = 0;
-  while (k < N && guard++ < N * 30) {                             // muestreo de la superficie del busto
-    const face = R() < 0.4;
-    let x = face ? (R() - 0.5) * 0.8 : (R() - 0.5) * 1.7, y = face ? R() * 0.9 - 0.05 : R() * 1.7 - 0.82, z = face ? R() * 0.55 : (R() - 0.5) * 1.1;
-    for (let it = 0; it < 7; it++) { const d = sdf(x, y, z), g = grad(x, y, z); x -= g[0] * d; y -= g[1] * d; z -= g[2] * d; }
-    if (Math.abs(sdf(x, y, z)) > 0.006 || y < -0.775) continue;
-    const n = grad(x, y, z);
-    F.set([x, y + 0.02, z], k * 3); FN.set(n, k * 3); k++;
-  }
-  for (; k < N; k++) { F.set(S.subarray(k * 3, k * 3 + 3), k * 3); FN.set([0, 0, 1], k * 3); }
-  for (let i = 0; i < N; i++) RAND[i] = R();
-
-  const gl = cv.getContext("webgl", { premultipliedAlpha: false, antialias: true, alpha: true });
-  let prog = null; const U = {};
-  if (gl) {
-    const vs = `
-attribute vec3 aS; attribute vec3 aF; attribute vec3 aFN; attribute float aRand;
-uniform float uT, uM, uLevel, uYaw, uPitch, uDpr, uSize, uAspect, uScan;
-varying float vA; varying vec3 vC;
-float nz(vec3 p){ return sin(p.x*2.1+uT*0.7)*sin(p.y*2.7+uT*0.9)*sin(p.z*2.3+uT*0.6); }
-mat2 rot(float a){ return mat2(cos(a), -sin(a), sin(a), cos(a)); }
-void main(){
-  float mp = smoothstep(0.0, 1.0, clamp(uM * 1.8 - aRand * 0.45 - (aF.y + 0.8) * 0.22, 0.0, 1.0));
-  vec3 sn = normalize(aS);
-  vec3 s = aS * (1.0 + 0.07*nz(aS*3.0) + uLevel*0.16*nz(aS*6.0 + uT));
-  vec3 f = aF + aFN * (uLevel*0.025*sin(aRand*60.0 + uT*18.0)) + vec3(0.0, sin(uT*1.1)*0.006, 0.0);
-  vec3 p = mix(s, f, mp), n = normalize(mix(sn, aFN, mp));
-  float sw = sin(mp*3.14159) * (aRand - 0.5) * 2.2;
-  p.xz = rot(sw) * p.xz; n.xz = rot(sw) * n.xz;
-  float yaw = uYaw + (1.0 - mp) * uT * 0.25;
-  p.xz = rot(yaw) * p.xz; n.xz = rot(yaw) * n.xz;
-  p.yz = rot(uPitch) * p.yz; n.yz = rot(uPitch) * n.yz;
-  float persp = 3.2 / (3.2 - p.z);
-  float sc = mix(0.95, 0.84, mp);
-  gl_Position = vec4(p.x*persp*sc/uAspect, (p.y + 0.06*mp)*persp*sc, 0.0, 1.0);
-  float fres = pow(1.0 - abs(n.z), 2.2);
-  float key = max(dot(n, normalize(vec3(-0.45, 0.55, 0.7))), 0.0);
-  float back = step(0.0, n.z);
-  float scan = exp(-pow((p.y - uScan) * 10.0, 2.0)) * mp;
-  vec3 c1 = vec3(0.30, 0.82, 1.0), c2 = vec3(0.62, 0.48, 1.0), c3 = vec3(0.95, 0.55, 0.95);
-  float hue = 0.5 + 0.5*sin(n.y*2.6 + n.x*1.7 + uT*0.6);
-  vC = mix(mix(c1, c2, hue), c3, (1.0 - mp) * 0.25 * (0.5 + 0.5*sin(uT + aRand*6.28)));
-  vC = mix(vC, vec3(0.9, 0.97, 1.0), scan*0.8 + key*0.25*mp);
-  float base = mix(0.62, 0.16, mp);
-  vA = (base + fres*0.9 + key*0.55*mp + scan*0.6 + uLevel*0.25) * mix(mix(0.6, 0.28, mp), 1.0, back);
-  gl_PointSize = (1.6 + (1.0 - mp)*0.9 + fres*2.2 + key*0.9*mp + scan*1.5 + uLevel*1.0) * uDpr * uSize;
-}`;
-    const fs = `precision mediump float; varying float vA; varying vec3 vC;
-void main(){ float r = length(gl_PointCoord - 0.5); if (r > 0.5) discard; float a = smoothstep(0.5, 0.05, r); gl_FragColor = vec4(vC * a, a * vA); }`;
-    const sh = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : (console.warn(gl.getShaderInfoLog(s)), null); };
-    const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
-    if (v && f) { prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) prog = null; }
-    if (prog) {
-      gl.useProgram(prog);
-      const buf = (name, data, size) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-        const loc = gl.getAttribLocation(prog, name); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0); };
-      buf("aS", S, 3); buf("aF", F, 3); buf("aFN", FN, 3); buf("aRand", RAND, 1);
-      ["uT","uM","uLevel","uYaw","uPitch","uDpr","uSize","uAspect","uScan"].forEach(n => U[n] = gl.getUniformLocation(prog, n));
-      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    }
-  }
-  if (!prog) box.classList.add("no-gl");
-
-  let W = 0, H = 0, dpr = 1, level = 0, target = 0, speaking = false, forceAgent = false, morph = 0, scrollM = 0;
-  let yaw = 0, pitch = 0, mx = 0, my = 0, visible = true, raf = 0;
-  const t0 = performance.now(), hero = document.querySelector(".hero"), sticky = () => matchMedia("(min-width: 861px)").matches;
-  function size() { dpr = Math.min(2, devicePixelRatio || 1); const r = box.getBoundingClientRect();
-    W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = hud.width = W; cv.height = hud.height = H; if (gl) gl.viewport(0, 0, W, H); }
-  function onScroll() {
-    const vh = innerHeight;
-    if (sticky()) { const r = hero.getBoundingClientRect(); scrollM = Math.min(1, Math.max(0, -r.top / Math.max(1, (r.height - vh) * 0.8))); }
-    else { const r = box.getBoundingClientRect(), c = r.top + r.height / 2; scrollM = Math.min(1, Math.max(0, (vh * 0.9 - c) / (vh * 0.45))); }
-  }
-  addEventListener("scroll", onScroll, { passive: true });
-  box.addEventListener("pointermove", e => { const r = box.getBoundingClientRect(); mx = ((e.clientX - r.left) / r.width - 0.5) * 2; my = ((e.clientY - r.top) / r.height - 0.5) * 2; });
-  box.addEventListener("pointerleave", () => { mx = my = 0; });
-
-  function drawHud(t, L, M) {
-    const cx = W / 2, cy = H / 2, R0 = Math.min(W, H) * 0.47;
-    hx.clearRect(0, 0, W, H); hx.lineCap = "round";
-    const arc = (r, a0, len, w, col, sp) => { hx.strokeStyle = col; hx.lineWidth = w * dpr; hx.beginPath(); hx.arc(cx, cy, r, a0 + t * sp, a0 + t * sp + len); hx.stroke(); };
-    const a = 0.25 + M * 0.35;
-    arc(R0, 0, 1.1, 1.4, `rgba(110,210,255,${a})`, 0.18); arc(R0, 3.4, 0.6, 1.4, `rgba(160,130,255,${a})`, 0.18);
-    arc(R0 * 0.95, 1.6, 2.4, 0.8, `rgba(120,200,255,${a * 0.5})`, -0.1);
-    if (L > 0.02) {
-      for (let i = 0; i < 120; i++) { const an = i / 120 * Math.PI * 2, n = Math.abs(Math.sin(i * 1.3 + t * 7) * Math.sin(i * 0.27 + t * 2.6)), h = R0 * (0.015 + L * 0.08 * n), r1 = R0 * 0.9;
-        hx.strokeStyle = `rgba(${130 + 90 * n},${200 + 40 * n},255,${0.2 + L * 0.6})`; hx.lineWidth = 2 * dpr;
-        hx.beginPath(); hx.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); hx.lineTo(cx + Math.cos(an) * (r1 - h), cy + Math.sin(an) * (r1 - h)); hx.stroke(); }
-    }
-  }
+  if (!g) box.classList.add("no-gl");
+  let amp = .12, pulse = 0, speaking = false, hover = false, visible = true, running = false;
+  const resize = () => { sizeCanvas(hud); sizeCanvas(glc); };
+  resize(); addEventListener("resize", resize);
+  box.addEventListener("mouseenter", () => hover = true); box.addEventListener("mouseleave", () => hover = false);
   function frame(now) {
     const t = (now - t0) / 1000;
-    level += (target - level) * 0.2; target *= speaking ? 0.9 : 0.85;
-    const L = Math.min(1, level);
-    morph += ((forceAgent ? 1 : (reduce ? Math.round(scrollM) : scrollM)) - morph) * (reduce ? 1 : 0.06);
-    yaw += ((mx * 0.5 + Math.sin(t * 0.45) * 0.1 * morph) - yaw) * 0.05;
-    pitch += ((my * 0.22 - 0.04 * morph) - pitch) * 0.05;
-    const scan = ((t * 0.45) % 1.8) - 0.85;
-    if (prog) {
-      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform1f(U.uT, t); gl.uniform1f(U.uM, morph); gl.uniform1f(U.uLevel, L); gl.uniform1f(U.uYaw, yaw); gl.uniform1f(U.uPitch, pitch);
-      gl.uniform1f(U.uDpr, dpr); gl.uniform1f(U.uSize, W / dpr < 360 ? 0.85 : 1); gl.uniform1f(U.uAspect, W / H); gl.uniform1f(U.uScan, scan);
-      gl.drawArrays(gl.POINTS, 0, N);
-    }
-    drawHud(t, L, morph);
-    box.style.setProperty("--glow", (0.3 + L * 0.7).toFixed(3));
-    box.style.setProperty("--m", morph.toFixed(3));
-    document.documentElement.style.setProperty("--hm", scrollM.toFixed(3));
-    if (visible && !document.hidden) raf = requestAnimationFrame(frame); else raf = 0;
+    const target = speaking ? .45 + .35 * Math.abs(Math.sin(t * 7.1) * Math.sin(t * 2.3 + .7)) + pulse * .35
+      : (hover ? .5 : .18) + (hover ? .3 : .12) * Math.abs(Math.sin(t * (hover ? 6.2 : 2.4)) * Math.sin(t * 1.7 + .5));
+    amp += (target - amp) * .12; pulse *= .9;
+    if (hud.width < 4) resize();
+    if (g) g.draw(t, amp, 0);
+    hudDraw(ctx, hud.width, hud.height, t, amp, 0, st);
+    box.style.setProperty("--glow", Math.min(1, amp).toFixed(3));
+    if (!reduce && visible && !document.hidden) requestAnimationFrame(frame); else running = false;
   }
-  function start() { if (!raf) raf = requestAnimationFrame(frame); }
-  size(); onScroll(); addEventListener("resize", () => { size(); onScroll(); });
+  const start = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
   if ("IntersectionObserver" in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) start(); }).observe(box);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) start(); });
   start();
-  return { bump(v) { target = Math.max(target, v); }, speak(on) { speaking = on; if (on) target = Math.max(target, .5); }, face(on) { forceAgent = on; } };
+  return { bump(v) { pulse = Math.max(pulse, v); }, speak(on) { speaking = on; }, face() {} };
 })();
 
 /* ---------------------------------------------------------------- demo call */
-const cap = document.getElementById("cap"), sms = document.getElementById("sms");
+const cap = document.getElementById("cap"), notifs = document.getElementById("notifs");
 let playing = false, timers = [], runId = 0;
 function setListenLabel(){ document.getElementById("listenBtn").textContent = fill(t(playing ? "stop" : "listen")); }
-function resetCap(){ cap.innerHTML = `<div class="hint">${esc(t("demo.hint"))}</div>`; sms.style.display = "none"; }
+function resetCap(){ cap.innerHTML = `<div class="hint">${esc(t("demo.hint"))}</div>`; notifs.innerHTML = ""; }
 function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
 function stopDemo(){
   runId++; playing = false; timers.forEach(clearTimeout); timers = [];
@@ -681,7 +793,7 @@ function showLine(who, text){
   return [...cap.querySelectorAll(".txt span")];
 }
 function playDemo(){
-  stopDemo(); playing = true; setListenLabel(); sms.style.display = "none"; ORB.face(true);
+  stopDemo(); playing = true; setListenLabel(); notifs.innerHTML = ""; ORB.face(true);
   const my = ++runId, demo = STR[lang].demo;
   const lines = demo.lines.map(([w, s]) => [w, fill(s)]);
   const canSpeak = "speechSynthesis" in window && voicesFor(demo.lang).length > 0;
@@ -692,7 +804,8 @@ function playDemo(){
     if(my !== runId) return;
     if(i >= lines.length){ // fin: texto al dueño
       ORB.speak(false); playing = false; setListenLabel(); later(() => { if(my===runId) ORB.face(false); }, 2500);
-      document.getElementById("smsTxt").textContent = demo.sms; sms.style.display = "block";
+      notifs.innerHTML = demo.notifs.map(n=>`<div class="nt"><span class="ic ${n[0]}">${n[1]}</span><span style="flex:1;min-width:0"><span class="hd"><span>${esc(n[2])}</span><span>${esc(demo.now)}</span></span><b>${esc(n[3])}</b><p>${esc(n[4])}</p></span></div>`).join("");
+      [...notifs.children].forEach((el,k) => later(() => el.classList.add("in"), 150 + k*750));
       later(() => { if(my===runId) cap.insertAdjacentHTML("beforeend", `<div class="hint" style="margin-top:6px">${esc(t("demo.end"))}</div>`); }, 600);
       return;
     }
@@ -703,7 +816,7 @@ function playDemo(){
     if(canSpeak){
       const u = new SpeechSynthesisUtterance(text);
       u.voice = who === "a" ? vA : vC; u.lang = u.voice ? u.voice.lang : demo.lang;
-      u.rate = 1.02; u.pitch = who === "a" ? 1.0 : 0.85;
+      u.rate = 1.02; u.pitch = who === "a" ? 1.08 : 0.85;
       let ended = false, gotBoundary = false;
       u.onboundary = e => { if(e.name && e.name !== "word") return; gotBoundary = true; lit(); if(who==="a") ORB.bump(0.55 + Math.random()*0.45); };
       u.onend = u.onerror = () => { if(ended) return; ended = true; done(); };

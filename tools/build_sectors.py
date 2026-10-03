@@ -315,7 +315,7 @@ const PERSONAS = {sofia:{name:"Sofía",ini:"S"}, alex:{name:"Alex",ini:"A"}, tom
 const GENDER = {sofia:"f", alex:"n", tomas:"m"};
 const qs = new URLSearchParams(location.search);
 let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
-let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "alex");
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "sofia");
 let callTimers = [];
 
 function S(){ return SEC[lang]; }
@@ -492,7 +492,7 @@ function endCall(done){
 }
 
 /* ---------- controls ---------- */
-function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"alex")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
+function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"sofia")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
 document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; render(); syncUrl(); }));
 document.querySelectorAll(".persona").forEach(b=>b.addEventListener("click",()=>{ persona = b.dataset.persona; render(); syncUrl(); toast(g("your")[GENDER[persona]]+aName()+" ✓"); }));
 document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));
@@ -547,9 +547,15 @@ def build():
     # Página principal (sencilla, orbe geométrico): tools/home_template.html + planes y sectores
     data = {lang: {"plans": G[lang]["plans"], "priceTop": G[lang]["priceTop"], "per": G[lang]["price.per"],
                    "rollout": G[lang]["rollout"], "calc": {**{k: GEN["fr"]["calc"][k] for k in ("mode", "v", "r")}, **{k: v for k, v in GEN[lang]["calc"].items() if v is not None}}} for lang in ["fr", "en", "es"]}
+    for lang in ["fr", "en", "es"]:
+        g, gen = G[lang], GEN[lang]
+        data[lang]["dash"] = {"t": DASH[lang], "tags": g["tags"], "next": g["dash.next"], "eyebrow": g["dash.eyebrow"],
+            "title": g["dash.title"], "lead": g["dash.lead"], "badge": g["dash.badge"], "more": g["dash.more"],
+            "sub": g["dash.sub"], "name": g["dash.name"], "stats": gen["stats"], "calls": gen["calls"], "script": gen["script"]}
     data["sectors"] = sectors
     home = open(os.path.join(HERE, "home_template.html"), encoding="utf-8").read()
     home = home.replace("__DATA__", json.dumps(data, ensure_ascii=False))
+    home = home.replace("__QR__", open(os.path.join(HERE, "qr_demo_line.svg"), encoding="utf-8").read().strip())
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(home)
     print("wrote", os.path.join(ROOT, "index.html"), len(home))
 

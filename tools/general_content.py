@@ -6,7 +6,7 @@ Los campos numéricos, íconos, integraciones y persona viven solo en FR (igual 
 GEN = {}
 
 GEN["fr"] = {
-    "name": "AI Staff", "tab": "Général", "ic": "✨", "persona": "alex",
+    "name": "AI Staff", "tab": "Général", "ic": "✨", "persona": "sofia",
     "aud": "les gens occupés et les petites entreprises",
     "title": "AI Staff — Votre adjointe personnelle IA",
     "desc": "Votre prochaine employée est une IA. Elle répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. À partir de 397 $ par mois.",
@@ -19,7 +19,7 @@ GEN["fr"] = {
         ["lead", "Bonjour, je voudrais une soumission pour un déménagement le 28."],
         ["agent", "Avec plaisir. Quelle est l'adresse de départ et d'arrivée, et combien de pièces?"],
         ["lead", "De Laval à Longueuil, un 4 et demi."],
-        ["agent", "Parfait. J'ai une visite jeudi à 10 h. Je vous texte la confirmation."],
+        ["agent", "Parfait. Je note une visite jeudi à 10 h; l'équipe vous confirme par texto."],
         ["lead", "Super, merci!"],
         ["agent", "Avec plaisir. Bonne soirée!"],
     ],
@@ -76,7 +76,7 @@ GEN["en"] = {
         ["lead", "Hi, I'd like a quote for a move on the 28th."],
         ["agent", "Happy to help. What are the pickup and drop-off addresses, and how many rooms?"],
         ["lead", "From Laval to Longueuil, a 2-bedroom."],
-        ["agent", "Perfect. I have a visit on Thursday at 10 AM. I'll text you the confirmation."],
+        ["agent", "Perfect. I'm noting a visit on Thursday at 10 AM; the team will confirm by text."],
         ["lead", "Great, thanks!"],
         ["agent", "My pleasure. Have a good evening!"],
     ],
@@ -131,7 +131,7 @@ GEN["es"] = {
         ["lead", "Hola, quisiera una cotización para una mudanza el día 28."],
         ["agent", "Con gusto. ¿Cuáles son la dirección de salida y la de llegada, y cuántas habitaciones?"],
         ["lead", "De Laval a Longueuil, un apartamento de dos habitaciones."],
-        ["agent", "Perfecto. Tengo una visita el jueves a las 10. Le envío la confirmación por texto."],
+        ["agent", "Perfecto. Anoto una visita el jueves a las 10; el equipo le confirma por mensaje de texto."],
         ["lead", "¡Genial, gracias!"],
         ["agent", "Con gusto. ¡Buenas noches!"],
     ],

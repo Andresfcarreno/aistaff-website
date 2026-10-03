@@ -178,7 +178,7 @@ fr:{
  doneT:"Merci! On s'occupe du reste.", doneL:"Vos réponses sont bien reçues. Voici la suite :",
  doneSteps:["<b>On prépare votre démo</b> avec votre entreprise, vos services et votre adjointe.","<b>On vous contacte</b> pour planifier l'appel découverte et vous la présenter.","<b>Si elle vous plaît</b>, on signe l'entente, on branche votre numéro (ou un nouveau) et on active les canaux par phases."],
  fallbackT:"Presque terminé : envoyez vos réponses", fallbackL:"Cliquez sur « Envoyer par courriel » : un message déjà rempli s'ouvre dans votre application courriel. Vous pouvez aussi télécharger vos réponses.",
- mailBtn:"Envoyer par courriel", cpBtn:"Copier mes réponses", copied:"Réponses copiées : collez-les dans un courriel à hello@meetaistaff.com", dlBtn:"Télécharger mes réponses", home:"Retour au site", callUs:"📞 Parler à Alex",
+ mailBtn:"Envoyer par courriel", cpBtn:"Copier mes réponses", copied:"Réponses copiées : collez-les dans un courriel à hello@meetaistaff.com", dlBtn:"Télécharger mes réponses", home:"Retour au site", callUs:"📞 Parler à Sofía",
  sectors:[["immobilier","Courtier immobilier"],["cvc","Chauffage & climatisation (CVC)"],["paysagement","Paysagement"],["deneigement","Déneigement"],["garages","Garage / mécanique"],["nettoyage","Nettoyage"],["barbiers","Barbier / salon"],["dental","Clinique dentaire"],["sante","Autre clinique / santé"],["pro","Avocat·e / professionnel·le"],["coach","Coach / créateur·rice"],["metiers","Construction / métiers"],["autre","Autre"]],
  reviewH:["Vous","Entreprise","Appels et messages","Adjointe","Objectifs"], yes:"Oui", no:"Non"
 },
@@ -221,7 +221,7 @@ en:{
  doneT:"Thank you! We'll take it from here.", doneL:"Your answers were received. Here's what happens next:",
  doneSteps:["<b>We prepare your demo</b> with your business, your services and your assistant.","<b>We contact you</b> to schedule the discovery call and show it to you.","<b>If you like it</b>, we sign the agreement, connect your number (or a new one) and enable channels in phases."],
  fallbackT:"Almost done: send your answers", fallbackL:"Click “Send by email”: a pre-filled message opens in your email app. You can also download your answers.",
- mailBtn:"Send by email", cpBtn:"Copy my answers", copied:"Answers copied: paste them in an email to hello@meetaistaff.com", dlBtn:"Download my answers", home:"Back to the site", callUs:"📞 Talk to Alex",
+ mailBtn:"Send by email", cpBtn:"Copy my answers", copied:"Answers copied: paste them in an email to hello@meetaistaff.com", dlBtn:"Download my answers", home:"Back to the site", callUs:"📞 Talk to Sofía",
  sectors:[["immobilier","Real estate broker"],["cvc","Heating & cooling (HVAC)"],["paysagement","Landscaping"],["deneigement","Snow removal"],["garages","Garage / auto repair"],["nettoyage","Cleaning"],["barbiers","Barber / salon"],["dental","Dental clinic"],["sante","Other clinic / health"],["pro","Lawyer / professional"],["coach","Coach / creator"],["metiers","Construction / trades"],["autre","Other"]],
  reviewH:["You","Business","Calls & messages","Assistant","Goals"], yes:"Yes", no:"No"
 },
@@ -264,7 +264,7 @@ es:{
  doneT:"¡Gracias! Nosotros nos encargamos.", doneL:"Recibimos tus respuestas. Esto es lo que sigue:",
  doneSteps:["<b>Preparamos tu demo</b> con tu negocio, tus servicios y tu asistente.","<b>Te contactamos</b> para agendar la llamada de descubrimiento y mostrártela.","<b>Si te gusta</b>, firmamos el acuerdo, conectamos tu número (o uno nuevo) y activamos los canales por fases."],
  fallbackT:"Casi listo: envía tus respuestas", fallbackL:"Haz clic en «Enviar por correo»: se abre un mensaje ya lleno en tu app de correo. También puedes descargar tus respuestas.",
- mailBtn:"Enviar por correo", cpBtn:"Copiar mis respuestas", copied:"Respuestas copiadas: pégalas en un correo a hello@meetaistaff.com", dlBtn:"Descargar mis respuestas", home:"Volver al sitio", callUs:"📞 Hablar con Alex",
+ mailBtn:"Enviar por correo", cpBtn:"Copiar mis respuestas", copied:"Respuestas copiadas: pégalas en un correo a hello@meetaistaff.com", dlBtn:"Descargar mis respuestas", home:"Volver al sitio", callUs:"📞 Hablar con Sofía",
  sectors:[["immobilier","Courtier inmobiliario"],["cvc","Calefacción y climatización (HVAC)"],["paysagement","Paisajismo"],["deneigement","Remoción de nieve"],["garages","Taller mecánico"],["nettoyage","Limpieza"],["barbiers","Barbería / salón"],["dental","Clínica dental"],["sante","Otra clínica / salud"],["pro","Abogado/a / profesional"],["coach","Coach / creador/a"],["metiers","Construcción / oficios"],["autre","Otro"]],
  reviewH:["Tú","Negocio","Llamadas y mensajes","Asistente","Objetivos"], yes:"Sí", no:"No"
 }};
@@ -279,7 +279,7 @@ let A = {};
 try{ A = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }catch(e){ A = {}; }
 if(qs.get("secteur") || qs.get("sector")) A.sector = qs.get("secteur") || qs.get("sector");
 if(qs.get("ref")) A.ref = qs.get("ref");
-if(!A.persona) A.persona = "alex";
+if(!A.persona) A.persona = "sofia";
 if(!A.langs) A.langs = ["fr","en"];
 let step = 0, maxStep = 0;
 const t = k=>T[lang][k];

@@ -1075,7 +1075,7 @@ const PERSONAS = {
   tomas:{name:"Tomás",ini:"T",g:"m"}
 };
 let uiLang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
-let persona = PERSONAS[qs.get("a")] ? qs.get("a") : "alex";
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : "sofia";
 const client = (qs.get("n") || "Marie").replace(/[<>&"]/g,"").slice(0,30) || "Marie";
 
 /* role words that depend on persona gender */
@@ -2136,7 +2136,7 @@ function syncUrl(){
   try{
     const p = new URLSearchParams(location.search);
     uiLang==="fr" ? p.delete("lang") : p.set("lang", uiLang);
-    persona==="alex" ? p.delete("a") : p.set("a", persona);
+    persona==="sofia" ? p.delete("a") : p.set("a", persona);
     const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash);
   }catch(e){}
 }
