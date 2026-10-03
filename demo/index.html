@@ -841,6 +841,11 @@ html[data-theme="dark"] .email-status::before{box-shadow:0 0 0 3px rgba(87,200,1
     .mn-cap b{font-size:14px;}
     .mn-play{width:34px;height:34px;font-size:12px;}
   }
+.reply-box{border-top:1px solid var(--line, #dfe6f1);padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.reply-box textarea{width:100%;font:inherit;border-radius:12px;padding:10px 12px;border:1px solid var(--line, #dfe6f1);background:transparent;color:inherit;resize:vertical}
+.reply-hint{margin:0;font-size:12px;opacity:.75}
+.reply-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+.reply-msg{font-size:12px;opacity:.85;margin-right:auto}
 </style>
 </head>
 <body>
@@ -1913,7 +1918,10 @@ function renderMsgDetail(){
   document.getElementById("msgDetail").innerHTML =
     `<div class="email-detail-head"><div class="email-detail-top"><div style="display:flex;gap:10px;align-items:center;">${pic(x.ini)}<div><h3>${esc(x.name)}</h3><div class="email-meta">${chip(x.ch)} · ${esc(x.time)}</div></div></div>${pending?`<span class="badge b-tiede">${u("pendingW")}</span>`:`<span class="badge b-ok">${u("handledTag")}</span>`}</div></div>`+
     `<div class="email-thread">${thread}</div>`+
+    (live && x.handle ? `<div class="reply-box"><p class="reply-hint">${esc(au("rauto"))}</p><textarea id="replyText" rows="2" placeholder="${esc(au("rph"))}"></textarea><div class="reply-actions"><span id="replyMsg" class="reply-msg"></span><button class="primary-button" type="button" id="replySend">${esc(au("rsend"))}</button></div></div>` : "")+
     (pending ? `<div class="email-ai-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg><div><strong>${fill(u("draft"))}</strong><span>${F(x.draft)}</span></div></div><div class="approve-bar"><span>${fill(u("waitingYou"))}</span><button class="secondary-button" type="button" id="msgEdit">${u("edit")}</button><button class="primary-button" type="button" id="msgApprove">${u("approve")}</button></div>` : "");
+  const rs = document.getElementById("replySend");
+  if(rs) rs.addEventListener("click", ()=>sendReply(x));
   if(pending){
     document.getElementById("msgApprove").addEventListener("click",()=>{ approvedMsgs.add(activeMsg); toast(u("approved")); renderMsgList(); renderMsgDetail(); renderSocial(); });
     document.getElementById("msgEdit").addEventListener("click",()=>{ go("assistant"); document.getElementById("chatInput").focus(); });
@@ -1927,6 +1935,19 @@ document.querySelectorAll("#segMsg button").forEach(b=>b.addEventListener("click
   renderMsgList(); renderMsgDetail();
 }));
 
+async function sendReply(x){
+  const ta = document.getElementById("replyText"), msg = document.getElementById("replyMsg"), btn = document.getElementById("replySend");
+  const text = (ta.value||"").trim(); if(!text) return;
+  btn.disabled = true; msg.textContent = "…";
+  try{
+    const t = await token(); if(!t) throw new Error("auth");
+    const r = await fetch(SB_URL+"/functions/v1/messages-out",{method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+t,"Content-Type":"application/json"},body:JSON.stringify({channel:x.rch,to:x.handle,body:text})});
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(j.error||"err");
+    x.thread.push(["ai", text, rel(new Date().toISOString())]); x.preview = text;
+    ta.value = ""; renderMsgDetail(); const m2 = document.getElementById("replyMsg"); if(m2) m2.textContent = au("rsent");
+  }catch(e){ msg.textContent = e.message==="whatsapp_24h" ? au("r24") : au("rerr"); btn.disabled = false; }
+}
 /* ================= EMAIL ================= */
 function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
 function renderEmailList(){
@@ -2160,9 +2181,9 @@ function renderAll(){
 const SB_URL = "https://vqvdmcxkkmkyxpfnxmzo.supabase.co", SB_KEY = "sb_publishable_TrK_aqIhFlEJf1XCyXpFGg_k-3bAqHf";
 const SES_KEY = "aistaff-sb-session";
 const AUTH = {
-  fr:{in:"Mes données réelles",out:"Se déconnecter",title:"Connexion",hint:"Entrez votre courriel : vous recevrez un lien de connexion, sans mot de passe.",send:"Envoyer le lien",sent:"Lien envoyé à {e}. Ouvrez-le dans ce navigateur.",err:"Impossible d'envoyer le lien.",close:"Fermer",chip:"En direct : appels, messages, courriels, agenda · le reste est une démo",emptyMsg:"Aucun message pour l'instant. Les SMS et WhatsApp envoyés au numéro apparaîtront ici.",emptyMail:"Aucun courriel synchronisé pour l'instant.",emptySoc:"Réseaux sociaux : connexion à venir.",unk:"Numéro inconnu",caller:"Appelant",more:"Actions à venir"},
-  en:{in:"My live data",out:"Sign out",title:"Sign in",hint:"Enter your email: you'll get a sign-in link, no password.",send:"Send link",sent:"Link sent to {e}. Open it in this browser.",err:"Couldn't send the link.",close:"Close",chip:"Live: calls, messages, email, calendar · the rest is a demo",emptyMsg:"No messages yet. SMS and WhatsApp sent to the number will show up here.",emptyMail:"No email synced yet.",emptySoc:"Social networks: connection coming soon.",unk:"Unknown number",caller:"Caller",more:"Upcoming actions"},
-  es:{in:"Mis datos reales",out:"Cerrar sesión",title:"Iniciar sesión",hint:"Escribe tu correo: recibirás un enlace de acceso, sin contraseña.",send:"Enviar enlace",sent:"Enlace enviado a {e}. Ábrelo en este navegador.",err:"No se pudo enviar el enlace.",close:"Cerrar",chip:"En vivo: llamadas, mensajes, correos, agenda · lo demás es demo",emptyMsg:"Aún no hay mensajes. Los SMS y WhatsApp enviados al número aparecerán aquí.",emptyMail:"Aún no hay correos sincronizados.",emptySoc:"Redes sociales: conexión próximamente.",unk:"Número desconocido",caller:"Llamante",more:"Próximas acciones"}
+  fr:{in:"Mes données réelles",out:"Se déconnecter",title:"Connexion",hint:"Entrez votre courriel : vous recevrez un lien de connexion, sans mot de passe.",send:"Envoyer le lien",sent:"Lien envoyé à {e}. Ouvrez-le dans ce navigateur.",err:"Impossible d'envoyer le lien.",close:"Fermer",chip:"En direct : appels, messages, courriels, agenda · le reste est une démo",emptyMsg:"Aucun message pour l'instant. Les SMS et WhatsApp envoyés au numéro apparaîtront ici.",emptyMail:"Aucun courriel synchronisé pour l'instant.",emptySoc:"Réseaux sociaux : connexion à venir.",unk:"Numéro inconnu",caller:"Appelant",more:"Actions à venir",rph:"Répondre à ce contact…",rsend:"Envoyer",rsent:"Message envoyé. Réponse automatique en pause 12 h pour ce contact.",rerr:"Impossible d'envoyer le message.",r24:"WhatsApp : plus de 24 h depuis son dernier message. Meta exige un modèle approuvé.",rauto:"Sofía répond automatiquement. Si vous écrivez, elle se met en pause 12 h pour ce contact."},
+  en:{in:"My live data",out:"Sign out",title:"Sign in",hint:"Enter your email: you'll get a sign-in link, no password.",send:"Send link",sent:"Link sent to {e}. Open it in this browser.",err:"Couldn't send the link.",close:"Close",chip:"Live: calls, messages, email, calendar · the rest is a demo",emptyMsg:"No messages yet. SMS and WhatsApp sent to the number will show up here.",emptyMail:"No email synced yet.",emptySoc:"Social networks: connection coming soon.",unk:"Unknown number",caller:"Caller",more:"Upcoming actions",rph:"Reply to this contact…",rsend:"Send",rsent:"Message sent. Auto-reply paused for 12 h for this contact.",rerr:"Couldn't send the message.",r24:"WhatsApp: more than 24 h since their last message. Meta requires an approved template.",rauto:"Sofía replies automatically. If you write, she pauses for 12 h for this contact."},
+  es:{in:"Mis datos reales",out:"Cerrar sesión",title:"Iniciar sesión",hint:"Escribe tu correo: recibirás un enlace de acceso, sin contraseña.",send:"Enviar enlace",sent:"Enlace enviado a {e}. Ábrelo en este navegador.",err:"No se pudo enviar el enlace.",close:"Cerrar",chip:"En vivo: llamadas, mensajes, correos, agenda · lo demás es demo",emptyMsg:"Aún no hay mensajes. Los SMS y WhatsApp enviados al número aparecerán aquí.",emptyMail:"Aún no hay correos sincronizados.",emptySoc:"Redes sociales: conexión próximamente.",unk:"Número desconocido",caller:"Llamante",more:"Próximas acciones",rph:"Responder a este contacto…",rsend:"Enviar",rsent:"Mensaje enviado. La respuesta automática queda en pausa 12 h para este contacto.",rerr:"No se pudo enviar el mensaje.",r24:"WhatsApp: pasaron más de 24 h desde su último mensaje. Meta exige una plantilla aprobada.",rauto:"Sofía responde sola. Si escribes tú, ella se pausa 12 h con este contacto."}
 };
 function au(k){ return AUTH[uiLang][k]; }
 function getSes(){ try{ return JSON.parse(localStorage.getItem(SES_KEY)||"null"); }catch(e){ return null; } }
@@ -2232,7 +2253,7 @@ async function loadChannels(){
   const msgs = {};
   (ms||[]).forEach(r=>{
     const k = r.channel+"|"+r.contact_handle, nm = r.contact_name || r.contact_handle || "?";
-    const m = msgs[k] || (msgs[k] = {ch:CHMAP[r.channel]||"sms", name:nm, ini:nm.replace(/[^\p{L}\p{N} ]/gu,"").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase()||"?", status:"done", thread:[], draft:"", _at:0});
+    const m = msgs[k] || (msgs[k] = {rch:r.channel, handle:r.contact_handle, ch:CHMAP[r.channel]||"sms", name:nm, ini:nm.replace(/[^\p{L}\p{N} ]/gu,"").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase()||"?", status:"done", thread:[], draft:"", _at:0});
     m.thread.push([r.direction==="out"?"ai":"them", r.body||"", rel(r.at)]);
     m.preview = r.body||""; m.time = rel(r.at); m._at = new Date(r.at).getTime();
   });
