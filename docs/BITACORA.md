@@ -130,3 +130,10 @@
 - Mientras no exista ninguno, los leads se guardan igual y el aviso sale en cuanto se agregue la clave.
 
 **No se pudo desde la sesión:** cambios de esquema en Supabase (`apply_migration` y DDL se quedan esperando y vencen a los 60 s). Por eso el aviso usa un cron y no un trigger. Queda pendiente correr en el SQL Editor: `alter function public.leads_fill_from_payload() set search_path = '';` (aviso del linter).
+
+## 10. 2–3 de octubre (noche), sesión de Cowork: verificado
+- **SMS entrantes:** el webhook de mensajes del +1 438 805 8804 apunta a `messages-in` (guarda en `messages`). Probado con un SMS real.
+- **Twilio sigue en prueba:** vence a los 30 días, solo envía a números verificados y no permite textos propios. Hay que pagarlo antes del primer cliente (y antes de que `lead-notify` mande SMS a números no verificados).
+- **Make:** `AI Staff Gmail → dashboard` quedó **activo** (ya importó correos a `emails`). `AI Staff Calendar → dashboard` está **apagado**: falla con `403 insufficient authentication scopes` (la conexión de Google no tiene permiso de Calendar), además del límite de 2 escenarios activos. Alternativa: leer la agenda por la dirección iCal secreta desde una función de Supabase.
+- **Falta para el cliente 1:** la voz usa el mismo guion en cualquier número. Hay que cargar el guion por número desde `tenants`, asignar `tenant_id` a las llamadas por `to_number` y avisar al dueño del negocio por SMS después de cada llamada.
+- **Plan comercial:** documento "AI Staff: primeros 5 clientes" (Claude Docs) con 40 prospectos de Montreal y Laval, mensajes FR/EN/ES, objeciones, posts y checklist de alta.
