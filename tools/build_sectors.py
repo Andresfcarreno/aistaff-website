@@ -315,7 +315,7 @@ const PERSONAS = {sofia:{name:"Sofía",ini:"S"}, alex:{name:"Alex",ini:"A"}, tom
 const GENDER = {sofia:"f", alex:"n", tomas:"m"};
 const qs = new URLSearchParams(location.search);
 let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
-let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "sofia");
+let persona = PERSONAS[qs.get("a")] ? qs.get("a") : (SEC.fr.persona || "alex");
 let callTimers = [];
 
 function S(){ return SEC[lang]; }
@@ -492,7 +492,7 @@ function endCall(done){
 }
 
 /* ---------- controls ---------- */
-function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"sofia")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
+function syncUrl(){ try{ const p = new URLSearchParams(location.search); lang==="fr" ? p.delete("lang") : p.set("lang", lang); p.delete("a"); if(persona !== (SEC.fr.persona||"alex")) p.set("a", persona); const q = p.toString(); history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash); }catch(e){} }
 document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{ lang = b.dataset.lang; render(); syncUrl(); }));
 document.querySelectorAll(".persona").forEach(b=>b.addEventListener("click",()=>{ persona = b.dataset.persona; render(); syncUrl(); toast(g("your")[GENDER[persona]]+aName()+" ✓"); }));
 document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));

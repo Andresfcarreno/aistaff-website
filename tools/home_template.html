@@ -53,8 +53,15 @@ nav.scrolled{border-bottom-color:var(--line)}
 .btn-sm{padding:9px 16px;font-size:14px}
 
 /* hero */
-.hero{padding:28px 0 36px}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:28px;min-height:calc(100vh - 110px);min-height:calc(100svh - 110px)}
+.hero{position:relative;height:180vh}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(38% 26% at 78% 22%,rgba(124,92,255,.16),transparent 70%),radial-gradient(34% 26% at 18% 40%,rgba(34,199,232,.12),transparent 70%),radial-gradient(40% 30% at 60% 60%,rgba(31,111,235,.10),transparent 70%);animation:aurora 16s ease-in-out infinite alternate}
+@keyframes aurora{to{transform:translate3d(-3%,4%,0) scale(1.06)}}
+.hero-grid{position:sticky;top:64px;height:calc(100vh - 64px);height:calc(100svh - 64px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:28px}
+.scroll-hint{margin-top:34px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:calc(1 - var(--hm, 0)*2)}
+.scroll-hint:before{content:"";width:22px;height:34px;border:1.6px solid var(--muted);border-radius:12px;background:linear-gradient(var(--muted),var(--muted)) center 7px/2px 7px no-repeat;animation:wheel 1.8s ease-in-out infinite}
+@keyframes wheel{50%{background-position:center 15px}}
+.halo{position:absolute;inset:-9%;border-radius:50%;pointer-events:none;filter:blur(14px);
+  background:radial-gradient(circle at 50% calc(50% - var(--m,0)*16%),rgba(110,190,255,calc(.16 + .45*var(--glow))) 0%,rgba(124,92,255,calc(.08 + .22*var(--m,0))) 24%,rgba(34,199,232,calc(.05 + .1*var(--glow))) 40%,transparent 62%)}
 .hero-text .ctas{justify-content:flex-start}
 .hero-orb{text-align:center}
 .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--blue);background:var(--soft);padding:6px 12px;border-radius:999px}
@@ -145,11 +152,15 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
 .foot nav{position:static;background:none;backdrop-filter:none;border:0;display:flex;flex-wrap:wrap;gap:8px 16px}
 .foot a{text-decoration:none}.foot a:hover{color:var(--ink)}
 
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in{opacity:1;transform:none}
+.reveal{opacity:0;transform:translateY(26px) scale(.985);filter:blur(8px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
+.reveal.in{opacity:1;transform:none;filter:none}
+.step,.plan,.do,.sec{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.step:hover,.plan:hover,.do:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(10,26,51,.1);border-color:color-mix(in srgb,var(--blue) 35%,var(--line))}
 
 @media (max-width:860px){
-  .hero-grid{grid-template-columns:1fr;min-height:0;text-align:center;gap:6px}
+  .hero{height:auto;padding:28px 0 36px}
+  .hero-grid{position:static;height:auto;grid-template-columns:1fr;text-align:center;gap:6px}
+  .scroll-hint{display:none}
   .hero-text .ctas{justify-content:center}
   .lead{margin-left:auto;margin-right:auto}
   .orb-box{width:min(330px,84vw);margin-top:18px}
@@ -166,7 +177,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
   .wrap{padding:0 16px}
 }
 @media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
+  .reveal{opacity:1;transform:none;filter:none;transition:none}
+  .hero{height:auto;padding:28px 0 36px}.hero-grid{position:static;height:auto}.hero:before{animation:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -201,9 +213,10 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
         <a class="btn btn-g" href="tel:+14388058804" data-t="cta.call"></a>
       </div>
       <div class="note" data-t="hero.note"></div>
+      <div class="scroll-hint" data-t="hero.scroll"></div>
     </div>
     <div class="hero-orb">
-      <div class="orb-box" id="orbBox" role="button" tabindex="0"><canvas id="orb" aria-hidden="true"></canvas><canvas id="hud" aria-hidden="true"></canvas></div>
+      <div class="orb-box" id="orbBox" role="button" tabindex="0"><div class="halo"></div><canvas id="orb" aria-hidden="true"></canvas><canvas id="hud" aria-hidden="true"></canvas></div>
       <div class="cap" id="cap" aria-live="polite"><div class="hint" data-t="demo.hint"></div></div>
       <div class="sms" id="sms"><b data-t="demo.smsLbl"></b><span id="smsTxt"></span></div>
     </div>
@@ -319,7 +332,7 @@ fr:{
  "hero.kicker":"Adjointe IA · Montréal",
  "hero.h1":"Votre prochaine employée est une IA.",
  "hero.lead":"{a} répond à vos appels jour et nuit, en français, en anglais et en espagnol, prend les messages et les demandes de rendez-vous, et vous envoie un résumé par texto.",
- "hero.note":"Ligne démo : +1 (438) 805-8804 · l'appel est transcrit",
+ "hero.note":"Ligne démo : +1 (438) 805-8804 · l'appel est transcrit","hero.scroll":"Faites défiler pour rencontrer {a}",
  "listen":"▶ Écouter {a}","stop":"■ Arrêter",
  "demo.hint":"Appuyez sur « Écouter » pour entendre un appel d'exemple.",
  "demo.end":"Exemple avec la voix de votre navigateur. La vraie voix est au téléphone : appelez la ligne démo.",
@@ -345,7 +358,7 @@ en:{
  "hero.kicker":"AI assistant · Montréal",
  "hero.h1":"Your next employee is an AI.",
  "hero.lead":"{a} answers your calls day and night, in French, English and Spanish, takes messages and appointment requests, and texts you a summary.",
- "hero.note":"Demo line: +1 (438) 805-8804 · the call is transcribed",
+ "hero.note":"Demo line: +1 (438) 805-8804 · the call is transcribed","hero.scroll":"Scroll to meet {a}",
  "listen":"▶ Listen to {a}","stop":"■ Stop",
  "demo.hint":"Press “Listen” to hear a sample call.",
  "demo.end":"Sample using your browser's voice. The real voice is on the phone: call the demo line.",
@@ -371,7 +384,7 @@ es:{
  "hero.kicker":"Asistente con IA · Montreal",
  "hero.h1":"Tu próxima empleada es una IA.",
  "hero.lead":"{a} contesta tus llamadas día y noche, en francés, inglés y español, toma mensajes y solicitudes de cita, y te manda un resumen por mensaje de texto.",
- "hero.note":"Línea demo: +1 (438) 805-8804 · la llamada se transcribe",
+ "hero.note":"Línea demo: +1 (438) 805-8804 · la llamada se transcribe","hero.scroll":"Desliza para conocer a {a}",
  "listen":"▶ Escuchar a {a}","stop":"■ Detener",
  "demo.hint":"Pulsa «Escuchar» para oír una llamada de ejemplo.",
  "demo.end":"Ejemplo con la voz de tu navegador. La voz real está en el teléfono: llama a la línea demo.",
@@ -394,7 +407,7 @@ es:{
 
 const qs = new URLSearchParams(location.search);
 const PERS = {sofia:"Sofía", alex:"Alex", tomas:"Tomás"};
-const persona = PERS[qs.get("a")] ? qs.get("a") : "sofia";
+const persona = PERS[qs.get("a")] ? qs.get("a") : "alex";
 const A = PERS[persona];
 let lang = ["fr","en","es"].includes(qs.get("lang")) ? qs.get("lang") : "fr";
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -452,13 +465,18 @@ function renderCalc(){
   document.getElementById("cNote").textContent = fill(C.note);
   updateCalc();
 }
+function tween(el, val, fmt){
+  const from = el._v ?? val, t0 = performance.now(); el._v = val;
+  const step = now => { const k = Math.min(1, (now - t0) / 380), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(from + (val - from) * e); if(k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
 function updateCalc(){
   const C = DATA[lang].calc, ai = DATA[lang].plans[0].price, h = +r1.value, w = +r2.value, emp = h * w * 4.33;
   document.getElementById("v1").textContent = h + " h";
   document.getElementById("v2").textContent = money(w) + (lang === "en" ? "/h" : " / h");
-  document.getElementById("cEmp").textContent = money(emp);
+  tween(document.getElementById("cEmp"), emp, money);
   document.getElementById("cAi").textContent = (lang === "en" ? "from " : lang === "fr" ? "dès " : "desde ") + money(ai);
-  document.getElementById("cSave").textContent = money(Math.max(0, emp - ai));
+  tween(document.getElementById("cSave"), Math.max(0, emp - ai), money);
   const top = Math.max(emp, ai);
   document.getElementById("bEmp").style.width = (emp / top * 100) + "%";
   document.getElementById("bAi").style.width = Math.max(3, ai / top * 100) + "%";
@@ -475,181 +493,167 @@ function observeReveal(){
   els.forEach(e => io.observe(e));
 }
 
-/* ---------------------------------------------------------------- holographic orb → face */
-// Miles de partículas (WebGL) que forman una esfera y se arman en una cara que habla:
-// la boca se abre con la voz, los ojos parpadean y la cabeza sigue el puntero.
-// Un segundo canvas dibuja los anillos del holograma y las barras de voz.
+/* ---------------------------------------------------------------- orb → virtual agent */
+// Partículas (WebGL). Estado 1: orbe de luz iridiscente que respira. Estado 2: busto de luz
+// (cabeza y hombros modelados con funciones de distancia), iluminado por el contorno, con
+// una luz detrás. Pasa de uno a otro al bajar por la página o cuando el agente habla.
 const ORB = (() => {
   const box = document.getElementById("orbBox");
   const cv = document.getElementById("orb"), hud = document.getElementById("hud"), hx = hud.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const N = innerWidth < 700 ? 3200 : 5200;
-  let rnd = 7; const R = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647; // aleatorio fijo
+  const N = innerWidth < 700 ? 6000 : 10000;
+  let seed = 11; const R = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  // ---- forma 1: esfera (Fibonacci)
-  const S = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) {
+  // ---- busto: funciones de distancia
+  const len3 = (x, y, z) => Math.sqrt(x * x + y * y + z * z);
+  const ell = (x, y, z, cx, cy, cz, rx, ry, rz) => { const px = (x - cx) / rx, py = (y - cy) / ry, pz = (z - cz) / rz;
+    const k0 = len3(px, py, pz), k1 = len3(px / rx, py / ry, pz / rz); return k1 ? k0 * (k0 - 1) / k1 : -1; };
+  const smin = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h * h * k * 0.25; };
+  const smax = (a, b, k) => -smin(-a, -b, k);
+  function sdf(x, y, z) {
+    let d = ell(x, y, z, 0, 0.36, 0, 0.35, 0.46, 0.41);                       // cráneo
+    d = smin(d, ell(x, y, z, 0, 0.13, 0.08, 0.26, 0.25, 0.29), 0.12);          // mandíbula
+    d = smin(d, ell(x, y, z, 0, 0.0, 0.17, 0.11, 0.07, 0.11), 0.08);           // mentón
+    d = smin(d, ell(x, y, z, 0, 0.29, 0.37, 0.05, 0.11, 0.08), 0.05);          // nariz
+    d = smin(d, ell(x, y, z, 0, 0.44, 0.3, 0.25, 0.06, 0.1), 0.06);            // frente / cejas
+    d = smin(d, ell(x, y, z, 0.19, 0.27, 0.25, 0.1, 0.08, 0.1), 0.08);         // pómulos
+    d = smin(d, ell(x, y, z, -0.19, 0.27, 0.25, 0.1, 0.08, 0.1), 0.08);
+    d = smin(d, ell(x, y, z, 0, 0.13, 0.33, 0.09, 0.03, 0.05), 0.03);          // labios
+    d = smin(d, ell(x, y, z, 0.355, 0.31, -0.01, 0.035, 0.09, 0.065), 0.03);  // orejas
+    d = smin(d, ell(x, y, z, -0.355, 0.31, -0.01, 0.035, 0.09, 0.065), 0.03);
+    d = smax(d, -ell(x, y, z, 0.13, 0.36, 0.37, 0.07, 0.045, 0.06), 0.035);   // cuencas de los ojos
+    d = smax(d, -ell(x, y, z, -0.13, 0.36, 0.37, 0.07, 0.045, 0.06), 0.035);
+    const qx = Math.hypot(x, z + 0.03) - 0.145, qy = Math.abs(y + 0.1) - 0.22;     // cuello
+    const neck = Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0));
+    d = smin(d, neck, 0.1);
+    d = smin(d, ell(x, y, z, 0, -0.56, -0.03, 0.78, 0.3, 0.3), 0.18);          // hombros
+    return Math.max(d, -(y + 0.78));                                          // corte del busto
+  }
+  const grad = (x, y, z) => { const e = 0.002;
+    const g = [sdf(x + e, y, z) - sdf(x - e, y, z), sdf(x, y + e, z) - sdf(x, y - e, z), sdf(x, y, z + e) - sdf(x, y, z - e)];
+    const l = len3(g[0], g[1], g[2]) || 1; return [g[0] / l, g[1] / l, g[2] / l]; };
+
+  const S = new Float32Array(N * 3), F = new Float32Array(N * 3), FN = new Float32Array(N * 3), RAND = new Float32Array(N);
+  for (let i = 0; i < N; i++) {                                   // esfera (Fibonacci)
     const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963;
-    S.set([Math.cos(th) * r * 0.92, y * 0.92, Math.sin(th) * r * 0.92], i * 3);
+    S.set([Math.cos(th) * r * 0.66, y * 0.66, Math.sin(th) * r * 0.66], i * 3);
   }
-  // ---- forma 2: cara (cabeza elipsoidal con rasgos). roles: 0 piel, 1 contorno, 2 ojos, 3 labio inf., 4 labio sup., 5 cejas/nariz
-  const A = 0.74, B = 1.0, C = 0.8;
-  const taper = y => 1 - 0.3 * Math.max(0, -y - 0.05) ** 1.2;       // mandíbula más angosta
-  const zAt = (x, y) => { const xx = x / (A * taper(y)), yy = y / B, d = 1 - xx * xx - yy * yy; return d > 0 ? C * Math.sqrt(d) : 0; };
-  const F = new Float32Array(N * 3), ROLE = new Float32Array(N), RAND = new Float32Array(N);
-  let k = 0;
-  const put = (x, y, z, role) => { if (k >= N) return; F.set([x, y + 0.05, z], k * 3); ROLE[k] = role; k++; };
-  const share = { skin: 0.5, contour: 0.13, eyes: 0.14, mouth: 0.11, brows: 0.04, nose: 0.05 };
-  // piel: líneas de escaneo horizontales (look holograma)
-  const nSkin = Math.floor(N * share.skin), rows = 34;
-  for (let i = 0; i < nSkin; i++) {
-    const row = i % rows, y = 0.98 - (row / (rows - 1)) * 1.95, w = A * taper(y) * Math.sqrt(Math.max(0, 1 - (y / B) ** 2));
-    const x = (R() * 2 - 1) * w * 0.98; put(x, y, zAt(x, y), 0);
+  let k = 0, guard = 0;
+  while (k < N && guard++ < N * 30) {                             // muestreo de la superficie del busto
+    const face = R() < 0.4;
+    let x = face ? (R() - 0.5) * 0.8 : (R() - 0.5) * 1.7, y = face ? R() * 0.9 - 0.05 : R() * 1.7 - 0.82, z = face ? R() * 0.55 : (R() - 0.5) * 1.1;
+    for (let it = 0; it < 7; it++) { const d = sdf(x, y, z), g = grad(x, y, z); x -= g[0] * d; y -= g[1] * d; z -= g[2] * d; }
+    if (Math.abs(sdf(x, y, z)) > 0.006 || y < -0.775) continue;
+    const n = grad(x, y, z);
+    F.set([x, y + 0.02, z], k * 3); FN.set(n, k * 3); k++;
   }
-  for (let i = 0, n = Math.floor(N * share.contour); i < n; i++) {
-    const t = (i / n) * Math.PI * 2, y = Math.sin(t) * B * 0.995, x = Math.cos(t) * A * taper(y) * 0.995;
-    put(x, y, 0.06 + R() * 0.05, 1);
-  }
-  const eye = (cx, cy, n) => {
-    for (let i = 0; i < n; i++) {
-      const p = i / n, t = p * Math.PI * 2;
-      let x, y;
-      if (p < 0.45) { x = cx + Math.cos(t / 0.45) * 0.14; y = cy + Math.sin(t / 0.45) * 0.05 * (1 - 0.3 * Math.cos(t / 0.45)); }   // almendra
-      else if (p < 0.85) { const a = (p - 0.45) / 0.4 * Math.PI * 2; x = cx + Math.cos(a) * 0.05; y = cy + Math.sin(a) * 0.05; }      // iris
-      else { const a = R() * Math.PI * 2, r = R() * 0.022; x = cx + Math.cos(a) * r; y = cy + Math.sin(a) * r; }                      // pupila
-      put(x, y, zAt(x, y) + 0.02, 2);
-    }
-  };
-  const nEye = Math.floor(N * share.eyes / 2); eye(-0.3, 0.2, nEye); eye(0.3, 0.2, nEye);
-  for (let i = 0, n = Math.floor(N * share.brows); i < n; i++) {
-    const s = i % 2 ? 1 : -1, u = R() * 2 - 1, x = s * (0.3 + u * 0.17), y = 0.36 + 0.035 * (1 - u * u) - s * u * 0.01;
-    put(x, y, zAt(x, y) + 0.03, 5);
-  }
-  for (let i = 0, n = Math.floor(N * share.nose); i < n; i++) {
-    const p = R();
-    if (p < 0.7) { const y = 0.14 - R() * 0.33, x = (R() - 0.5) * 0.05; put(x, y, zAt(x, y) + 0.04 + 0.16 * (0.14 - y) / 0.33, 5); }
-    else { const a = R() * Math.PI, x = Math.cos(a) * 0.1, y = -0.2 - Math.sin(a) * 0.03; put(x, y, zAt(x, y) + 0.06, 5); }
-  }
-  for (let i = 0, n = Math.floor(N * share.mouth); i < n; i++) {
-    const u = R() * 2 - 1, x = u * 0.25, b = 1 - u * u, upper = i % 2 === 0;
-    const y = upper ? -0.44 + 0.025 * b - 0.012 * Math.cos(u * 9) * b : -0.47 - 0.04 * b;
-    put(x, y, zAt(x, y) + 0.03, upper ? 4 : 3);
-  }
-  while (k < N) { const a = R() * Math.PI * 2, r = 1.05 + R() * 0.25; put(Math.cos(a) * r, Math.sin(a) * r, (R() - 0.5) * 0.4, 6); } // polvo alrededor
+  for (; k < N; k++) { F.set(S.subarray(k * 3, k * 3 + 3), k * 3); FN.set([0, 0, 1], k * 3); }
   for (let i = 0; i < N; i++) RAND[i] = R();
 
-  // ---- WebGL
   const gl = cv.getContext("webgl", { premultipliedAlpha: false, antialias: true, alpha: true });
-  let prog = null, U = {};
+  let prog = null; const U = {};
   if (gl) {
     const vs = `
-attribute vec3 aS; attribute vec3 aF; attribute float aRole; attribute float aRand;
-uniform float uT, uM, uOpen, uBlink, uYaw, uPitch, uLevel, uDpr, uSize, uAspect;
+attribute vec3 aS; attribute vec3 aF; attribute vec3 aFN; attribute float aRand;
+uniform float uT, uM, uLevel, uYaw, uPitch, uDpr, uSize, uAspect, uScan;
 varying float vA; varying vec3 vC;
+float nz(vec3 p){ return sin(p.x*2.1+uT*0.7)*sin(p.y*2.7+uT*0.9)*sin(p.z*2.3+uT*0.6); }
+mat2 rot(float a){ return mat2(cos(a), -sin(a), sin(a), cos(a)); }
 void main(){
-  float mp = smoothstep(0.0, 1.0, clamp(uM * 1.7 - aRand * 0.7, 0.0, 1.0));
-  vec3 s = aS * (1.0 + 0.035*sin(aRand*40.0 + uT*1.8) + uLevel*0.16*sin(aRand*25.0 + uT*9.0));
-  vec3 f = aF;
-  if (aRole > 2.5 && aRole < 3.5) f.y -= uOpen * 0.13;
-  if (aRole > 3.5 && aRole < 4.5) f.y += uOpen * 0.02;
-  if (aRole > 1.5 && aRole < 2.5) f.y = 0.25 + (f.y - 0.25) * uBlink;
-  if (aRole > 5.5) f += 0.03*vec3(sin(uT*0.7+aRand*30.0), cos(uT*0.6+aRand*20.0), 0.0);
-  vec3 p = mix(s, f, mp);
-  float sw = sin(mp * 3.14159) * (aRand - 0.5) * 2.4;                    // remolino al transformarse
-  p.xz = mat2(cos(sw), -sin(sw), sin(sw), cos(sw)) * p.xz;
-  float yaw = uYaw + (1.0 - mp) * uT * 0.35;
-  p.xz = mat2(cos(yaw), -sin(yaw), sin(yaw), cos(yaw)) * p.xz;
-  p.yz = mat2(cos(uPitch), -sin(uPitch), sin(uPitch), cos(uPitch)) * p.yz;
-  float persp = 3.0 / (3.0 - p.z);
-  gl_Position = vec4(p.x * persp * 0.78 / uAspect, p.y * persp * 0.78, 0.0, 1.0);
-  float front = clamp((p.z + 1.0) * 0.5, 0.0, 1.0);
-  bool feat = aRole > 1.5 && aRole < 5.5;
-  gl_PointSize = (1.7 + front * 2.4 + (feat ? 0.8 * mp : 0.0) + (1.0 - mp) * 0.6 + uLevel * 1.2) * uDpr * uSize;
-  vA = (0.32 + 0.68 * front) * (aRole > 5.5 ? 0.4 : 1.0) * (aRole > 0.5 && aRole < 1.5 ? 1.5 : 1.0) * (1.15 + (1.0 - mp) * 0.35);
-  vec3 cyan = vec3(0.35, 0.86, 1.0), blue = vec3(0.24, 0.52, 1.0), vio = vec3(0.6, 0.45, 1.0), white = vec3(0.92, 0.97, 1.0);
-  vC = mix(blue, cyan, aRand);
-  if (feat) vC = mix(vC, (aRole > 2.5 && aRole < 4.5) ? vio : white, 0.35 * mp + 0.25 * uLevel);
-  vC = mix(vC, vio, (1.0 - mp) * 0.35 * sin(aRand * 6.28 + uT));
+  float mp = smoothstep(0.0, 1.0, clamp(uM * 1.8 - aRand * 0.45 - (aF.y + 0.8) * 0.22, 0.0, 1.0));
+  vec3 sn = normalize(aS);
+  vec3 s = aS * (1.0 + 0.07*nz(aS*3.0) + uLevel*0.16*nz(aS*6.0 + uT));
+  vec3 f = aF + aFN * (uLevel*0.025*sin(aRand*60.0 + uT*18.0)) + vec3(0.0, sin(uT*1.1)*0.006, 0.0);
+  vec3 p = mix(s, f, mp), n = normalize(mix(sn, aFN, mp));
+  float sw = sin(mp*3.14159) * (aRand - 0.5) * 2.2;
+  p.xz = rot(sw) * p.xz; n.xz = rot(sw) * n.xz;
+  float yaw = uYaw + (1.0 - mp) * uT * 0.25;
+  p.xz = rot(yaw) * p.xz; n.xz = rot(yaw) * n.xz;
+  p.yz = rot(uPitch) * p.yz; n.yz = rot(uPitch) * n.yz;
+  float persp = 3.2 / (3.2 - p.z);
+  float sc = mix(0.95, 0.84, mp);
+  gl_Position = vec4(p.x*persp*sc/uAspect, (p.y + 0.06*mp)*persp*sc, 0.0, 1.0);
+  float fres = pow(1.0 - abs(n.z), 2.2);
+  float key = max(dot(n, normalize(vec3(-0.45, 0.55, 0.7))), 0.0);
+  float back = step(0.0, n.z);
+  float scan = exp(-pow((p.y - uScan) * 10.0, 2.0)) * mp;
+  vec3 c1 = vec3(0.30, 0.82, 1.0), c2 = vec3(0.62, 0.48, 1.0), c3 = vec3(0.95, 0.55, 0.95);
+  float hue = 0.5 + 0.5*sin(n.y*2.6 + n.x*1.7 + uT*0.6);
+  vC = mix(mix(c1, c2, hue), c3, (1.0 - mp) * 0.25 * (0.5 + 0.5*sin(uT + aRand*6.28)));
+  vC = mix(vC, vec3(0.9, 0.97, 1.0), scan*0.8 + key*0.25*mp);
+  float base = mix(0.62, 0.16, mp);
+  vA = (base + fres*0.9 + key*0.55*mp + scan*0.6 + uLevel*0.25) * mix(mix(0.6, 0.28, mp), 1.0, back);
+  gl_PointSize = (1.6 + (1.0 - mp)*0.9 + fres*2.2 + key*0.9*mp + scan*1.5 + uLevel*1.0) * uDpr * uSize;
 }`;
-    const fs = `
-precision mediump float; varying float vA; varying vec3 vC;
-void main(){ vec2 d = gl_PointCoord - 0.5; float r = length(d); if (r > 0.5) discard;
-  float a = smoothstep(0.5, 0.0, r); gl_FragColor = vec4(vC * a, a * vA); }`;
+    const fs = `precision mediump float; varying float vA; varying vec3 vC;
+void main(){ float r = length(gl_PointCoord - 0.5); if (r > 0.5) discard; float a = smoothstep(0.5, 0.05, r); gl_FragColor = vec4(vC * a, a * vA); }`;
     const sh = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : (console.warn(gl.getShaderInfoLog(s)), null); };
     const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
-    if (v && f) {
-      prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) prog = null;
-    }
+    if (v && f) { prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) prog = null; }
     if (prog) {
       gl.useProgram(prog);
       const buf = (name, data, size) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
         const loc = gl.getAttribLocation(prog, name); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0); };
-      buf("aS", S, 3); buf("aF", F, 3); buf("aRole", ROLE, 1); buf("aRand", RAND, 1);
-      ["uT","uM","uOpen","uBlink","uYaw","uPitch","uLevel","uDpr","uSize","uAspect"].forEach(n => U[n] = gl.getUniformLocation(prog, n));
-      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE); // brillo aditivo
+      buf("aS", S, 3); buf("aF", F, 3); buf("aFN", FN, 3); buf("aRand", RAND, 1);
+      ["uT","uM","uLevel","uYaw","uPitch","uDpr","uSize","uAspect","uScan"].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
     }
   }
   if (!prog) box.classList.add("no-gl");
 
-  let W = 0, H = 0, dpr = 1, level = 0, target = 0, open = 0, speaking = false, forceFace = false, morph = 0;
-  let yaw = 0, pitch = 0, mx = 0, my = 0, blinkAt = 2, visible = true, raf = 0;
-  const t0 = performance.now();
-  function size() {
-    dpr = Math.min(2, devicePixelRatio || 1); const r = box.getBoundingClientRect();
-    W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
-    cv.width = hud.width = W; cv.height = hud.height = H;
-    if (gl) gl.viewport(0, 0, W, H);
+  let W = 0, H = 0, dpr = 1, level = 0, target = 0, speaking = false, forceAgent = false, morph = 0, scrollM = 0;
+  let yaw = 0, pitch = 0, mx = 0, my = 0, visible = true, raf = 0;
+  const t0 = performance.now(), hero = document.querySelector(".hero"), sticky = () => matchMedia("(min-width: 861px)").matches;
+  function size() { dpr = Math.min(2, devicePixelRatio || 1); const r = box.getBoundingClientRect();
+    W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = hud.width = W; cv.height = hud.height = H; if (gl) gl.viewport(0, 0, W, H); }
+  function onScroll() {
+    const vh = innerHeight;
+    if (sticky()) { const r = hero.getBoundingClientRect(); scrollM = Math.min(1, Math.max(0, -r.top / Math.max(1, (r.height - vh) * 0.8))); }
+    else { const r = box.getBoundingClientRect(), c = r.top + r.height / 2; scrollM = Math.min(1, Math.max(0, (vh * 0.9 - c) / (vh * 0.45))); }
   }
+  addEventListener("scroll", onScroll, { passive: true });
   box.addEventListener("pointermove", e => { const r = box.getBoundingClientRect(); mx = ((e.clientX - r.left) / r.width - 0.5) * 2; my = ((e.clientY - r.top) / r.height - 0.5) * 2; });
   box.addEventListener("pointerleave", () => { mx = my = 0; });
 
-  function drawHud(t, L) {
+  function drawHud(t, L, M) {
     const cx = W / 2, cy = H / 2, R0 = Math.min(W, H) * 0.47;
     hx.clearRect(0, 0, W, H); hx.lineCap = "round";
-    const ring = (r, a0, len, w, col, speed) => { hx.strokeStyle = col; hx.lineWidth = w * dpr; hx.beginPath(); hx.arc(cx, cy, r, a0 + t * speed, a0 + t * speed + len); hx.stroke(); };
-    ring(R0, 0, 1.3, 1.6, "rgba(90,200,255,.55)", 0.25); ring(R0, 3.3, 0.8, 1.6, "rgba(140,110,255,.5)", 0.25);
-    ring(R0 * 0.93, 1, 2.2, 1, "rgba(90,200,255,.25)", -0.15); ring(R0 * 0.93, 4.2, 1.1, 1, "rgba(90,200,255,.25)", -0.15);
-    // marcas
-    hx.strokeStyle = "rgba(120,190,255,.22)"; hx.lineWidth = dpr;
-    for (let i = 0; i < 72; i++) { const a = i / 72 * Math.PI * 2 - t * 0.05, r1 = R0 * 0.985, r2 = R0 * (i % 6 ? 0.965 : 0.94);
-      hx.beginPath(); hx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); hx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); hx.stroke(); }
-    // barras de voz
+    const arc = (r, a0, len, w, col, sp) => { hx.strokeStyle = col; hx.lineWidth = w * dpr; hx.beginPath(); hx.arc(cx, cy, r, a0 + t * sp, a0 + t * sp + len); hx.stroke(); };
+    const a = 0.25 + M * 0.35;
+    arc(R0, 0, 1.1, 1.4, `rgba(110,210,255,${a})`, 0.18); arc(R0, 3.4, 0.6, 1.4, `rgba(160,130,255,${a})`, 0.18);
+    arc(R0 * 0.95, 1.6, 2.4, 0.8, `rgba(120,200,255,${a * 0.5})`, -0.1);
     if (L > 0.02) {
-      hx.strokeStyle = `rgba(110,215,255,${0.25 + L * 0.6})`; hx.lineWidth = 2 * dpr;
-      for (let i = 0; i < 96; i++) { const a = i / 96 * Math.PI * 2, n = Math.abs(Math.sin(i * 1.7 + t * 8) * Math.sin(i * 0.31 + t * 3)), h = R0 * (0.02 + L * 0.09 * n);
-        const r1 = R0 * 0.87; hx.beginPath(); hx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); hx.lineTo(cx + Math.cos(a) * (r1 - h), cy + Math.sin(a) * (r1 - h)); hx.stroke(); }
+      for (let i = 0; i < 120; i++) { const an = i / 120 * Math.PI * 2, n = Math.abs(Math.sin(i * 1.3 + t * 7) * Math.sin(i * 0.27 + t * 2.6)), h = R0 * (0.015 + L * 0.08 * n), r1 = R0 * 0.9;
+        hx.strokeStyle = `rgba(${130 + 90 * n},${200 + 40 * n},255,${0.2 + L * 0.6})`; hx.lineWidth = 2 * dpr;
+        hx.beginPath(); hx.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); hx.lineTo(cx + Math.cos(an) * (r1 - h), cy + Math.sin(an) * (r1 - h)); hx.stroke(); }
     }
   }
-
   function frame(now) {
     const t = (now - t0) / 1000;
-    level += (target - level) * 0.18; target *= speaking ? 0.92 : 0.85;
+    level += (target - level) * 0.2; target *= speaking ? 0.9 : 0.85;
     const L = Math.min(1, level);
-    open += ((speaking ? Math.min(1, L * 1.25) : 0) - open) * 0.35;
-    // esfera ↔ cara: ciclo de 12 s, o cara fija mientras habla
-    const cyc = t % 12, auto = reduce ? 1 : (cyc < 4 ? 0 : cyc < 11 ? 1 : 0);
-    morph += ((forceFace ? 1 : auto) - morph) * (reduce ? 1 : 0.035);
-    yaw += ((mx * 0.45 + Math.sin(t * 0.5) * 0.12) - yaw) * 0.06;
-    pitch += ((my * 0.25 + Math.sin(t * 0.37) * 0.05) - pitch) * 0.06;
-    let blink = 1; if (t > blinkAt) { const p = (t - blinkAt) / 0.18; blink = p < 1 ? Math.abs(1 - 2 * p) * 0.9 + 0.1 : 1; if (p >= 1) blinkAt = t + 2.5 + Math.random() * 3; }
+    morph += ((forceAgent ? 1 : (reduce ? Math.round(scrollM) : scrollM)) - morph) * (reduce ? 1 : 0.06);
+    yaw += ((mx * 0.5 + Math.sin(t * 0.45) * 0.1 * morph) - yaw) * 0.05;
+    pitch += ((my * 0.22 - 0.04 * morph) - pitch) * 0.05;
+    const scan = ((t * 0.45) % 1.8) - 0.85;
     if (prog) {
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform1f(U.uT, t); gl.uniform1f(U.uM, morph); gl.uniform1f(U.uOpen, open); gl.uniform1f(U.uBlink, blink);
-      gl.uniform1f(U.uYaw, yaw); gl.uniform1f(U.uPitch, pitch); gl.uniform1f(U.uLevel, L); gl.uniform1f(U.uDpr, dpr);
-      gl.uniform1f(U.uSize, W / dpr < 360 ? 0.85 : 1); gl.uniform1f(U.uAspect, W / H);
+      gl.uniform1f(U.uT, t); gl.uniform1f(U.uM, morph); gl.uniform1f(U.uLevel, L); gl.uniform1f(U.uYaw, yaw); gl.uniform1f(U.uPitch, pitch);
+      gl.uniform1f(U.uDpr, dpr); gl.uniform1f(U.uSize, W / dpr < 360 ? 0.85 : 1); gl.uniform1f(U.uAspect, W / H); gl.uniform1f(U.uScan, scan);
       gl.drawArrays(gl.POINTS, 0, N);
     }
-    drawHud(t, L);
-    box.style.setProperty("--glow", (0.35 + L * 0.65).toFixed(3));
+    drawHud(t, L, morph);
+    box.style.setProperty("--glow", (0.3 + L * 0.7).toFixed(3));
+    box.style.setProperty("--m", morph.toFixed(3));
+    document.documentElement.style.setProperty("--hm", scrollM.toFixed(3));
     if (visible && !document.hidden) raf = requestAnimationFrame(frame); else raf = 0;
   }
   function start() { if (!raf) raf = requestAnimationFrame(frame); }
-  size(); addEventListener("resize", size);
+  size(); onScroll(); addEventListener("resize", () => { size(); onScroll(); });
   if ("IntersectionObserver" in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) start(); }).observe(box);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) start(); });
   start();
-  return { bump(v) { target = Math.max(target, v); }, speak(on) { speaking = on; if (on) target = Math.max(target, .5); }, face(on) { forceFace = on; } };
+  return { bump(v) { target = Math.max(target, v); }, speak(on) { speaking = on; if (on) target = Math.max(target, .5); }, face(on) { forceAgent = on; } };
 })();
 
 /* ---------------------------------------------------------------- demo call */
@@ -699,7 +703,7 @@ function playDemo(){
     if(canSpeak){
       const u = new SpeechSynthesisUtterance(text);
       u.voice = who === "a" ? vA : vC; u.lang = u.voice ? u.voice.lang : demo.lang;
-      u.rate = 1.02; u.pitch = who === "a" ? 1.08 : 0.86;
+      u.rate = 1.02; u.pitch = who === "a" ? 1.0 : 0.85;
       let ended = false, gotBoundary = false;
       u.onboundary = e => { if(e.name && e.name !== "word") return; gotBoundary = true; lit(); if(who==="a") ORB.bump(0.55 + Math.random()*0.45); };
       u.onend = u.onerror = () => { if(ended) return; ended = true; done(); };

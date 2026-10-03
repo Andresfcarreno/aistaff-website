@@ -6,7 +6,7 @@ Los campos numéricos, íconos, integraciones y persona viven solo en FR (igual 
 GEN = {}
 
 GEN["fr"] = {
-    "name": "AI Staff", "tab": "Général", "ic": "✨", "persona": "sofia",
+    "name": "AI Staff", "tab": "Général", "ic": "✨", "persona": "alex",
     "aud": "les gens occupés et les petites entreprises",
     "title": "AI Staff — Votre adjointe personnelle IA",
     "desc": "Votre prochaine employée est une IA. Elle répond à vos appels et à vos textos jour et nuit et prend vos rendez-vous. À partir de 397 $ par mois.",
