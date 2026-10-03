@@ -167,4 +167,4 @@ alter function public.leads_fill_from_payload() set search_path = '';
 ## 13. 3 de octubre: aviso por SMS activo
 - `TWILIO_ACCOUNT_SID` y `NOTIFY_PHONE` (celular de Andrés) guardados en el **Vault** de Supabase (las funciones leen primero los secretos de Edge Functions y, si no están, el Vault). `TWILIO_AUTH_TOKEN` ya existía.
 - Probado: `lead-notify` mandó el SMS de prueba (Twilio respondió 201). El mismo SID sirve para el SMS de resumen al dueño de cada cliente (`voice`).
-- Falta solo el correo: `RESEND_API_KEY`.
+- Correo activo: `RESEND_API_KEY` en el Vault; probado (Resend respondió 200, remitente leads@meetaistaff.com → hello@meetaistaff.com). Los dos avisos (correo y SMS) funcionan.
