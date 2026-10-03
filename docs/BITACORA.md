@@ -17,7 +17,7 @@
 5. **El correo no está en los planes** (no complicar).
 6. Se vende **"+ taxes"** (TPS 5 % y TVQ 9,975 %). Para facturar con impuestos hay que registrarse; el contador debe confirmarlo.
 7. **Honestidad:** WhatsApp, llamadas programadas, Instagram/Facebook, estadísticas y reportes por llamada se marcan **"par phases"** hasta que existan. Nunca prometer plazos.
-8. La página debe ser **simple y limpia**, no recargada.
+8. La página debe ser **simple y limpia**, pero **igual de atractiva que las páginas de sector** (celular flotante, dashboard de muestra, calculadora, integraciones): la home debe verse como ellas, en versión general.
 
 ## 2. Línea de tiempo de lo hecho
 | Fecha | Qué |
@@ -32,9 +32,9 @@
 
 ## 3. Cambios del 2–3 de octubre (esta sesión)
 ### 3.1 Sitio
-- **Home nueva** (`index.html`, **generada**): `python3 tools/build_home.py`.
-  - Fuentes: `tools/home_template.html`, `tools/plans.json` (planes en FR/EN/ES) y `tools/sectors_menu.json`.
-  - La home anterior, más cargada, quedó en `tools/home_source.html`, **solo porque `tools/build_sectors.py` toma de ahí el CSS y los efectos de las páginas de sector.**
+- **Página principal** (`index.html`, **generada**): el 2 de octubre se hizo una home mínima aparte, pero al dueño le gustaron más las páginas de sector. **El 3 de octubre la home pasó a ser el sector "general"** de `tools/build_sectors.py`: mismo diseño que los sectores (celular flotante, dashboard de muestra, integraciones), con una calculadora que compara un empleado real con AI Staff. Contenido en `tools/general_content.py`.
+  - `tools/home_source.html` (home v2 anterior) se conserva **solo porque el generador toma de ahí el CSS y los efectos**.
+  - Se eliminaron `tools/build_home.py`, `home_template.html`, `plans.json` y `sectors_menu.json`.
 - Las 8 páginas de sector se regeneraron con los planes nuevos (`python3 tools/build_sectors.py`; `generic_text.py` y `sectors_*.py` ya no mencionan "Exécutive", "Dédiée" ni a un equipo humano).
 - Se corrigió un desborde horizontal en las páginas de sector entre 1100 y 1250 px (`html{overflow-x:clip}` en la plantilla).
 - `/onboarding/`: lista de planes actualizada. Su webhook de Make ya estaba conectado en `main`.
@@ -88,7 +88,7 @@
    - **Hay que confirmar a cuál apunta el número +1 438 805 8804 en Twilio.** B es bastante más barato (ver `docs/precios-y-costos.md`).
 2. **Ya no se usa Retell ni Vapi.** Los documentos `docs/demo-agent-retell.md`, `docs/briefing-backend.md` y parte de `PROYECTO-COMPLETO` fueron escritos pensando en Retell: la lógica sirve, los nombres de herramientas no.
 3. **No editar a mano** `index.html` ni las páginas de sector: son generadas (ver 3.1). Si se cambia un precio o un texto, regenerar y volver a probar.
-4. **Los precios viven en varios lugares:** `tools/plans.json`, `tools/generic_text.py`, `tools/legal/contrat_*.js` (Anexo A), `tools/flyers/build.js`, `onboarding/index.html` (lista de planes), playbook, guiones de video, `CLAUDE.md` y `PROYECTO-COMPLETO`. Cambiar uno exige revisar los demás: `grep -rn "397\|597\|797"`.
+4. **Los precios viven en varios lugares:** `tools/generic_text.py`, `tools/legal/contrat_*.js` (Anexo A), `tools/flyers/build.js`, `onboarding/index.html` (lista de planes), playbook, guiones de video, `CLAUDE.md` y `PROYECTO-COMPLETO`. Cambiar uno exige revisar los demás: `grep -rn "397\|597\|797"`.
 5. **Nunca claves en el repositorio.** El webhook de Make en `onboarding/` es una URL pública por diseño; el escenario descarta lo que no traiga consentimiento y un correo válido.
 6. Cualquier cambio en la base de datos o en Make de AI Staff requiere confirmación del dueño: ya canceló varias operaciones de escritura.
 

@@ -14,10 +14,13 @@ from sectors_fr import FR
 from sectors_en import EN
 from sectors_es import ES
 from generic_text import G
+from general_content import GEN
+FR["general"] = GEN["fr"]; EN["general"] = GEN["en"]; ES["general"] = GEN["es"]
 
 ORDER = ["immobilier", "cvc", "paysagement", "deneigement", "garages", "nettoyage", "barbiers", "dental"]
 SLUG = {"immobilier": "immobilier", "cvc": "cvc", "paysagement": "paysagement", "deneigement": "deneigement",
-        "garages": "garages", "nettoyage": "nettoyage", "barbiers": "barbiers", "dental": "dental"}
+        "garages": "garages", "nettoyage": "nettoyage", "barbiers": "barbiers", "dental": "dental",
+        "general": ""}  # "general" = la página principal (index.html en la raíz)
 NUMERIC = ["ic", "ints", "persona"]
 
 home = open(os.path.join(ROOT, "tools", "home_source.html"), encoding="utf-8").read()  # fuente de estilos y efectos (la home pública es otra, más simple)
@@ -340,7 +343,7 @@ function render(){
   document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
   document.querySelectorAll(".persona").forEach(b=>b.classList.toggle("active", b.dataset.persona===persona));
   const subj = encodeURIComponent("AI Staff — "+s.name);
-  document.querySelectorAll(".mailcta").forEach(a=>a.href = "/onboarding/?secteur="+SECTOR_ID+(lang==="fr"?"":"&lang="+lang));
+  document.querySelectorAll(".mailcta").forEach(a=>a.href = SECTOR_ID==="general" ? "/onboarding/"+(lang==="fr"?"":"?lang="+lang) : "/onboarding/?secteur="+SECTOR_ID+(lang==="fr"?"":"&lang="+lang));
   document.getElementById("trust").innerHTML = s.trust.map(t=>`<div><div class="n">${esc(t[0])}</div><div class="l">${esc(fill(t[1]))}</div></div>`).join("");
   document.getElementById("doesList").innerHTML = s.does.map(d=>`<li>${esc(fill(d))}</li>`).join("");
   document.getElementById("featGrid").innerHTML = s.features.map(f=>`<div class="card feat"><div class="top"><div class="ic">${f[0]}</div></div><h3>${esc(fill(f[1]))}</h3><p>${esc(fill(f[2]))}</p></div>`).join("");
@@ -376,11 +379,18 @@ function buildCalc(){
   const c = S().calc;
   [1,2,3].forEach(i=>{ document.getElementById("cl"+i).textContent = c["l"+i]; const r = document.getElementById("cr"+i), rg = c.r[i-1];
     r.min = rg[0]; r.max = rg[1]; r.step = rg[2]; if(!r.dataset.init){ r.value = c.v[i-1]; r.dataset.init = 1; } });
-  document.getElementById("calcDisc").textContent = c.disc;
+  document.getElementById("calcDisc").textContent = fill(c.disc);
+  const human = c.mode === "human";
+  document.getElementById("cl3").closest("label").style.display = human ? "none" : ""; document.getElementById("cr3").style.display = human ? "none" : "";
+  ["eyebrow","title","lead","cap","note"].forEach(k=>{ const el = document.querySelector('[data-i18n="calc.'+k+'"]'); if(el && c[k]) el.textContent = fill(c[k]).split("{p}").join(money(g("plans")[0].price)); });
   updateCalc();
 }
 function updateCalc(){
   const a = +document.getElementById("cr1").value, b = +document.getElementById("cr2").value, v = +document.getElementById("cr3").value;
+  if(S().calc.mode === "human"){
+    document.getElementById("cv1").textContent = a+" h"; document.getElementById("cv2").textContent = money(b)+(lang==="fr"?" / h":(lang==="es"?" / h":"/h"));
+    document.getElementById("calcBig").textContent = "≈ "+money(Math.round(a*4.33*b)); return;
+  }
   document.getElementById("cv1").textContent = a;
   document.getElementById("cv2").textContent = b+" %";
   document.getElementById("cv3").textContent = money(v);
@@ -462,7 +472,7 @@ def build():
             d = re.search(r' d="([^"]+)"', open(path, encoding="utf-8").read()).group(1)
             logos[k] = [title, color, d]
     sectors = sector_list()
-    for k in ORDER:
+    for k in ORDER + ["general"]:
         sec = {lang: sector(k, lang) for lang in ["fr", "en", "es"]}
         used = set()
         for lang in sec: used.update(sec[lang]["ints"]); used.update(c[0] for c in sec[lang]["fcards"])
@@ -476,6 +486,7 @@ def build():
             "__ORB__": JS_ORB, "__REVEAL__": JS_REVEAL,
         }
         for a, b in rep.items(): page = page.replace(a, b)
+        page = page.replace("meetaistaff.com//", "meetaistaff.com/")
         out = os.path.join(ROOT, SLUG[k], "index.html")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         open(out, "w", encoding="utf-8").write(page)
