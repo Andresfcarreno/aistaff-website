@@ -146,3 +146,20 @@
 - **Falta para el SMS al dueño:** el secreto `TWILIO_ACCOUNT_SID` y Twilio pagado.
 - **Fila de prueba pendiente de borrar** en `tenants`: `name = 'TEST-BORRAR'` (id `22222222-…`), ya neutralizada (sin número ni guion). Borrar con `delete from tenants where name = 'TEST-BORRAR';`
 - Cómo dar de alta un cliente: `docs/alta-cliente.md`.
+
+## 12. 3 de octubre (mañana): alta automática y citas
+- **`client-setup`** (Edge Function, desplegada): convierte un lead del formulario en cliente. Claude escribe el guion y el saludo **solo con las respuestas del dueño** y lista lo que falta preguntar. Probada con `dry_run` sobre el lead de prueba: no inventó horarios ni dirección ("no indicado") y devolvió la lista de faltantes. Instrucciones en `docs/alta-cliente.md`.
+- **Citas de los clientes del negocio → `bookings`:** al analizar una llamada a la línea de un cliente, se extraen el servicio y el día y la hora pedidos (resolviendo "el jueves", "mañana" con la fecha de la llamada, hora de Montreal) y se guarda la solicitud con `status = 'requested'`. `voice` versión 10.
+- **Panel (`/demo/`):** las citas pedidas aparecen en la agenda como "à confirmer / to confirm / por confirmar", con nombre y teléfono.
+- Protección: `client-setup` usa la misma clave `NOTIFY_KEY` del Vault; solo se puede llamar desde la base (SQL Editor o pg_net).
+- **Probado de punta a punta** con una llamada simulada al cliente de prueba: "cita para cambio de aceite el jueves a las 2 de la tarde" quedó en `bookings` como jueves 8 de octubre a las 14:00 (hora de Montreal), `requested`, con el nombre y el teléfono; la llamada quedó con el `tenant_id` del cliente.
+- **Limpieza pendiente (los DELETE se cancelan desde la sesión). Pegar en el SQL Editor:**
+
+```sql
+delete from bookings where tenant_id = '22222222-2222-2222-2222-222222222222';
+delete from calls where retell_call_id = 'CA-TEST-BOOKING-BORRAR';
+delete from voice_sessions where call_sid = 'CA-TEST-BOOKING-BORRAR';
+delete from tenants where id = '22222222-2222-2222-2222-222222222222';
+delete from leads where biz_name = 'TEST-BORRAR';
+alter function public.leads_fill_from_payload() set search_path = '';
+```

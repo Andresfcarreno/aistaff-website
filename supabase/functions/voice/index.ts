@@ -156,7 +156,7 @@ type Tenant = { id: string; name: string; business_info: string | null; greeting
 const CLIENT_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["caller_name", "language", "summary", "sentiment", "intent", "callback_number", "requested_time"],
+  required: ["caller_name", "language", "summary", "sentiment", "intent", "callback_number", "requested_time", "requested_datetime", "service"],
   properties: {
     caller_name: { type: ["string", "null"] },
     language: { type: "string", enum: ["fr", "en", "es"] },
@@ -165,6 +165,8 @@ const CLIENT_SCHEMA = {
     intent: { type: "string", enum: ["appointment_request", "quote_request", "info", "callback", "complaint", "other"] },
     callback_number: { type: ["string", "null"] },
     requested_time: { type: ["string", "null"] },
+    requested_datetime: { type: ["string", "null"] },
+    service: { type: ["string", "null"] },
   },
 };
 const LANG_NAME: Record<string, string> = { es: "Spanish", fr: "French", en: "English" };
@@ -553,7 +555,7 @@ async function finalizeClient(t: Tenant, s: Session, transcript: string, disconn
           messages: [{
             role: "user",
             content:
-              `This is a call to the phone line of the business "${t.name}", answered by its AI assistant. Write the report for the business owner. caller_name: the caller's name or null. language: the language the caller spoke. summary: 1 to 3 short sentences in ${report} for the owner: who called, what they want, and what the assistant said it would pass on; include any appointment or quote details. Do not invent anything. sentiment: the caller's. intent: appointment_request, quote_request, info, callback, complaint or other. callback_number: a number the caller gave to call back, or null (their caller ID is ${s.from_number ?? "unknown"}). requested_time: the day or time they asked for, in their own words, or null.\n\nCall transcript:\n${transcript}\nCall ended reason: ${disconnection}`,
+              `This is a call to the phone line of the business "${t.name}", answered by its AI assistant. Write the report for the business owner. caller_name: the caller's name or null. language: the language the caller spoke. summary: 1 to 3 short sentences in ${report} for the owner: who called, what they want, and what the assistant said it would pass on; include any appointment or quote details. Do not invent anything. sentiment: the caller's. intent: appointment_request, quote_request, info, callback, complaint or other. callback_number: a number the caller gave to call back, or null (their caller ID is ${s.from_number ?? "unknown"}). requested_time: the day or time they asked for, in their own words, or null. requested_datetime: only if they asked for an appointment and gave a specific enough day and time, that moment as ISO 8601 with the Montreal offset (e.g. 2026-10-08T14:00:00-04:00), resolving words like "tomorrow" or "Thursday" from the call date below; otherwise null. service: what the appointment or request is for, in 1 to 5 words in ${report}, or null.\n\nCall date and time (Montreal): ${montreal(s.started_at)}\nCall transcript:\n${transcript}\nCall ended reason: ${disconnection}`,
           }],
         });
         if (res.stop_reason !== "refusal") a = JSON.parse(textOf(res.content));
@@ -564,9 +566,9 @@ async function finalizeClient(t: Tenant, s: Session, transcript: string, disconn
   }
   const started = new Date(s.started_at);
   const ended = new Date(s.last_activity);
-  await db("calls?on_conflict=retell_call_id", {
+  const saved = await db("calls?on_conflict=retell_call_id", {
     method: "POST",
-    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    headers: { Prefer: "resolution=merge-duplicates,return=representation" },
     body: JSON.stringify({
       retell_call_id: s.call_sid,
       tenant_id: t.id,
@@ -585,7 +587,44 @@ async function finalizeClient(t: Tenant, s: Session, transcript: string, disconn
       disconnection_reason: disconnection,
     }),
   });
+  const callId: string | undefined = saved.ok ? (await saved.json())[0]?.id : undefined;
+  if (hasUser && (a.intent === "appointment_request" || a.requested_datetime)) await saveBooking(t, s, a, callId);
   if (hasUser) await notifyOwner(t, s, a);
+}
+
+// Fecha de la llamada en hora de Montreal, para que el análisis resuelva "mañana", "el jueves"…
+function montreal(iso: string): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Montreal", weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit", timeZoneName: "short",
+  }).format(new Date(iso));
+}
+
+// Solicitud de cita de un cliente del negocio → `bookings` (estado "requested": el equipo
+// la confirma; la asistente nunca da una cita por confirmada). El dueño la ve en su agenda.
+async function saveBooking(t: Tenant, s: Session, a: Record<string, unknown>, callId?: string) {
+  if (callId) {
+    const seen = await db(`bookings?call_id=eq.${encodeURIComponent(callId)}&select=id`);
+    if (seen.ok && (await seen.json()).length) return;
+  }
+  const str = (k: string) => (typeof a[k] === "string" && a[k] ? (a[k] as string) : null);
+  const when = str("requested_datetime");
+  const at = when && !Number.isNaN(Date.parse(when)) ? new Date(when).toISOString() : null;
+  const r = await db("bookings", {
+    method: "POST",
+    headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({
+      tenant_id: t.id,
+      call_id: callId ?? null,
+      contact_name: str("caller_name"),
+      contact_phone: str("callback_number") ?? s.from_number,
+      booking_type: str("service"),
+      scheduled_for: at,
+      status: "requested",
+      notes: [str("requested_time"), str("summary")].filter(Boolean).join(" · ") || null,
+    }),
+  });
+  if (!r.ok) console.error("booking insert failed", r.status, await r.text());
 }
 
 async function saveCallLead(s: Session, a: Record<string, unknown>, email: string | null) {

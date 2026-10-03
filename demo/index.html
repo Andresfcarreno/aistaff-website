@@ -2224,10 +2224,11 @@ function rel(iso){
   return new Intl.DateTimeFormat(uiLang,{day:"numeric",month:"short"}).format(t);
 }
 async function loadChannels(){
-  const [ms, em, ev] = await Promise.all([
+  const [ms, em, ev, bk] = await Promise.all([
     sb("messages?select=channel,direction,contact_name,contact_handle,body,at&order=at.asc&limit=500"),
     sb("emails?select=id,from_name,from_addr,subject,snippet,status,at&order=at.desc&limit=100"),
-    sb("events?select=title,who,starts_at,source&order=starts_at.asc&limit=500")]);
+    sb("events?select=title,who,starts_at,source&order=starts_at.asc&limit=500"),
+    sb("bookings?select=contact_name,contact_phone,booking_type,scheduled_for,status&scheduled_for=not.is.null&order=scheduled_for.asc&limit=500")]);
   const msgs = {};
   (ms||[]).forEach(r=>{
     const k = r.channel+"|"+r.contact_handle, nm = r.contact_name || r.contact_handle || "?";
@@ -2246,6 +2247,14 @@ async function loadChannels(){
     if(!r.starts_at) return; const t = new Date(r.starts_at), k = dateKey(t);
     (events[k] = events[k] || []).push([String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0"), r.title||"—", "", r.who||r.source||""]);
   });
+  // Citas pedidas por teléfono a la asistente: aparecen en la agenda como "por confirmar".
+  const BK = {fr:["Rendez-vous","à confirmer"], en:["Appointment","to confirm"], es:["Cita","por confirmar"]}[uiLang];
+  (bk||[]).forEach(r=>{
+    const t = new Date(r.scheduled_for), k = dateKey(t);
+    const label = (r.booking_type||BK[0]) + (r.status==="requested"||r.status==="pending" ? " · "+BK[1] : "");
+    (events[k] = events[k] || []).push([String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0"), label, "", [r.contact_name, r.contact_phone].filter(Boolean).join(" · ")]);
+  });
+  Object.values(events).forEach(l=>l.sort((a,b)=>a[0].localeCompare(b[0])));
   return {msgs:msgSorted, emails, events, social:[], dms:[]};
 }
 function liveOverview(x){

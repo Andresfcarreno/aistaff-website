@@ -7,10 +7,11 @@
 - **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude, con Supabase y un Worker de Cloudflare) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
   - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
-- **Stack:** Twilio (+1 438-805-8804, línea demo), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Functions `voice`, `lead-notify` y `messages-in`, pg_cron), Cloudflare Worker `voice-relay`, Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
+- **Stack:** Twilio (+1 438-805-8804, línea demo), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Functions `voice`, `lead-notify`, `client-setup` y `messages-in`, pg_cron), Cloudflare Worker `voice-relay`, Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
   - **Cómo funciona la línea demo (confirmado el 3 oct. 2026):** Twilio llama a la función `voice` de Supabase; esta pasa la llamada al Worker `voice-relay` de Cloudflare (ConversationRelay: Deepgram + ElevenLabs + Claude Haiku 4.5). Si el relay falla, `voice` sigue sola por turnos (`<Gather>` + voces Google). Al colgar, el cron `voice-sweep` analiza la llamada (tabla `calls`) y, si la persona está interesada, crea un **lead** (`ref = appel-demo`).
   - **El prompt de Sofía está en dos lugares y debe ser igual:** `voice-relay/src/prompt.ts` (el que se oye) y `supabase/functions/voice/index.ts` (respaldo, con etiquetas `[[LANG:xx]]`). El relay se publica solo al hacer merge a `main` (Cloudflare Workers Builds); `voice` se publica con `deploy_edge_function`.
   - **Aviso de leads:** cron `lead-notify` (cada minuto, solo si hay leads sin avisar) → función `lead-notify` → correo por Resend y/o SMS por Twilio. Secretos: ver `docs/BITACORA.md`.
+  - **Clientes:** cada negocio es una fila de `tenants` (su número de Twilio, guion `business_info`, saludo, celular del dueño). Alta automática desde el formulario con la función `client-setup` (`docs/alta-cliente.md`). Las citas pedidas por teléfono van a `bookings` (`requested`) y salen en la agenda del panel.
   - Detalle: `docs/voz-propia.md`, `docs/make-supabase.md`.
 - **Meta de negocio:** cerrar clientes de unos 1 000 $/mes. Cada tarea debe acercar a un cliente que pague.
 
