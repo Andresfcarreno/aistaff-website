@@ -96,5 +96,5 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 
 ## Pendientes conocidos
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Activar el aviso de leads: poner `RESEND_API_KEY` (correo) y/o `TWILIO_ACCOUNT_SID` + `NOTIFY_PHONE` (SMS) en los secretos de Edge Functions de Supabase.
+- Aviso de leads: activo por correo y SMS (claves en el Vault de Supabase, 3 oct. 2026).
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Conviene implementarlo con Edge Functions de Supabase (como `voice`) en vez de Make; requiere la tabla `clients`.
