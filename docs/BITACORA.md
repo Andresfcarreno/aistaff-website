@@ -137,3 +137,12 @@
 - **Make:** `AI Staff Gmail → dashboard` quedó **activo** (ya importó correos a `emails`). `AI Staff Calendar → dashboard` está **apagado**: falla con `403 insufficient authentication scopes` (la conexión de Google no tiene permiso de Calendar), además del límite de 2 escenarios activos. Alternativa: leer la agenda por la dirección iCal secreta desde una función de Supabase.
 - **Falta para el cliente 1:** la voz usa el mismo guion en cualquier número. Hay que cargar el guion por número desde `tenants`, asignar `tenant_id` a las llamadas por `to_number` y avisar al dueño del negocio por SMS después de cada llamada.
 - **Plan comercial:** documento "AI Staff: primeros 5 clientes" (Claude Docs) con 40 prospectos de Montreal y Laval, mensajes FR/EN/ES, objeciones, posts y checklist de alta.
+
+## 11. 3 de octubre (madrugada): voz multi-cliente, publicada y probada
+- `tenants` tiene `business_info`, `greeting`, `notify_phone` y `report_lang` (aplicado en Supabase).
+- Si el número llamado es de un cliente con `business_info`, la asistente contesta como recepcionista de ese negocio (en el Worker y en el respaldo de `voice`). Si no, es la línea demo de siempre.
+- Al colgar: la llamada se guarda con el `tenant_id` del cliente (la ve en su panel), se manda un SMS de resumen al dueño (`notify_phone`) y **no** se crea un lead de AI Staff.
+- Publicado: Worker (versión 5fea0cc8, 100 %) y `voice` versión 9. Probado en vivo con un cliente de prueba: saludo y guion correctos. La línea demo no cambió.
+- **Falta para el SMS al dueño:** el secreto `TWILIO_ACCOUNT_SID` y Twilio pagado.
+- **Fila de prueba pendiente de borrar** en `tenants`: `name = 'TEST-BORRAR'` (id `22222222-…`), ya neutralizada (sin número ni guion). Borrar con `delete from tenants where name = 'TEST-BORRAR';`
+- Cómo dar de alta un cliente: `docs/alta-cliente.md`.
