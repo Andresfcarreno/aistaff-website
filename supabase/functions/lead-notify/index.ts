@@ -92,7 +92,8 @@ async function sendEmail(l: Lead): Promise<string> {
 
 async function sendSms(l: Lead): Promise<string> {
   const [sid, token, to] = await Promise.all([secret("TWILIO_ACCOUNT_SID"), secret("TWILIO_AUTH_TOKEN"), secret("NOTIFY_PHONE")]);
-  if (!sid || !token || !to) return "sms: faltan TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / NOTIFY_PHONE";
+  const missing = [!sid && "TWILIO_ACCOUNT_SID", !token && "TWILIO_AUTH_TOKEN", !to && "NOTIFY_PHONE"].filter(Boolean);
+  if (missing.length) return `sms: falta ${missing.join(", ")}`;
   const from = (await secret("NOTIFY_FROM")) ?? "+14388058804";
   const p = l.payload ?? {};
   const parts = [
@@ -105,7 +106,7 @@ async function sendSms(l: Lead): Promise<string> {
   const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
     method: "POST",
     headers: { Authorization: `Basic ${btoa(`${sid}:${token}`)}`, "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ From: from, To: to, Body: body }),
+    body: new URLSearchParams({ From: from, To: to!, Body: body }),
   });
   return `sms: ${r.status}${r.ok ? "" : " " + (await r.text()).slice(0, 200)}`;
 }
