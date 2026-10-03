@@ -6,7 +6,7 @@
   - Quiere entregables completos, no instrucciones.
 - **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude, con Supabase y un Worker de Cloudflare) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
-  - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
+  - Personas: **Sofía** (por defecto; es el nombre de la línea demo, y la publicidad nueva dirá Sofía), **Alex** y **Tomás**. **No cambiar el prompt ni la voz de la línea demo** sin que el dueño lo pida.
 - **Stack:** Twilio (+1 438-805-8804, línea demo), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Functions `voice`, `lead-notify`, `client-setup` y `messages-in`, pg_cron), Cloudflare Worker `voice-relay`, Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
   - **Cómo funciona la línea demo (confirmado el 3 oct. 2026):** Twilio llama a la función `voice` de Supabase; esta pasa la llamada al Worker `voice-relay` de Cloudflare (ConversationRelay: Deepgram + ElevenLabs + Claude Haiku 4.5). Si el relay falla, `voice` sigue sola por turnos (`<Gather>` + voces Google). Al colgar, el cron `voice-sweep` analiza la llamada (tabla `calls`) y, si la persona está interesada, crea un **lead** (`ref = appel-demo`).
   - **El prompt de Sofía está en dos lugares y debe ser igual:** `voice-relay/src/prompt.ts` (el que se oye) y `supabase/functions/voice/index.ts` (respaldo, con etiquetas `[[LANG:xx]]`). El relay se publica solo al hacer merge a `main` (Cloudflare Workers Builds); `voice` se publica con `deploy_edge_function`.
@@ -18,7 +18,7 @@
 ## Estructura del sitio (estático, sin build)
 | Ruta | Archivo | Notas |
 |---|---|---|
-| `/` | `index.html` (**generado**: `python3 tools/build_sectors.py`) | Página principal = el sector "general" de la misma plantilla de los sectores (celular flotante, dashboard de muestra, calculadora empleado vs. AI Staff, integraciones, planes y preguntas). Contenido FR/EN/ES en `tools/general_content.py`. FR por defecto, EN/ES, claro/oscuro. Parámetros `?lang= &a=sofia\|alex\|tomas`. |
+| `/` | `index.html` (**generado**: `python3 tools/build_sectors.py`) | Página principal **sencilla** (4 oct. 2026): plantilla `tools/home_template.html`; los planes, precios y la lista de sectores se inyectan desde `tools/generic_text.py` y `tools/sectors_*.py`. Hero con el **mismo orbe de la consola de voz de `/demo/`** (nebulosa WebGL + anillo de barras de voz; código copiado de `demo/index.html`: `glNebula`, `hudState`, `hudDraw`). Botón principal **«Appeler Sofía maintenant»** (tel:) y franja «Appelez Sofía. Pour vrai.» con el número grande y un **código QR** (`tools/qr_demo_line.svg`, se inyecta al generar); en celular, barra fija para llamar. «Écouter un exemple» (o clic en el orbe) reproduce una llamada de ejemplo **general** (pedir cita el sábado, sirve para cualquier negocio) con la voz del navegador, subtítulos palabra por palabra y al final notificaciones tipo celular (texto al dueño y aviso del tablero). Luego: cómo funciona (3 pasos), qué hace (hoy / por fases), **calculadora** empleado vs. AI Staff (horas × salario × 4,33; textos en `tools/general_content.py`), 3 planes, sectores, **dashboard de muestra con 6 pestañas** (estilo ventana de Mac; datos de `tools/general_content.py` y `tools/dash_text.py`), preguntas y cierre. FR por defecto, EN/ES, claro/oscuro, `?lang= &a=sofia\|alex\|tomas`. |
 | `/demo/` | `demo/index.html` | Dashboard generalizado: Aperçu, Appels, Messages, Courriel, Agenda, Briefings, Réseaux, Contacts y chat con la asistente. `?v=immobilier` redirige a `/immobilier/demo/` |
 | `/immobilier/demo/` | `immobilier/demo/index.html` | Dashboard inmobiliario original, con la marca unificada |
 | `/immobilier/`, `/cvc/`, `/paysagement/`, `/deneigement/`, `/garages/`, `/nettoyage/`, `/barbiers/`, `/dental/` | **generadas**, no se editan a mano | Plantilla común en `tools/build_sectors.py`, que toma el CSS, el orbe y los avatares de `tools/home_source.html` (la home v2 anterior, conservada solo como fuente de estilos). El contenido FR/EN/ES está en `tools/sectors_*.py` y `generic_text.py`. Después de cambiar la home o el contenido: `python3 tools/build_sectors.py` (genera también la página principal). |
@@ -59,12 +59,10 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Nunca poner claves API en el HTML. Todo pasa por Make o por una función serverless.
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
-## Página principal (general) y sectores
-- La home ya no es una página aparte: es el sector **"general"** de `tools/build_sectors.py`, así que **se ve igual que las páginas de sector** (3 de octubre de 2026). Texto en `tools/general_content.py`; precios y textos comunes en `tools/generic_text.py`.
-- **Dashboard de muestra con 6 pestañas intercambiables** (Aperçu con gráfica semanal, Appels con transcripción, Messages, Agenda semanal, Réseaux, Contacts), armado desde los datos de cada sector; rótulos en `tools/dash_text.py`. Datos siempre marcados como demostración.
-- Secciones: hero con celular flotante y llamada de ejemplo, problema y qué hace, 4 funciones, **calculadora** (cuánto cuesta un empleado que contesta el teléfono frente a AI Staff), cómo funciona, **dashboard de muestra**, **integraciones** (logos), **3 planes**, preguntas y cierre.
-- La calculadora general usa `mode: "human"`: horas por semana × salario por hora × 4,33. Los valores iniciales son solo ejemplos; la cifra de 3 500 a 4 500 $ de una asistente humana sigue siendo una estimación.
-- La home v2 anterior se conserva en `tools/home_source.html` solo como fuente de estilos y efectos del generador. La home "simple" de planes que existió el 2 de octubre se eliminó.
+## Página principal y sectores
+- **Home sencilla (4 oct. 2026):** el dueño la quiso más vacía y entendible, con un orbe llamativo que hable. Texto en el diccionario `STR` de `tools/home_template.html`; planes y precios vienen de `tools/generic_text.py` (no se escriben a mano). La demo de voz es un ejemplo con la voz del navegador y lo dice; la voz real es la de la línea demo.
+- La asistente del ejemplo **nunca confirma** la cita: dice que el equipo confirma por texto (igual que la voz real de los clientes).
+- **Páginas de sector:** siguen con el diseño completo (celular flotante, dashboard de muestra con 6 pestañas, calculadora, integraciones). De `tools/general_content.py` solo se usa la calculadora (`calc`).
 - **Siluetas de persona:** son SVG propios (`avatarSVG`): Sofía femenina; Alex neutra con anillo arcoíris sutil; Tomás masculina.
 - **Idiomas:** los tres planes hablan FR, EN y ES. "20+ langues" ya no se usa.
 - **Dashboard** (`/demo/`): gráfica apilada por canal, gráfica de línea con crosshair, vista de semana en la agenda, tarjetas de Langues e Intégrations.

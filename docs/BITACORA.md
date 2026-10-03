@@ -168,3 +168,25 @@ alter function public.leads_fill_from_payload() set search_path = '';
 - `TWILIO_ACCOUNT_SID` y `NOTIFY_PHONE` (celular de Andrés) guardados en el **Vault** de Supabase (las funciones leen primero los secretos de Edge Functions y, si no están, el Vault). `TWILIO_AUTH_TOKEN` ya existía.
 - Probado: `lead-notify` mandó el SMS de prueba (Twilio respondió 201). El mismo SID sirve para el SMS de resumen al dueño de cada cliente (`voice`).
 - Correo activo: `RESEND_API_KEY` en el Vault; probado (Resend respondió 200, remitente leads@meetaistaff.com → hello@meetaistaff.com). Los dos avisos (correo y SMS) funcionan.
+
+## 14. 4 de octubre: home sencilla con orbe que habla
+- A pedido del dueño, la página principal pasó a ser **más vacía y fácil de entender**. Plantilla nueva `tools/home_template.html`; `tools/build_sectors.py` ya no genera la home con el diseño de sector, sino desde esta plantilla (planes, precios y sectores siguen saliendo de `generic_text.py` y `sectors_*.py`).
+- Hero: título, una frase, «Écouter Sofía» y «Appeler la ligne démo». A la derecha, **orbe geométrico** (esfera geodésica con órbitas) que se deforma y brilla cuando la asistente habla. La demo usa la voz del navegador (speechSynthesis) con subtítulos palabra por palabra; si el navegador no tiene voz, sigue con tiempos simulados. Al final aparece el texto que recibe el dueño.
+- Secciones: cómo funciona (3 pasos), qué hace (hoy / por fases), 3 planes iguales, sectores (enlaces), 5 preguntas, cierre.
+- Revisado con capturas: escritorio claro y oscuro, móvil, FR/EN/ES, sin desborde horizontal ni errores de consola.
+- **Mismo día, 2.ª versión** (pedido del dueño: "el orbe tiene que verse tremendo, que se forme una cara"): el orbe ahora es una nube de ~5 000 partículas (WebGL) sobre un fondo holográfico oscuro con líneas de escaneo y anillos. Cada 12 s pasa de esfera a **cara** (ojos, cejas, nariz, labios), parpadea y sigue el puntero; durante la demo se queda en cara y **abre la boca con la voz**, con barras de voz alrededor. Si el navegador no tiene WebGL, se ve un brillo animado. Clic en el orbe = escuchar.
+- **Calculadora** antes de los precios: horas por semana × salario por hora × 4,33 frente a «dès 397 $», con barras y ahorro estimado (textos de `tools/general_content.py`; rangos y valores iniciales del francés).
+
+## 15. 4 de octubre: orbe → agente virtual y Alex por defecto
+- El dueño encontró fea la cara dibujada ("parece un jeroglífico"). Se reemplazó por un **orbe de luz iridiscente** que, al bajar por la página o al darle a escuchar, se transforma en un **agente virtual**: busto de luz (cabeza y hombros modelados con funciones de distancia), iluminado por el contorno, con una luz violeta detrás. Sin ojos ni boca dibujados; al hablar, la luz y las partículas pulsan con la voz y aparecen barras de voz alrededor.
+- Más estilo Mac: el hero queda fijo mientras se hace scroll (en computadora) para ver la transformación, aurora de fondo, secciones que entran con desenfoque, tarjetas que se levantan, números animados en la calculadora, indicador «Faites défiler pour rencontrer Alex».
+- **Alex por defecto** en todo el sitio (home, sectores, `/demo/`, `/onboarding/`), porque la publicidad dice «llamen a Alex». **Pendiente decidir:** la línea demo (+1 438 805 8804) todavía se presenta como Sofía, con voz femenina.
+
+## 16. 4 de octubre (tarde): decisiones y página principal casi lista
+- **Decisión del dueño:** se queda **Sofía** (la línea demo dice Sofía; la publicidad nueva dirá Sofía). Se volvió a poner Sofía por defecto en todo el sitio. **No tocar el prompt ni la voz de la línea demo.**
+- **Orbe:** el agente/cara no gustó. Ahora la home usa **el mismo orbe de la consola de voz del dashboard** (nebulosa WebGL + anillo de barras), copiado de `demo/index.html`. Late suave en reposo, más al pasar el mouse y fuerte cuando habla.
+- **Énfasis en llamar:** botón principal «Appeler Sofía maintenant», número clicable bajo los botones, franja oscura «Appelez Sofía. Pour vrai.» con el número grande, 3 pasos (llamar, decir el oficio, hacer de cliente) y **QR** para llamar desde el celular; en celular, barra fija «Appeler Sofía» al bajar.
+- **Ejemplo de llamada general** (sirve para barbería, dentista, taller…): un cliente pregunta si abren el sábado y pide cita; Sofía la anota y dice que el equipo confirma por texto. Al final aparecen dos **notificaciones tipo iPhone**: el texto al dueño y «Appel ajouté au tableau de bord». No se muestra correo porque el resumen por correo no está en los planes.
+- **Dashboard de muestra con 6 pestañas** (Aperçu, Appels, Messages, Agenda, Réseaux, Contacts) en una ventana estilo Mac, entre los sectores y el FAQ.
+- Se corrigió la transcripción de ejemplo de la mudanza: ya no dice «je vous texte la confirmation» (la asistente no confirma citas; el equipo confirma).
+- **Siguiente paso acordado:** remodelar a fondo el dashboard (`/demo/`).
