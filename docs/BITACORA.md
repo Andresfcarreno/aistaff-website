@@ -83,10 +83,10 @@
   - **Falta:** que Andrés llene el formulario ya publicado y confirme que aparece la fila en `leads`.
 
 ## 6. Cosas que hay que saber antes de tocar algo
-1. **Hay dos implementaciones de voz en el repositorio**, y `CLAUDE.md` y `docs/voz-propia.md` describen solo la primera:
-   - **A.** Función de Supabase `voice` (`supabase/functions/voice/`): Twilio `<Gather>`, voces Polly, modelo `claude-opus-5-5`.
-   - **B.** Servicio de Cloudflare `voice-relay/`: Twilio ConversationRelay, Deepgram y ElevenLabs, modelo `claude-haiku-4-5`. `docs/DEPLOY.md` lo da como la voz activa (Cloudflare Workers Builds desde `main`).
-   - **Hay que confirmar a cuál apunta el número +1 438 805 8804 en Twilio.** B es bastante más barato (ver `docs/precios-y-costos.md`).
+1. **La línea demo usa las dos piezas de voz, en cadena** (confirmado el 3 oct. con las llamadas guardadas en Supabase):
+   - Twilio llama a la función `voice` de Supabase, que pasa la llamada al Worker `voice-relay` de Cloudflare (ConversationRelay, Deepgram, ElevenLabs, Claude Haiku 4.5). Lo que se oye es el prompt de `voice-relay/src/prompt.ts`.
+   - Si el relay falla, `voice` sigue sola por turnos (`<Gather>`, voces Google Chirp3-HD) con su propia copia del prompt. **Las dos copias deben ser iguales** (la de `voice` lleva además las etiquetas `[[LANG:xx]]`).
+   - El Worker se publica solo con cada merge a `main`. El check rojo "Workers Builds" en las ramas es una compilación de vista previa de Cloudflare, no afecta.
 2. **Ya no se usa Retell ni Vapi.** Los documentos `docs/demo-agent-retell.md`, `docs/briefing-backend.md` y parte de `PROYECTO-COMPLETO` fueron escritos pensando en Retell: la lógica sirve, los nombres de herramientas no.
 3. **No editar a mano** `index.html` ni las páginas de sector: son generadas (ver 3.1). Si se cambia un precio o un texto, regenerar y volver a probar.
 4. **Los precios viven en varios lugares:** `tools/generic_text.py`, `tools/legal/contrat_*.js` (Anexo A), `tools/flyers/build.js`, `onboarding/index.html` (lista de planes), playbook, guiones de video, `CLAUDE.md` y `PROYECTO-COMPLETO`. Cambiar uno exige revisar los demás: `grep -rn "397\|597\|797"`.
@@ -100,7 +100,7 @@
 
 ## 8. Pendientes, en orden sugerido
 1. **Andrés:** llenar el formulario publicado y confirmar que llega a `leads`; borrar la fila de prueba.
-2. **Andrés:** confirmar a qué voz apunta Twilio (A o B) y alinear `CLAUDE.md` y `docs/voz-propia.md`.
+2. ~~Confirmar a qué voz apunta Twilio~~: hecho (ver 6.1). **Andrés:** poner las claves del aviso de leads (sección 9).
 3. Construir lo prometido en cada plan antes de venderlo como activo:
    - dashboard con datos reales por cliente (ya hay avances en `demo/` y las tablas);
    - que Sofía reconozca al dueño cuando llama y le dé sus reportes;
@@ -108,8 +108,25 @@
    - Instagram y Facebook por ManyChat (≈ 39 $/mes por cliente) y métricas de redes.
 4. Completar NEQ, dirección, TPS/TVQ e interés por mora en los contratos (`tools/legal/`) y que los revise un abogado de Quebec. Registrarse para TPS/TVQ para poder facturar.
 5. Evaluación de privacidad y acuerdos de procesamiento con cada proveedor (lista en `docs/legal/LEEME.md`).
-6. Aviso por correo de cada lead nuevo (módulo de correo en el escenario de onboarding).
+6. ~~Aviso de cada lead nuevo~~: construido (sección 9); falta la clave de Resend o de Twilio.
 7. Decidir si se sube el plan de Make (más escenarios activos) y pasar Supabase al plan de pago antes de tener clientes.
 8. Revisar los avisos de seguridad de Supabase (sección 4).
 9. Línea demo que se adapta al negocio de quien llama (`docs/demo-agent-retell.md`, adaptada a la voz propia) y bloque "Llama y dile qué negocio tienes" en la home.
 10. Videos por nicho (`docs/guiones-video.md`).
+
+## 9. 3 de octubre (tarde): "poner todo a funcionar"
+**Hecho y verificado:**
+- **Precios de Sofía corregidos.** La línea demo todavía decía 997/1 497/2 497 $ y "la más popular". Ahora cita 397/597/797 $ + impuestos, los tres planes iguales, con "par phases" donde corresponde y la asistente humana como estimación. Cambiado en `voice-relay/src/prompt.ts` (se publica con el merge a `main`) y en `supabase/functions/voice/index.ts` (desplegada, versión 8).
+- **El respaldo `voice` tiene el mismo prompt que el relay** (pitch para dueños latinos, role-play del negocio de quien llama, reglas para dictar el correo).
+- **Las llamadas interesadas se vuelven leads.** Al analizar cada llamada, Claude extrae también negocio, sector, correo (solo si se confirmó) y cuándo llamar. Si la persona está calificada o dio un correo, se crea una fila en `leads` con `ref = appel-demo` y `payload.source = "call"`. Así el formulario y las llamadas caen en la misma bandeja.
+- **Aviso de cada lead nuevo:** función `lead-notify` (desplegada) + cron `lead-notify` en Supabase (cada minuto, solo llama si hay leads sin avisar desde el 3 oct.). Envía un correo por Resend y/o un SMS por Twilio, y marca el lead con `payload.notified_at`. Si ningún canal funciona, reintenta (hasta 7 días).
+  - Probado: con la clave correcta responde 200, sin ella 403.
+- Secreto nuevo en el Vault: `NOTIFY_KEY` (lo comparten el cron y la función).
+- `supabase/functions/messages-in/` agregado al repo (ya estaba desplegado, faltaba el código).
+
+**Falta (Andrés, 5 minutos, en Supabase → Edge Functions → Secrets):**
+- Correo: `RESEND_API_KEY` (resend.com → API Keys; el dominio meetaistaff.com ya tiene los registros de Resend). Opcional `NOTIFY_EMAIL` (por defecto hello@meetaistaff.com).
+- SMS: `TWILIO_ACCOUNT_SID` (consola de Twilio, empieza por AC…) y `NOTIFY_PHONE` (tu celular, formato +1…). `TWILIO_AUTH_TOKEN` ya existe.
+- Mientras no exista ninguno, los leads se guardan igual y el aviso sale en cuanto se agregue la clave.
+
+**No se pudo desde la sesión:** cambios de esquema en Supabase (`apply_migration` y DDL se quedan esperando y vencen a los 60 s). Por eso el aviso usa un cron y no un trigger. Queda pendiente correr en el SQL Editor: `alter function public.leads_fill_from_payload() set search_path = '';` (aviso del linter).

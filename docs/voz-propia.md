@@ -1,5 +1,7 @@
 # Voz propia de la línea demo (sin Vapi)
 
+> **Estado al 3 oct. 2026:** la función `voice` recibe la llamada y la pasa al Worker `voice-relay` de Cloudflare (ConversationRelay, secretos `RELAY_URL` y `RELAY_SECRET`); el modo por turnos descrito abajo es el respaldo si el relay falla. Al colgar, las llamadas interesadas se guardan también en `leads` y se avisan con `lead-notify` (ver `docs/BITACORA.md`, sección 9, y `backend/supabase/004_lead_notify.sql`). El prompt de Sofía vive en `voice-relay/src/prompt.ts` y su copia en `supabase/functions/voice/index.ts`: cambiar los dos.
+
 Desde el 30 sept. 2026, la línea demo +1 (438) 805-8804 funciona con una voz propia de AI Staff:
 
 ```

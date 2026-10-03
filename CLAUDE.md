@@ -4,11 +4,14 @@
 - **Dueño:** Andrés Carreño, emprendedor solo en Montreal.
   - Habla ES/EN y **no habla francés**: todo el copy FR debe salir listo.
   - Quiere entregables completos, no instrucciones.
-- **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude en una Edge Function de Supabase) más un dashboard por cliente.
+- **Producto:** AI Staff, una asistente personal con IA (voz propia trilingüe FR/EN/ES: Twilio + Claude, con Supabase y un Worker de Cloudflare) más un dashboard por cliente.
   - Posicionamiento (sept. 2026): **"Votre prochaine employée est une IA."** Se vende a la persona ocupada, no a la empresa.
   - Personas: **Sofía** (por defecto), **Alex** y **Tomás**.
-- **Stack:** Twilio (+1 438-805-8804, línea demo; voz Polly y reconocimiento de voz), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Function `voice`, pg_cron), Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
-  - Voz de la línea demo: `docs/voz-propia.md` (código en `supabase/functions/voice/index.ts`; el prompt de Sofía vive ahí). Make y Supabase: `docs/make-supabase.md`.
+- **Stack:** Twilio (+1 438-805-8804, línea demo), Claude API, Supabase (proyecto `vqvdmcxkkmkyxpfnxmzo`: tablas, Edge Functions `voice`, `lead-notify` y `messages-in`, pg_cron), Cloudflare Worker `voice-relay`, Make.com (plan Free: onboarding) y Resend. **Ya no se usa Vapi ni Retell.**
+  - **Cómo funciona la línea demo (confirmado el 3 oct. 2026):** Twilio llama a la función `voice` de Supabase; esta pasa la llamada al Worker `voice-relay` de Cloudflare (ConversationRelay: Deepgram + ElevenLabs + Claude Haiku 4.5). Si el relay falla, `voice` sigue sola por turnos (`<Gather>` + voces Google). Al colgar, el cron `voice-sweep` analiza la llamada (tabla `calls`) y, si la persona está interesada, crea un **lead** (`ref = appel-demo`).
+  - **El prompt de Sofía está en dos lugares y debe ser igual:** `voice-relay/src/prompt.ts` (el que se oye) y `supabase/functions/voice/index.ts` (respaldo, con etiquetas `[[LANG:xx]]`). El relay se publica solo al hacer merge a `main` (Cloudflare Workers Builds); `voice` se publica con `deploy_edge_function`.
+  - **Aviso de leads:** cron `lead-notify` (cada minuto, solo si hay leads sin avisar) → función `lead-notify` → correo por Resend y/o SMS por Twilio. Secretos: ver `docs/BITACORA.md`.
+  - Detalle: `docs/voz-propia.md`, `docs/make-supabase.md`.
 - **Meta de negocio:** cerrar clientes de unos 1 000 $/mes. Cada tarea debe acercar a un cliente que pague.
 
 ## Estructura del sitio (estático, sin build)
@@ -89,10 +92,8 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 
 ## Bitácora y estado (léela antes de continuar)
 - **`docs/BITACORA.md`**: qué se hizo hasta el 3 oct. 2026, decisiones del dueño (precios 397/597/797 + impuestos), estado de Supabase y Make, lo que no se pudo hacer y los pendientes en orden.
-- Ojo: hay **dos implementaciones de voz** en el repo (función `voice` de Supabase y `voice-relay/` de Cloudflare). Confirmar a cuál apunta Twilio antes de dar por buena la descripción de voz de este archivo.
 
 ## Pendientes conocidos
-- Aviso por correo de cada lead nuevo: agregar un módulo Gmail en el escenario de onboarding (ver `docs/make-supabase.md`).
 - Completar NEQ, dirección, TPS/TVQ en los contratos (`tools/legal/`) y hacerlos revisar.
-- Activar la voz propia (`docs/voz-propia.md`): poner `ANTHROPIC_API_KEY` y `TWILIO_AUTH_TOKEN` en los secretos de Supabase, liberar el número en Vapi y apuntar el webhook de voz de Twilio a la función `voice`.
+- Activar el aviso de leads: poner `RESEND_API_KEY` (correo) y/o `TWILIO_ACCOUNT_SID` + `NOTIFY_PHONE` (SMS) en los secretos de Edge Functions de Supabase.
 - Tarea 5 (backend del briefing): diseño listo en `docs/briefing-backend.md`. Conviene implementarlo con Edge Functions de Supabase (como `voice`) en vez de Make; requiere la tabla `clients`.
