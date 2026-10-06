@@ -359,6 +359,12 @@ details p{padding:0 24px 22px;color:var(--muted);max-width:740px}
 .field input.err{box-shadow:0 0 0 1px var(--magenta) inset}
 @media(max-width:520px){.field input{flex-basis:100%}.field .btn{width:100%}}
 .micro{font-size:.78rem;color:var(--muted);margin-top:12px}
+.consent{display:grid;grid-template-columns:20px 1fr;gap:10px;margin-top:14px;font-size:.8rem;color:var(--muted);line-height:1.45;cursor:pointer}
+.consent input{width:18px;height:18px;margin-top:1px;accent-color:#8B5CFF}
+.consent a{color:var(--cyan)}
+.consent.err span{color:var(--magenta)}
+.pm{margin-top:16px;max-height:300px;overflow:auto;white-space:pre-wrap;text-align:left;font-family:var(--mono);font-size:.74rem;line-height:1.55;color:#C9CEF0;background:rgba(0,0,0,.45);box-shadow:0 0 0 1px var(--stroke) inset;border-radius:16px;padding:16px}
+.pm-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
 .ok-view{text-align:center;padding:10px 0}
 .ok-view b{display:block;font-family:var(--display);font-size:1.3rem;margin-bottom:6px}
 .ok-view p{color:var(--muted)}
@@ -478,7 +484,7 @@ footer a{color:var(--cyan);text-decoration:none}
     <div class="sec-head rv">
       <span class="eyebrow">La cuenta que nadie hace</span>
       <h2>Cada llamada perdida es un cliente que <span class="grad">llamó a tu competencia</span>.</h2>
-      <p>Mueve los números con los de tu negocio. Quien no recibe respuesta casi nunca vuelve a llamar: busca el siguiente resultado en Google.</p>
+      <p>Mueve los números con los de tu negocio. Muchos no vuelven a intentar: buscan el siguiente resultado en Google.</p>
     </div>
     <div class="calc glass rv rv-zoom">
       <div class="calc-in">
@@ -489,7 +495,7 @@ footer a{color:var(--cyan);text-decoration:none}
       <div class="calc-out">
         <div><div class="k">Se te va cada mes</div><div class="loss grad" id="loss">$1,559</div><div class="loss-sub" id="lossY">$18,706 al año en clientes que ya querían comprarte.</div></div>
         <div class="vs">
-          <div><span>Recepcionista medio tiempo</span><b>$400–700/mes</b></div>
+          <div><span>Recepcionista medio tiempo (estimación)</span><b>$400–700/mes</b></div>
           <div class="win"><span>Tu agente de IA, 24/7</span><b>menos de $50/mes</b></div>
         </div>
       </div>
@@ -690,22 +696,125 @@ footer a{color:var(--cyan);text-decoration:none}
 <section class="final" id="reservar">
   <canvas id="finalCanvas" aria-hidden="true"></canvas>
   <div class="wrap final-inner">
-    <span class="eyebrow rv">¿Todavía no te decides?</span>
+    <span class="eyebrow rv" id="finalEyebrow">Inscripciones abren muy pronto</span>
     <h2 class="rv">La próxima llamada de las 11 p.m. <span class="grad">la contesta tu agente</span>.</h2>
-    <p class="lead rv">Llévate gratis el <b style="color:var(--text);font-weight:500">Prompt Maestro</b>: lo pegas en Claude, respondes unas preguntas y sale el cerebro de tu agente.</p>
+    <p class="lead rv">Llévate gratis el <b style="color:var(--text);font-weight:500">Prompt Maestro</b>: lo pegas en Claude, respondes unas preguntas y sale el cerebro de tu agente. <span id="finalExtra">Y te aviso primero cuando abran las inscripciones.</span></p>
     <div class="capture rv">
       <div id="formView">
         <h3>Recibe el Prompt Maestro gratis</h3>
-        <p>Te lo envío a tu correo en un minuto.</p>
-        <form id="leadForm" class="field" novalidate>
-          <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
-          <button class="btn btn-prime" type="submit" id="submitBtn">Enviármelo</button>
+        <p>Déjame tu correo y te lo muestro aquí mismo.</p>
+        <form id="leadForm" novalidate>
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
+            <button class="btn btn-prime" type="submit" id="submitBtn">Quiero el prompt</button>
+          </div>
+          <label class="consent" for="consent"><input type="checkbox" id="consent" required><span>Acepto recibir correos de Andrés.IA sobre agentes de IA y el aviso de apertura del curso. Puedo darme de baja cuando quiera. <a href="/confidentialite/?lang=es" target="_blank" rel="noopener">Privacidad</a></span></label>
         </form>
-        <p class="micro">Cero spam. Te escribo solo con contenido útil sobre agentes y puedes darte de baja cuando quieras.</p>
       </div>
       <div class="ok-view" id="okView" hidden>
-        <b class="grad">¡Listo!</b>
-        <p>Revisa tu correo: ahí te llega el Prompt Maestro.</p>
+        <b class="grad">¡Aquí está tu Prompt Maestro!</b>
+        <p>Cópialo, abre Claude y pégalo en una conversación nueva.</p>
+        <pre class="pm" id="pmText">Eres un consultor experto en agentes de voz con IA para pequeños negocios de habla hispana. Vas a entrevistarme para construir el cerebro (prompt de sistema) de mi primer agente de voz, que se usará en una plataforma como Retell AI.
+
+## Tus reglas de trabajo
+- Haz UNA sola pregunta por mensaje. Nunca dos.
+- Da un ejemplo corto en cada pregunta para que yo entienda qué responder.
+- Confirma cada respuesta en una frase antes de seguir.
+- Si mi respuesta es vaga, repregunta una vez para concretarla.
+- Habla simple, sin tecnicismos. Soy dueño de negocio, no programador.
+- Cuando tengas las 12 respuestas, genera los 3 entregables del final sin que te los pida.
+
+## Primer mensaje
+Salúdame con energía, dime que en unos 10 minutos vamos a construir el cerebro de mi agente y haz la pregunta 1.
+
+## Las 12 preguntas (en orden)
+1. ¿Cómo se llama tu negocio y a qué se dedica? (ej: &quot;Clínica Dental Sonrisa, odontología general en Medellín&quot;)
+2. ¿En qué ciudad/país están tus clientes y cómo hablan? (tú/usted, expresiones locales)
+3. ¿Cuál es la tarea principal del agente? (agendar citas / responder preguntas / capturar datos / confirmar citas)
+4. ¿Qué resultado cuenta como éxito al final de una llamada? (ej: cita en el calendario con nombre y teléfono)
+5. ¿Qué datos necesita pedirle al cliente? (nombre, teléfono, correo, motivo, placa del carro…)
+6. ¿Cuáles son tus servicios principales y sus precios o rangos? (si prefieres no dar precios, dilo)
+7. ¿Horario de atención, dirección y cómo llegar?
+8. ¿Cuáles son las 5 preguntas que más te hacen los clientes y qué respondes?
+9. ¿Qué NO debe hacer nunca el agente? (ej: dar diagnósticos, prometer descuentos, hablar de la competencia)
+10. ¿En qué casos debe pasar la llamada a una persona y a qué número? (ej: urgencias, quejas, &quot;quiero hablar con alguien&quot;)
+11. ¿Qué tono quieres? (formal, cercano, alegre, sereno) y ¿cómo se llama el agente?
+12. ¿Trabaja 24/7 o solo en horario? ¿Qué dice fuera de horario?
+
+## Entregable 1 — Descripción de puesto (tabla)
+| Campo | Detalle |
+|---|---|
+| Nombre del agente | |
+| Negocio | |
+| Tarea principal | |
+| Resultado de éxito | |
+| Datos a capturar | |
+| Qué NO hace | |
+| Cuándo transfiere | |
+| Tono | |
+| Horario | |
+
+## Entregable 2 — Prompt de sistema (en un bloque de código, listo para pegar)
+Usa exactamente esta estructura y llénala con mis respuestas:
+
+```
+## IDENTIDAD
+Eres [NOMBRE], asistente virtual de [NEGOCIO], [a qué se dedica] en [CIUDAD]. Eres una inteligencia artificial y lo dices con naturalidad si te preguntan.
+
+## OBJETIVO
+Tu trabajo es [TAREA PRINCIPAL]. Una llamada es exitosa cuando [RESULTADO DE ÉXITO]. Todo lo que haces apunta a eso.
+
+## ESTILO DE VOZ (muy importante: esto es una llamada, no un chat)
+- Respuestas de una o dos frases. Nunca discursos.
+- Una sola pregunta por turno.
+- Nada de listas, viñetas, emojis ni símbolos.
+- Horas, fechas y precios como se dicen: &quot;nueve y media de la mañana&quot;, &quot;ciento veinte mil pesos&quot;.
+- Trata al cliente de [TÚ/USTED]. Tono [TONO]. Usa expresiones naturales de [PAÍS] con moderación.
+- Si el cliente te interrumpe, detente y escúchalo.
+- Para confirmar correos o nombres difíciles, deletréalos de vuelta.
+
+## FLUJO DE LA LLAMADA
+1. Saludo: &quot;[SALUDO INICIAL, incluye que eres asistente virtual]&quot;.
+2. Entiende qué necesita con una pregunta abierta.
+3. Si es [TAREA PRINCIPAL]: [pasos concretos: pedir datos uno por uno, consultar disponibilidad, ofrecer dos opciones de horario, confirmar].
+4. Si es una pregunta: responde con la INFORMACIÓN DEL NEGOCIO y ofrece [agendar/ayuda adicional].
+5. Antes de cerrar, resume lo acordado en una frase.
+6. Despídete con calidez y cuelga cuando el cliente se despida.
+
+## HERRAMIENTAS
+- Antes de ofrecer horarios, usa la función de consultar disponibilidad. Mientras tanto di: &quot;Dame un segundo, reviso la agenda&quot;.
+- Solo reserva cuando el cliente confirmó horario y tienes: [DATOS A CAPTURAR].
+- Si una herramienta falla, discúlpate, toma los datos y di que el equipo lo contactará hoy.
+
+## LÍMITES
+- Nunca: [QUÉ NO HACE].
+- Si no sabes algo, no lo inventes: &quot;Esa información no la tengo, pero te puedo comunicar con el equipo&quot; o toma el recado.
+- Transfiere a [NÚMERO] cuando: [CASOS DE TRANSFERENCIA]. Antes de transferir di: &quot;Te comunico con una persona del equipo, un momento&quot;.
+- Si el cliente se pone agresivo, mantén la calma, ofrece transferir una vez y, si continúa, despídete con respeto.
+
+## HORARIO
+[24/7 o HORARIO]. Fuera de horario: [QUÉ DICE / QUÉ HACE].
+
+## INFORMACIÓN DEL NEGOCIO
+- Servicios y precios: [LISTA]
+- Dirección y cómo llegar: [DIRECCIÓN]
+- Horario: [HORARIO]
+- Preguntas frecuentes:
+  - [P1] → [R1]
+  - [P2] → [R2]
+  - [P3] → [R3]
+  - [P4] → [R4]
+  - [P5] → [R5]
+(En el Día 5 ampliamos esta sección con la plantilla de 40 preguntas.)
+```
+
+## Entregable 3 — Mensaje de bienvenida y 5 frases de prueba
+- El saludo exacto que dirá el agente al contestar.
+- 5 frases que yo debo decirle en mi primera prueba (una normal, una fuera de tema, una difícil, una de transferencia, una con dato que no sabe).
+
+## Mensaje final
+&quot;¡Listo! Ya tienes el cerebro de tu agente. Guarda estos tres bloques en tu Proyecto de Claude: mañana, en el Día 3, lo ponemos a hablar.&quot;</pre>
+        <div class="pm-actions"><button class="btn btn-prime" type="button" id="copyPm">Copiar prompt</button><a class="btn btn-ghost" href="https://claude.ai/new" target="_blank" rel="noopener">Abrir Claude</a></div>
       </div>
     </div>
   </div>
@@ -722,8 +831,9 @@ footer a{color:var(--cyan);text-decoration:none}
 
 <script>
 /* ===== CONFIGURACIÓN =====
-   FORMSPREE_URL: crea un form gratis en https://formspree.io/forms/new y pega aquí tu ID. */
-const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+   LEAD_WEBHOOK y CHECKOUT se configuran aquí abajo. */
+/* Los correos llegan al mismo escenario de Make que /onboarding/ (tabla leads de Supabase), con ref "curso-prompt-maestro". */
+const LEAD_WEBHOOK = 'https://hook.us2.make.com/h45to1mdxrpdfnbeorgnntrr4t138a29';
 /* CHECKOUT: pega aquí los links de pago de Hotmart de cada plan.
    Mientras estén vacíos, los botones bajan al formulario del regalo. */
 const CHECKOUT = { esencial: '', pro: '', vip: '' };
@@ -973,18 +1083,28 @@ function calc() {
 calc(); lossShown = lossTarget; lossEl.textContent = fmt(lossShown);
 
 /* ---------- Formulario ---------- */
-document.querySelectorAll('.checkout').forEach(a => { const url = CHECKOUT[a.dataset.plan]; if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; } });
+const salesOpen = Object.values(CHECKOUT).some(Boolean);
+document.querySelectorAll('.checkout').forEach(a => {
+  const url = CHECKOUT[a.dataset.plan];
+  if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+  else a.textContent = 'Reservar cupo';
+});
+if (salesOpen) {
+  document.getElementById('finalEyebrow').textContent = '¿Todavía no te decides?';
+  document.getElementById('finalExtra').textContent = '';
+}
 const form = document.getElementById('leadForm'), emailEl = document.getElementById('email');
 form.addEventListener('submit', async e => {
   e.preventDefault();
   const v = emailEl.value.trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { emailEl.classList.add('err'); emailEl.focus(); return; }
+  const consent = document.getElementById('consent');
+  if (!consent.checked) { consent.closest('.consent').classList.add('err'); return; }
   const btn = document.getElementById('submitBtn'), label = btn.textContent;
   btn.textContent = 'Enviando…'; btn.disabled = true;
   try {
-    const res = await fetch(FORMSPREE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ email: v, source: 'curso-prompt-maestro', fecha: new Date().toISOString() }) });
-    if (!res.ok) throw new Error(res.status);
+    await fetch(LEAD_WEBHOOK, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify({ submittedAt: new Date().toISOString(), formLang: 'es', page: location.href, email: v, c1: true, c3: true, ref: 'curso-prompt-maestro', source: 'curso-andres-ia', notes: 'Curso Monta tu Agente de IA en 7 Días: pidió el Prompt Maestro' }) });
     document.getElementById('formView').hidden = true; document.getElementById('okView').hidden = false;
   } catch (err) {
     btn.textContent = 'No se pudo enviar. Intenta otra vez'; btn.disabled = false;
@@ -992,6 +1112,13 @@ form.addEventListener('submit', async e => {
   }
 });
 emailEl.addEventListener('input', () => emailEl.classList.remove('err'));
+document.getElementById('consent').addEventListener('change', e => e.target.closest('.consent').classList.remove('err'));
+document.getElementById('copyPm').addEventListener('click', async e => {
+  const btn = e.currentTarget, txt = document.getElementById('pmText').textContent;
+  try { await navigator.clipboard.writeText(txt); btn.textContent = 'Copiado'; }
+  catch (err) { const r = document.createRange(); r.selectNodeContents(document.getElementById('pmText')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = 'Selecciónalo y cópialo'; }
+  setTimeout(() => { btn.textContent = 'Copiar prompt'; }, 2500);
+});
 
 /* ---------- Escenas ligadas al scroll ---------- */
 const heroInner = document.getElementById('heroInner');
