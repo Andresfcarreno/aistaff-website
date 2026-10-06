@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Agente IA en 7 Días · Andrés.IA</title>
+<title>Agente IA en 7 Días · Andrés.IA, un programa de AI Staff</title>
 <meta name="description" content="Monta tu propio agente de voz con IA que contesta llamadas, responde dudas y agenda citas 24/7. En 7 días, sin programar, funcionando por menos de 50 dólares al mes.">
 <meta property="og:title" content="Monta tu Agente de IA en 7 Días">
 <meta property="og:description" content="Tu negocio contesta solo, 24/7. Sin programar. Funcionando por menos de $50 al mes, garantizado.">
@@ -103,6 +103,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .brand{font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;gap:10px}
 .brand i{width:18px;height:18px;border-radius:50%;background:conic-gradient(from 0deg,#5CF2FF,#8B5CFF,#FF4FB8,#5CF2FF);box-shadow:0 0 16px rgba(139,92,255,.8);animation:rot 6s linear infinite}
 .brand b{color:var(--cyan);font-weight:800}
+.brand-txt{display:flex;flex-direction:column;gap:4px;line-height:1}
+.brand small{font-family:var(--mono);font-weight:400;font-size:.52rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.intro-sub{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-top:-4px;opacity:0;animation:fadeUp .8s var(--ease) .7s forwards}
+.intro-sub b{color:var(--text);font-weight:500}
 .nav ul{list-style:none;display:flex;gap:26px;font-size:.88rem;color:var(--muted)}
 .nav ul a{text-decoration:none;transition:color .2s}
 .nav ul a:hover{color:var(--text)}
@@ -402,6 +406,7 @@ footer a{color:var(--cyan);text-decoration:none}
       <circle class="core" cx="120" cy="120" r="7" fill="#5CF2FF"/>
     </svg>
     <div class="intro-brand">ANDRÉS<span>.IA</span></div>
+    <div class="intro-sub">Un programa de <b>AI Staff</b></div>
     <div class="intro-status" id="introStatus">Conectando agente de voz · 0%</div>
   </div>
 </div>
@@ -409,7 +414,7 @@ footer a{color:var(--cyan);text-decoration:none}
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <nav class="nav" aria-label="Principal">
-  <a class="brand" href="#top"><i></i><span>ANDRÉS<b>.IA</b></span></a>
+  <a class="brand" href="#top" aria-label="Andrés.IA, un programa de AI Staff"><i></i><span class="brand-txt"><span>ANDRÉS<b>.IA</b></span><small>Un programa de AI Staff</small></span></a>
   <ul>
     <li><a href="#llamada">La llamada</a></li>
     <li><a href="#metodo">Método</a></li>
@@ -708,7 +713,7 @@ footer a{color:var(--cyan);text-decoration:none}
             <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
             <button class="btn btn-prime" type="submit" id="submitBtn">Quiero el prompt</button>
           </div>
-          <label class="consent" for="consent"><input type="checkbox" id="consent" required><span>Acepto recibir correos de Andrés.IA sobre agentes de IA y el aviso de apertura del curso. Puedo darme de baja cuando quiera. <a href="/confidentialite/?lang=es" target="_blank" rel="noopener">Privacidad</a></span></label>
+          <label class="consent" for="consent"><input type="checkbox" id="consent" required><span>Acepto recibir correos de Andrés.IA (AI Staff) sobre agentes de IA y el aviso de apertura del curso. Puedo darme de baja cuando quiera. <a href="/confidentialite/?lang=es" target="_blank" rel="noopener">Privacidad</a></span></label>
         </form>
       </div>
       <div class="ok-view" id="okView" hidden>
@@ -822,7 +827,7 @@ Tu trabajo es [TAREA PRINCIPAL]. Una llamada es exitosa cuando [RESULTADO DE ÉX
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> Andrés.IA · Curso de agentes de IA en español</span>
+    <span>© <span id="yr">2026</span> Andrés.IA es el programa de formación de <a href="/">AI Staff</a>, la agencia de agentes de voz de Andrés Carreño en Montreal.</span>
     <span>¿Prefieres que lo hagamos por ti? <a href="/">AI Staff →</a></span>
   </div>
 </footer>
