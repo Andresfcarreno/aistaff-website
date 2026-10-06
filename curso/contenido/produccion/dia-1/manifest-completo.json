@@ -1,0 +1,62 @@
+[
+ {
+  "slide": "01",
+  "audio": "01",
+  "text": "Bienvenido al Día 1. Soy Andrés, y durante los próximos siete días vamos a construir juntos tu agente de inteligencia artificial: uno que contesta llamadas, resuelve dudas y agenda citas por ti. Hoy no vamos a tocar ninguna herramienta todavía. Hoy hacemos lo más importante de todo el curso."
+ },
+ {
+  "slide": "02",
+  "audio": "02",
+  "text": "Antes de abrir cualquier plataforma, vamos a hacer lo que el 90% de la gente se salta. Y justamente por eso fracasan. Si no defines bien qué va a hacer tu agente, terminas con un robot que habla bonito, pero que no le sirve a tu negocio. Al terminar este video, vas a tener el trabajo de tu agente definido en una sola hoja. Esa hoja guía los próximos seis días."
+ },
+ {
+  "slide": "03",
+  "audio": "03",
+  "text": "El error más común es querer un agente que lo haga todo. Que conteste, que venda, que cobre, que haga seguimiento y que responda en redes. Un agente que intenta hacerlo todo, lo hace todo mal. Uno que hace una sola cosa, la hace excelente. Tu primer agente resuelve un solo dolor concreto de tu negocio. Después, cuando funcione, escalas."
+ },
+ {
+  "slide": "04",
+  "audio": "04",
+  "text": "Mira la diferencia. Esto es vago: un asistente para mi clínica. Esto, en cambio, es un trabajo real: un agente que agenda citas de primera consulta por teléfono, para que mi recepcionista deje de pasar el día contestando lo mismo. Quédate con esta idea: tu primer agente no es un empleado. Es un especialista en una sola tarea."
+ },
+ {
+  "slide": "05",
+  "audio": "05",
+  "text": "Para encontrar esa tarea, vamos a responder tres preguntas. Uno: qué conversación repites una y otra vez. Dos: por dónde llega esa conversación. Y tres: qué resultado quieres al final. Ve anotando tus respuestas mientras avanzamos."
+ },
+ {
+  "slide": "06",
+  "audio": "06",
+  "text": "Primera pregunta. ¿Qué te preguntan tus clientes veinte veces al día? ¿Qué responde tu equipo en piloto automático? Casi siempre es algo así: ¿tienen disponibilidad? ¿Cuánto cuesta? ¿Dónde están ubicados? Quiero agendar una cita. Esa conversación repetida es oro, porque es exactamente lo que un agente hace mejor que nadie."
+ },
+ {
+  "slide": "07",
+  "audio": "07",
+  "text": "Segunda pregunta. ¿Por dónde te llega esa conversación? Puede ser por llamada, por WhatsApp, por mensajes de Instagram o por el formulario de tu página. Aquí la regla es simple: elige un solo canal para empezar, el que más volumen tenga. En este curso nos enfocamos en las llamadas, porque es donde más clientes se pierden."
+ },
+ {
+  "slide": "08",
+  "audio": "08",
+  "text": "Tercera pregunta. ¿Qué tiene que pasar al final de la conversación para que digas: esto funcionó? Puede ser una cita confirmada en tu calendario, el nombre y el teléfono del cliente guardados, o una pregunta resuelta. Y si es algo complicado, la llamada pasada a una persona. Ese resultado es la métrica de éxito de tu agente, y lo vamos a medir en el Día 7."
+ },
+ {
+  "slide": "09",
+  "audio": "09",
+  "text": "Si no estás seguro de tus respuestas, haz esto: una auditoría de 48 horas. Durante dos días, anota cada llamada o mensaje que entra: la hora, el motivo, y si alguien contestó o no. Al final vas a ver, con datos y no con intuición, cuál es la conversación que más se repite, y cuántas se te están escapando."
+ },
+ {
+  "slide": "10",
+  "audio": "10",
+  "text": "Ahora juntamos todo en la descripción de puesto de tu agente. Son ocho campos: el nombre del agente, tu negocio, el canal, la tarea principal en una frase, el resultado de éxito, lo que no hace y cuándo pasa a una persona, el tono, y el horario. La plantilla está en los recursos de este módulo."
+ },
+ {
+  "slide": "11",
+  "audio": "11",
+  "text": "Así queda un ejemplo lleno. Se llama Sofía, y trabaja para la Clínica Dental Sonrisa. Atiende por teléfono. Su tarea es agendar citas de primera consulta, y tiene éxito cuando la cita queda en el calendario con los datos del paciente. No da diagnósticos, y si es una urgencia, pasa la llamada a una persona. Habla cercana y profesional, y trabaja 24/7. Esta hoja es tu mapa: si la tarea está clara, lo demás es montaje."
+ },
+ {
+  "slide": "12",
+  "audio": "12",
+  "text": "Tu tarea de hoy: llena tu propia descripción de puesto antes de seguir. No avances sin ella. Mañana, en el Día 2, le vamos a construir el cerebro a tu agente: el guion exacto con el que va a conversar. Y lo vamos a hacer con Claude, en minutos. Nos vemos en el Día 2. Trae tu hoja lista."
+ }
+]
