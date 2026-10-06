@@ -314,6 +314,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radiu
 .plan .flag{align-self:flex-start;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:100px;background:var(--grad);color:#050612;font-weight:500}
 .plan h3{font-size:1.5rem;font-weight:700}
 .plan .for{color:var(--muted);font-size:.93rem;margin-top:6px}
+.price-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price{font-family:var(--display);font-weight:800;font-size:3.4rem;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.price sup{font-size:.4em;vertical-align:top;position:relative;top:.3em;margin-right:2px}
+.was{font-family:var(--mono);font-size:.9rem;color:var(--muted);text-decoration:line-through}
+.price-note{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--cyan);margin-top:8px}
 .redact{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;background:rgba(0,0,0,.3);box-shadow:0 0 0 1px var(--stroke) inset}
 .redact .bars{font-family:var(--display);font-weight:800;font-size:1.9rem;letter-spacing:-.04em;filter:blur(7px);user-select:none;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .redact small{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
@@ -338,7 +343,7 @@ details p{padding:0 24px 22px;color:var(--muted);max-width:740px}
 #finalCanvas{position:absolute;inset:0;width:100%;height:100%}
 .final-inner{position:relative;z-index:2;display:grid;justify-items:center;gap:22px}
 .final h2{font-size:clamp(2.1rem,6.2vw,5.2rem);line-height:.98;font-weight:800;letter-spacing:-.045em;max-width:1000px}
-.final .lead{color:var(--muted);max-width:560px;font-size:1.08rem}
+.final .lead{color:#B4BAD9;max-width:560px;font-size:1.08rem;text-shadow:0 0 6px var(--void),0 2px 24px var(--void),0 0 40px var(--void)}
 .capture{width:min(560px,100%);padding:24px;border-radius:28px;text-align:left;background:rgba(8,10,23,.72);box-shadow:0 0 0 1px var(--stroke-2) inset,0 40px 100px -40px rgba(139,92,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .capture h3{font-size:1.05rem;font-weight:500;margin-bottom:4px}
 .capture > div > p{color:var(--muted);font-size:.9rem;margin-bottom:16px}
@@ -404,9 +409,10 @@ footer a{color:var(--cyan);text-decoration:none}
     <li><a href="#metodo">Método</a></li>
     <li><a href="#incluye">Qué incluye</a></li>
     <li><a href="#garantia">Garantía</a></li>
+    <li><a href="#planes">Precio</a></li>
     <li><a href="#faq">Preguntas</a></li>
   </ul>
-  <a class="btn btn-prime mag" href="#reservar">Reservar cupo</a>
+  <a class="btn btn-prime mag" href="#planes">Ver planes</a>
 </nav>
 
 <header class="hero" id="top">
@@ -421,11 +427,11 @@ footer a{color:var(--cyan);text-decoration:none}
     </h1>
     <p class="lead">Monta en <b>7 días</b> un agente de voz con IA que <b>contesta llamadas, resuelve dudas y agenda citas</b>. Sin programar. Funcionando por <b>menos de 50 dólares al mes</b>, garantizado.</p>
     <div class="hero-ctas">
-      <a class="btn btn-prime mag" href="#reservar">Quiero mi agente
+      <a class="btn btn-prime mag" href="#planes">Quiero mi agente
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="btn btn-ghost mag" href="#llamada">Ver una llamada</a>
     </div>
-    <div class="hero-proof"><span>Sin código</span><span>En español</span><span>Garantía doble</span></div>
+    <div class="hero-proof"><span>Desde $117 · pago único</span><span>Sin código</span><span>Garantía doble</span></div>
   </div>
   <div class="scroll-cue" aria-hidden="true"><i></i>Desliza</div>
 </header>
@@ -618,14 +624,14 @@ footer a{color:var(--cyan);text-decoration:none}
 <section class="sec" id="planes" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head center rv">
-      <span class="eyebrow">Cohorte fundadora · cupos limitados</span>
+      <span class="eyebrow">Precio de fundador · primeros 100 alumnos</span>
       <h2>Elige hasta dónde <span class="grad">quieres llegar</span>.</h2>
-      <p>El precio de fundador se revela solo a quienes están en la lista. Pago único, en cuotas y con acceso de por vida.</p>
+      <p>Pago único, acceso de por vida y actualizaciones incluidas. Paga en cuotas desde tu país.</p>
     </div>
     <div class="plans">
       <article class="plan rv">
         <div><h3>Esencial</h3><p class="for">Para montar tu propio agente.</p></div>
-        <div class="redact"><span class="bars" aria-hidden="true">$000</span><small>Precio de fundador<br>solo para la lista</small></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>117</span><span class="was">$147</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
         <ul>
           <li><span><b>Día 0 + los 7 días</b> completos</span></li>
           <li><span>Kit de plantillas descargables</span></li>
@@ -633,12 +639,12 @@ footer a{color:var(--cyan);text-decoration:none}
           <li><span>Kit legal y de confianza</span></li>
           <li><span>Actualizaciones de por vida</span></li>
         </ul>
-        <a class="btn btn-ghost pick" data-plan="esencial" href="#reservar">Recibir mi precio</a>
+        <a class="btn btn-ghost checkout" data-plan="esencial" href="#reservar">Elegir Esencial</a>
       </article>
       <article class="plan feat rv" style="--d:.1s">
         <span class="flag">El más elegido</span>
         <div><h3>Pro</h3><p class="for">Para tu negocio y para venderlo a otros.</p></div>
-        <div class="redact"><span class="bars" aria-hidden="true">$000</span><small>Precio de fundador<br>solo para la lista</small></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>197</span><span class="was">$297</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
         <ul>
           <li><span><b>Todo lo de Esencial</b></span></li>
           <li><span>Pack de 12 industrias</span></li>
@@ -647,19 +653,19 @@ footer a{color:var(--cyan);text-decoration:none}
           <li><span>Claude como copiloto semanal</span></li>
           <li><span><b>Comunidad privada</b> + sesiones en vivo</span></li>
         </ul>
-        <a class="btn btn-prime pick" data-plan="pro" href="#reservar">Recibir mi precio</a>
+        <a class="btn btn-prime checkout" data-plan="pro" href="#reservar">Elegir Pro</a>
       </article>
       <article class="plan rv" style="--d:.2s">
         <div><h3>VIP</h3><p class="for">Lo hacemos contigo, esta misma semana.</p></div>
-        <div class="redact"><span class="bars" aria-hidden="true">$000</span><small>Por aplicación<br>cupos mensuales limitados</small></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>497</span></div><div class="price-note">USD · SOLO 5 CUPOS AL MES</div></div>
         <ul>
           <li><span><b>Todo lo de Pro</b></span></li>
-          <li><span>Sesión 1 a 1 con Andrés</span></li>
+          <li><span>Sesión 1 a 1 de 90 min con Andrés</span></li>
           <li><span>El equipo de AI Staff configura contigo</span></li>
           <li><span>Revisión de tus primeras llamadas</span></li>
-          <li><span>Soporte directo</span></li>
+          <li><span>30 días de soporte directo</span></li>
         </ul>
-        <a class="btn btn-ghost pick" data-plan="vip" href="#reservar">Aplicar</a>
+        <a class="btn btn-ghost checkout" data-plan="vip" href="#reservar">Elegir VIP</a>
       </article>
     </div>
   </div>
@@ -676,7 +682,7 @@ footer a{color:var(--cyan);text-decoration:none}
       <details><summary>¿Cuánto tiempo necesito al día?</summary><p>Entre 30 y 45 minutos. Si vas más lento, no pasa nada: el acceso es de por vida.</p></details>
       <details><summary>¿Qué pasa si la IA dice algo incorrecto?</summary><p>Los días 5 y 6 son para eso: límites claros, paso a una persona y una batería de 20 pruebas diseñadas para romper agentes antes de que lo haga un cliente.</p></details>
       <details><summary>¿Puedo vender agentes a otros negocios?</summary><p>Sí. El plan Pro incluye el módulo "Vende este servicio" con el guion de demo, la propuesta y el contrato que uso en mi agencia.</p></details>
-      <details><summary>¿Por qué no está el precio publicado?</summary><p>Porque la primera cohorte tiene precio de fundador y cupos limitados. Te lo enviamos al entrar a la lista, junto con la fecha de apertura.</p></details>
+      <details><summary>¿Puedo pagar en cuotas?</summary><p>Sí. El pago se hace en Hotmart, que acepta tarjeta, PSE, OXXO, PIX y otros medios locales, y permite pagar en cuotas según tu país.</p></details>
     </div>
   </div>
 </section>
@@ -684,27 +690,22 @@ footer a{color:var(--cyan);text-decoration:none}
 <section class="final" id="reservar">
   <canvas id="finalCanvas" aria-hidden="true"></canvas>
   <div class="wrap final-inner">
-    <span class="eyebrow rv">Abrimos inscripciones muy pronto</span>
+    <span class="eyebrow rv">¿Todavía no te decides?</span>
     <h2 class="rv">La próxima llamada de las 11 p.m. <span class="grad">la contesta tu agente</span>.</h2>
-    <p class="lead rv">Entra a la lista y recibe primero tu precio de fundador y la fecha de apertura.</p>
+    <p class="lead rv">Llévate gratis el <b style="color:var(--text);font-weight:500">Prompt Maestro</b>: lo pegas en Claude, respondes unas preguntas y sale el cerebro de tu agente.</p>
     <div class="capture rv">
       <div id="formView">
-        <h3>Reserva tu cupo de fundador</h3>
-        <p>Elige el plan que te interesa. Puedes cambiarlo después.</p>
-        <div class="plan-pick" role="radiogroup" aria-label="Plan de interés">
-          <label><input type="radio" name="plan" value="esencial" id="pp-esencial"><span>Esencial</span></label>
-          <label><input type="radio" name="plan" value="pro" id="pp-pro" checked><span>Pro</span></label>
-          <label><input type="radio" name="plan" value="vip" id="pp-vip"><span>VIP</span></label>
-        </div>
+        <h3>Recibe el Prompt Maestro gratis</h3>
+        <p>Te lo envío a tu correo en un minuto.</p>
         <form id="leadForm" class="field" novalidate>
           <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
-          <button class="btn btn-prime" type="submit" id="submitBtn">Reservar</button>
+          <button class="btn btn-prime" type="submit" id="submitBtn">Enviármelo</button>
         </form>
-        <p class="micro">Cero spam. Solo te escribo cuando abramos y con contenido útil sobre agentes.</p>
+        <p class="micro">Cero spam. Te escribo solo con contenido útil sobre agentes y puedes darte de baja cuando quieras.</p>
       </div>
       <div class="ok-view" id="okView" hidden>
-        <b class="grad">Estás dentro.</b>
-        <p>Revisa tu correo: ahí te llega tu precio de fundador y la fecha de apertura.</p>
+        <b class="grad">¡Listo!</b>
+        <p>Revisa tu correo: ahí te llega el Prompt Maestro.</p>
       </div>
     </div>
   </div>
@@ -717,12 +718,15 @@ footer a{color:var(--cyan);text-decoration:none}
   </div>
 </footer>
 
-<div class="mcta" id="mcta"><span>Cupos de fundador limitados</span><a class="btn btn-prime" href="#reservar">Reservar</a></div>
+<div class="mcta" id="mcta"><span>Desde <b style="color:var(--text)">$117</b> · pago único</span><a class="btn btn-prime" href="#planes">Ver planes</a></div>
 
 <script>
 /* ===== CONFIGURACIÓN =====
    FORMSPREE_URL: crea un form gratis en https://formspree.io/forms/new y pega aquí tu ID. */
 const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+/* CHECKOUT: pega aquí los links de pago de Hotmart de cada plan.
+   Mientras estén vacíos, los botones bajan al formulario del regalo. */
+const CHECKOUT = { esencial: '', pro: '', vip: '' };
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(pointer: fine)').matches;
@@ -969,19 +973,17 @@ function calc() {
 calc(); lossShown = lossTarget; lossEl.textContent = fmt(lossShown);
 
 /* ---------- Formulario ---------- */
-const planRadios = document.querySelectorAll('input[name=plan]');
-document.querySelectorAll('.pick').forEach(a => a.addEventListener('click', () => { document.getElementById('pp-' + a.dataset.plan).checked = true; }));
+document.querySelectorAll('.checkout').forEach(a => { const url = CHECKOUT[a.dataset.plan]; if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; } });
 const form = document.getElementById('leadForm'), emailEl = document.getElementById('email');
 form.addEventListener('submit', async e => {
   e.preventDefault();
   const v = emailEl.value.trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { emailEl.classList.add('err'); emailEl.focus(); return; }
-  const plan = [...planRadios].find(r => r.checked)?.value || 'pro';
   const btn = document.getElementById('submitBtn'), label = btn.textContent;
   btn.textContent = 'Enviando…'; btn.disabled = true;
   try {
     const res = await fetch(FORMSPREE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ email: v, plan, source: 'curso-landing', fecha: new Date().toISOString() }) });
+      body: JSON.stringify({ email: v, source: 'curso-prompt-maestro', fecha: new Date().toISOString() }) });
     if (!res.ok) throw new Error(res.status);
     document.getElementById('formView').hidden = true; document.getElementById('okView').hidden = false;
   } catch (err) {
