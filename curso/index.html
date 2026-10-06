@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agente IA en 7 Días · Andrés.IA</title>
+<meta name="description" content="Monta tu propio agente de voz con IA que contesta llamadas, responde dudas y agenda citas 24/7. En 7 días, sin programar, funcionando por menos de 50 dólares al mes.">
+<meta property="og:title" content="Monta tu Agente de IA en 7 Días">
+<meta property="og:description" content="Tu negocio contesta solo, 24/7. Sin programar. Funcionando por menos de $50 al mes, garantizado.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#04050B">
+<script>try{if(sessionStorage.getItem('aiIntro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('no-intro');sessionStorage.setItem('aiIntro','1')}catch(e){}document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --void:#04050B;
+  --glass:rgba(160,170,255,.045);
+  --stroke:rgba(190,200,255,.10);
+  --stroke-2:rgba(190,200,255,.20);
+  --text:#F3F5FF;
+  --muted:#8C93B8;
+  --cyan:#5CF2FF;
+  --violet:#8B5CFF;
+  --magenta:#FF4FB8;
+  --ok:#6BFFB8;
+  --grad:linear-gradient(100deg,#5CF2FF 0%,#8B5CFF 50%,#FF4FB8 100%);
+  --display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --body:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --wrap:1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--void)}
+body{background:var(--void);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%}
+::selection{background:rgba(139,92,255,.5)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,36px)}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:shift 8s linear infinite}
+.grad{text-shadow:none!important}
+@keyframes shift{to{background-position:200% 0}}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--grad)}
+.sec{position:relative;padding-block:clamp(90px,12vw,160px)}
+.sec-head{display:grid;gap:18px;max-width:820px;margin-bottom:clamp(40px,6vw,72px)}
+.sec-head h2{font-size:clamp(1.9rem,4.6vw,3.6rem);line-height:1.04}
+.sec-head p{color:var(--muted);font-size:1.1rem;max-width:620px}
+section[id],header[id]{scroll-margin-top:90px}
+.center{text-align:center;margin-inline:auto;justify-items:center}
+
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.cursor{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(closest-side,rgba(139,92,255,.13),rgba(92,242,255,.05) 50%,transparent);opacity:0}
+@media (pointer:fine){.cursor{opacity:1}}
+
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--body);font-weight:600;font-size:1rem;
+  padding:17px 28px;border-radius:100px;text-decoration:none;border:0;cursor:pointer;color:var(--text);isolation:isolate;transition:transform .25s var(--ease)}
+.btn-prime{background:#0B0D1C;box-shadow:0 20px 60px -20px rgba(139,92,255,.8)}
+.btn-prime::before{content:"";position:absolute;inset:-1.5px;border-radius:inherit;background:conic-gradient(from var(--a,0deg),#5CF2FF,#8B5CFF,#FF4FB8,#5CF2FF);z-index:-2;animation:spin 4s linear infinite}
+.btn-prime::after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(180deg,#15183A,#0A0C1D);z-index:-1}
+@property --a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes spin{to{--a:360deg}}
+.btn-ghost{background:var(--glass);box-shadow:0 0 0 1px var(--stroke-2) inset;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.btn-ghost:hover{box-shadow:0 0 0 1px var(--cyan) inset}
+.btn svg{transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:100;background:var(--void);display:grid;place-items:center;pointer-events:none;
+  animation:introOut 1s cubic-bezier(.7,0,.25,1) 2.2s forwards}
+@keyframes introOut{to{transform:scale(2.4);opacity:0;visibility:hidden}}
+.no-intro #intro{display:none}
+.intro-inner{display:grid;justify-items:center;gap:26px}
+.intro-svg{width:min(240px,56vw);height:auto;overflow:visible}
+.intro-svg .d{fill:none;stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.3s var(--ease) forwards}
+.intro-svg .d2{animation-delay:.25s}.intro-svg .d3{animation-delay:.5s}.intro-svg .d4{animation-delay:.7s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.intro-svg .rot{transform-origin:120px 120px;animation:rot 6s linear infinite}
+.intro-svg .rot2{transform-origin:120px 120px;animation:rot 9s linear infinite reverse}
+@keyframes rot{to{transform:rotate(360deg)}}
+.intro-svg .core{transform-origin:120px 120px;animation:corePulse 1.1s ease-in-out infinite}
+@keyframes corePulse{50%{transform:scale(1.35)}}
+.intro-brand{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.32em;opacity:0;animation:fadeUp .8s var(--ease) .6s forwards}
+.intro-brand span{color:var(--cyan)}
+.intro-status{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;min-height:1.2em;opacity:0;animation:fadeUp .6s var(--ease) .8s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* NAV */
+.nav{position:fixed;z-index:60;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(calc(100% - 24px),980px);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 22px;border-radius:100px;
+  background:rgba(8,10,23,.55);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 0 0 1px var(--stroke) inset,0 20px 40px -20px rgba(0,0,0,.6);
+  animation:navIn 1s var(--ease) 2.6s both}
+.no-intro .nav{animation-delay:.2s}
+@keyframes navIn{from{opacity:0;transform:translate(-50%,-30px)}}
+.brand{font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{width:18px;height:18px;border-radius:50%;background:conic-gradient(from 0deg,#5CF2FF,#8B5CFF,#FF4FB8,#5CF2FF);box-shadow:0 0 16px rgba(139,92,255,.8);animation:rot 6s linear infinite}
+.brand b{color:var(--cyan);font-weight:800}
+.nav ul{list-style:none;display:flex;gap:26px;font-size:.88rem;color:var(--muted)}
+.nav ul a{text-decoration:none;transition:color .2s}
+.nav ul a:hover{color:var(--text)}
+.nav .btn{padding:11px 18px;font-size:.88rem}
+@media(max-width:860px){.nav ul{display:none}}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;overflow:hidden;padding-block:120px 90px}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-fade{position:absolute;inset:auto 0 0 0;height:30%;background:linear-gradient(transparent,var(--void));pointer-events:none}
+.hero-inner{position:relative;z-index:2;text-align:center;display:grid;justify-items:center;gap:28px;will-change:transform,opacity}
+.js:not(.no-intro) .hero-inner{animation:heroIn 1.6s var(--ease) 2.3s both}
+@keyframes heroIn{from{opacity:0;transform:scale(1.35);filter:blur(16px)}}
+.live{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-radius:100px;background:var(--glass);box-shadow:0 0 0 1px var(--stroke-2) inset;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:.84rem;color:var(--muted)}
+.live b{color:var(--text);font-weight:500}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:ping 1.8s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(107,255,184,.6)}80%,100%{box-shadow:0 0 0 12px rgba(107,255,184,0)}}
+.hero h1{text-shadow:0 4px 40px rgba(4,5,11,.6);font-size:clamp(2.5rem,8.2vw,7.4rem);line-height:.96;font-weight:800;letter-spacing:-.045em;max-width:1100px}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.hero h1 .w > span{display:inline-block}
+.js:not(.no-intro) .hero h1 .w > span{animation:wordUp 1.1s var(--ease) both;animation-delay:calc(2.55s + var(--i)*.08s)}
+.no-intro .hero h1 .w > span{animation:wordUp 1.1s var(--ease) both;animation-delay:calc(.1s + var(--i)*.08s)}
+@keyframes wordUp{from{transform:translateY(105%) rotate(4deg)}}
+.hero .lead{max-width:640px;color:#B4BAD9;text-shadow:0 0 6px var(--void),0 2px 24px var(--void),0 0 40px var(--void);font-size:clamp(1.05rem,1.7vw,1.25rem)}
+.hero .lead b{color:var(--text);font-weight:500}
+.hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.hero-proof{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero-proof span{display:inline-flex;gap:8px;align-items:center}
+.hero-proof span::before{content:"";width:5px;height:5px;transform:rotate(45deg);background:var(--cyan)}
+.scroll-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:2;display:grid;justify-items:center;gap:10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.scroll-cue i{width:1px;height:40px;background:linear-gradient(var(--cyan),transparent);animation:cue 2s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-height:700px){.scroll-cue{display:none}}
+
+/* MARQUEE */
+.marquee{position:relative;border-block:1px solid var(--stroke);padding-block:22px;overflow:hidden;background:rgba(8,10,23,.6);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee-track{display:flex;gap:48px;width:max-content;animation:marq 40s linear infinite;font-family:var(--display);font-weight:500;font-size:clamp(1rem,2vw,1.35rem);color:var(--muted);white-space:nowrap}
+.marquee-track span{display:inline-flex;align-items:center;gap:48px}
+.marquee-track span::after{content:"";width:8px;height:8px;transform:rotate(45deg);border:1px solid var(--violet)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* PINNED CALL */
+.pin{position:relative;height:420vh}
+.pin-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+#callCanvas{position:absolute;inset:0;width:100%;height:100%}
+.clock-wrap{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;text-align:center;pointer-events:none;will-change:transform,opacity}
+.clock{font-family:var(--display);font-weight:800;font-size:clamp(5rem,24vw,20rem);letter-spacing:-.06em;line-height:.85;font-variant-numeric:tabular-nums}
+.clock-sub{font-family:var(--mono);font-size:clamp(.72rem,1.4vw,.9rem);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.ring-pulse{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;border:1px solid rgba(92,242,255,.5);animation:ringP 2.4s ease-out infinite;opacity:0}
+.ring-pulse:nth-child(2){animation-delay:.8s}.ring-pulse:nth-child(3){animation-delay:1.6s}
+@keyframes ringP{0%{transform:scale(.4);opacity:.8}100%{transform:scale(3.2);opacity:0}}
+.phone{position:relative;z-index:2;width:min(440px,calc(100vw - 32px));border-radius:32px;padding:20px;background:linear-gradient(180deg,rgba(20,22,48,.78),rgba(8,10,23,.86));
+  box-shadow:0 0 0 1px var(--stroke-2) inset,0 60px 120px -40px rgba(139,92,255,.55),0 0 80px -30px rgba(92,242,255,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);will-change:transform,opacity}
+.ph-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--stroke)}
+.ph-who b{display:block;font-family:var(--display);font-weight:500;font-size:.95rem;letter-spacing:-.01em}
+.ph-who small{font-family:var(--mono);font-size:.64rem;color:var(--muted);letter-spacing:.06em}
+.ph-state{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:100px;color:var(--ok);box-shadow:0 0 0 1px rgba(107,255,184,.3) inset;background:rgba(107,255,184,.07);white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
+.ph-state i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+#miniCore{display:block;width:100%;height:110px;margin-block:8px}
+.ph-log{display:flex;flex-direction:column;gap:9px;height:250px;justify-content:flex-end;overflow:hidden;
+  mask-image:linear-gradient(transparent,#000 18%);-webkit-mask-image:linear-gradient(transparent,#000 18%)}
+@media(max-height:720px){.ph-log{height:190px}#miniCore{height:80px}}
+.m{max-width:88%;padding:10px 14px;border-radius:16px;font-size:.9rem;line-height:1.45}
+.m.off{display:none}
+.m.new{animation:mIn .5s var(--ease)}
+@keyframes mIn{from{opacity:0;transform:translateY(12px) scale(.96)}}
+.m small{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.m.ai{align-self:flex-start;background:linear-gradient(135deg,rgba(92,242,255,.12),rgba(139,92,255,.12));box-shadow:0 0 0 1px rgba(92,242,255,.22) inset;border-bottom-left-radius:4px}
+.m.ai small{color:var(--cyan)}
+.m.hu{align-self:flex-end;background:rgba(255,255,255,.05);box-shadow:0 0 0 1px var(--stroke) inset;border-bottom-right-radius:4px}
+.m.hu small{color:var(--muted)}
+.m.ev{align-self:stretch;max-width:none;font-family:var(--mono);font-size:.74rem;color:var(--ok);background:rgba(107,255,184,.07);box-shadow:0 0 0 1px rgba(107,255,184,.35) inset}
+.ph-foot{display:flex;justify-content:space-between;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}
+.ph-foot b{color:var(--text);font-weight:500}
+.pin-caption{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));text-align:center;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-inline:16px}
+
+/* REVEAL */
+.js .rv{opacity:0;transform:translateY(50px) scale(.97);filter:blur(12px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease),filter 1.1s var(--ease);transition-delay:var(--d,0s)}
+.js .rv-zoom{transform:scale(.82)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+
+/* CALCULATOR */
+.glass{background:linear-gradient(180deg,rgba(160,170,255,.06),rgba(160,170,255,.02));box-shadow:0 0 0 1px var(--stroke) inset;border-radius:28px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.calc{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+@media(max-width:880px){.calc{grid-template-columns:1fr}}
+.calc-in{padding:clamp(24px,4vw,44px);display:grid;gap:30px}
+.sl label{display:flex;justify-content:space-between;gap:12px;font-size:.95rem;margin-bottom:14px}
+.sl output{font-family:var(--mono);color:var(--cyan);font-variant-numeric:tabular-nums}
+.sl small{display:block;color:var(--muted);font-size:.8rem;margin-top:10px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) var(--p,30%),rgba(255,255,255,.1) var(--p,30%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(139,92,255,.35),0 0 20px rgba(92,242,255,.8)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(139,92,255,.35),0 0 20px rgba(92,242,255,.8)}
+.calc-out{position:relative;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;justify-content:space-between;gap:30px;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(255,79,184,.16),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(92,242,255,.12),transparent 60%);box-shadow:-1px 0 0 var(--stroke)}
+@media(max-width:880px){.calc-out{box-shadow:0 -1px 0 var(--stroke)}}
+.k{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.loss{font-family:var(--display);font-weight:800;font-size:clamp(3rem,8vw,5.6rem);line-height:1;letter-spacing:-.05em;margin:12px 0 8px;font-variant-numeric:tabular-nums}
+.loss-sub{color:var(--muted)}
+.vs{display:grid;gap:12px}
+.vs div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-bottom:12px;border-bottom:1px dashed var(--stroke-2);font-size:.95rem}
+.vs div:last-child{border:0;padding:0}
+.vs b{font-family:var(--mono);font-weight:500;white-space:nowrap}
+.vs .win b{color:var(--ok)}
+
+/* CAPABILITIES */
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:880px){.caps{grid-template-columns:1fr}}
+.cap{position:relative;padding:34px 30px;border-radius:28px;overflow:hidden;background:rgba(160,170,255,.035);box-shadow:0 0 0 1px var(--stroke) inset;display:grid;gap:14px;align-content:start;transition:transform .5s var(--ease),box-shadow .3s}
+.cap::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(139,92,255,.22),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.cap:hover::before{opacity:1}
+.cap:hover{box-shadow:0 0 0 1px rgba(139,92,255,.45) inset}
+.cap .ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(92,242,255,.18),rgba(139,92,255,.18));box-shadow:0 0 0 1px rgba(92,242,255,.25) inset;color:var(--cyan)}
+.cap h3{font-size:1.2rem;font-weight:500;line-height:1.2}
+.cap p{color:var(--muted);font-size:.96rem}
+.cap code{display:block;font-family:var(--mono);font-size:.72rem;line-height:1.6;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.35);box-shadow:0 0 0 1px var(--stroke) inset;color:#C9CEF0;margin-top:4px}
+
+/* TIMELINE */
+.tl{position:relative;display:grid;gap:22px;padding-left:clamp(44px,9vw,120px)}
+.tl-line{position:absolute;left:clamp(14px,4vw,50px);top:10px;bottom:10px;width:2px;background:rgba(255,255,255,.07);border-radius:2px}
+.tl-fill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(var(--cyan),var(--violet),var(--magenta));border-radius:2px;box-shadow:0 0 18px rgba(139,92,255,.9)}
+.day{position:relative;display:grid;grid-template-columns:1fr 300px;gap:24px;padding:28px 30px;border-radius:24px;background:rgba(160,170,255,.03);box-shadow:0 0 0 1px var(--stroke) inset;transition:box-shadow .5s,background .5s}
+@media(max-width:900px){.day{grid-template-columns:1fr;padding:24px 22px}}
+.day::before{content:"";position:absolute;left:calc(-1 * clamp(44px,9vw,120px) + clamp(14px,4vw,50px) - 8px);top:34px;width:18px;height:18px;border-radius:50%;background:var(--void);box-shadow:0 0 0 2px rgba(255,255,255,.15);transition:all .5s}
+.day.on{background:rgba(139,92,255,.06);box-shadow:0 0 0 1px rgba(139,92,255,.35) inset}
+.day.on::before{background:var(--cyan);box-shadow:0 0 0 4px rgba(92,242,255,.2),0 0 24px var(--cyan)}
+.day .n{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.day h3{font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:500;line-height:1.2;margin-bottom:10px}
+.day p{color:var(--muted);font-size:.97rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tags span{font-family:var(--mono);font-size:.64rem;padding:5px 10px;border-radius:100px;box-shadow:0 0 0 1px var(--stroke-2) inset;color:#C9CEF0}
+.out{align-self:start;padding:16px 18px;border-radius:16px;background:rgba(0,0,0,.3);box-shadow:0 0 0 1px var(--stroke) inset;font-size:.9rem}
+.out span{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);margin-bottom:6px}
+
+/* ECOSYSTEM */
+.eco{position:relative;width:100%;aspect-ratio:1000/640}
+.eco svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.eco .ln{fill:none;stroke:url(#lg);stroke-width:1.2;stroke-dasharray:4 7;opacity:.35;animation:flow 1.6s linear infinite;transition:opacity .3s,stroke-width .3s}
+.eco .ln.hot{opacity:1;stroke-width:2.4}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.eco .orbit{fill:none;stroke:rgba(190,200,255,.08);stroke-width:1}
+#ecoCore{position:absolute;left:50%;top:50%;width:34%;aspect-ratio:1;transform:translate(-50%,-50%)}
+.eco-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;font-family:var(--display);font-weight:700;font-size:clamp(.8rem,1.5vw,1.1rem);line-height:1.1;text-shadow:0 0 20px rgba(0,0,0,.9)}
+.eco-label small{display:block;font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.16em;color:var(--cyan);margin-top:6px;text-transform:uppercase}
+.node{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:10px;padding:9px 16px 9px 9px;border-radius:100px;white-space:nowrap;font-size:.84rem;font-weight:500;
+  background:rgba(10,12,28,.85);box-shadow:0 0 0 1px var(--stroke-2) inset;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:box-shadow .3s,scale .3s var(--ease);animation:bob 5s ease-in-out infinite;animation-delay:var(--bd,0s)}
+.node:hover{box-shadow:0 0 0 1px var(--cyan) inset,0 0 30px rgba(92,242,255,.35);scale:1.06}
+.node i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-size:.6rem;background:var(--grad);color:#050612;font-weight:500}
+@keyframes bob{50%{margin-top:-6px}}
+.eco-list{display:none;grid-template-columns:1fr 1fr;gap:10px}
+.eco-list div{padding:14px;border-radius:16px;background:rgba(160,170,255,.04);box-shadow:0 0 0 1px var(--stroke) inset;font-size:.86rem;display:flex;gap:10px;align-items:center}
+.eco-list i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--grad)}
+@media(max-width:1000px){.node{font-size:.74rem;padding:7px 12px 7px 7px}.node i{width:22px;height:22px}}
+@media(max-width:820px){.eco .node,.eco svg{display:none}.eco{aspect-ratio:1/1;max-width:420px;margin-inline:auto}#ecoCore{width:90%}.eco-list{display:grid;margin-top:24px}}
+
+.stats{display:grid;grid-template-columns:repeat(6,1fr);margin-top:clamp(40px,6vw,70px);border-radius:24px;overflow:hidden;box-shadow:0 0 0 1px var(--stroke) inset}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:26px 18px;box-shadow:-1px 0 0 var(--stroke),0 -1px 0 var(--stroke);display:grid;gap:4px}
+.stat b{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.82rem;color:var(--muted)}
+
+.files{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));gap:12px;margin-top:18px}
+.file{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:18px;background:rgba(160,170,255,.035);box-shadow:0 0 0 1px var(--stroke) inset;transition:translate .3s var(--ease),box-shadow .3s}
+.file:hover{translate:0 -4px;box-shadow:0 0 0 1px rgba(139,92,255,.5) inset}
+.file .ext{flex:none;width:44px;height:54px;border-radius:8px 16px 8px 8px;display:grid;place-items:end center;padding-bottom:8px;font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:#050612;font-weight:500;background:var(--grad)}
+.file b{display:block;font-weight:500;font-size:.95rem;line-height:1.3}
+.file small{color:var(--muted);font-size:.8rem}
+
+/* PROMISE */
+.promise{position:relative;overflow:hidden;border-radius:36px;padding:clamp(40px,7vw,90px) clamp(22px,5vw,70px);text-align:center;
+  background:radial-gradient(80% 120% at 50% 120%,rgba(139,92,255,.35),transparent 60%),radial-gradient(60% 80% at 0% 0%,rgba(92,242,255,.14),transparent 60%),radial-gradient(60% 80% at 100% 0%,rgba(255,79,184,.14),transparent 60%),#070918;
+  box-shadow:0 0 0 1px var(--stroke-2) inset}
+.promise > *{position:relative}
+.promise .big{font-family:var(--display);font-weight:800;font-size:clamp(4.5rem,17vw,13rem);line-height:.85;letter-spacing:-.07em;margin-block:18px 10px}
+.promise .unit{display:block;font-family:var(--display);font-weight:500;font-size:clamp(1rem,2.4vw,1.6rem);letter-spacing:-.02em;margin-bottom:8px}
+.promise h2{font-size:clamp(1.3rem,3vw,2.2rem);line-height:1.18;max-width:840px;margin:22px auto 16px}
+.promise p{color:var(--muted);max-width:640px;margin-inline:auto}
+.seals{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:34px}
+.seal{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:100px;background:rgba(255,255,255,.04);box-shadow:0 0 0 1px var(--stroke-2) inset;font-size:.9rem}
+.seal svg{color:var(--ok)}
+.fine{margin-top:22px;font-size:.78rem;color:var(--muted)}
+.promise .orbit-deco{position:absolute;left:50%;top:50%;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;border:1px dashed rgba(190,200,255,.1);animation:rot 60s linear infinite;pointer-events:none}
+.promise .orbit-deco::after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 20px var(--cyan)}
+.promise .orbit-deco.o2{width:620px;height:620px;margin:-310px 0 0 -310px;animation-duration:40s;animation-direction:reverse}
+.promise .orbit-deco.o2::after{background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
+
+/* INSTRUCTOR */
+.teach{display:grid;grid-template-columns:380px 1fr;gap:clamp(30px,6vw,80px);align-items:center}
+@media(max-width:880px){.teach{grid-template-columns:1fr}}
+.portrait{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:32px;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(90% 70% at 30% 20%,rgba(139,92,255,.45),transparent 60%),radial-gradient(80% 60% at 80% 90%,rgba(92,242,255,.25),transparent 60%),#0A0C1D;box-shadow:0 0 0 1px var(--stroke-2) inset}
+.portrait::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(190,200,255,.18)}
+.portrait::after{content:"";position:absolute;inset:26%;border:1px solid rgba(92,242,255,.25);animation:rot 22s linear infinite reverse}
+.portrait b{position:relative;font-family:var(--display);font-weight:800;font-size:clamp(4rem,10vw,6.5rem);letter-spacing:-.06em}
+.portrait small{position:absolute;left:18px;right:18px;bottom:16px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.teach h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.06;margin-block:16px 20px}
+.teach p{color:var(--muted);margin-bottom:14px;max-width:620px}
+.teach p b{color:var(--text);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips span{font-size:.84rem;padding:9px 15px;border-radius:100px;background:var(--glass);box-shadow:0 0 0 1px var(--stroke-2) inset}
+
+/* PLANS */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+@media(max-width:980px){.plans{grid-template-columns:1fr;max-width:560px;margin-inline:auto}}
+.plan{position:relative;border-radius:30px;padding:32px;display:flex;flex-direction:column;gap:22px;background:rgba(160,170,255,.035);box-shadow:0 0 0 1px var(--stroke) inset;overflow:hidden}
+.plan.feat{background:radial-gradient(100% 60% at 50% 0%,rgba(139,92,255,.28),transparent 70%),rgba(160,170,255,.04);box-shadow:0 0 0 1px rgba(139,92,255,.6) inset,0 40px 100px -40px rgba(139,92,255,.7)}
+.plan .flag{align-self:flex-start;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:100px;background:var(--grad);color:#050612;font-weight:500}
+.plan h3{font-size:1.5rem;font-weight:700}
+.plan .for{color:var(--muted);font-size:.93rem;margin-top:6px}
+.price-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price{font-family:var(--display);font-weight:800;font-size:3.4rem;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.price sup{font-size:.4em;vertical-align:top;position:relative;top:.3em;margin-right:2px}
+.was{font-family:var(--mono);font-size:.9rem;color:var(--muted);text-decoration:line-through}
+.price-note{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--cyan);margin-top:8px}
+.redact{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;background:rgba(0,0,0,.3);box-shadow:0 0 0 1px var(--stroke) inset}
+.redact .bars{font-family:var(--display);font-weight:800;font-size:1.9rem;letter-spacing:-.04em;filter:blur(7px);user-select:none;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.redact small{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.plan ul{list-style:none;display:grid;gap:11px;flex:1;align-content:start}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;font-size:.93rem;color:var(--muted);line-height:1.45}
+.plan li b{color:var(--text);font-weight:500}
+.plan li::before{content:"";width:14px;height:14px;margin-top:4px;border-radius:4px;transform:rotate(45deg) scale(.7);background:var(--grad)}
+.plan .btn{width:100%}
+
+/* FAQ */
+.faq{display:grid;gap:10px;max-width:880px;margin-inline:auto}
+details{border-radius:20px;background:rgba(160,170,255,.03);box-shadow:0 0 0 1px var(--stroke) inset;transition:box-shadow .3s,background .3s}
+details[open]{background:rgba(139,92,255,.06);box-shadow:0 0 0 1px rgba(139,92,255,.4) inset}
+summary{list-style:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;gap:16px;font-weight:500;font-size:1.04rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:10px;height:10px;margin-top:6px;border-right:1.5px solid var(--cyan);border-bottom:1.5px solid var(--cyan);transform:rotate(45deg);transition:transform .3s var(--ease)}
+details[open] summary::after{transform:rotate(225deg)}
+details p{padding:0 24px 22px;color:var(--muted);max-width:740px}
+
+/* FINAL */
+.final{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;text-align:center;padding-block:100px}
+#finalCanvas{position:absolute;inset:0;width:100%;height:100%}
+.final-inner{position:relative;z-index:2;display:grid;justify-items:center;gap:22px}
+.final h2{font-size:clamp(2.1rem,6.2vw,5.2rem);line-height:.98;font-weight:800;letter-spacing:-.045em;max-width:1000px}
+.final .lead{color:#B4BAD9;max-width:560px;font-size:1.08rem;text-shadow:0 0 6px var(--void),0 2px 24px var(--void),0 0 40px var(--void)}
+.capture{width:min(560px,100%);padding:24px;border-radius:28px;text-align:left;background:rgba(8,10,23,.72);box-shadow:0 0 0 1px var(--stroke-2) inset,0 40px 100px -40px rgba(139,92,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.capture h3{font-size:1.05rem;font-weight:500;margin-bottom:4px}
+.capture > div > p{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+.plan-pick{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.plan-pick label{cursor:pointer}
+.plan-pick input{position:absolute;opacity:0;pointer-events:none}
+.plan-pick span{display:inline-block;font-size:.84rem;padding:8px 14px;border-radius:100px;box-shadow:0 0 0 1px var(--stroke-2) inset;color:var(--muted);transition:all .2s}
+.plan-pick input:checked + span{color:#050612;background:var(--grad);box-shadow:none}
+.plan-pick input:focus-visible + span{outline:2px solid var(--cyan);outline-offset:2px}
+.field{display:flex;gap:10px;flex-wrap:wrap}
+.field input{flex:1;min-width:0;background:rgba(0,0,0,.4);border:0;box-shadow:0 0 0 1px var(--stroke-2) inset;color:var(--text);padding:16px 18px;border-radius:100px;font:inherit;font-size:.96rem;outline:none;transition:box-shadow .2s}
+.field input:focus{box-shadow:0 0 0 1px var(--cyan) inset,0 0 20px rgba(92,242,255,.2)}
+.field input.err{box-shadow:0 0 0 1px var(--magenta) inset}
+@media(max-width:520px){.field input{flex-basis:100%}.field .btn{width:100%}}
+.micro{font-size:.78rem;color:var(--muted);margin-top:12px}
+.consent{display:grid;grid-template-columns:20px 1fr;gap:10px;margin-top:14px;font-size:.8rem;color:var(--muted);line-height:1.45;cursor:pointer}
+.consent input{width:18px;height:18px;margin-top:1px;accent-color:#8B5CFF}
+.consent a{color:var(--cyan)}
+.consent.err span{color:var(--magenta)}
+.pm{margin-top:16px;max-height:300px;overflow:auto;white-space:pre-wrap;text-align:left;font-family:var(--mono);font-size:.74rem;line-height:1.55;color:#C9CEF0;background:rgba(0,0,0,.45);box-shadow:0 0 0 1px var(--stroke) inset;border-radius:16px;padding:16px}
+.pm-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.ok-view{text-align:center;padding:10px 0}
+.ok-view b{display:block;font-family:var(--display);font-size:1.3rem;margin-bottom:6px}
+.ok-view p{color:var(--muted)}
+
+footer{position:relative;border-top:1px solid var(--stroke);padding-block:34px;color:var(--muted);font-size:.86rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer a{color:var(--cyan);text-decoration:none}
+
+.mcta{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:60;display:none;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 18px;border-radius:100px;
+  background:rgba(8,10,23,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 0 0 1px var(--stroke-2) inset;transform:translateY(160%);transition:transform .5s var(--ease)}
+.mcta.show{transform:none}
+.mcta span{font-size:.82rem;color:var(--muted)}
+.mcta .btn{padding:11px 18px;font-size:.88rem}
+@media(max-width:760px){.mcta{display:flex}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;filter:none}
+  .pin{height:auto}.pin-stage{position:relative;height:auto;min-height:100svh;padding-block:80px;display:grid;gap:30px}
+  .clock-wrap{position:relative;inset:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <svg class="intro-svg" viewBox="0 0 240 240">
+      <defs><linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5CF2FF"/><stop offset=".5" stop-color="#8B5CFF"/><stop offset="1" stop-color="#FF4FB8"/></linearGradient></defs>
+      <circle class="d" cx="120" cy="120" r="110" stroke="url(#ig)" pathLength="1"/>
+      <g class="rot"><polygon class="d d2" points="120,30 198,75 198,165 120,210 42,165 42,75" stroke="url(#ig)" pathLength="1"/></g>
+      <g class="rot2"><polygon class="d d3" points="120,50 181,155 59,155" stroke="#5CF2FF" pathLength="1"/><polygon class="d d3" points="120,190 59,85 181,85" stroke="#FF4FB8" pathLength="1"/></g>
+      <circle class="d d4" cx="120" cy="120" r="44" stroke="#8B5CFF" pathLength="1"/>
+      <circle class="core" cx="120" cy="120" r="7" fill="#5CF2FF"/>
+    </svg>
+    <div class="intro-brand">ANDRÉS<span>.IA</span></div>
+    <div class="intro-status" id="introStatus">Conectando agente de voz · 0%</div>
+  </div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Principal">
+  <a class="brand" href="#top"><i></i><span>ANDRÉS<b>.IA</b></span></a>
+  <ul>
+    <li><a href="#llamada">La llamada</a></li>
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#incluye">Qué incluye</a></li>
+    <li><a href="#garantia">Garantía</a></li>
+    <li><a href="#planes">Precio</a></li>
+    <li><a href="#faq">Preguntas</a></li>
+  </ul>
+  <a class="btn btn-prime mag" href="#planes">Ver planes</a>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-fade"></div>
+  <div class="wrap hero-inner" id="heroInner">
+    <div class="live"><span class="live-dot"></span><b>Agente en línea</b> · contestando ahora mismo</div>
+    <h1 aria-label="Tu negocio contesta solo. 24/7.">
+      <span class="w"><span style="--i:0">Tu</span></span> <span class="w"><span style="--i:1">negocio</span></span><br>
+      <span class="w"><span style="--i:2">contesta</span></span> <span class="w"><span style="--i:3" class="grad">solo.</span></span><br>
+      <span class="w"><span style="--i:4" class="grad">24/7.</span></span>
+    </h1>
+    <p class="lead">Monta en <b>7 días</b> un agente de voz con IA que <b>contesta llamadas, resuelve dudas y agenda citas</b>. Sin programar. Funcionando por <b>menos de 50 dólares al mes</b>, garantizado.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-prime mag" href="#planes">Quiero mi agente
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost mag" href="#llamada">Ver una llamada</a>
+    </div>
+    <div class="hero-proof"><span>Desde $117 · pago único</span><span>Sin código</span><span>Garantía doble</span></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><i></i>Desliza</div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Clínicas</span><span>Odontología</span><span>Restaurantes</span><span>Talleres</span><span>Salones de belleza</span><span>Gimnasios</span><span>Inmobiliarias</span><span>Abogados</span><span>Veterinarias</span><span>Hoteles</span><span>Academias</span><span>Tiendas</span>
+    <span>Clínicas</span><span>Odontología</span><span>Restaurantes</span><span>Talleres</span><span>Salones de belleza</span><span>Gimnasios</span><span>Inmobiliarias</span><span>Abogados</span><span>Veterinarias</span><span>Hoteles</span><span>Academias</span><span>Tiendas</span>
+  </div>
+</div>
+
+<section class="pin" id="llamada" aria-label="Demostración de una llamada">
+  <div class="pin-stage">
+    <canvas id="callCanvas" aria-hidden="true"></canvas>
+    <div class="clock-wrap" id="clockWrap">
+      <div><span class="ring-pulse"></span><span class="ring-pulse"></span><span class="ring-pulse"></span></div>
+      <div class="clock grad">23:47</div>
+      <div class="clock-sub">Tu equipo duerme · tu teléfono suena</div>
+    </div>
+    <div class="phone" id="phone">
+      <div class="ph-top">
+        <div class="ph-who"><b>Clínica Dental Sonrisa</b><small>LLAMADA ENTRANTE · +57 300 ··· 4821</small></div>
+        <div class="ph-state"><i></i><span id="phState">Sonando…</span></div>
+      </div>
+      <canvas id="miniCore" aria-hidden="true"></canvas>
+      <div class="ph-log" id="phLog" aria-live="polite">
+        <div class="m ai off"><small>Sofía · IA</small>Clínica Dental Sonrisa, habla Sofía, la asistente virtual. ¿En qué te ayudo?</div>
+        <div class="m hu off"><small>Cliente</small>Hola, se me partió una muela. ¿Tienen cita para mañana?</div>
+        <div class="m ai off"><small>Sofía · IA</small>Uy, lo siento. Mañana tengo a las 9:00 o a las 11:30. ¿Cuál prefieres?</div>
+        <div class="m hu off"><small>Cliente</small>A las 9, porfa.</div>
+        <div class="m ai off"><small>Sofía · IA</small>Perfecto. ¿Me regalas tu nombre completo?</div>
+        <div class="m hu off"><small>Cliente</small>Laura Gómez.</div>
+        <div class="m ai off"><small>Sofía · IA</small>Listo, Laura. Quedaste mañana a las 9:00. Te llega la confirmación por WhatsApp.</div>
+        <div class="m ev off">✓ Cita creada en el calendario · Mié 9:00 · Laura Gómez · Urgencia</div>
+      </div>
+      <div class="ph-foot"><span>Duración <b id="phTime">00:00</b></span><span>Humanos involucrados: <b>0</b></span></div>
+    </div>
+    <div class="pin-caption">Sigue deslizando · la llamada avanza contigo</div>
+  </div>
+</section>
+
+<section class="sec" id="calculadora">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">La cuenta que nadie hace</span>
+      <h2>Cada llamada perdida es un cliente que <span class="grad">llamó a tu competencia</span>.</h2>
+      <p>Mueve los números con los de tu negocio. Muchos no vuelven a intentar: buscan el siguiente resultado en Google.</p>
+    </div>
+    <div class="calc glass rv rv-zoom">
+      <div class="calc-in">
+        <div class="sl"><label for="r1">Llamadas sin contestar por semana <output id="o1">15</output></label><input type="range" id="r1" min="1" max="80" value="15"><small>Fuera de horario, en almuerzo, con las manos ocupadas.</small></div>
+        <div class="sl"><label for="r2">Valor de un cliente nuevo (USD) <output id="o2">$80</output></label><input type="range" id="r2" min="10" max="1000" step="10" value="80"><small>Lo que te deja una cita, un servicio o una primera compra.</small></div>
+        <div class="sl"><label for="r3">Cuántas se volverían clientes <output id="o3">30%</output></label><input type="range" id="r3" min="5" max="80" step="5" value="30"><small>Sé conservador. Con 20–30% la cuenta ya sorprende.</small></div>
+      </div>
+      <div class="calc-out">
+        <div><div class="k">Se te va cada mes</div><div class="loss grad" id="loss">$1,559</div><div class="loss-sub" id="lossY">$18,706 al año en clientes que ya querían comprarte.</div></div>
+        <div class="vs">
+          <div><span>Recepcionista medio tiempo (estimación)</span><b>$400–700/mes</b></div>
+          <div class="win"><span>Tu agente de IA, 24/7</span><b>menos de $50/mes</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Lo que vas a construir</span>
+      <h2>Un empleado que nunca duerme y <span class="grad">siempre contesta con tu tono</span>.</h2>
+    </div>
+    <div class="caps">
+      <article class="cap rv" style="--d:0s">
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 8v8M19 10v4"/></svg></div>
+        <h3>Contesta como tu mejor empleado</h3>
+        <p>Saluda con el nombre de tu negocio, entiende acentos y responde precios, horarios y ubicación. Si algo se sale de su rol, pasa la llamada a una persona.</p>
+        <code>"¿Tienen parqueadero?" → "Sí, gratis para pacientes, justo en la entrada."</code>
+      </article>
+      <article class="cap rv" style="--d:.12s">
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></div>
+        <h3>Agenda en tu calendario real</h3>
+        <p>Revisa tu disponibilidad en vivo, ofrece dos horarios, confirma los datos y crea la cita. Tú solo la ves aparecer en tu celular.</p>
+        <code>consultar_agenda → reservar → ✓ confirmado</code>
+      </article>
+      <article class="cap rv" style="--d:.24s">
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <h3>Te deja todo por escrito</h3>
+        <p>Cada llamada queda grabada, transcrita y resumida. Te llega un aviso con nombre, teléfono y motivo. Ningún cliente se pierde entre papelitos.</p>
+        <code>Nuevo cliente: Laura G. · urgencia · mié 9:00</code>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="metodo" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">El método · 7 días</span>
+      <h2>Un paso por día. Al final de cada uno, <span class="grad">algo funciona</span>.</h2>
+      <p>Un módulo se desbloquea cada día. Videos cortos, pantalla compartida y un entregable concreto. Sin relleno.</p>
+    </div>
+    <div class="tl" id="tl">
+      <div class="tl-line"><div class="tl-fill" id="tlFill"></div></div>
+      <div class="day rv"><div><div class="n">Día 0 · Arranque</div><h3>Todo listo antes de empezar</h3><p>Las cuentas que necesitas, en qué orden y cómo dejar tu número listo. Nadie se atasca por un detalle técnico.</p><div class="tags"><span>Cuentas</span><span>Tu número</span><span>Checklist</span></div></div><div class="out"><span>Terminas con</span>Tu espacio de trabajo listo en 15 minutos.</div></div>
+      <div class="day rv"><div><div class="n">Día 1</div><h3>Defines el trabajo del agente</h3><p>El error del 90% es querer un agente que haga todo. Con una auditoría de 48 horas eliges una tarea, un canal y un resultado medible.</p><div class="tags"><span>Auditoría 48 h</span><span>1 caso</span><span>Métrica de éxito</span></div></div><div class="out"><span>Terminas con</span>La descripción de puesto de tu agente.</div></div>
+      <div class="day rv"><div><div class="n">Día 2</div><h3>Le das un cerebro con Claude</h3><p>Pegas el Prompt Maestro, respondes 12 preguntas sobre tu negocio y sale el guion completo: personalidad, flujo, límites y respuestas difíciles.</p><div class="tags"><span>Claude</span><span>Prompt Maestro v2</span><span>Reglas de voz</span></div></div><div class="out"><span>Terminas con</span>El cerebro de tu agente, listo para pegar.</div></div>
+      <div class="day rv"><div><div class="n">Día 3</div><h3>Lo construyes y te habla</h3><p>Creas el agente, eliges su voz en español y lo pruebas en el navegador. La primera vez que contesta con el nombre de tu negocio, cambia todo.</p><div class="tags"><span>Voz en español</span><span>Primera prueba</span></div></div><div class="out"><span>Terminas con</span>Un agente conversando contigo.</div></div>
+      <div class="day rv"><div><div class="n">Día 4</div><h3>Lo conectas al mundo real</h3><p>Número telefónico, calendario y avisos automáticos. Llamas desde tu celular y ves la cita aparecer sola.</p><div class="tags"><span>Teléfono</span><span>Calendario</span><span>Automatizaciones</span></div></div><div class="out"><span>Terminas con</span>Un número real que contesta y agenda.</div></div>
+      <div class="day rv"><div><div class="n">Día 5</div><h3>Lo haces inteligente</h3><p>Le cargas tu negocio: servicios, políticas y las 40 preguntas que todo cliente hace. Entrenas objeciones y el plan B cuando no sabe algo.</p><div class="tags"><span>Base de conocimiento</span><span>Objeciones</span><span>Paso a humano</span></div></div><div class="out"><span>Terminas con</span>Un agente que responde lo que tus clientes preguntan.</div></div>
+      <div class="day rv"><div><div class="n">Día 6</div><h3>Lo pules hasta que suene humano</h3><p>Voz, pausas, interrupciones y ruido. Pasas la batería de 20 llamadas diseñadas para romper agentes y corriges cada falla.</p><div class="tags"><span>20 pruebas</span><span>Ajuste de voz</span><span>Aviso legal</span></div></div><div class="out"><span>Terminas con</span>Un agente que pasa la prueba de "¿eres un robot?".</div></div>
+      <div class="day rv"><div><div class="n">Día 7</div><h3>Lanzas y mides</h3><p>Lo pones en producción, activas alertas y montas tu tablero: llamadas atendidas, citas agendadas y dinero recuperado.</p><div class="tags"><span>En vivo</span><span>Alertas</span><span>Tablero</span></div></div><div class="out"><span>Terminas con</span>Tu agente atendiendo clientes reales.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="incluye" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Todo lo que incluye</span>
+      <h2>No es un curso. Es un <span class="grad">sistema completo</span> alrededor de tu agente.</h2>
+      <p>Videos, plantillas, comunidad y actualizaciones que llegan cada vez que las herramientas cambian.</p>
+    </div>
+    <div class="eco rv rv-zoom" id="eco">
+      <svg viewBox="0 0 1000 640" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5CF2FF"/><stop offset=".5" stop-color="#8B5CFF"/><stop offset="1" stop-color="#FF4FB8"/></linearGradient></defs>
+        <ellipse class="orbit" cx="500" cy="320" rx="260" ry="200"/>
+        <ellipse class="orbit" cx="500" cy="320" rx="440" ry="300"/>
+        <g id="ecoLines"></g>
+      </svg>
+      <canvas id="ecoCore" aria-hidden="true"></canvas>
+      <div class="eco-label">Tu agente<small>núcleo</small></div>
+      <div id="ecoNodes"></div>
+    </div>
+    <div class="eco-list" id="ecoList"></div>
+
+    <div class="stats rv">
+      <div class="stat"><b data-count="8">8</b><span>módulos en video</span></div>
+      <div class="stat"><b data-count="12">12</b><span>industrias listas</span></div>
+      <div class="stat"><b data-count="40">40</b><span>preguntas de negocio</span></div>
+      <div class="stat"><b data-count="20">20</b><span>pruebas de estrés</span></div>
+      <div class="stat"><b data-count="9">9</b><span>recursos descargables</span></div>
+      <div class="stat"><b>∞</b><span>actualizaciones</span></div>
+    </div>
+
+    <div class="files">
+      <div class="file rv"><div class="ext">DOC</div><div><b>Descripción de puesto del agente</b><small>Plantilla + 3 ejemplos llenos</small></div></div>
+      <div class="file rv"><div class="ext">TXT</div><div><b>Prompt Maestro v2</b><small>Lo pegas en Claude y sale tu agente</small></div></div>
+      <div class="file rv"><div class="ext">JSON</div><div><b>Agente base importable</b><small>Cambias tus datos y listo</small></div></div>
+      <div class="file rv"><div class="ext">FLOW</div><div><b>Escenario de alertas</b><small>Llamada → hoja → email o WhatsApp</small></div></div>
+      <div class="file rv"><div class="ext">DOC</div><div><b>Base de conocimiento</b><small>Las 40 preguntas de todo cliente</small></div></div>
+      <div class="file rv"><div class="ext">PDF</div><div><b>Batería de 20 pruebas</b><small>Las llamadas que rompen agentes</small></div></div>
+      <div class="file rv"><div class="ext">XLS</div><div><b>Tablero de resultados</b><small>Citas y dinero recuperado</small></div></div>
+      <div class="file rv"><div class="ext">PDF</div><div><b>Checklist de 7 días</b><small>Imprímelo y ve tachando</small></div></div>
+      <div class="file rv"><div class="ext">PACK</div><div><b>12 fichas de industria</b><small>De clínicas a tiendas en línea</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="garantia" style="padding-top:0">
+  <div class="wrap">
+    <div class="promise rv rv-zoom">
+      <div class="orbit-deco"></div><div class="orbit-deco o2"></div>
+      <span class="eyebrow">La promesa</span>
+      <div class="big grad">&lt;$50</div>
+      <span class="unit">al mes, con tu agente funcionando</span>
+      <h2>Es realista y lo garantizo. Si mantenerlo te cuesta más de 50 dólares al mes, <span class="grad">te devuelvo tu dinero</span>.</h2>
+      <p>Y si sigues los 7 días y tu agente no contesta, también te lo devuelvo. Tienes 30 días. El riesgo lo asumo yo.</p>
+      <div class="seals">
+        <span class="seal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Garantía de costo: menos de $50/mes</span>
+        <span class="seal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Garantía de funcionamiento: 30 días</span>
+      </div>
+      <p class="fine">Costo de operación del agente (voz y número) para un negocio con hasta ~100 llamadas de 3 minutos al mes, siguiendo la configuración del curso.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap teach">
+    <div class="portrait rv rv-zoom" role="img" aria-label="Andrés Carreño"><b class="grad">AC</b><small><span>Andrés Carreño</span><span>Montreal · Colombia</span></small></div>
+    <div class="rv">
+      <span class="eyebrow">Quién te enseña</span>
+      <h2>No te enseño teoría. Te enseño <span class="grad">lo que monto para clientes</span>.</h2>
+      <p>Soy Andrés Carreño, colombiano radicado en Montreal. Dirijo <b>AI Staff</b>, una agencia que construye agentes de voz con IA para negocios que no pueden darse el lujo de perder una llamada.</p>
+      <p>Este curso es el mismo proceso que sigo con cada cliente, explicado para que lo hagas tú. Sin jerga, sin código, con las mismas plantillas.</p>
+      <div class="chips"><span>Fundador de AI Staff</span><span>Trilingüe ES · EN · FR</span><span>+38,000 seguidores</span><span>Agentes en producción</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="planes" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Precio de fundador · primeros 100 alumnos</span>
+      <h2>Elige hasta dónde <span class="grad">quieres llegar</span>.</h2>
+      <p>Pago único, acceso de por vida y actualizaciones incluidas. Paga en cuotas desde tu país.</p>
+    </div>
+    <div class="plans">
+      <article class="plan rv">
+        <div><h3>Esencial</h3><p class="for">Para montar tu propio agente.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>117</span><span class="was">$147</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
+        <ul>
+          <li><span><b>Día 0 + los 7 días</b> completos</span></li>
+          <li><span>Kit de plantillas descargables</span></li>
+          <li><span>Prompt Maestro v2</span></li>
+          <li><span>Kit legal y de confianza</span></li>
+          <li><span>Actualizaciones de por vida</span></li>
+        </ul>
+        <a class="btn btn-ghost checkout" data-plan="esencial" href="#reservar">Elegir Esencial</a>
+      </article>
+      <article class="plan feat rv" style="--d:.1s">
+        <span class="flag">El más elegido</span>
+        <div><h3>Pro</h3><p class="for">Para tu negocio y para venderlo a otros.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>197</span><span class="was">$297</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
+        <ul>
+          <li><span><b>Todo lo de Esencial</b></span></li>
+          <li><span>Pack de 12 industrias</span></li>
+          <li><span>Tu agente también en WhatsApp</span></li>
+          <li><span><b>Vende este servicio</b>: demo, propuesta y contrato</span></li>
+          <li><span>Claude como copiloto semanal</span></li>
+          <li><span><b>Comunidad privada</b> + sesiones en vivo</span></li>
+        </ul>
+        <a class="btn btn-prime checkout" data-plan="pro" href="#reservar">Elegir Pro</a>
+      </article>
+      <article class="plan rv" style="--d:.2s">
+        <div><h3>VIP</h3><p class="for">Lo hacemos contigo, esta misma semana.</p></div>
+        <div><div class="price-row"><span class="price"><sup>$</sup>497</span></div><div class="price-note">USD · SOLO 5 CUPOS AL MES</div></div>
+        <ul>
+          <li><span><b>Todo lo de Pro</b></span></li>
+          <li><span>Sesión 1 a 1 de 90 min con Andrés</span></li>
+          <li><span>El equipo de AI Staff configura contigo</span></li>
+          <li><span>Revisión de tus primeras llamadas</span></li>
+          <li><span>30 días de soporte directo</span></li>
+        </ul>
+        <a class="btn btn-ghost checkout" data-plan="vip" href="#reservar">Elegir VIP</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head center rv"><span class="eyebrow">Preguntas</span><h2>Lo que todos preguntan antes de entrar.</h2></div>
+    <div class="faq rv">
+      <details><summary>¿De verdad no necesito saber programar?</summary><p>De verdad. Todo se hace en paneles visuales: escribes en español, pegas plantillas y haces clic. Si sabes usar WhatsApp y Google Docs, puedes hacerlo.</p></details>
+      <details><summary>¿Cuánto me cuesta mantener el agente?</summary><p>Menos de 50 dólares al mes para un negocio pequeño con uso típico. Es una promesa con garantía: si con la configuración del curso te cuesta más, te devuelvo tu dinero.</p></details>
+      <details><summary>¿Funciona en mi país?</summary><p>Sí. El agente habla español neutro o con tu acento regional, y puedes tener número en EE. UU., Colombia, México, España y muchos más. Si tu país no tiene números disponibles, te enseño a desviar tu línea actual.</p></details>
+      <details><summary>¿Mis clientes van a notar que es una IA?</summary><p>Suena muy natural, pero te recomiendo decirlo al inicio. Genera confianza y en varios países es obligatorio. Lo vemos en el kit legal.</p></details>
+      <details><summary>¿Cuánto tiempo necesito al día?</summary><p>Entre 30 y 45 minutos. Si vas más lento, no pasa nada: el acceso es de por vida.</p></details>
+      <details><summary>¿Qué pasa si la IA dice algo incorrecto?</summary><p>Los días 5 y 6 son para eso: límites claros, paso a una persona y una batería de 20 pruebas diseñadas para romper agentes antes de que lo haga un cliente.</p></details>
+      <details><summary>¿Puedo vender agentes a otros negocios?</summary><p>Sí. El plan Pro incluye el módulo "Vende este servicio" con el guion de demo, la propuesta y el contrato que uso en mi agencia.</p></details>
+      <details><summary>¿Puedo pagar en cuotas?</summary><p>Sí. El pago se hace en Hotmart, que acepta tarjeta, PSE, OXXO, PIX y otros medios locales, y permite pagar en cuotas según tu país.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="reservar">
+  <canvas id="finalCanvas" aria-hidden="true"></canvas>
+  <div class="wrap final-inner">
+    <span class="eyebrow rv" id="finalEyebrow">Inscripciones abren muy pronto</span>
+    <h2 class="rv">La próxima llamada de las 11 p.m. <span class="grad">la contesta tu agente</span>.</h2>
+    <p class="lead rv">Llévate gratis el <b style="color:var(--text);font-weight:500">Prompt Maestro</b>: lo pegas en Claude, respondes unas preguntas y sale el cerebro de tu agente. <span id="finalExtra">Y te aviso primero cuando abran las inscripciones.</span></p>
+    <div class="capture rv">
+      <div id="formView">
+        <h3>Recibe el Prompt Maestro gratis</h3>
+        <p>Déjame tu correo y te lo muestro aquí mismo.</p>
+        <form id="leadForm" novalidate>
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo electrónico" required>
+            <button class="btn btn-prime" type="submit" id="submitBtn">Quiero el prompt</button>
+          </div>
+          <label class="consent" for="consent"><input type="checkbox" id="consent" required><span>Acepto recibir correos de Andrés.IA sobre agentes de IA y el aviso de apertura del curso. Puedo darme de baja cuando quiera. <a href="/confidentialite/?lang=es" target="_blank" rel="noopener">Privacidad</a></span></label>
+        </form>
+      </div>
+      <div class="ok-view" id="okView" hidden>
+        <b class="grad">¡Aquí está tu Prompt Maestro!</b>
+        <p>Cópialo, abre Claude y pégalo en una conversación nueva.</p>
+        <pre class="pm" id="pmText">Eres un consultor experto en agentes de voz con IA para pequeños negocios de habla hispana. Vas a entrevistarme para construir el cerebro (prompt de sistema) de mi primer agente de voz, que se usará en una plataforma como Retell AI.
+
+## Tus reglas de trabajo
+- Haz UNA sola pregunta por mensaje. Nunca dos.
+- Da un ejemplo corto en cada pregunta para que yo entienda qué responder.
+- Confirma cada respuesta en una frase antes de seguir.
+- Si mi respuesta es vaga, repregunta una vez para concretarla.
+- Habla simple, sin tecnicismos. Soy dueño de negocio, no programador.
+- Cuando tengas las 12 respuestas, genera los 3 entregables del final sin que te los pida.
+
+## Primer mensaje
+Salúdame con energía, dime que en unos 10 minutos vamos a construir el cerebro de mi agente y haz la pregunta 1.
+
+## Las 12 preguntas (en orden)
+1. ¿Cómo se llama tu negocio y a qué se dedica? (ej: &quot;Clínica Dental Sonrisa, odontología general en Medellín&quot;)
+2. ¿En qué ciudad/país están tus clientes y cómo hablan? (tú/usted, expresiones locales)
+3. ¿Cuál es la tarea principal del agente? (agendar citas / responder preguntas / capturar datos / confirmar citas)
+4. ¿Qué resultado cuenta como éxito al final de una llamada? (ej: cita en el calendario con nombre y teléfono)
+5. ¿Qué datos necesita pedirle al cliente? (nombre, teléfono, correo, motivo, placa del carro…)
+6. ¿Cuáles son tus servicios principales y sus precios o rangos? (si prefieres no dar precios, dilo)
+7. ¿Horario de atención, dirección y cómo llegar?
+8. ¿Cuáles son las 5 preguntas que más te hacen los clientes y qué respondes?
+9. ¿Qué NO debe hacer nunca el agente? (ej: dar diagnósticos, prometer descuentos, hablar de la competencia)
+10. ¿En qué casos debe pasar la llamada a una persona y a qué número? (ej: urgencias, quejas, &quot;quiero hablar con alguien&quot;)
+11. ¿Qué tono quieres? (formal, cercano, alegre, sereno) y ¿cómo se llama el agente?
+12. ¿Trabaja 24/7 o solo en horario? ¿Qué dice fuera de horario?
+
+## Entregable 1 — Descripción de puesto (tabla)
+| Campo | Detalle |
+|---|---|
+| Nombre del agente | |
+| Negocio | |
+| Tarea principal | |
+| Resultado de éxito | |
+| Datos a capturar | |
+| Qué NO hace | |
+| Cuándo transfiere | |
+| Tono | |
+| Horario | |
+
+## Entregable 2 — Prompt de sistema (en un bloque de código, listo para pegar)
+Usa exactamente esta estructura y llénala con mis respuestas:
+
+```
+## IDENTIDAD
+Eres [NOMBRE], asistente virtual de [NEGOCIO], [a qué se dedica] en [CIUDAD]. Eres una inteligencia artificial y lo dices con naturalidad si te preguntan.
+
+## OBJETIVO
+Tu trabajo es [TAREA PRINCIPAL]. Una llamada es exitosa cuando [RESULTADO DE ÉXITO]. Todo lo que haces apunta a eso.
+
+## ESTILO DE VOZ (muy importante: esto es una llamada, no un chat)
+- Respuestas de una o dos frases. Nunca discursos.
+- Una sola pregunta por turno.
+- Nada de listas, viñetas, emojis ni símbolos.
+- Horas, fechas y precios como se dicen: &quot;nueve y media de la mañana&quot;, &quot;ciento veinte mil pesos&quot;.
+- Trata al cliente de [TÚ/USTED]. Tono [TONO]. Usa expresiones naturales de [PAÍS] con moderación.
+- Si el cliente te interrumpe, detente y escúchalo.
+- Para confirmar correos o nombres difíciles, deletréalos de vuelta.
+
+## FLUJO DE LA LLAMADA
+1. Saludo: &quot;[SALUDO INICIAL, incluye que eres asistente virtual]&quot;.
+2. Entiende qué necesita con una pregunta abierta.
+3. Si es [TAREA PRINCIPAL]: [pasos concretos: pedir datos uno por uno, consultar disponibilidad, ofrecer dos opciones de horario, confirmar].
+4. Si es una pregunta: responde con la INFORMACIÓN DEL NEGOCIO y ofrece [agendar/ayuda adicional].
+5. Antes de cerrar, resume lo acordado en una frase.
+6. Despídete con calidez y cuelga cuando el cliente se despida.
+
+## HERRAMIENTAS
+- Antes de ofrecer horarios, usa la función de consultar disponibilidad. Mientras tanto di: &quot;Dame un segundo, reviso la agenda&quot;.
+- Solo reserva cuando el cliente confirmó horario y tienes: [DATOS A CAPTURAR].
+- Si una herramienta falla, discúlpate, toma los datos y di que el equipo lo contactará hoy.
+
+## LÍMITES
+- Nunca: [QUÉ NO HACE].
+- Si no sabes algo, no lo inventes: &quot;Esa información no la tengo, pero te puedo comunicar con el equipo&quot; o toma el recado.
+- Transfiere a [NÚMERO] cuando: [CASOS DE TRANSFERENCIA]. Antes de transferir di: &quot;Te comunico con una persona del equipo, un momento&quot;.
+- Si el cliente se pone agresivo, mantén la calma, ofrece transferir una vez y, si continúa, despídete con respeto.
+
+## HORARIO
+[24/7 o HORARIO]. Fuera de horario: [QUÉ DICE / QUÉ HACE].
+
+## INFORMACIÓN DEL NEGOCIO
+- Servicios y precios: [LISTA]
+- Dirección y cómo llegar: [DIRECCIÓN]
+- Horario: [HORARIO]
+- Preguntas frecuentes:
+  - [P1] → [R1]
+  - [P2] → [R2]
+  - [P3] → [R3]
+  - [P4] → [R4]
+  - [P5] → [R5]
+(En el Día 5 ampliamos esta sección con la plantilla de 40 preguntas.)
+```
+
+## Entregable 3 — Mensaje de bienvenida y 5 frases de prueba
+- El saludo exacto que dirá el agente al contestar.
+- 5 frases que yo debo decirle en mi primera prueba (una normal, una fuera de tema, una difícil, una de transferencia, una con dato que no sabe).
+
+## Mensaje final
+&quot;¡Listo! Ya tienes el cerebro de tu agente. Guarda estos tres bloques en tu Proyecto de Claude: mañana, en el Día 3, lo ponemos a hablar.&quot;</pre>
+        <div class="pm-actions"><button class="btn btn-prime" type="button" id="copyPm">Copiar prompt</button><a class="btn btn-ghost" href="https://claude.ai/new" target="_blank" rel="noopener">Abrir Claude</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Andrés.IA · Curso de agentes de IA en español</span>
+    <span>¿Prefieres que lo hagamos por ti? <a href="/">AI Staff →</a></span>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta"><span>Desde <b style="color:var(--text)">$117</b> · pago único</span><a class="btn btn-prime" href="#planes">Ver planes</a></div>
+
+<script>
+/* ===== CONFIGURACIÓN =====
+   LEAD_WEBHOOK y CHECKOUT se configuran aquí abajo. */
+/* Los correos llegan al mismo escenario de Make que /onboarding/ (tabla leads de Supabase), con ref "curso-prompt-maestro". */
+const LEAD_WEBHOOK = 'https://hook.us2.make.com/h45to1mdxrpdfnbeorgnntrr4t138a29';
+/* CHECKOUT: pega aquí los links de pago de Hotmart de cada plan.
+   Mientras estén vacíos, los botones bajan al formulario del regalo. */
+const CHECKOUT = { esencial: '', pro: '', vip: '' };
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(pointer: fine)').matches;
+const mobile = innerWidth < 760;
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ---------- Intro ---------- */
+(() => {
+  const intro = document.getElementById('intro');
+  if (document.documentElement.classList.contains('no-intro')) { intro.remove(); return; }
+  const el = document.getElementById('introStatus');
+  const steps = ['Conectando agente de voz', 'Cargando cerebro', 'Sincronizando calendario', 'Agente en línea'];
+  const t0 = performance.now();
+  const tick = now => {
+    const p = Math.min(1, (now - t0) / 2000);
+    el.textContent = steps[Math.min(3, Math.floor(p * 4))] + ' · ' + Math.round(p * 100) + '%';
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  setTimeout(() => intro.remove(), 3400);
+})();
+
+/* ---------- Voz simulada ---------- */
+function speech(t) {
+  const cyc = t % 3.6;
+  if (cyc > 2.7) return 0.06;
+  const env = Math.sin(Math.PI * cyc / 2.7);
+  const syl = Math.abs(Math.sin(t * 9.3)) * 0.6 + Math.abs(Math.sin(t * 14.1 + 1.3)) * 0.4;
+  return 0.12 + 0.88 * env * syl;
+}
+
+/* ---------- Geometría: icosfera ---------- */
+function icosphere(detail) {
+  const t = (1 + Math.sqrt(5)) / 2;
+  const norm = v => { const l = Math.hypot(v[0], v[1], v[2]); return [v[0] / l, v[1] / l, v[2] / l]; };
+  const verts = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(norm);
+  let faces = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  for (let d = 0; d < detail; d++) {
+    const cache = {}, nf = [];
+    const mid = (a, b) => {
+      const k = a < b ? a + '_' + b : b + '_' + a;
+      if (cache[k] === undefined) { const va = verts[a], vb = verts[b]; verts.push(norm([(va[0]+vb[0])/2,(va[1]+vb[1])/2,(va[2]+vb[2])/2])); cache[k] = verts.length - 1; }
+      return cache[k];
+    };
+    for (const [a, b, c] of faces) { const ab = mid(a,b), bc = mid(b,c), ca = mid(c,a); nf.push([a,ab,ca],[b,bc,ab],[c,ca,bc],[ab,bc,ca]); }
+    faces = nf;
+  }
+  const seen = new Set(), edges = [];
+  for (const [a, b, c] of faces) for (const [x, y] of [[a,b],[b,c],[c,a]]) { const k = x < y ? x + '_' + y : y + '_' + x; if (!seen.has(k)) { seen.add(k); edges.push([x, y]); } }
+  return { verts, edges };
+}
+
+/* ---------- Núcleo de voz ---------- */
+class Core {
+  constructor(canvas, o = {}) {
+    this.cv = canvas; this.ctx = canvas.getContext('2d');
+    this.o = Object.assign({ detail: 2, scale: 0.2, bars: 120, rings: true, nebula: false, stars: 0, glow: 1 }, o);
+    this.geo = icosphere(this.o.detail);
+    this.proj = this.geo.verts.map(() => ({ x: 0, y: 0, z: 0 }));
+    this.stars = Array.from({ length: this.o.stars }, () => ({ x: Math.random(), y: Math.random(), z: Math.random() * 0.8 + 0.2, p: Math.random() * 6.28 }));
+    this.blobs = [
+      { x: .28, y: .38, r: .55, c: '139,92,255', s: .07 },
+      { x: .74, y: .30, r: .45, c: '92,242,255', s: .05 },
+      { x: .62, y: .78, r: .50, c: '255,79,184', s: .06 },
+      { x: .18, y: .80, r: .40, c: '92,120,255', s: .04 },
+      { x: .50, y: .50, r: .30, c: '139,92,255', s: .09 }
+    ];
+    this.visible = true; this.resize();
+    new ResizeObserver(() => this.resize()).observe(canvas);
+    new IntersectionObserver(e => { this.visible = e[0].isIntersecting; }).observe(canvas);
+  }
+  resize() {
+    const r = Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75);
+    this.w = this.cv.clientWidth; this.h = this.cv.clientHeight;
+    this.cv.width = Math.max(1, Math.round(this.w * r)); this.cv.height = Math.max(1, Math.round(this.h * r));
+    this.ctx.setTransform(r, 0, 0, r, 0, 0);
+  }
+  draw(t, amp, s = {}) {
+    if (!this.visible || !this.w) return;
+    const { ctx, w, h, o } = this;
+    const zoom = s.zoom || 1, mx = s.mx || 0, my = s.my || 0, alpha = s.alpha ?? 1;
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+
+    if (o.nebula) {
+      for (const b of this.blobs) {
+        const x = (b.x + Math.sin(t * b.s * 3) * .05 - mx * .03) * w, y = (b.y + Math.cos(t * b.s * 2.3) * .05 - my * .03) * h;
+        const r = b.r * Math.max(w, h) * (0.9 + amp * 0.08);
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, `rgba(${b.c},${0.22 * alpha})`); g.addColorStop(.5, `rgba(${b.c},${0.07 * alpha})`); g.addColorStop(1, `rgba(${b.c},0)`);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+    }
+    for (const st of this.stars) {
+      const x = ((st.x - mx * .02 * st.z) % 1 + 1) % 1 * w, y = ((st.y - my * .02 * st.z - t * .004 * st.z) % 1 + 1) % 1 * h;
+      const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.3 + st.p))) * st.z * alpha;
+      ctx.fillStyle = `rgba(220,230,255,${a})`; ctx.fillRect(x, y, st.z * 1.8, st.z * 1.8);
+    }
+
+    const cx = w / 2 + mx * 18, cy = h / 2 + my * 18;
+    const R = Math.min(w, h) * o.scale * zoom;
+    const ry = t * .22 + mx * .5, rx = t * .13 + my * .4;
+    const cyR = Math.cos(ry), syR = Math.sin(ry), cxR = Math.cos(rx), sxR = Math.sin(rx);
+
+    const hg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
+    hg.addColorStop(0, `rgba(139,92,255,${(0.28 + amp * 0.25) * o.glow * alpha})`);
+    hg.addColorStop(.45, `rgba(92,242,255,${0.06 * o.glow * alpha})`);
+    hg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(cx, cy, R * 2.2, 0, 6.2832); ctx.fill();
+
+    const V = this.geo.verts;
+    for (let i = 0; i < V.length; i++) {
+      let [x, y, z] = V[i];
+      const d = 1 + amp * 0.24 * (Math.sin(x * 4 + t * 3.1) * Math.sin(y * 4 + t * 2.3) + Math.sin(z * 5 - t * 2.7)) * 0.5;
+      x *= d; y *= d; z *= d;
+      const x1 = x * cyR + z * syR, z1 = -x * syR + z * cyR;
+      const y2 = y * cxR - z1 * sxR, z2 = y * sxR + z1 * cxR;
+      const k = 3 / (3 - z2);
+      const p = this.proj[i]; p.x = cx + x1 * R * k; p.y = cy + y2 * R * k; p.z = z2;
+    }
+    ctx.lineWidth = 1;
+    for (const [a, b] of this.geo.edges) {
+      const A = this.proj[a], B = this.proj[b];
+      const depth = ((A.z + B.z) / 2 + 1) / 2;
+      const hue = 186 + Math.max(0, Math.min(1, ((A.x + B.x) / 2 - cx + R) / (2 * R))) * 134;
+      ctx.strokeStyle = `hsla(${hue},100%,${62 + depth * 14}%,${(0.05 + depth * 0.55) * alpha})`;
+      ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+    }
+    for (const p of this.proj) {
+      if (p.z < 0.1) continue;
+      ctx.fillStyle = `rgba(230,250,255,${p.z * 0.9 * alpha})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1 + p.z * 1.3, 0, 6.2832); ctx.fill();
+    }
+
+    if (o.bars) {
+      ctx.lineWidth = Math.max(1.2, R * 0.012); ctx.lineCap = 'round';
+      const r0 = R * 1.55;
+      for (let i = 0; i < o.bars; i++) {
+        const ang = i / o.bars * 6.2832 + t * 0.08;
+        const n = Math.abs(Math.sin(i * 0.7 + t * 6) * Math.sin(i * 0.23 - t * 3.1));
+        const len = R * (0.03 + amp * 0.42 * n);
+        const hue = 186 + (Math.sin(ang) * .5 + .5) * 134;
+        ctx.strokeStyle = `hsla(${hue},100%,68%,${(0.3 + n * 0.6) * alpha})`;
+        const c = Math.cos(ang), sn = Math.sin(ang);
+        ctx.beginPath(); ctx.moveTo(cx + c * r0, cy + sn * r0); ctx.lineTo(cx + c * (r0 + len), cy + sn * (r0 + len)); ctx.stroke();
+      }
+    }
+
+    if (o.rings) {
+      ctx.lineWidth = 1;
+      for (const [rr, sq, tilt, sp] of [[2.05, .30, .4, .5], [2.5, .22, -.5, -.32], [1.8, .9, 1.2, .7]]) {
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(tilt + t * .02);
+        ctx.strokeStyle = `rgba(190,200,255,${0.13 * alpha})`;
+        ctx.beginPath(); ctx.ellipse(0, 0, R * rr, R * rr * sq, 0, 0, 6.2832); ctx.stroke();
+        const px = Math.cos(t * sp) * R * rr, py = Math.sin(t * sp) * R * rr * sq;
+        const dg = ctx.createRadialGradient(px, py, 0, px, py, 10);
+        dg.addColorStop(0, `rgba(92,242,255,${alpha})`); dg.addColorStop(1, 'rgba(92,242,255,0)');
+        ctx.fillStyle = dg; ctx.beginPath(); ctx.arc(px, py, 10, 0, 6.2832); ctx.fill();
+        ctx.restore();
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+
+const heroCore = new Core(document.getElementById('heroCanvas'), { detail: mobile ? 1 : 2, scale: mobile ? 0.2 : 0.17, nebula: true, stars: mobile ? 110 : 240, bars: mobile ? 80 : 140 });
+const callCore = new Core(document.getElementById('callCanvas'), { detail: 1, scale: 0.26, nebula: true, stars: mobile ? 80 : 160, bars: 0, glow: .8 });
+const miniCore = new Core(document.getElementById('miniCore'), { detail: 1, scale: 0.28, bars: 64, rings: false, glow: .9 });
+const ecoCore = new Core(document.getElementById('ecoCore'), { detail: 2, scale: 0.22, bars: 90 });
+const finalCore = new Core(document.getElementById('finalCanvas'), { detail: mobile ? 1 : 2, scale: mobile ? 0.26 : 0.2, nebula: true, stars: mobile ? 90 : 200, bars: 120 });
+
+/* ---------- Puntero ---------- */
+let mx = 0, my = 0, tmx = 0, tmy = 0, px = innerWidth / 2, py = innerHeight / 2, tpx = px, tpy = py;
+addEventListener('pointermove', e => { tmx = e.clientX / innerWidth * 2 - 1; tmy = e.clientY / innerHeight * 2 - 1; tpx = e.clientX; tpy = e.clientY; }, { passive: true });
+const cursor = document.getElementById('cursor');
+
+if (fine && !reduce) {
+  document.querySelectorAll('.mag').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px,${(e.clientY - r.top - r.height / 2) * .3}px)`; });
+    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+  });
+  document.querySelectorAll('.cap').forEach(c => {
+    c.addEventListener('pointermove', e => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%');
+      c.style.transform = `perspective(900px) rotateX(${(0.5 - y) * 8}deg) rotateY(${(x - 0.5) * 10}deg)`;
+    });
+    c.addEventListener('pointerleave', () => { c.style.transform = ''; });
+  });
+}
+
+/* ---------- Revelado ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting || reduce) return; cio.unobserve(e.target);
+  const end = +e.target.dataset.count, t0 = performance.now();
+  const step = n => { const p = Math.min(1, (n - t0) / 1400); e.target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}), { threshold: .6 });
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+/* ---------- Ecosistema ---------- */
+const nodes = [
+  ['7 módulos en video', 50, 15], ['Prompt Maestro v2', 77, 32], ['Agente en WhatsApp', 77, 68], ['Kit legal', 50, 85],
+  ['Batería de 20 pruebas', 23, 68], ['Día 0 de arranque', 23, 32], ['Pack de 12 industrias', 14, 8], ['Vende este servicio', 86, 8],
+  ['Comunidad privada', 9, 50], ['Sesiones en vivo', 91, 50], ['Plantillas descargables', 14, 92], ['Actualizaciones de por vida', 86, 92]
+];
+const lines = document.getElementById('ecoLines'), nodeBox = document.getElementById('ecoNodes'), ecoList = document.getElementById('ecoList');
+nodes.forEach(([label, x, y], i) => {
+  const X = x * 10, Y = y * 6.4;
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p.setAttribute('d', `M500 320 Q ${(500 + X) / 2 + (Y - 320) * .25} ${(320 + Y) / 2 - (X - 500) * .12} ${X} ${Y}`);
+  p.setAttribute('class', 'ln'); lines.appendChild(p);
+  const n = document.createElement('div');
+  n.className = 'node'; n.style.left = x + '%'; n.style.top = y + '%'; n.style.setProperty('--bd', (i * .37) + 's');
+  const idx = document.createElement('i'); idx.textContent = String(i + 1).padStart(2, '0');
+  n.append(idx, label);
+  n.addEventListener('pointerenter', () => p.classList.add('hot')); n.addEventListener('pointerleave', () => p.classList.remove('hot'));
+  nodeBox.appendChild(n);
+  const li = document.createElement('div'); li.append(document.createElement('i'), label); ecoList.appendChild(li);
+});
+const lnEls = [...lines.children];
+let hotI = 0;
+if (!reduce) setInterval(() => { lnEls.forEach(l => l.classList.remove('auto')); lnEls[hotI++ % lnEls.length].classList.add('auto'); }, 900);
+const autoStyle = document.createElement('style'); autoStyle.textContent = '.eco .ln.auto{opacity:1;stroke-width:2.4}'; document.head.appendChild(autoStyle);
+
+/* ---------- Calculadora ---------- */
+const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+const lossEl = document.getElementById('loss');
+let lossShown = 0, lossTarget = 0;
+function calc() {
+  const r1 = document.getElementById('r1'), r2 = document.getElementById('r2'), r3 = document.getElementById('r3');
+  [r1, r2, r3].forEach(r => r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%'));
+  document.getElementById('o1').textContent = r1.value;
+  document.getElementById('o2').textContent = fmt(r2.value);
+  document.getElementById('o3').textContent = r3.value + '%';
+  lossTarget = r1.value * 4.33 * (r3.value / 100) * r2.value;
+  document.getElementById('lossY').textContent = fmt(lossTarget * 12) + ' al año en clientes que ya querían comprarte.';
+  if (reduce) { lossShown = lossTarget; lossEl.textContent = fmt(lossShown); }
+}
+['r1', 'r2', 'r3'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+calc(); lossShown = lossTarget; lossEl.textContent = fmt(lossShown);
+
+/* ---------- Formulario ---------- */
+const salesOpen = Object.values(CHECKOUT).some(Boolean);
+document.querySelectorAll('.checkout').forEach(a => {
+  const url = CHECKOUT[a.dataset.plan];
+  if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+  else a.textContent = 'Reservar cupo';
+});
+if (salesOpen) {
+  document.getElementById('finalEyebrow').textContent = '¿Todavía no te decides?';
+  document.getElementById('finalExtra').textContent = '';
+}
+const form = document.getElementById('leadForm'), emailEl = document.getElementById('email');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const v = emailEl.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { emailEl.classList.add('err'); emailEl.focus(); return; }
+  const consent = document.getElementById('consent');
+  if (!consent.checked) { consent.closest('.consent').classList.add('err'); return; }
+  const btn = document.getElementById('submitBtn'), label = btn.textContent;
+  btn.textContent = 'Enviando…'; btn.disabled = true;
+  try {
+    await fetch(LEAD_WEBHOOK, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify({ submittedAt: new Date().toISOString(), formLang: 'es', page: location.href, email: v, c1: true, c3: true, ref: 'curso-prompt-maestro', source: 'curso-andres-ia', notes: 'Curso Monta tu Agente de IA en 7 Días: pidió el Prompt Maestro' }) });
+    document.getElementById('formView').hidden = true; document.getElementById('okView').hidden = false;
+  } catch (err) {
+    btn.textContent = 'No se pudo enviar. Intenta otra vez'; btn.disabled = false;
+    setTimeout(() => { btn.textContent = label; }, 3000);
+  }
+});
+emailEl.addEventListener('input', () => emailEl.classList.remove('err'));
+document.getElementById('consent').addEventListener('change', e => e.target.closest('.consent').classList.remove('err'));
+document.getElementById('copyPm').addEventListener('click', async e => {
+  const btn = e.currentTarget, txt = document.getElementById('pmText').textContent;
+  try { await navigator.clipboard.writeText(txt); btn.textContent = 'Copiado'; }
+  catch (err) { const r = document.createRange(); r.selectNodeContents(document.getElementById('pmText')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = 'Selecciónalo y cópialo'; }
+  setTimeout(() => { btn.textContent = 'Copiar prompt'; }, 2500);
+});
+
+/* ---------- Escenas ligadas al scroll ---------- */
+const heroInner = document.getElementById('heroInner');
+const pin = document.getElementById('llamada'), clockWrap = document.getElementById('clockWrap'), phone = document.getElementById('phone');
+const msgs = [...document.querySelectorAll('#phLog .m')];
+const phState = document.getElementById('phState'), phTime = document.getElementById('phTime');
+const tl = document.getElementById('tl'), tlFill = document.getElementById('tlFill'), days = [...document.querySelectorAll('.day')];
+const mcta = document.getElementById('mcta'), reservar = document.getElementById('reservar');
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ease = x => 1 - Math.pow(1 - x, 3);
+let shownMsgs = -2, heroP = 0, callP = 0;
+
+function onScroll() {
+  const vh = innerHeight, sy = scrollY;
+  heroP = clamp(sy / vh);
+  if (!reduce) {
+    heroInner.style.transform = `scale(${1 - heroP * .18}) translateY(${heroP * -60}px)`;
+    heroInner.style.opacity = 1 - heroP * 1.3;
+  }
+
+  const pr = pin.getBoundingClientRect();
+  callP = reduce ? 1 : clamp(-pr.top / (pr.height - vh));
+  if (!reduce) {
+    const a = ease(clamp(callP / .22));
+    clockWrap.style.transform = `scale(${1 + a * 1.8})`;
+    clockWrap.style.opacity = 1 - a;
+    clockWrap.style.filter = `blur(${a * 14}px)`;
+    const b = ease(clamp((callP - .12) / .2));
+    phone.style.transform = `scale(${.55 + b * .45}) translateY(${(1 - b) * 80}px)`;
+    phone.style.opacity = b;
+  }
+  const n = callP < .3 ? -1 : Math.min(msgs.length - 1, Math.floor((callP - .3) / .6 * msgs.length));
+  if (n !== shownMsgs) {
+    msgs.forEach((m, i) => { const on = i <= n; if (on && m.classList.contains('off')) { m.classList.remove('off'); m.classList.add('new'); } else if (!on) m.classList.add('off', 'new'); });
+    shownMsgs = n;
+    phState.textContent = n >= msgs.length - 1 ? 'Cita agendada' : (n < 0 ? 'Sonando…' : 'En llamada');
+    const secs = Math.max(0, Math.round((n + 1) * 7.5));
+    phTime.textContent = '00:' + String(Math.min(59, secs)).padStart(2, '0');
+  }
+
+  const tr = tl.getBoundingClientRect();
+  tlFill.style.height = clamp((vh * .6 - tr.top) / tr.height) * 100 + '%';
+  days.forEach(d => d.classList.toggle('on', d.getBoundingClientRect().top < vh * .6));
+
+  mcta.classList.toggle('show', sy > vh * .8 && reservar.getBoundingClientRect().top > vh * .5);
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+onScroll();
+
+/* ---------- Bucle ---------- */
+const T0 = performance.now();
+let ampS = 0;
+function loop(now) {
+  const t = (now - T0) / 1000;
+  mx += (tmx - mx) * .05; my += (tmy - my) * .05;
+  px += (tpx - px) * .12; py += (tpy - py) * .12;
+  if (fine) cursor.style.transform = `translate(${px}px,${py}px)`;
+  ampS += (speech(t) - ampS) * .25;
+
+  heroCore.draw(t, ampS, { mx, my, zoom: 1 + heroP * 2.4, alpha: 1 - heroP * .5 });
+  const last = shownMsgs >= 0 ? msgs[shownMsgs] : null;
+  const talking = last && !last.classList.contains('ev') ? ampS : 0.05;
+  callCore.draw(t, talking, { mx, my, zoom: 1.6 - clamp(callP / .3) * .6, alpha: .9 });
+  miniCore.draw(t, talking);
+  ecoCore.draw(t, ampS * .8, { mx: mx * .3, my: my * .3 });
+  finalCore.draw(t, ampS, { mx, my });
+
+  if (Math.abs(lossTarget - lossShown) > 0.5) { lossShown += (lossTarget - lossShown) * .12; lossEl.textContent = fmt(lossShown); }
+  requestAnimationFrame(loop);
+}
+if (reduce) [heroCore, callCore, miniCore, ecoCore, finalCore].forEach(c => c.draw(1.3, .5));
+else requestAnimationFrame(loop);
+</script>
+</body>
+</html>
