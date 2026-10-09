@@ -60,6 +60,7 @@ Nota obligatoria: "Déploiement progressif : les canaux s'activent par phases et
 - Contacto: hello@meetaistaff.com · +1 (438) 805-8804.
 
 ## Página principal y sectores
+- **Orbe y chat (8 oct. 2026):** el orbe de la home es el mismo de la página del curso (icosfera + barras de voz + nebulosa, clase `Core`), dentro del círculo oscuro sobrio. Abajo a la derecha hay un **chat con Sofía** (FR/EN/ES, estilo Mac, sigue el tema claro/oscuro) que usa la función `curso-chat` con `bot: "sofia"`; las conversaciones quedan en la tabla `course_chat` (columna `bot`).
 - **Home sencilla (4 oct. 2026):** el dueño la quiso más vacía y entendible, con un orbe llamativo que hable. Texto en el diccionario `STR` de `tools/home_template.html`; planes y precios vienen de `tools/generic_text.py` (no se escriben a mano). La demo de voz es un ejemplo con la voz del navegador y lo dice; la voz real es la de la línea demo.
 - La asistente del ejemplo **nunca confirma** la cita: dice que el equipo confirma por texto (igual que la voz real de los clientes).
 - **Páginas de sector:** siguen con el diseño completo (celular flotante, dashboard de muestra con 6 pestañas, calculadora, integraciones). De `tools/general_content.py` solo se usa la calculadora (`calc`).

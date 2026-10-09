@@ -62,9 +62,10 @@ nav.scrolled{border-bottom-color:var(--line)}
 .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--blue);background:var(--soft);padding:6px 12px;border-radius:999px}
 .orb-box{--glow:.35;position:relative;width:min(470px,100%);aspect-ratio:1;margin:0 auto;border-radius:50%;cursor:pointer;
   background:radial-gradient(circle at 50% 45%,rgba(18,40,90,.95) 0%,#06122a 55%,#020610 100%);
-  box-shadow:0 0 calc(30px + 70px*var(--glow)) rgba(40,140,255,calc(.18 + .3*var(--glow))),inset 0 0 70px rgba(60,160,255,.18),0 30px 60px rgba(4,12,30,.25)}
+  box-shadow:0 0 calc(30px + 70px*var(--glow)) rgba(110,100,255,calc(.18 + .3*var(--glow))),inset 0 0 70px rgba(60,160,255,.18),0 30px 60px rgba(4,12,30,.25)}
 .orb-box:before{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(120,200,255,.045) 0 1px,transparent 1px 4px);pointer-events:none}
 .orb-box canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.orb-box{overflow:hidden;isolation:isolate}
 .orb-box.no-gl:after{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle,rgba(140,220,255,.9),rgba(60,120,255,.4) 45%,transparent 70%);filter:blur(4px);animation:pulse 3s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.08);opacity:.8}}
 .orb-box:focus-visible{outline:3px solid var(--blue);outline-offset:6px}
@@ -274,6 +275,53 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
   .hero:before{animation:none}
   html{scroll-behavior:auto}
 }
+
+/* Chat Sofía (mismo orbe y chat que el curso, en versión sobria) */
+.sf-btn{position:fixed;z-index:40;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));width:64px;height:64px;border-radius:50%;border:0;padding:0;cursor:pointer;overflow:hidden;
+  background:radial-gradient(circle at 50% 45%,#16285a 0%,#06122a 60%,#020610 100%);box-shadow:0 14px 34px rgba(10,26,51,.35),0 0 0 3px var(--card),0 0 0 4px var(--line);transition:transform .35s cubic-bezier(.2,1.3,.3,1)}
+.sf-btn:hover{transform:scale(1.06)}
+.sf-btn canvas{position:absolute;inset:0;width:100%;height:100%}
+.sf-btn i{position:absolute;top:6px;right:6px;width:11px;height:11px;border-radius:50%;background:var(--green);box-shadow:0 0 0 2px #06122a}
+.sf-tease{position:fixed;z-index:40;right:92px;bottom:calc(30px + env(safe-area-inset-bottom));max-width:250px;padding:12px 15px;border-radius:16px 16px 4px 16px;background:var(--card);color:var(--ink);font-size:14px;line-height:1.4;cursor:pointer;
+  box-shadow:var(--shadow),0 0 0 1px var(--line);transform-origin:bottom right;transform:scale(.5);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,1.3,.3,1),opacity .25s}
+.sf-tease.show{transform:none;opacity:1;pointer-events:auto}
+.sf-tease b{display:block;font-size:12px;color:var(--blue);margin-bottom:2px}
+.sf{position:fixed;z-index:60;right:18px;bottom:calc(96px + env(safe-area-inset-bottom));width:min(380px,calc(100vw - 36px));height:min(580px,calc(100svh - 130px));display:flex;flex-direction:column;border-radius:20px;overflow:hidden;
+  background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:saturate(1.5) blur(22px);-webkit-backdrop-filter:saturate(1.5) blur(22px);box-shadow:0 30px 70px rgba(10,26,51,.28),0 0 0 1px var(--line);
+  transform-origin:bottom right;transform:scale(.6) translateY(20px);opacity:0;visibility:hidden;transition:transform .4s cubic-bezier(.2,1.2,.3,1),opacity .2s,visibility 0s .4s}
+.sf.open{transform:none;opacity:1;visibility:visible;transition:transform .4s cubic-bezier(.2,1.2,.3,1),opacity .2s}
+.sf-head{display:flex;align-items:center;gap:11px;padding:12px 12px 12px 14px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 60%,var(--card))}
+.sf-dots{display:flex;gap:6px;margin-right:4px}.sf-dots i{width:11px;height:11px;border-radius:50%;background:#FF5F57}.sf-dots i:nth-child(2){background:#FEBC2E}.sf-dots i:nth-child(3){background:#28C840}
+.sf-av{position:relative;width:38px;height:38px;border-radius:50%;overflow:hidden;flex:none;background:radial-gradient(circle at 50% 45%,#16285a 0%,#06122a 60%,#020610 100%)}
+.sf-av canvas{position:absolute;inset:0;width:100%;height:100%}
+.sf-head b{display:block;font-size:15px}
+.sf-head span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.sf-head span i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.sf-x{margin-left:auto;width:32px;height:32px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:18px;line-height:1}
+.sf-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;overscroll-behavior:contain}
+.sf-m{max-width:85%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word;animation:sfIn .35s cubic-bezier(.2,1.3,.3,1)}
+@keyframes sfIn{from{opacity:0;transform:translateY(8px) scale(.96)}}
+.sf-m.ai{align-self:flex-start;background:var(--bg);border-bottom-left-radius:5px}
+.sf-m.me{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:5px}
+.sf-m a{color:inherit}
+.sf-m.typing{display:inline-flex;gap:5px}.sf-m.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:sfDot 1s infinite}
+.sf-m.typing i:nth-child(2){animation-delay:.15s}.sf-m.typing i:nth-child(3){animation-delay:.3s}
+@keyframes sfDot{50%{transform:translateY(-4px);opacity:.5}}
+.sf-cta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.sf-cta a{font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;background:var(--blue);color:#fff;text-decoration:none}
+.sf-chips{display:flex;gap:7px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}.sf-chips::-webkit-scrollbar{display:none}
+.sf-chips button{flex:none;font-size:13px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sf-chips button:hover{border-color:var(--blue)}
+.sf-form{display:flex;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.sf-form input{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:10px 15px;outline:none}
+.sf-form input:focus{border-color:var(--blue)}
+.sf-form button{width:42px;height:42px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+.sf-form button:disabled{opacity:.5}
+.sf-note{font-size:11px;color:var(--muted);text-align:center;padding:0 12px 8px}
+@media (max-width:860px){
+  .sf-btn{right:14px;width:56px;height:56px;bottom:calc(84px + env(safe-area-inset-bottom))}
+  .sf-tease{right:80px;bottom:calc(92px + env(safe-area-inset-bottom))}
+  .sf{right:0;left:0;bottom:0;width:100%;height:calc(100svh - 10px);border-radius:20px 20px 0 0;transform-origin:bottom center}
+}
 </style>
 </head>
 <body>
@@ -448,6 +496,16 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color
 
 <a class="callbar" id="callbar" href="tel:+14388058804"><span class="ph">📞</span><span><b data-t="cta.callA"></b><small>+1 (438) 805-8804</small></span></a>
 
+
+<button class="sf-btn" id="sfBtn" aria-controls="sf" aria-expanded="false"><canvas id="sfOrb" aria-hidden="true"></canvas><i></i></button>
+<div class="sf-tease" id="sfTease"><b>Sofía · IA</b><span id="sfTeaseTxt"></span></div>
+<section class="sf" id="sf" role="dialog" aria-modal="false">
+  <div class="sf-head"><div class="sf-dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="sf-av"><canvas id="sfOrb2" aria-hidden="true"></canvas></div><div><b>Sofía</b><span><i></i><em id="sfSub" style="font-style:normal"></em></span></div><button class="sf-x" id="sfX" aria-label="×">×</button></div>
+  <div class="sf-log" id="sfLog"></div>
+  <div class="sf-chips" id="sfChips"></div>
+  <form class="sf-form" id="sfForm" autocomplete="off"><input id="sfIn" maxlength="600"><button id="sfSend" aria-label="→"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <div class="sf-note" id="sfNote"></div>
+</section>
 <script>
 const DATA = {"fr": {"plans": [{"name": "Essentiel", "tag": "Vos appels, vos textos et votre agenda, pris en charge.", "price": 397, "cta": "Choisir Essentiel", "feat": ["Numéro de téléphone dédié et appels 24/7", "Français, anglais et espagnol", "Réponses par texto (SMS)", "Rendez-vous pris dans votre agenda", "Tableau de bord privé", "Appelez {a} pour demander vos rapports (par phases)"]}, {"name": "Pro", "tag": "L'essentiel, plus WhatsApp et des appels programmés.", "price": 597, "cta": "Choisir Pro", "feat": ["Tout le plan Essentiel, plus :", "WhatsApp avec le même numéro (par phases)", "{a} vous appelle aux heures que vous choisissez, jusqu'à 3 fois par jour (par phases)", "Appelez {a} à toute heure", "Appels illimités, usage raisonnable"]}, {"name": "Complet", "tag": "Tous vos canaux, avec un accès prioritaire.", "price": 797, "cta": "Choisir Complet", "feat": ["Tout le plan Pro, plus :", "Messages Instagram et Facebook (par phases)", "Statistiques de vos réseaux sociaux (par phases)", "Accès prioritaire : vos questions et changements passent en premier"]}], "priceTop": ["CAD · mois par mois · taxes en sus", "Sans contrat", "Installation gratuite au lancement"], "per": "/ mois", "rollout": "Déploiement progressif : les canaux s'activent par phases et sont confirmés avec vous lors de l'appel découverte.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Heures à couvrir par semaine", "l2": "Salaire horaire", "l3": "", "eyebrow": "Faites le calcul", "title": "Combien coûte un employé qui répond au téléphone?", "lead": "Entrez les heures à couvrir et un salaire horaire : on compare avec {a}.", "cap": "par mois en salaire seulement, sans charges ni remplacements. {a} : dès {p} par mois, 24 h sur 24.", "note": "Calculé avec vos chiffres; les valeurs de départ ne sont que des exemples.", "disc": "Un employé couvre ses heures de travail. {a} couvre les 168 heures de la semaine."}, "dash": {"t": {"tabs": ["Aperçu", "Appels", "Messages", "Agenda", "Réseaux", "Contacts"], "chart": "Appels répondus cette semaine", "days": ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"], "recent": "Derniers appels", "transcript": "Transcription", "free": "Libre", "week": "Cette semaine", "sms": "Bonjour {n}, c'est {a}. C'est confirmé : {x}. À bientôt!", "sent": "Envoyé", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "Un client demande vos heures d'ouverture.", "{a} répond avec vos heures et propose un rendez-vous.", "Par phases"], "soc": [["Instagram", "📸", [["Portée", "2 340"], ["Messages", "18"], ["Nouveaux abonnés", "+27"]]], ["Facebook", "📘", [["Portée", "1 120"], ["Messages", "9"], ["Mentions J'aime", "+14"]]]], "socNote": "Instagram et Facebook : plan Complet, par phases.", "last": "Dernier contact", "contactsNote": "Chaque appelant devient un contact, avec son historique."}, "tags": {"hot": "Chaud", "warm": "Tiède", "cold": "Froid", "new": "Nouveau"}, "next": "Prochaine action", "eyebrow": "Ce que vous verrez chaque matin", "title": "Votre tableau de bord.", "lead": "Chaque appel est transcrit, résumé et suivi d'une prochaine action.", "badge": "◆ Données de démonstration", "more": "Voir le tableau de bord complet →", "sub": "avec {a} · AI Staff", "name": "Votre entreprise", "stats": [["Appels répondus", "41", "cette semaine"], ["Messages traités", "58", "textos et appels"], ["Rendez-vous pris", "12", "↑ 3 cette semaine"], ["Temps libéré", "≈ 9 h", "estimation cette semaine"]], "calls": [["Karim Benali", "Cette nuit · 23 h 48", "Soumission pour un déménagement, 4 ½ de Laval à Longueuil.", "hot", "Visite · jeudi 10 h"], ["Sophie Gagnon", "Hier · 16 h 40", "Veut déplacer son rendez-vous de vendredi.", "warm", "Rendez-vous déplacé · lundi 9 h"], ["Luis Ramírez", "Hier · 11 h 05", "Demande vos heures d'ouverture, en espagnol.", "new", "Réponse donnée en espagnol"]], "script": [["agent", "Déménagement Tremblay, bonsoir, c'est {a}. Comment puis-je vous aider?"], ["lead", "Bonjour, je voudrais une soumission pour un déménagement le 28."], ["agent", "Avec plaisir. Quelle est l'adresse de départ et d'arrivée, et combien de pièces?"], ["lead", "De Laval à Longueuil, un 4 et demi."], ["agent", "Parfait. Je note une visite jeudi à 10 h; l'équipe vous confirme par texto."], ["lead", "Super, merci!"], ["agent", "Avec plaisir. Bonne soirée!"]]}}, "en": {"plans": [{"name": "Essential", "tag": "Your calls, texts and calendar, handled.", "price": 397, "cta": "Choose Essential", "feat": ["Dedicated phone number and 24/7 calls", "French, English and Spanish", "Text message (SMS) replies", "Appointments booked in your calendar", "Private dashboard", "Call {a} to ask for your reports (in phases)"]}, {"name": "Pro", "tag": "The essentials, plus WhatsApp and scheduled calls.", "price": 597, "cta": "Choose Pro", "feat": ["Everything in Essential, plus:", "WhatsApp on the same number (in phases)", "{a} calls you at the times you choose, up to 3 times a day (in phases)", "Call {a} any time", "Unlimited calls, fair use"]}, {"name": "Complete", "tag": "Every channel, with priority access.", "price": 797, "cta": "Choose Complete", "feat": ["Everything in Pro, plus:", "Instagram and Facebook messages (in phases)", "Social media stats (in phases)", "Priority access: your questions and changes come first"]}], "priceTop": ["CAD · month to month · plus taxes", "No contract", "Free setup during launch"], "per": "/ month", "rollout": "Progressive rollout: channels are enabled in phases and confirmed with you on the discovery call.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Hours to cover per week", "l2": "Hourly wage", "l3": "", "eyebrow": "Do the math", "title": "What does an employee who answers the phone cost?", "lead": "Enter the hours to cover and an hourly wage: we compare with {a}.", "cap": "per month in wages alone, before payroll costs and replacements. {a}: from {p} a month, 24 hours a day.", "note": "Calculated from your numbers; the starting values are only examples.", "disc": "An employee covers working hours. {a} covers all 168 hours of the week."}, "dash": {"t": {"tabs": ["Overview", "Calls", "Messages", "Calendar", "Social", "Contacts"], "chart": "Calls answered this week", "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "recent": "Latest calls", "transcript": "Transcript", "free": "Open", "week": "This week", "sms": "Hi {n}, this is {a}. You're confirmed: {x}. See you soon!", "sent": "Sent", "smsLbl": "SMS · confirmation", "wa": ["WhatsApp", "A customer asks for your opening hours.", "{a} replies with your hours and offers an appointment.", "In phases"], "soc": [["Instagram", "📸", [["Reach", "2,340"], ["Messages", "18"], ["New followers", "+27"]]], ["Facebook", "📘", [["Reach", "1,120"], ["Messages", "9"], ["New likes", "+14"]]]], "socNote": "Instagram and Facebook: Complete plan, in phases.", "last": "Last contact", "contactsNote": "Every caller becomes a contact, with their history."}, "tags": {"hot": "Hot", "warm": "Warm", "cold": "Cold", "new": "New"}, "next": "Next action", "eyebrow": "What you'll see every morning", "title": "Your dashboard.", "lead": "Every call is transcribed, summarized and paired with a next action.", "badge": "◆ Demo data", "more": "See the full dashboard →", "sub": "with {a} · AI Staff", "name": "Your business", "stats": [["Calls answered", "41", "this week"], ["Messages handled", "58", "texts and calls"], ["Appointments booked", "12", "↑ 3 this week"], ["Time freed", "≈ 9 h", "estimate this week"]], "calls": [["Karim Benali", "Last night · 11:48 PM", "Quote for a move, 2-bedroom from Laval to Longueuil.", "hot", "Visit · Thursday 10 AM"], ["Sophie Gagnon", "Yesterday · 4:40 PM", "Wants to move her Friday appointment.", "warm", "Appointment moved · Monday 9 AM"], ["Luis Ramírez", "Yesterday · 11:05 AM", "Asks for your opening hours, in Spanish.", "new", "Answered in Spanish"]], "script": [["agent", "Tremblay Moving, good evening, this is {a}. How can I help?"], ["lead", "Hi, I'd like a quote for a move on the 28th."], ["agent", "Happy to help. What are the pickup and drop-off addresses, and how many rooms?"], ["lead", "From Laval to Longueuil, a 2-bedroom."], ["agent", "Perfect. I'm noting a visit on Thursday at 10 AM; the team will confirm by text."], ["lead", "Great, thanks!"], ["agent", "My pleasure. Have a good evening!"]]}}, "es": {"plans": [{"name": "Esencial", "tag": "Tus llamadas, tus mensajes de texto y tu agenda, atendidos.", "price": 397, "cta": "Elegir Esencial", "feat": ["Número de teléfono propio y llamadas 24/7", "Francés, inglés y español", "Respuestas por mensaje de texto (SMS)", "Citas agendadas en tu calendario", "Dashboard privado", "Llama a {a} para pedirle tus reportes (por fases)"]}, {"name": "Pro", "tag": "Lo esencial, más WhatsApp y llamadas programadas.", "price": 597, "cta": "Elegir Pro", "feat": ["Todo el plan Esencial, más:", "WhatsApp con el mismo número (por fases)", "{a} te llama a las horas que elijas, hasta 3 veces al día (por fases)", "Llama a {a} a cualquier hora", "Llamadas ilimitadas, uso razonable"]}, {"name": "Completo", "tag": "Todos tus canales, con acceso prioritario.", "price": 797, "cta": "Elegir Completo", "feat": ["Todo el plan Pro, más:", "Mensajes de Instagram y Facebook (por fases)", "Estadísticas de tus redes sociales (por fases)", "Acceso prioritario: tus preguntas y cambios van primero"]}], "priceTop": ["CAD · mes a mes · más impuestos", "Sin contrato", "Instalación gratis en el lanzamiento"], "per": "/ mes", "rollout": "Despliegue progresivo: los canales se activan por fases y se confirman contigo en la llamada de descubrimiento.", "calc": {"mode": "human", "v": [40, 22, 0], "r": [[10, 60, 1], [15, 50, 1], [0, 0, 1]], "l1": "Horas por cubrir a la semana", "l2": "Salario por hora", "l3": "", "eyebrow": "Haz la cuenta", "title": "¿Cuánto cuesta un empleado que contesta el teléfono?", "lead": "Escribe las horas por cubrir y un salario por hora: lo comparamos con {a}.", "cap": "al mes solo en salario, sin cargas ni reemplazos. {a}: desde {p} al mes, las 24 horas.", "note": "Calculado con tus cifras; los valores iniciales son solo ejemplos.", "disc": "Un empleado cubre su horario de trabajo. {a} cubre las 168 horas de la semana."}, "dash": {"t": {"tabs": ["Resumen", "Llamadas", "Mensajes", "Agenda", "Redes", "Contactos"], "chart": "Llamadas atendidas esta semana", "days": ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"], "recent": "Últimas llamadas", "transcript": "Transcripción", "free": "Libre", "week": "Esta semana", "sms": "Hola {n}, soy {a}. Quedó confirmado: {x}. ¡Hasta pronto!", "sent": "Enviado", "smsLbl": "SMS · confirmación", "wa": ["WhatsApp", "Un cliente pregunta por tu horario de atención.", "{a} responde con tu horario y propone una cita.", "Por fases"], "soc": [["Instagram", "📸", [["Alcance", "2 340"], ["Mensajes", "18"], ["Nuevos seguidores", "+27"]]], ["Facebook", "📘", [["Alcance", "1 120"], ["Mensajes", "9"], ["Nuevos me gusta", "+14"]]]], "socNote": "Instagram y Facebook: plan Completo, por fases.", "last": "Último contacto", "contactsNote": "Cada persona que llama se vuelve un contacto, con su historial."}, "tags": {"hot": "Caliente", "warm": "Tibio", "cold": "Frío", "new": "Nuevo"}, "next": "Próxima acción", "eyebrow": "Lo que verás cada mañana", "title": "Tu panel.", "lead": "Cada llamada queda transcrita, resumida y con una próxima acción.", "badge": "◆ Datos de demostración", "more": "Ver el panel completo →", "sub": "con {a} · AI Staff", "name": "Tu negocio", "stats": [["Llamadas atendidas", "41", "esta semana"], ["Mensajes atendidos", "58", "textos y llamadas"], ["Citas agendadas", "12", "↑ 3 esta semana"], ["Tiempo liberado", "≈ 9 h", "estimación esta semana"]], "calls": [["Karim Benali", "Anoche · 23:48", "Cotización de mudanza, dos habitaciones de Laval a Longueuil.", "hot", "Visita · jueves 10 h"], ["Sophie Gagnon", "Ayer · 16:40", "Quiere mover su cita del viernes.", "warm", "Cita movida · lunes 9 h"], ["Luis Ramírez", "Ayer · 11:05", "Pregunta por tu horario de atención, en español.", "new", "Respondido en español"]], "script": [["agent", "Mudanzas Tremblay, buenas noches, habla {a}. ¿En qué puedo ayudarle?"], ["lead", "Hola, quisiera una cotización para una mudanza el día 28."], ["agent", "Con gusto. ¿Cuáles son la dirección de salida y la de llegada, y cuántas habitaciones?"], ["lead", "De Laval a Longueuil, un apartamento de dos habitaciones."], ["agent", "Perfecto. Anoto una visita el jueves a las 10; el equipo le confirma por mensaje de texto."], ["lead", "¡Genial, gracias!"], ["agent", "Con gusto. ¡Buenas noches!"]]}}, "sectors": {"fr": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers immobiliers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Chauffage & climatisation"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paysagement"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Déneigement"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & mécanique"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Entreprises de nettoyage"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Salons & barbiers"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Cliniques dentaires"}], "en": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Real estate brokers"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Heating & cooling (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Landscaping"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Snow removal"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Garages & auto repair"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Cleaning companies"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barbers & salons"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Dental clinics"}], "es": [{"id": "immobilier", "slug": "immobilier", "ic": "🏡", "name": "Courtiers inmobiliarios"}, {"id": "cvc", "slug": "cvc", "ic": "🔥", "name": "Calefacción y climatización (HVAC)"}, {"id": "paysagement", "slug": "paysagement", "ic": "🌿", "name": "Paisajismo y jardinería"}, {"id": "deneigement", "slug": "deneigement", "ic": "❄️", "name": "Remoción de nieve"}, {"id": "garages", "slug": "garages", "ic": "🔧", "name": "Talleres mecánicos"}, {"id": "nettoyage", "slug": "nettoyage", "ic": "🧽", "name": "Empresas de limpieza"}, {"id": "barbiers", "slug": "barbiers", "ic": "💈", "name": "Barberías y salones"}, {"id": "dental", "slug": "dental", "ic": "🦷", "name": "Clínicas dentales"}]}};
 
@@ -565,6 +623,7 @@ function render(){
   renderCalc();
   document.title = "AI Staff · " + t("hero.h1").replace(/\.$/,"");
   observeReveal();
+  if (window.sofiaChatRender) sofiaChatRender();
 }
 
 document.getElementById("langSeg").addEventListener("click", e => {
@@ -728,31 +787,186 @@ function hudDraw(ctx, W, H, t, amp, u, st){
     ctx.beginPath(); ctx.arc(cx+Math.cos(p.a)*r, cy+Math.sin(p.a)*r, Math.max(.8,S*.006*(.6+p.z)), 0, Math.PI*2); ctx.fill(); });
 }
 function sizeCanvas(c){ const dpr = Math.min(window.devicePixelRatio||1, 2), r = c.getBoundingClientRect(); c.width = Math.max(1,Math.round(r.width*dpr)); c.height = Math.max(1,Math.round(r.height*dpr)); }
+/* Orbe geométrico: el mismo de la página del curso (icosfera + barras de voz + nebulosa), dentro del círculo sobrio de AI Staff */
+const mobile = innerWidth < 760;
+/* ---------- Geometría: icosfera ---------- */
+function icosphere(detail) {
+  const t = (1 + Math.sqrt(5)) / 2;
+  const norm = v => { const l = Math.hypot(v[0], v[1], v[2]); return [v[0] / l, v[1] / l, v[2] / l]; };
+  const verts = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(norm);
+  let faces = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  for (let d = 0; d < detail; d++) {
+    const cache = {}, nf = [];
+    const mid = (a, b) => {
+      const k = a < b ? a + '_' + b : b + '_' + a;
+      if (cache[k] === undefined) { const va = verts[a], vb = verts[b]; verts.push(norm([(va[0]+vb[0])/2,(va[1]+vb[1])/2,(va[2]+vb[2])/2])); cache[k] = verts.length - 1; }
+      return cache[k];
+    };
+    for (const [a, b, c] of faces) { const ab = mid(a,b), bc = mid(b,c), ca = mid(c,a); nf.push([a,ab,ca],[b,bc,ab],[c,ca,bc],[ab,bc,ca]); }
+    faces = nf;
+  }
+  const seen = new Set(), edges = [];
+  for (const [a, b, c] of faces) for (const [x, y] of [[a,b],[b,c],[c,a]]) { const k = x < y ? x + '_' + y : y + '_' + x; if (!seen.has(k)) { seen.add(k); edges.push([x, y]); } }
+  return { verts, edges };
+}
+
+/* ---------- Núcleo de voz ---------- */
+class Core {
+  constructor(canvas, o = {}) {
+    this.cv = canvas; this.ctx = canvas.getContext('2d');
+    this.o = Object.assign({ detail: 2, scale: 0.2, bars: 120, rings: true, nebula: false, stars: 0, glow: 1 }, o);
+    this.geo = icosphere(this.o.detail);
+    this.proj = this.geo.verts.map(() => ({ x: 0, y: 0, z: 0 }));
+    this.stars = Array.from({ length: this.o.stars }, () => ({ x: Math.random(), y: Math.random(), z: Math.random() * 0.8 + 0.2, p: Math.random() * 6.28 }));
+    this.blobs = [
+      { x: .28, y: .38, r: .55, c: '139,92,255', s: .07 },
+      { x: .74, y: .30, r: .45, c: '92,242,255', s: .05 },
+      { x: .62, y: .78, r: .50, c: '255,79,184', s: .06 },
+      { x: .18, y: .80, r: .40, c: '92,120,255', s: .04 },
+      { x: .50, y: .50, r: .30, c: '139,92,255', s: .09 }
+    ];
+    this.pulses = []; this.visible = true; this.resize();
+    new ResizeObserver(() => this.resize()).observe(canvas);
+    new IntersectionObserver(e => { this.visible = e[0].isIntersecting; }).observe(canvas);
+  }
+  resize() {
+    const r = Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2);
+    this.w = this.cv.clientWidth; this.h = this.cv.clientHeight;
+    this.cv.width = Math.max(1, Math.round(this.w * r)); this.cv.height = Math.max(1, Math.round(this.h * r));
+    this.ctx.setTransform(r, 0, 0, r, 0, 0);
+  }
+  pulse(x, y) { this.pulses.push({ t0: performance.now() / 1000, x, y }); if (this.pulses.length > 6) this.pulses.shift(); }
+  draw(t, amp, s = {}) {
+    if (!this.visible || !this.w) return;
+    const { ctx, w, h, o } = this;
+    const zoom = s.zoom || 1, mx = s.mx || 0, my = s.my || 0, alpha = s.alpha ?? 1;
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+
+    if (o.nebula) {
+      for (const b of this.blobs) {
+        const x = (b.x + Math.sin(t * b.s * 3) * .05 - mx * .03) * w, y = (b.y + Math.cos(t * b.s * 2.3) * .05 - my * .03) * h;
+        const r = b.r * Math.max(w, h) * (0.9 + amp * 0.08);
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, `rgba(${b.c},${0.22 * alpha})`); g.addColorStop(.5, `rgba(${b.c},${0.07 * alpha})`); g.addColorStop(1, `rgba(${b.c},0)`);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+    }
+    for (const st of this.stars) {
+      const x = ((st.x - mx * .02 * st.z) % 1 + 1) % 1 * w, y = ((st.y - my * .02 * st.z - t * .004 * st.z) % 1 + 1) % 1 * h;
+      const a = (0.25 + 0.75 * Math.abs(Math.sin(t * 1.3 + st.p))) * st.z * alpha;
+      ctx.fillStyle = `rgba(220,230,255,${a})`; ctx.fillRect(x, y, st.z * 1.8, st.z * 1.8);
+    }
+
+    const cx = w / 2 + mx * 18, cy = h / 2 + my * 18;
+    const R = Math.min(w, h) * o.scale * zoom;
+    const ry = t * .22 + (s.spin || 0) + mx * .5, rx = t * .13 + (s.spin || 0) * .35 + my * .4;
+    const cyR = Math.cos(ry), syR = Math.sin(ry), cxR = Math.cos(rx), sxR = Math.sin(rx);
+
+    const hg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
+    hg.addColorStop(0, `rgba(139,92,255,${(0.28 + amp * 0.25) * o.glow * alpha})`);
+    hg.addColorStop(.45, `rgba(92,242,255,${0.06 * o.glow * alpha})`);
+    hg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(cx, cy, R * 2.2, 0, 6.2832); ctx.fill();
+
+    const V = this.geo.verts;
+    for (let i = 0; i < V.length; i++) {
+      let [x, y, z] = V[i];
+      const d = 1 + amp * 0.24 * (Math.sin(x * 4 + t * 3.1) * Math.sin(y * 4 + t * 2.3) + Math.sin(z * 5 - t * 2.7)) * 0.5;
+      x *= d; y *= d; z *= d;
+      const x1 = x * cyR + z * syR, z1 = -x * syR + z * cyR;
+      const y2 = y * cxR - z1 * sxR, z2 = y * sxR + z1 * cxR;
+      const k = 3 / (3 - z2);
+      const p = this.proj[i]; p.x = cx + x1 * R * k; p.y = cy + y2 * R * k; p.z = z2;
+    }
+    ctx.lineWidth = 1;
+    for (const [a, b] of this.geo.edges) {
+      const A = this.proj[a], B = this.proj[b];
+      const depth = ((A.z + B.z) / 2 + 1) / 2;
+      const hue = 186 + Math.max(0, Math.min(1, ((A.x + B.x) / 2 - cx + R) / (2 * R))) * 134;
+      ctx.strokeStyle = `hsla(${hue},100%,${62 + depth * 14}%,${(0.05 + depth * 0.55) * alpha})`;
+      ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+    }
+    for (const p of this.proj) {
+      if (p.z < 0.1) continue;
+      ctx.fillStyle = `rgba(230,250,255,${p.z * 0.9 * alpha})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1 + p.z * 1.3, 0, 6.2832); ctx.fill();
+    }
+
+    if (o.bars) {
+      ctx.lineWidth = Math.max(1.2, R * 0.012); ctx.lineCap = 'round';
+      const r0 = R * 1.55;
+      for (let i = 0; i < o.bars; i++) {
+        const ang = i / o.bars * 6.2832 + t * 0.08;
+        const n = Math.abs(Math.sin(i * 0.7 + t * 6) * Math.sin(i * 0.23 - t * 3.1));
+        const len = R * (0.03 + amp * 0.42 * n);
+        const hue = 186 + (Math.sin(ang) * .5 + .5) * 134;
+        ctx.strokeStyle = `hsla(${hue},100%,68%,${(0.3 + n * 0.6) * alpha})`;
+        const c = Math.cos(ang), sn = Math.sin(ang);
+        ctx.beginPath(); ctx.moveTo(cx + c * r0, cy + sn * r0); ctx.lineTo(cx + c * (r0 + len), cy + sn * (r0 + len)); ctx.stroke();
+      }
+    }
+
+    if (o.rings) {
+      ctx.lineWidth = 1;
+      for (const [rr, sq, tilt, sp] of [[2.05, .30, .4, .5], [2.5, .22, -.5, -.32], [1.8, .9, 1.2, .7]]) {
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(tilt + t * .02);
+        ctx.strokeStyle = `rgba(190,200,255,${0.13 * alpha})`;
+        ctx.beginPath(); ctx.ellipse(0, 0, R * rr, R * rr * sq, 0, 0, 6.2832); ctx.stroke();
+        const px = Math.cos(t * sp) * R * rr, py = Math.sin(t * sp) * R * rr * sq;
+        const dg = ctx.createRadialGradient(px, py, 0, px, py, 10);
+        dg.addColorStop(0, `rgba(92,242,255,${alpha})`); dg.addColorStop(1, 'rgba(92,242,255,0)');
+        ctx.fillStyle = dg; ctx.beginPath(); ctx.arc(px, py, 10, 0, 6.2832); ctx.fill();
+        ctx.restore();
+      }
+    }
+    /* Ondas de choque al tocar la esfera */
+    const now = performance.now() / 1000;
+    this.pulses = this.pulses.filter(pu => now - pu.t0 < 1.6);
+    for (const pu of this.pulses) {
+      const k = (now - pu.t0) / 1.6, e = 1 - Math.pow(1 - k, 3);
+      const ox = pu.x ?? cx, oy = pu.y ?? cy;
+      for (let j = 0; j < 3; j++) {
+        const kk = Math.max(0, e - j * .12);
+        ctx.strokeStyle = `hsla(${186 + j * 60},100%,70%,${(1 - k) * .7 * alpha})`;
+        ctx.lineWidth = 2.2 - j * .5;
+        ctx.beginPath(); ctx.arc(ox, oy, R * (.4 + kk * 3.4), 0, 6.2832); ctx.stroke();
+      }
+      for (let j = 0; j < 22; j++) {
+        const a = j / 22 * 6.2832 + pu.t0, d = R * (.3 + e * (2.2 + (j % 5) * .35));
+        ctx.fillStyle = `hsla(${186 + (j % 3) * 67},100%,72%,${(1 - k) * alpha})`;
+        ctx.beginPath(); ctx.arc(ox + Math.cos(a) * d, oy + Math.sin(a) * d, 2.2 * (1 - k) + .4, 0, 6.2832); ctx.fill();
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+
 const ORB = (() => {
-  const box = document.getElementById("orbBox"), glc = document.getElementById("orb"), hud = document.getElementById("hud"), ctx = hud.getContext("2d");
-  const g = glNebula(glc), st = hudState(46), t0 = performance.now();
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!g) box.classList.add("no-gl");
-  let amp = .12, pulse = 0, speaking = false, hover = false, visible = true, running = false;
-  const resize = () => { sizeCanvas(hud); sizeCanvas(glc); };
-  resize(); addEventListener("resize", resize);
-  box.addEventListener("mouseenter", () => hover = true); box.addEventListener("mouseleave", () => hover = false);
+  const box = document.getElementById("orbBox"), cv = document.getElementById("orb");
+  document.getElementById("hud").style.display = "none";
+  const core = new Core(cv, { detail: 2, scale: .2, nebula: true, stars: 70, bars: 120, rings: true, glow: 1 });
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, t0 = performance.now();
+  let amp = .12, pulse = 0, speaking = false, hover = false, mx = 0, my = 0, tmx = 0, tmy = 0, spin = 0, spinV = 0;
+  box.addEventListener("mouseenter", () => hover = true); box.addEventListener("mouseleave", () => { hover = false; tmx = tmy = 0; });
+  box.addEventListener("pointermove", e => { const r = box.getBoundingClientRect(); tmx = (e.clientX - r.left) / r.width * 2 - 1; tmy = (e.clientY - r.top) / r.height * 2 - 1; });
+  box.addEventListener("pointerdown", e => { const r = cv.getBoundingClientRect(); core.pulse(e.clientX - r.left, e.clientY - r.top); spinV += .12; pulse = 1; });
+  let lastY = scrollY; addEventListener("scroll", () => { spinV += Math.max(-.03, Math.min(.03, (scrollY - lastY) * .0004)); lastY = scrollY; }, { passive: true });
   function frame(now) {
     const t = (now - t0) / 1000;
     const target = speaking ? .45 + .35 * Math.abs(Math.sin(t * 7.1) * Math.sin(t * 2.3 + .7)) + pulse * .35
-      : (hover ? .5 : .18) + (hover ? .3 : .12) * Math.abs(Math.sin(t * (hover ? 6.2 : 2.4)) * Math.sin(t * 1.7 + .5));
-    amp += (target - amp) * .12; pulse *= .9;
-    if (hud.width < 4) resize();
-    if (g) g.draw(t, amp, 0);
-    hudDraw(ctx, hud.width, hud.height, t, amp, 0, st);
+      : (hover ? .5 : .2) + (hover ? .3 : .14) * Math.abs(Math.sin(t * (hover ? 6.2 : 2.4)) * Math.sin(t * 1.7 + .5));
+    amp += (Math.min(1.2, target + pulse * .4) - amp) * .12; pulse *= .92;
+    if (!hover && !mobile) { tmx = Math.sin(t * .3) * .25; tmy = Math.cos(t * .23) * .2; }
+    if (mobile) { tmx = Math.sin(t * .31) * .45; tmy = Math.cos(t * .23) * .3; }
+    mx += (tmx - mx) * .05; my += (tmy - my) * .05; spin += spinV; spinV *= .94;
+    core.draw(t, amp, { mx, my, spin });
     box.style.setProperty("--glow", Math.min(1, amp).toFixed(3));
-    if (!reduce && visible && !document.hidden) requestAnimationFrame(frame); else running = false;
+    if (window.sofiaTick) sofiaTick(t, amp);
+    requestAnimationFrame(frame);
   }
-  const start = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
-  if ("IntersectionObserver" in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) start(); }).observe(box);
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) start(); });
-  start();
-  return { bump(v) { pulse = Math.max(pulse, v); }, speak(on) { speaking = on; }, face() {} };
+  if (reduce) core.draw(1.3, .4); else requestAnimationFrame(frame);
+  return { bump(v) { pulse = Math.max(pulse, v); }, speak(on) { speaking = on; }, face() {}, Core };
 })();
 
 /* ---------------------------------------------------------------- demo call */
@@ -827,6 +1041,71 @@ try{ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; }c
 addEventListener("pagehide", stopDemo);
 
 render(); resetCap();
+
+/* ---------------------------------------------------------------- chat con Sofía (función curso-chat, bot "sofia") */
+(() => {
+  const $ = id => document.getElementById(id);
+  const URL_ = "https://vqvdmcxkkmkyxpfnxmzo.supabase.co/functions/v1/curso-chat";
+  const L = {
+    fr: { sub: "Assistante IA d'AI Staff · répond tout de suite", hi: "Bonjour ! Je suis Sofía, l'assistante IA d'AI Staff. Posez-moi vos questions : forfaits, fonctionnement, ou ce que je ferais pour votre entreprise.", ph: "Écrivez votre question…", tease: "Une question ? Je réponds tout de suite.", note: "Je suis une IA : je peux me tromper. Ne partagez pas de données sensibles.", err: "Oups, la connexion a coupé. Réessayez ou écrivez à hello@meetaistaff.com.", lim: "Beaucoup de questions d'un coup ! Réessayez plus tard ou écrivez à hello@meetaistaff.com.", open: "Parler avec Sofía", chips: ["Combien ça coûte ?", "Comment ça marche ?", "Et pour mon entreprise ?", "Je veux une démo"], cta: { onboarding: "Commencer", call: "Appeler Sofía", plans: "Voir les forfaits", curso: "Le cours" } },
+    en: { sub: "AI Staff's AI assistant · replies right away", hi: "Hi! I'm Sofía, AI Staff's AI assistant. Ask me anything: plans, how it works, or what I'd do for your business.", ph: "Type your question…", tease: "Questions? I answer right away.", note: "I'm an AI: I can make mistakes. Don't share sensitive data.", err: "Oops, the connection dropped. Try again or write to hello@meetaistaff.com.", lim: "Lots of questions at once! Try again later or write to hello@meetaistaff.com.", open: "Chat with Sofía", chips: ["How much is it?", "How does it work?", "What about my business?", "I want a demo"], cta: { onboarding: "Get started", call: "Call Sofía", plans: "See plans", curso: "The course" } },
+    es: { sub: "Asistente con IA de AI Staff · responde al instante", hi: "¡Hola! Soy Sofía, la asistente con IA de AI Staff. Pregúntame lo que quieras: planes, cómo funciona o qué haría por tu negocio.", ph: "Escribe tu pregunta…", tease: "¿Tienes dudas? Te respondo al instante.", note: "Soy una IA: puedo equivocarme. No compartas datos sensibles.", err: "Uy, se cortó la conexión. Intenta otra vez o escribe a hello@meetaistaff.com.", lim: "¡Muchas preguntas seguidas! Intenta más tarde o escribe a hello@meetaistaff.com.", open: "Hablar con Sofía", chips: ["¿Cuánto cuesta?", "¿Cómo funciona?", "¿Y para mi negocio?", "Quiero una demo"], cta: { onboarding: "Empezar", call: "Llamar a Sofía", plans: "Ver planes", curso: "El curso" } }
+  };
+  const S = () => L[lang] || L.fr;
+  const sf = $("sf"), btn = $("sfBtn"), log = $("sfLog"), inp = $("sfIn"), tease = $("sfTease");
+  const Core = ORB.Core;
+  const o1 = new Core($("sfOrb"), { detail: 1, scale: .27, bars: 36, rings: false, glow: 1 });
+  const o2 = new Core($("sfOrb2"), { detail: 1, scale: .27, bars: 30, rings: false, glow: 1 });
+  let sid = ""; try { sid = sessionStorage.getItem("sfChat") || ""; } catch (e) {}
+  if (!sid) { sid = Math.random().toString(36).slice(2) + Date.now().toString(36); try { sessionStorage.setItem("sfChat", sid); } catch (e) {} }
+  const hist = []; let busy = false, greeted = false, talk = 0;
+  const href = k => k === "onboarding" ? "/onboarding/" + (lang === "fr" ? "" : "?lang=" + lang) : k === "call" ? "tel:+14388058804" : k === "plans" ? "#plans" : "/curso/";
+  window.sofiaChatRender = () => {
+    const x = S();
+    $("sfSub").textContent = x.sub; inp.placeholder = x.ph; $("sfNote").textContent = x.note; $("sfTeaseTxt").textContent = x.tease;
+    btn.setAttribute("aria-label", x.open); sf.setAttribute("aria-label", x.open);
+    $("sfChips").innerHTML = x.chips.map(c => `<button type="button">${esc(c)}</button>`).join("");
+  };
+  function add(role, text) {
+    const ctas = [];
+    text = text.replace(/\[\[CTA:(\w+)\]\]/g, (_, k) => { if (S().cta[k]) ctas.push(k); return ""; }).trim();
+    const m = document.createElement("div"); m.className = "sf-m " + (role === "user" ? "me" : "ai");
+    m.innerHTML = esc(text).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    if (ctas.length) { const b = document.createElement("div"); b.className = "sf-cta"; ctas.forEach(k => { const a = document.createElement("a"); a.textContent = S().cta[k]; a.href = href(k); if (k === "plans") a.addEventListener("click", () => toggle(false)); b.appendChild(a); }); m.appendChild(b); }
+    log.appendChild(m); log.scrollTop = log.scrollHeight;
+  }
+  function toggle(v) {
+    sf.classList.toggle("open", v); btn.setAttribute("aria-expanded", v); tease.classList.remove("show");
+    if (v && !greeted) { greeted = true; setTimeout(() => { add("ai", S().hi); talk = 1; }, 300); }
+    if (v && matchMedia("(pointer:fine)").matches) setTimeout(() => inp.focus(), 350);
+  }
+  btn.addEventListener("click", () => toggle(!sf.classList.contains("open")));
+  tease.addEventListener("click", () => toggle(true));
+  $("sfX").addEventListener("click", () => toggle(false));
+  addEventListener("keydown", e => { if (e.key === "Escape" && sf.classList.contains("open")) toggle(false); });
+  $("sfChips").addEventListener("click", e => { const b = e.target.closest("button"); if (b) ask(b.textContent); });
+  $("sfForm").addEventListener("submit", e => { e.preventDefault(); ask(inp.value); });
+  async function ask(q) {
+    q = (q || "").trim(); if (!q || busy) return;
+    busy = true; $("sfSend").disabled = true; inp.value = "";
+    add("user", q); hist.push({ role: "user", content: q.slice(0, 600) }); ORB.bump(.6);
+    const ty = document.createElement("div"); ty.className = "sf-m ai typing"; ty.innerHTML = "<i></i><i></i><i></i>"; log.appendChild(ty); log.scrollTop = log.scrollHeight;
+    let reply = "";
+    try {
+      const r = await fetch(URL_, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sid, bot: "sofia", lang, messages: hist.slice(-12) }) });
+      const j = await r.json().catch(() => ({}));
+      reply = j.reply || (r.status === 429 ? S().lim : "");
+    } catch (e) {}
+    ty.remove();
+    if (!reply) reply = S().err; else hist.push({ role: "assistant", content: reply });
+    add("ai", reply); talk = 1; ORB.bump(.8);
+    busy = false; $("sfSend").disabled = false;
+  }
+  let teased = false; try { teased = !!sessionStorage.getItem("sfTease"); } catch (e) {}
+  setTimeout(() => { if (teased || sf.classList.contains("open")) return; try { sessionStorage.setItem("sfTease", "1"); } catch (e) {} tease.classList.add("show"); setTimeout(() => tease.classList.remove("show"), 8000); }, 20000);
+  window.sofiaTick = (t, amp) => { talk *= .985; const a = Math.max(.12, talk * amp + (busy ? .5 : 0) * amp); o1.draw(t, a); if (sf.classList.contains("open")) o2.draw(t, a); };
+  window.sofiaChatRender();
+})();
 </script>
 </body>
 </html>

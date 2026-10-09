@@ -182,6 +182,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .m.ev{align-self:stretch;max-width:none;font-family:var(--mono);font-size:.74rem;color:var(--ok);background:rgba(107,255,184,.07);box-shadow:0 0 0 1px rgba(107,255,184,.35) inset}
 .ph-foot{display:flex;justify-content:space-between;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}
 .ph-foot b{color:var(--text);font-weight:500}
+.ph-play{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:10px 14px;border:0;border-radius:100px;cursor:pointer;font:inherit;font-size:.86rem;font-weight:600;color:var(--text);background:linear-gradient(90deg,rgba(92,242,255,.14),rgba(139,92,255,.14),rgba(255,79,184,.14));box-shadow:0 0 0 1px rgba(92,242,255,.35) inset}
+.ph-play i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#05060E;flex:none}
+.ph-play small{margin-left:auto;font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.ph-play.on i{animation:corePulse 1s ease-in-out infinite}
 .pin-caption{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));text-align:center;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-inline:16px}
 
 /* REVEAL */
@@ -237,6 +241,9 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radiu
 .day .n{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
 .day h3{font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:500;line-height:1.2;margin-bottom:10px}
 .day p{color:var(--muted);font-size:.97rem}
+.day.bonus{background:linear-gradient(135deg,rgba(92,242,255,.07),rgba(255,79,184,.07));box-shadow:0 0 0 1px rgba(255,79,184,.35) inset,0 30px 80px -40px rgba(255,79,184,.6)}
+.day.bonus .n{color:var(--magenta)}
+.day.bonus .n em{font-style:normal;margin-left:8px;padding:3px 8px;border-radius:100px;background:var(--grad);color:#05060E;letter-spacing:.08em}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .tags span{font-family:var(--mono);font-size:.64rem;padding:5px 10px;border-radius:100px;box-shadow:0 0 0 1px var(--stroke-2) inset;color:#C9CEF0}
 .out{align-self:start;padding:16px 18px;border-radius:16px;background:rgba(0,0,0,.3);box-shadow:0 0 0 1px var(--stroke) inset;font-size:.9rem}
@@ -302,6 +309,9 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radiu
   background:radial-gradient(90% 70% at 30% 20%,rgba(139,92,255,.45),transparent 60%),radial-gradient(80% 60% at 80% 90%,rgba(92,242,255,.25),transparent 60%),#0A0C1D;box-shadow:0 0 0 1px var(--stroke-2) inset}
 .portrait::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(190,200,255,.18)}
 .portrait::after{content:"";position:absolute;inset:26%;border:1px solid rgba(92,242,255,.25);animation:rot 22s linear infinite reverse}
+.portrait img{position:absolute;inset:12%;width:76%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;z-index:1;box-shadow:0 0 0 2px rgba(5,6,14,.9),0 0 0 4px rgba(92,242,255,.55),0 0 60px -6px rgba(139,92,255,.9);transition:transform .8s var(--ease)}
+.portrait:hover img{transform:scale(1.03) rotate(-1deg)}
+.portrait small{z-index:2}
 .portrait b{position:relative;font-family:var(--display);font-weight:800;font-size:clamp(4rem,10vw,6.5rem);letter-spacing:-.06em}
 .portrait small{position:absolute;left:18px;right:18px;bottom:16px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .teach h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.06;margin-block:16px 20px}
@@ -493,6 +503,16 @@ footer a{color:var(--cyan);text-decoration:none}
 .cb-form input:focus{box-shadow:0 0 0 1px var(--cyan) inset}
 .cb-form button{width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:var(--grad);color:#05060E;flex:none}
 .cb-form button:disabled{opacity:.5}
+.cb-mic{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;color:#05060E;background:var(--grad);box-shadow:0 0 20px -4px rgba(139,92,255,.9)}
+.cb-mic+.cb-x{margin-left:6px}
+.cb-voice{display:none;flex-direction:column;align-items:center;gap:6px;padding:10px 16px 14px;border-bottom:1px solid var(--stroke);text-align:center}
+.cb.voice .cb-voice{display:flex}
+.cb.voice .cb-log{flex:1}
+.cb-voice canvas{width:170px;height:170px}
+.cb-voice b{font-family:var(--display);font-size:.95rem;font-weight:500}
+.cb-voice small{font-size:.72rem;color:var(--muted)}
+.cb-hang{margin-top:6px;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.86rem;color:#fff;background:#E5484D;padding:10px 22px;border-radius:100px}
+.voice-cta{margin-top:18px}
 .cb-note{font-size:.66rem;color:var(--muted);text-align:center;padding:0 14px 6px;font-family:var(--mono);letter-spacing:.04em}
 </style>
 </head>
@@ -583,6 +603,7 @@ footer a{color:var(--cyan);text-decoration:none}
         <div class="m ev off">✓ Cita creada en el calendario · Mié 9:00 · Laura Gómez · Urgencia</div>
       </div>
       <div class="ph-foot"><span>Duración <b id="phTime">00:00</b></span><span>Humanos involucrados: <b>0</b></span></div>
+      <button class="ph-play" id="phPlay" type="button"><i><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></i><span>Escuchar la llamada</span><small>voces con IA</small></button>
     </div>
     <div class="pin-caption">Sigue deslizando · la llamada avanza contigo</div>
   </div>
@@ -646,7 +667,7 @@ footer a{color:var(--cyan);text-decoration:none}
     <div class="sec-head rv">
       <span class="eyebrow">El método · 7 días</span>
       <h2>Un paso por día. Al final de cada uno, <span class="grad">algo funciona</span>.</h2>
-      <p>Un módulo se desbloquea cada día. Videos cortos, pantalla compartida y un entregable concreto. Sin relleno.</p>
+      <p>Un módulo se desbloquea cada día: el video principal y un video extra para profundizar. Pantalla compartida, un entregable concreto y nada de relleno.</p>
     </div>
     <div class="tl" id="tl">
       <div class="tl-line"><div class="tl-fill" id="tlFill"></div></div>
@@ -658,6 +679,7 @@ footer a{color:var(--cyan);text-decoration:none}
       <div class="day rv"><div><div class="n">Día 5</div><h3>Lo haces inteligente</h3><p>Le cargas tu negocio: servicios, políticas y las 40 preguntas que todo cliente hace. Entrenas objeciones y el plan B cuando no sabe algo.</p><div class="tags"><span>Base de conocimiento</span><span>Objeciones</span><span>Paso a humano</span></div></div><div class="out"><span>Terminas con</span>Un agente que responde lo que tus clientes preguntan.</div></div>
       <div class="day rv"><div><div class="n">Día 6</div><h3>Lo pules hasta que suene humano</h3><p>Voz, pausas, interrupciones y ruido. Pasas la batería de 20 llamadas diseñadas para romper agentes y corriges cada falla.</p><div class="tags"><span>20 pruebas</span><span>Ajuste de voz</span><span>Aviso legal</span></div></div><div class="out"><span>Terminas con</span>Un agente que pasa la prueba de "¿eres un robot?".</div></div>
       <div class="day rv"><div><div class="n">Día 7</div><h3>Lanzas y mides</h3><p>Lo pones en producción, activas alertas y montas tu tablero: llamadas atendidas, citas agendadas y dinero recuperado.</p><div class="tags"><span>En vivo</span><span>Alertas</span><span>Tablero</span></div></div><div class="out"><span>Terminas con</span>Tu agente atendiendo clientes reales.</div></div>
+      <div class="day bonus rv"><div><div class="n">Día 8 · Bonos <em>Pro y VIP</em></div><h3>Se abre tu caja de bonos</h3><p>Al terminar los 7 días se desbloquean los módulos avanzados: tu agente en WhatsApp, la ficha y el video de tu industria, la comparativa de plataformas (Retell, Vapi y alternativas) y la clase para armar tu tablero con Claude.</p><div class="tags"><span>WhatsApp</span><span>12 industrias</span><span>Comparativa</span><span>Tablero con Claude</span></div></div><div class="out"><span>Terminas con</span>Tu agente en más canales y afinado para tu sector.</div></div>
     </div>
   </div>
 </section>
@@ -725,13 +747,14 @@ footer a{color:var(--cyan);text-decoration:none}
 
 <section class="sec" style="padding-top:0">
   <div class="wrap teach">
-    <div class="portrait rv rv-zoom" role="img" aria-label="Andrés Carreño"><b class="grad">AC</b><small><span>Andrés Carreño</span><span>Montreal · Colombia</span></small></div>
+    <div class="portrait rv rv-zoom"><img src="andres.jpg" alt="Andrés Carreño con su cámara" width="720" height="720" loading="lazy"><small><span>Andrés Carreño</span><span>Montreal · Colombia</span></small></div>
     <div class="rv">
       <span class="eyebrow">Quién te enseña</span>
       <h2>No te enseño teoría. Te enseño <span class="grad">lo que monto para clientes</span>.</h2>
       <p>Soy Andrés Carreño, colombiano radicado en Montreal. Dirijo <b>AI Staff</b>, una agencia que construye agentes de voz con IA para negocios que no pueden darse el lujo de perder una llamada.</p>
       <p>Este curso es el mismo proceso que sigo con cada cliente, explicado para que lo hagas tú. Sin jerga, sin código, con las mismas plantillas.</p>
-      <div class="chips"><span>Fundador de AI Staff</span><span>Trilingüe ES · EN · FR</span><span>+38,000 seguidores</span><span>Agentes en producción</span></div>
+      <div class="chips"><span>Fundador de AI Staff</span><span>Agentes en ES · EN · FR</span><span>+38,000 seguidores</span><span>Agentes en producción</span></div>
+      <button class="btn btn-prime voice-cta" id="talkBtn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg>Habla con mi IA, con mi voz</button>
     </div>
   </div>
 </section>
@@ -745,11 +768,12 @@ footer a{color:var(--cyan);text-decoration:none}
     </div>
     <div class="plans">
       <article class="plan rv">
-        <div><h3>Esencial</h3><p class="for">Para montar tu propio agente.</p></div>
+        <div><h3>Esencial</h3><p class="for">Para montar tu propio agente, paso a paso.</p></div>
         <div><div class="price-row"><span class="price"><sup>$</sup>117</span><span class="was">$147</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
         <ul>
           <li><span><b>Día 0 + los 7 días</b> completos</span></li>
-          <li><span>Kit de plantillas descargables</span></li>
+          <li><span>Video principal + video extra cada día</span></li>
+          <li><span>Plantillas generales, sirven para cualquier negocio</span></li>
           <li><span>Prompt Maestro v2</span></li>
           <li><span>Kit legal y de confianza</span></li>
           <li><span>Actualizaciones de por vida</span></li>
@@ -758,13 +782,14 @@ footer a{color:var(--cyan);text-decoration:none}
       </article>
       <article class="plan feat rv" style="--d:.1s">
         <span class="flag">El más elegido</span>
-        <div><h3>Pro</h3><p class="for">Para tu negocio y para venderlo a otros.</p></div>
+        <div><h3>Pro</h3><p class="for">Para sacarle todo el jugo a tu agente.</p></div>
         <div><div class="price-row"><span class="price"><sup>$</sup>197</span><span class="was">$297</span></div><div class="price-note">USD · PAGO ÚNICO O EN CUOTAS</div></div>
         <ul>
           <li><span><b>Todo lo de Esencial</b></span></li>
-          <li><span>Pack de 12 industrias</span></li>
+          <li><span><b>Día 8:</b> se desbloquean los bonos</span></li>
+          <li><span>Pack de 12 industrias: ficha + video de tu sector</span></li>
           <li><span>Tu agente también en WhatsApp</span></li>
-          <li><span><b>Vende este servicio</b>: demo, propuesta y contrato</span></li>
+          <li><span>Comparativa de plataformas y clase de tablero con Claude</span></li>
           <li><span>Claude como copiloto semanal</span></li>
           <li><span><b>Comunidad privada</b> + sesiones en vivo</span></li>
         </ul>
@@ -796,7 +821,8 @@ footer a{color:var(--cyan);text-decoration:none}
       <details><summary>¿Mis clientes van a notar que es una IA?</summary><p>Suena muy natural, pero te recomiendo decirlo al inicio. Genera confianza y en varios países es obligatorio. Lo vemos en el kit legal.</p></details>
       <details><summary>¿Cuánto tiempo necesito al día?</summary><p>Entre 30 y 45 minutos. Si vas más lento, no pasa nada: el acceso es de por vida.</p></details>
       <details><summary>¿Qué pasa si la IA dice algo incorrecto?</summary><p>Los días 5 y 6 son para eso: límites claros, paso a una persona y una batería de 20 pruebas diseñadas para romper agentes antes de que lo haga un cliente.</p></details>
-      <details><summary>¿Puedo vender agentes a otros negocios?</summary><p>Sí. El plan Pro incluye el módulo "Vende este servicio" con el guion de demo, la propuesta y el contrato que uso en mi agencia.</p></details>
+      <details><summary>¿Qué es el Día 8?</summary><p>Cuando terminas los 7 días se desbloquean los bonos de los planes Pro y VIP: tu agente en WhatsApp, la ficha y el video de tu industria, la comparativa de plataformas y la clase para armar tu tablero con Claude. Primero tu agente funciona; después lo llevas más lejos.</p></details>
+      <details><summary>¿Puedo vender agentes a otros negocios?</summary><p>Sí. Dentro del curso te muestro cómo dar ese paso con un programa aparte, con el método, el guion de demo, la propuesta y el contrato que uso en mi agencia, o asociándote con AI Staff. Lo primero es tener tu propio agente funcionando.</p></details>
       <details><summary>¿Puedo pagar en cuotas?</summary><p>Sí. El pago se hace en Hotmart, que acepta tarjeta, PSE, OXXO, PIX y otros medios locales, y permite pagar en cuotas según tu país.</p></details>
     </div>
   </div>
@@ -971,7 +997,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 })();
 
 /* Estado compartido de efectos (ver el script de efectos al final) */
-const FX = { spin: 0, spinV: 0, burst: 0, gyro: false, touching: false };
+const FX = { spin: 0, spinV: 0, burst: 0, gyro: false, touching: false, forceN: null };
 
 /* ---------- Voz simulada ---------- */
 function speech(t) {
@@ -1176,7 +1202,7 @@ document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 /* ---------- Ecosistema ---------- */
 const nodes = [
   ['7 módulos en video', 50, 15], ['Prompt Maestro v2', 77, 32], ['Agente en WhatsApp', 77, 68], ['Kit legal', 50, 85],
-  ['Batería de 20 pruebas', 23, 68], ['Día 0 de arranque', 23, 32], ['Pack de 12 industrias', 14, 8], ['Vende este servicio', 86, 8],
+  ['Batería de 20 pruebas', 23, 68], ['Día 0 de arranque', 23, 32], ['Pack de 12 industrias', 14, 8], ['Bonos del Día 8', 86, 8],
   ['Comunidad privada', 9, 50], ['Sesiones en vivo', 91, 50], ['Plantillas descargables', 14, 92], ['Actualizaciones de por vida', 86, 92]
 ];
 const lines = document.getElementById('ecoLines'), nodeBox = document.getElementById('ecoNodes'), ecoList = document.getElementById('ecoList');
@@ -1283,7 +1309,7 @@ function onScroll() {
     phone.style.transform = `scale(${.55 + b * .45}) translateY(${(1 - b) * 80}px)`;
     phone.style.opacity = b;
   }
-  const n = callP < .3 ? -1 : Math.min(msgs.length - 1, Math.floor((callP - .3) / .6 * msgs.length));
+  const n = FX.forceN != null ? FX.forceN : (callP < .3 ? -1 : Math.min(msgs.length - 1, Math.floor((callP - .3) / .6 * msgs.length)));
   if (n !== shownMsgs) {
     msgs.forEach((m, i) => { const on = i <= n; if (on && m.classList.contains('off')) { m.classList.remove('off'); m.classList.add('new'); } else if (!on) m.classList.add('off', 'new'); });
     if (n > shownMsgs && window.fxMsg) fxMsg(n, msgs[n]);
@@ -1341,7 +1367,14 @@ else requestAnimationFrame(loop);
   <div class="cb-head">
     <canvas id="cbOrb2" width="84" height="84" aria-hidden="true"></canvas>
     <div><b>ANDRÉS<em>.IA</em></b><span><i></i>Asistente con IA · responde al instante</span></div>
+    <button class="cb-mic" id="cbMic" aria-label="Hablar por voz con Andrés.IA" title="Hablar por voz"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg></button>
     <button class="cb-x" id="cbX" aria-label="Cerrar chat">×</button>
+  </div>
+  <div class="cb-voice" id="cbVoice">
+    <canvas id="cbOrb3" aria-hidden="true"></canvas>
+    <b id="cbVState">Conectando…</b>
+    <small>Hablas con una IA con la voz de Andrés. Máximo 4 minutos.</small>
+    <button class="cb-hang" id="cbHang">Colgar</button>
   </div>
   <div class="cb-log" id="cbLog"></div>
   <div class="cb-chips" id="cbChips">
@@ -1419,6 +1452,30 @@ const SND = window.SND = (() => {
   api.ring = () => { for (let r = 0; r < 2; r++) for (let i = 0; i < 8; i++) { tone(440, .05, { vol: .07, at: r * .9 + i * .05 }); tone(480, .05, { vol: .07, at: r * .9 + i * .05 }); } };
   api.chime = () => [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, .7, { vol: .1, at: i * .09 }));
   api.ui = () => noise(.18, { from: 4000, to: 9000, vol: .03, q: 4 });
+  /* Voces reales (ElevenLabs) de la llamada de ejemplo */
+  const bufs = {}; let cur = null, an = null, lvlData = null;
+  const load = i => bufs[i] || (bufs[i] = fetch('audio/l' + i + '.mp3').then(r => r.arrayBuffer()).then(b => new Promise((ok, ko) => ctx.decodeAudioData(b, ok, ko))));
+  api.preload = () => { if (ctx) for (let i = 0; i < 7; i++) load(i).catch(() => {}); };
+  api.stopLine = () => { if (cur) { try { cur.stop(); } catch (e) {} cur = null; } };
+  api.line = async i => {
+    if (!api.on || i < 0 || i > 6) return;
+    let buf; try { buf = await load(i); } catch (e) { return; }
+    api.stopLine();
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 200;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 6500;
+    const g = ctx.createGain(); g.gain.value = 1.5;
+    if (!an) { an = ctx.createAnalyser(); an.fftSize = 512; lvlData = new Uint8Array(an.fftSize); }
+    src.connect(hp).connect(lp).connect(g).connect(out); g.connect(an);
+    cur = src; src.start();
+    return new Promise(r => { src.onended = () => { if (cur === src) cur = null; r(); }; });
+  };
+  api.level = () => {
+    if (!an || !cur) return 0;
+    an.getByteTimeDomainData(lvlData); let sum = 0;
+    for (let k = 0; k < lvlData.length; k++) { const v = (lvlData[k] - 128) / 128; sum += v * v; }
+    return Math.sqrt(sum / lvlData.length);
+  };
   return api;
 })();
 
@@ -1433,7 +1490,7 @@ function askMotion() {
 function setSound(v) {
   SND.set(v); sndBtn.setAttribute('aria-pressed', v); sndBtn.setAttribute('aria-label', v ? 'Silenciar' : 'Activar sonido');
   sndTip.classList.remove('show');
-  if (v) { SND.pop(); FX.burst = 1; FX.spinV += .12; heroCore.pulse(); vib(20); }
+  if (v) { SND.pop(); SND.preload(); FX.burst = 1; FX.spinV += .12; heroCore.pulse(); vib(20); } else SND.stopLine();
   try { sessionStorage.setItem('aiSnd', v ? '1' : '0'); } catch (e) {}
 }
 sndBtn.addEventListener('click', () => { askMotion(); setSound(!SND.on); });
@@ -1543,7 +1600,7 @@ window.fxScroll = (p, frac) => {
   if (!rung && p > .14 && p < .3) { rung = true; SND.ring(); vib([80, 60, 80]); phoneEl.classList.remove('shake'); void phoneEl.offsetWidth; phoneEl.classList.add('shake'); }
   const n = shownMsgs, next = mList[n + 1];
   const show = p > .25 && p < 1 && next && next.classList.contains('ai') && (n < 0 ? p > .27 : frac > .35);
-  if (show) { if (typing.nextSibling !== next) phLog.insertBefore(typing, next); typing.hidden = false; } else typing.hidden = true;
+  if (show && FX.forceN == null) { if (typing.nextSibling !== next) phLog.insertBefore(typing, next); typing.hidden = false; } else typing.hidden = true;
   document.body.classList.toggle('mcta-on', $('mcta').classList.contains('show'));
   cbBtn.classList.toggle('hide', !cb.classList.contains('open') && (scrollY < innerHeight * .6 || (p > .02 && p < .98)));
 };
@@ -1559,8 +1616,34 @@ function confetti(x, y, n = 36) {
 window.fxMsg = (n, el) => {
   miniCore.pulse(); FX.burst = Math.max(FX.burst, .6);
   if (el.classList.contains('ev')) { SND.chime(); vib([20, 40, 60]); const r = el.getBoundingClientRect(); confetti(r.left + r.width / 2, r.top + r.height / 2); }
-  else { SND.blip(el.classList.contains('ai') ? 'ai' : 'hu'); vib(8); }
+  else { if (!playing) SND.line(n); vib(8); }
 };
+/* Botón "Escuchar la llamada": reproduce la llamada completa con las voces reales */
+const phPlay = $('phPlay'); let playing = false, playY = 0;
+const pinEl = $('llamada');
+async function playCall() {
+  if (playing) { stopCall(); return; }
+  askMotion(); if (!SND.on) setSound(true); SND.preload();
+  playing = true; phPlay.classList.add('on'); phPlay.querySelector('span').textContent = 'Detener';
+  rung = true;
+  playY = pinEl.offsetTop + .31 * (pinEl.offsetHeight - innerHeight);
+  scrollTo({ top: playY, behavior: 'smooth' });
+  await new Promise(r => setTimeout(r, 900));
+  FX.forceN = -1; onScroll(); SND.ring(); vib([80, 60, 80]);
+  await new Promise(r => setTimeout(r, 1900));
+  for (let i = 0; i < mList.length && playing; i++) {
+    FX.forceN = i; onScroll();
+    if (i < 7) { await SND.line(i); await new Promise(r => setTimeout(r, 350)); }
+    else await new Promise(r => setTimeout(r, 1200));
+  }
+  if (playing) { playing = false; phPlay.classList.remove('on'); phPlay.querySelector('span').textContent = 'Escuchar otra vez'; }
+}
+function stopCall() { playing = false; SND.stopLine(); phPlay.classList.remove('on'); phPlay.querySelector('span').textContent = 'Escuchar la llamada'; }
+phPlay.addEventListener('click', playCall);
+addEventListener('scroll', () => {
+  if (FX.forceN == null) return;
+  if (Math.abs(scrollY - playY) > innerHeight * .5) { if (playing) stopCall(); FX.forceN = null; onScroll(); }
+}, { passive: true });
 
 /* ---------- Pop-outs de actividad (simulación, no son clientes reales) ---------- */
 const IC = {
@@ -1660,11 +1743,47 @@ function tease() {
 setTimeout(tease, 22000);
 new IntersectionObserver(es => { if (es[0].isIntersecting) setTimeout(tease, 1200); }, { threshold: .2 }).observe($('planes'));
 
+/* ---------- Voz: hablar con Andrés.IA (agente de ElevenLabs con la voz clonada de Andrés) ---------- */
+const AGENT_ID = 'agent_9601m4f9vn96e8gaebs6yezvgg5v';
+const vState = $('cbVState'); let conv = null, vMode = '', vStarting = false;
+const orbC = new Core($('cbOrb3'), { detail: 2, scale: .26, bars: 70, rings: true, glow: 1 });
+async function startVoice() {
+  if (conv || vStarting) return;
+  vStarting = true; toggleChat(true); cb.classList.add('voice'); vState.textContent = 'Conectando…'; SND.stopLine();
+  try {
+    await navigator.mediaDevices.getUserMedia({ audio: true }).then(st => st.getTracks().forEach(t => t.stop()));
+    const { Conversation } = await import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.27.0/+esm');
+    conv = await Conversation.startSession({
+      agentId: AGENT_ID, connectionType: 'websocket',
+      onConnect: () => { vState.textContent = 'Te escucho…'; SND.pop(); vib(20); },
+      onDisconnect: () => endVoiceUI(),
+      onModeChange: ({ mode }) => { vMode = mode; vState.textContent = mode === 'speaking' ? 'Andrés.IA está hablando…' : 'Te escucho…'; },
+      onMessage: ({ message, source }) => { if (message) bubble(source === 'user' ? 'user' : 'ai', message); },
+      onError: () => { vState.textContent = 'Se cortó la conexión. Intenta otra vez.'; }
+    });
+  } catch (e) {
+    vState.textContent = e && e.name === 'NotAllowedError' ? 'Necesito permiso para usar tu micrófono.' : 'No pude conectar la voz. Escríbeme aquí abajo.';
+    conv = null;
+  }
+  vStarting = false;
+}
+async function stopVoice() { const c = conv; conv = null; if (c) try { await c.endSession(); } catch (e) {} endVoiceUI(); }
+function endVoiceUI() { conv = null; vMode = ''; cb.classList.remove('voice'); }
+$('cbMic').addEventListener('click', () => conv ? stopVoice() : startVoice());
+$('cbHang').addEventListener('click', stopVoice);
+$('talkBtn').addEventListener('click', startVoice);
+$('cbX').addEventListener('click', () => { if (conv) stopVoice(); });
+
 /* ---------- Cada cuadro ---------- */
 window.fxTick = (t, amp) => {
+  const lv = SND.level(); if (lv) FX.burst = Math.max(FX.burst, Math.min(1.2, lv * 4));
   talk *= .985;
   const a = Math.max(.08, talk * amp + (busy ? .5 * amp : 0));
   orbA.draw(t, a, { spin: FX.spin }); if (cb.classList.contains('open')) orbB.draw(t, a, { spin: FX.spin });
+  if (cb.classList.contains('voice')) {
+    let v = .08; try { if (conv) v = vMode === 'speaking' ? .2 + conv.getOutputVolume() * 2.2 : .1 + conv.getInputVolume() * 1.6; } catch (e) {}
+    orbC.draw(t, Math.min(1.3, v), { spin: FX.spin });
+  }
   SND.amp(amp);
 };
 })();
